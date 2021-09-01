@@ -1,20 +1,21 @@
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const routes = require("./routes");
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import routes from "./routes";
+import express, {Application, Request, Response, NextFunction } from "express";
 
-//@ts-ignore;
-const server = express();
+// server.name = "API";
+const server: Application = express();
 
-//@ts-ignore;
-server.name = "API";
+interface error {
+	status: number;
+	message: string;
+}
 
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-server.use(bodyParser.json({ limit: "50mb" }));
+server.use(express.urlencoded({extended: true, limit: '50mb'})); //middleware
+server.use(express.json({limit: '50mb'}));
 server.use(cookieParser());
 server.use(morgan("dev"));
-server.use((req, res, next) => {
+server.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:4000"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
@@ -29,7 +30,7 @@ server.use((req, res, next) => {
 server.use("/", routes);
 
 // Error catching endware.
-server.use((err, req, res, next) => {
+server.use((err: error, req: Request, res: Response, next: NextFunction) => {
   // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
@@ -37,4 +38,4 @@ server.use((err, req, res, next) => {
   res.status(status).send(message);
 });
 
-module.exports = server;
+export default server;

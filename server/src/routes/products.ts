@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const router = require("express").Router();
+import {Response, Request, Router, NextFunction} from 'express';
+const router = Router()
 
 // Traeme todos los productos con sus nombres, categorias y generos
 
@@ -12,7 +13,7 @@ const query = `query {
     }
   }`;
 
-router.get("/", async (request, response, next) => {
+router.get("/", async (req: Request, response: Response, next: NextFunction) => {
   try {
     const data = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
@@ -21,8 +22,8 @@ router.get("/", async (request, response, next) => {
     });
     response.send(data.data.data);
   } catch (err) {
-    response.status(400).send("Rompiste algo");
+    next(err)
   }
 });
 
-module.exports = router;
+export default router;
