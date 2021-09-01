@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "dev": "tsnd --respawn index.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
