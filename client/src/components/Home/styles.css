@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  [class^="number-slide"],
+  [class*=" number-slide"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: black;
+    font-weight: 500;
+    height: 500px;
+  }
+  
+  .number-slide1 {
+    background-image: url("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHQlMjBzaGlydHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-size: cover;
+    display: flex;
+    justify-content: space-evenly;
+    
+  }
+  
+  .number-slide2 {
+    background-image: url("https://media.gq-magazine.co.uk/photos/607db916763d41717cc26894/master/w_1920,h_1280,c_limit/190432021_Shop_05.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    
+  }
+  
+  .number-slide3 {
+    background-image: url("https://www.forsythwoman.com/wp-content/uploads/2018/01/FW47-MellieAndEmilia-COVER-1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+  }
+  
+  .number-slide4 {
+    
+  }
+  
+  .number-slide5 {
+    
+  }
+  .number-slide6 {
+    
+  }
+  
+  .navigation-wrapper {
+    position: relative;
+  }
+  
+  
+  .arrow {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    fill: #fff;
+    cursor: pointer;
+  }
+  
+  .arrow--left {
+    left: 5px;
+  }
+  
+  .arrow--right {
+    left: auto;
+    right: 5px;
+  }
+  
+  .arrow--disabled {
+    fill: rgba(255, 255, 255, 0.5);
+  }
+  
+  .btn1{
+    border: none;
+    padding: 1em 2.5em;
+    font-size: 0.35em;
+    display: inline-block;
+    background-color: #fff;
+    text-decoration: none;
+    color: black;
+  }
+  .link{
+    text-decoration: none;
+  }
