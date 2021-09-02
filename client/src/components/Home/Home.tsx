@@ -1,21 +1,55 @@
-import React from "react"
-import { useKeenSlider } from "keen-slider/react"
-import "keen-slider/keen-slider.min.css"
-import "./styles.css"
+import React from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import "./styles.css";
+import NavBar from "../NavBar/NavBar";
+import { Link } from "react-router-dom";
+import sale from "../../sale.png";
+import shoes from "../../shoes.png";
+import tshirt from "../../t-shirt.png";
+import parka from "../../parka.png";
+import tshirt2 from "../../t-shirt2.png";
 
 export default (props) => {
   const [ref, slider] = useKeenSlider<HTMLDivElement>({ loop: true });
 
   return (
     <>
+      <NavBar/>
       <div className="navigation-wrapper">
         <div ref={ref} className="keen-slider">
-          <div className="keen-slider__slide number-slide1">1</div>
-          <div className="keen-slider__slide number-slide2">2</div>
-          <div className="keen-slider__slide number-slide3">3</div>
-          <div className="keen-slider__slide number-slide4">4</div>
+          <div className="keen-slider__slide number-slide1">
+            <img src={sale} width="22%"/>
+            <Link to="/">
+              <img src={tshirt} width="85%"  style={{'border':'1px solid black'}}/>
+            </Link>
+            <Link to="/">
+              <img src={shoes} width="85%"  style={{'border':'1px solid black'}}/>
+            </Link>
+            <Link to="/">
+              <img src={parka} width="85%"  style={{'border':'1px solid black'}}/>
+            </Link>
+            <Link to="/">
+              <img src={tshirt2} width="85%" style={{'border':'1px solid black'}}/>
+            </Link>
+          </div>
+          <div className="keen-slider__slide number-slide2">
+            <Link to="/" className="link">
+              <p className="btn1">
+                    SHOP MEN
+              </p>
+            </Link>
+          </div>
+          <div className="keen-slider__slide number-slide3">
+          <Link to="/" className="link">
+              <p className="btn1">
+                    SHOP WOMEN
+              </p>
+            </Link>
+          </div>
+          {/* <div className="keen-slider__slide number-slide4">4</div>
           <div className="keen-slider__slide number-slide5">5</div>
-          <div className="keen-slider__slide number-slide6">6</div>
+          <div className="keen-slider__slide number-slide6">6</div> */}
         </div>
         {slider && (
           <>

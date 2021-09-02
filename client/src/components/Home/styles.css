@@ -7,70 +7,49 @@ body {
   
   [class^="number-slide"],
   [class*=" number-slide"] {
-    background:transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 50px;
     color: black;
     font-weight: 500;
-    height: 450px;
+    height: 500px;
   }
   
   .number-slide1 {
-    background-image: url("https://cdn.discordapp.com/attachments/723359213828702247/882654740650012672/sale-final-50-off-sign-600w-561738571.png");
-    background-image: url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c2hvZXMlMjBzaG9wfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+    background-image: url("https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHQlMjBzaGlydHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
     background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-size: cover;
+    display: flex;
+    justify-content: space-evenly;
     
   }
   
   .number-slide2 {
-    background: rgb(255, 75, 64);
-    background: linear-gradient(
-      128deg,
-      rgba(255, 154, 63, 1) 0%,
-      rgba(255, 75, 64, 1) 100%
-    );
+    background-image: url("https://media.gq-magazine.co.uk/photos/607db916763d41717cc26894/master/w_1920,h_1280,c_limit/190432021_Shop_05.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    
   }
   
   .number-slide3 {
-    background: rgb(182, 255, 64);
-    background: linear-gradient(
-      128deg,
-      rgba(182, 255, 64, 1) 0%,
-      rgba(63, 255, 71, 1) 100%
-    );
-    background: linear-gradient(
-      128deg,
-      rgba(189, 255, 83, 1) 0%,
-      rgba(43, 250, 82, 1) 100%
-    );
+    background-image: url("https://www.forsythwoman.com/wp-content/uploads/2018/01/FW47-MellieAndEmilia-COVER-1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
   }
   
   .number-slide4 {
-    background: rgb(64, 255, 242);
-    background: linear-gradient(
-      128deg,
-      rgba(64, 255, 242, 1) 0%,
-      rgba(63, 188, 255, 1) 100%
-    );
+    
   }
   
   .number-slide5 {
-    background: rgb(255, 64, 156);
-    background: linear-gradient(
-      128deg,
-      rgba(255, 64, 156, 1) 0%,
-      rgba(255, 63, 63, 1) 100%
-    );
+    
   }
   .number-slide6 {
-    background: rgb(64, 76, 255);
-    background: linear-gradient(
-      128deg,
-      rgba(64, 76, 255, 1) 0%,
-      rgba(174, 63, 255, 1) 100%
-    );
+    
   }
   
   .navigation-wrapper {
@@ -102,3 +81,15 @@ body {
     fill: rgba(255, 255, 255, 0.5);
   }
   
+  .btn1{
+    border: none;
+    padding: 1em 2.5em;
+    font-size: 0.35em;
+    display: inline-block;
+    background-color: #fff;
+    text-decoration: none;
+    color: black;
+  }
+  .link{
+    text-decoration: none;
+  }
