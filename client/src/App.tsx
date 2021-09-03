@@ -1,18 +1,23 @@
+import Home from './components/Home/Home'
+import './App.css';
+import Products from './components/products/products'
 import React from 'react';
-import { Route, Switch } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Login from "./components/Login/Login";
+import {BrowserRouter ,Route, Switch } from "react-router-dom";
 import Carrito from "./components/Carrito";
 import Profile from "./components/Profile";
+import NavBar from "./components/NavBar/NavBar";
+import Login from './components/Login/Login';
 
 function App() {
   return (
-    <Switch>
+    <BrowserRouter>
+      <Route path ="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/carrito" exact component={Carrito} />
-      <Route path="/profile" exact component={Profile} />
-    </Switch>
+      <Route exact path = '/clouthing/:gender' component={Products}/>
+      <Route exact path="/login"  component={Login} />
+      <Route exact path="/carrito"  component={Carrito} />
+      <Route exact path="/profile"  component={Profile} />
+    </BrowserRouter>
   );
 }
 
