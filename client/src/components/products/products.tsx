@@ -8,8 +8,11 @@ import Filter from "./filter/filter";
 import Crads from "./cards/cards";
 
 export default function Products(){
-    
-    const {gender} = useParams();
+
+    type GenderParams = {
+        gender : string
+    };
+    const {gender} = useParams<GenderParams>();
     
     return(
         <div>

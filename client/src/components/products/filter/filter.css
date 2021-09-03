@@ -147,16 +147,16 @@
 .dropdown-menu{
     border: none;
 }
-.div_colors_filter_product{
-    display: inline-flex;
-}
 
 
 
 /*colores*/
 
 
-
+.div_colors_filter_product{
+    margin-left: 10px;
+    display: inline-flex;
+}
 
 .color_filter {
     margin: 5px;
@@ -178,8 +178,8 @@
 }
 
 .color_three_filter{
-    border: yellow;
-    background-color: yellow;
+    border: grey;
+    background-color: grey;
 }
 
 .color_four_filter{
@@ -188,11 +188,17 @@
 }
 
 .color_five_filter{
-    border: grey;
-    background-color: grey;
+    border: yellow;
+    background-color: yellow;
+
 }
 
 .color_six_filter{
-    border: hotpink ;
-    background-color: hotpink;
+    border: pink ;
+    background-color: pink;
+}
+
+.color_seven_filter{
+    border: sienna;
+    background-color: sienna;
 }
