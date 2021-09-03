@@ -5,10 +5,11 @@ const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
 
-  const categoria = req.query.categoria? `categoria: {_eq: ${req.query.categoria}}` : ' '
-  const genero = req.query.genero? `genero: {_eq: ${req.query.genero}}` : ' '
+  const category = req.query.category? `category: {_eq: ${req.query.category}}` : ' '
+  const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
+  const price = `price: {_gte: ${req.query.greater_than || "0"}, _lte: ${req.query.less_than || "999999"}}`
   
   try {
     const {data} = await axios({
@@ -16,10 +17,11 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
       method: "POST",
       data: { query: 
         `query {
-          producto(where: {${categoria},${genero}, opcion_productos: {${color}, ${size}} }) {
-            nombre
-            categoria
-            genero
+          products(where: {${category},${gender},${price}, product_options: {${color}, ${size}} }) {
+            name
+            category
+            gender
+            price
           }
         }`
       },
