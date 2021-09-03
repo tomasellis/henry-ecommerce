@@ -6,26 +6,26 @@ const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
   const id = req.query.id
-  console.log(id)
+  let query = `query MyQuery {
+    products(where: {id: {_eq: "${id}"}}) {
+      gender
+      name
+      image_url
+      price
+      product_options(where: {id: {}, product_id: {_eq: "${id}"}}) {
+        color
+        size
+        stock
+      }
+    }
+  }`
   try {
     const {data} = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
       method: "POST",
-      data: { query:
-        `query product {
-          products ( where: {id: {_eq: $id }}) {
-            price
-            name
-            product_options(where: {product_id: {_eq: $id }}) {
-              color
-              image_url
-              size
-              stock
-            }
-          }`
+      data: { query: query
         },
     });
-    await console.log(data)
     response.status(200).json(data.data)
   } catch (err) {
     next(err)
