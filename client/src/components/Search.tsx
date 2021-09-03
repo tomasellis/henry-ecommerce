@@ -12,7 +12,7 @@ export default function Search() {
         name="name"
         autoComplete="off"
         placeholder='Search'
-        clasName='input '
+        className='input '
       >
       </input>
       <div>
