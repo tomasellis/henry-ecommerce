@@ -5,26 +5,27 @@ const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
 
-  const categoria = req.query.categoria? `categoria: {_eq: ${req.query.categoria}}` : ' '
-  const genero = req.query.genero? `genero: {_eq: ${req.query.genero}}` : ' '
+  const category = req.query.category? `category: {_eq: ${req.query.category}}` : ' '
+  const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
-  
+
   try {
     const {data} = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
       method: "POST",
-      data: { query: 
+      data: { query:
         `query {
-          producto(where: {${categoria},${genero}, opcion_productos: {${color}, ${size}} }) {
-            nombre
-            categoria
-            genero
+            product(where: {${category},${gender}, products_options: {${color}, ${size}} }) {
+            name
+            category
+            gender
           }
         }`
       },
     });
-    response.send(data.data);
+    await console.log(data.data)
+    response.status(200).json(data.data);
   } catch (err) {
     next(err)
   }
