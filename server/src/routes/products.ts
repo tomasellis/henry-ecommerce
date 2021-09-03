@@ -12,12 +12,12 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
   const price = `price: {_gte: ${req.query.greater_than || "0"}, _lte: ${req.query.less_than || "999999"}}`
   const name = req.query.name? `name: {_ilike: "%${req.query.name}%"}`: ' '
 
-  
+
   try {
     const {data} = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
       method: "POST",
-      data: { query: 
+      data: { query:
         `query {
 
           products(where: {${category},${gender},${price},${name}, product_options: {${color}, ${size}} }) {
