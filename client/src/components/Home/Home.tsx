@@ -9,14 +9,14 @@ import shoes from "../../shoes.png";
 import tshirt from "../../t-shirt.png";
 import parka from "../../parka.png";
 import tshirt2 from "../../t-shirt2.png";
+import CategorySlide from "../categorySlide/categorySlide";
 
 export default (props) => {
   const [ref, slider] = useKeenSlider<HTMLDivElement>({ loop: true });
 
   return (
     <>
-      <NavBar/>
-      <div className="navigation-wrapper">
+        <div className="navigation-wrapper">
         <div ref={ref} className="keen-slider">
           <div className="keen-slider__slide number-slide1">
             <img src={sale} width="22%"/>
@@ -62,6 +62,7 @@ export default (props) => {
           </>
         )}
       </div>
+        <CategorySlide/>
     </>
   )
 }

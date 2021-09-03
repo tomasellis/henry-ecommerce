@@ -1,0 +1,16 @@
+.div_categorySlide{
+    display: flex;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.img_categorySlide {
+    transition: all 0.15s;
+}
+
+.img_categorySlide:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3); 
+    text-decoration: none;
+    color: black;
+}

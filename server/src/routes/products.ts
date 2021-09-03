@@ -9,17 +9,19 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
   const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
-
+  const price = `price: {_gte: ${req.query.greater_than || "0"}, _lte: ${req.query.less_than || "999999"}}`
+  
   try {
     const {data} = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
       method: "POST",
       data: { query:
         `query {
-            product(where: {${category},${gender}, products_options: {${color}, ${size}} }) {
+          products(where: {${category},${gender},${price}, product_options: {${color}, ${size}} }) {
             name
             category
             gender
+            price
           }
         }`
       },
