@@ -19,7 +19,7 @@ export default function Products(){
             <h1 className = 'ropa_title_prdouct'>Ropa</h1>
             <Filter/>
             <Crads/>
-            {gender === 'men' ? <p>spy hombre</p> : null}
+            {gender === 'men' ? <p>soy hombre</p> : null}
             {gender === 'woman' ? <p>soy mujer</p> : null}
             {gender === 'kids' ? <p>soy niño</p> : null}
     </div>
