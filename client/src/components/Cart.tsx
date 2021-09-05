@@ -1,9 +1,22 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 
 type ProductsInCart = {
-  loading: "idle" | "loading" | "error";
-  products: [];
+  loading: "loaded" | "loading" | "error";
+  products: CartProductData[];
+};
+
+type CartProductData = {
+  baseId: string;
+  baseName: string;
+  basePrice: number;
+  baseImage: string;
+  productOption: {
+    optionId: string;
+    optionSize: string;
+    optionColor: string;
+    optionImage: string;
+  };
 };
 
 const userId = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
@@ -15,9 +28,16 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    getProductsInCart(userId);
-    console.log("acá");
-    setProductsInCart({ ...productsInCart, loading: "idle" });
+    (async () => {
+      const data = await getProductsInCart(userId);
+      if (data) {
+        setProductsInCart({
+          ...productsInCart,
+          products: data,
+          loading: "loaded",
+        });
+      }
+    })();
   }, []);
 
   switch (productsInCart.loading) {
@@ -27,8 +47,14 @@ const Cart = () => {
     case "loading":
       return <div>Loading your cart!</div>;
 
-    case "idle":
-      return <div>Algo se cargo</div>;
+    case "loaded":
+      return (
+        <div id={"cartDisplay"} style={{ border: "5px solid" }}>
+          {productsInCart.products.map((product) => (
+            <div>{product.baseName}</div>
+          ))}
+        </div>
+      );
 
     default:
       return <div>Loading ;)</div>;
@@ -39,13 +65,13 @@ export default Cart;
 
 const getProductsInCart = async (userId: string) => {
   try {
-    const { data } = await axios(
-      `http://localhost:4000/getUserData?user_id=${userId}`
+    const { data }: AxiosResponse<CartProductData[] | any> = await axios(
+      `http://localhost:4000/getUserCartData?user_id=${userId}`
     );
-    data.errors ? console.error(data.errors) : console.info(data.data);
-    console.log("estoy");
-    console.log(data);
-    return data.data;
+    if (data[0].message) {
+      return console.error(data[0]);
+    }
+    return data;
   } catch (err) {
     console.error(err);
   }
