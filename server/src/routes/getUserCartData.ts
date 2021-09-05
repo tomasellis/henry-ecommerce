@@ -14,12 +14,11 @@ router.get(
           url: "https://henry-pg-api.herokuapp.com/v1/graphql",
           method: "POST",
           data: {
-            query: getUserDataQuery(user_id_query),
+            query: getUserCartDataQuery(user_id_query),
           },
         });
 
         if (data.errors) {
-          console.error(data.errors);
           response.send(data.errors);
         } else {
           response.send(data.data);
@@ -36,7 +35,7 @@ router.get(
 
 export default router;
 
-const getUserDataQuery = (user_id: string) => `query {
+const getUserCartDataQuery = (user_id: string) => `query {
     users(where: {id: {_eq: "${user_id}"}}) {
       role
       email
