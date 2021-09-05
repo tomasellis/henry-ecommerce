@@ -5,7 +5,7 @@ import './products.css'
 
 //import components
 import Filter from "./filter/filter";
-import Crads from "./cards/cards";
+import Card from "./cards/card";
 
 export default function Products(){
 
@@ -18,7 +18,7 @@ export default function Products(){
         <div>
             <h1 className = 'ropa_title_prdouct'>Ropa</h1>
             <Filter/>
-            <Crads/>
+            <Card/>
             {gender === 'men' ? <p>soy hombre</p> : null}
             {gender === 'woman' ? <p>soy mujer</p> : null}
             {gender === 'kids' ? <p>soy niño</p> : null}
