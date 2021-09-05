@@ -1,20 +1,14 @@
 import axios from "axios";
 
-import {Response, Request, Router, NextFunction} from 'express';
+import { Response, Request, Router, NextFunction } from "express";
 const router = Router();
 
-router.get("/", async (req: Request, response: Response, next: NextFunction) => {
-  const {
-    name,
-    category,
-    image_url,
-    gender,
-    price,
-    color,
-    size,
-    stock
-  } = req.body;
-  let mutation =`mutation  {
+router.post(
+  "/",
+  async (req: Request, response: Response, next: NextFunction) => {
+    const { name, category, image_url, gender, price, color, size, stock } =
+      req.body;
+    let mutation = `mutation  {
     insert_products(
       objects:
       {
@@ -40,19 +34,19 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
             price
           }
         }
-  }`
-  try {
-    const {data} = await axios({
-      url: "https://henry-pg-api.herokuapp.com/v1/graphql",
-      method: "POST",
-      data: { query: mutation
-        },
-    });
-    console.log(data.data.insert_products, "ACAAAAAAAAAAA")
-    response.status(200).json(data.data.insert_products.returning)
-  } catch (err) {
-    next(err)
+  }`;
+    try {
+      const { data } = await axios({
+        url: "https://henry-pg-api.herokuapp.com/v1/graphql",
+        method: "POST",
+        data: { query: mutation },
+      });
+      console.log(data.data.insert_products, "ACAAAAAAAAAAA");
+      response.status(200).json(data.data.insert_products.returning);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 export default router;

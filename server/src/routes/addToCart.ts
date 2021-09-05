@@ -3,12 +3,11 @@ import { Response, Request, Router, NextFunction } from "express";
 const router = Router();
 require("dotenv").config();
 
-router.get(
+router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { product_option_id, user_id, quantity } = request.query;
+    const { product_option_id, user_id, quantity } = request.body;
 
-    console.log("query", quantity);
     const user_id_query: string = (user_id as string) ?? "";
     const product_option_id_query: string = (product_option_id as string) ?? "";
     const quantity_query: number = quantity ? parseInt(quantity as string) : 0;
