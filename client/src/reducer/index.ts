@@ -1,20 +1,16 @@
-import { PRODUCTS_ACTIONS } from "../actions/products/productActions"
-
-
 const initialState = {
-
+  articles: []
 }
 
-export default function rootReducer(state = initialState, action) {
-
-  switch(action.type){
-    case PRODUCTS_ACTIONS.BRING_CLOTHER:
-      return {
+export const rootReducer = (state = initialState, {type, payload}) => {
+  switch (type) {
+    case 'GET_ARTICLES':
+      return{
         ...state,
-        
+        articles: payload
       }
     
-    default:
-      return state
+      default: 
+        return state
   }
 }
