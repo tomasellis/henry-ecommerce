@@ -3,10 +3,10 @@ import { Response, Request, Router, NextFunction } from "express";
 const router = Router();
 require("dotenv").config();
 
-router.get(
+router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { cart_product_id } = request.query;
+    const { cart_product_id } = request.body;
 
     const cart_product_query: string = (cart_product_id as string) ?? "";
 
@@ -17,9 +17,8 @@ router.get(
           method: "POST",
           data: {
             query: deleteFromCartById(cart_product_query),
-          }, // addToCartMutation returns a string
+          },
         });
-
         response.send(data.data);
       } catch (err) {
         next(err);
@@ -33,7 +32,7 @@ router.get(
 export default router;
 
 const deleteFromCartById = (cart_product_id: string) => `mutation {
-    delete_carts_products_by_pk(id: ${cart_product_id}){
+    delete_carts_products_by_pk(id: "${cart_product_id}"){
       id
       product_option_id
       user_id
