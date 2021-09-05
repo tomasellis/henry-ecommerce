@@ -1,10 +1,12 @@
+import { PRODUCTS_ACTIONS } from "../actions/products/productActions"
+
 const initialState = {
   articles: []
 }
 
 export const rootReducer = (state = initialState, {type, payload}) => {
   switch (type) {
-    case 'GET_ARTICLES':
+    case PRODUCTS_ACTIONS.BRING_CLOTHER:
       return{
         ...state,
         articles: payload

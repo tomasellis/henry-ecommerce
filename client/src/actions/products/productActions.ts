@@ -1,9 +1,9 @@
 import axios from "axios";
 // import { Dispatch } from "redux";
 
-// export const PRODUCTS_ACTIONS = {
-//     BRING_CLOTHER: "BRING_CLOTHER",
-// }
+export const PRODUCTS_ACTIONS = {
+    BRING_CLOTHER: "BRING_CLOTHER",
+}
 
 
 
@@ -34,7 +34,7 @@ export const getArticles = (gender,category,less_than,greater_than,color,size) =
         `)
         // let result = res.data;
         dispatch({
-            type: 'GET_ARTICLES',
+            type: PRODUCTS_ACTIONS.BRING_CLOTHER,
             payload: res,
             // payload: result.data
         })
