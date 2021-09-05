@@ -124,7 +124,7 @@ export default function NavBar() {
 
           <div className={classes.bolsa}>
             <IconButton>
-              <Link to="/carrito">
+              <Link to="/cart">
                 <ShoppingBasketIcon className={classes.icon} />
               </Link>
             </IconButton>
