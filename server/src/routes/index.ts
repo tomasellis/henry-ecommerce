@@ -7,6 +7,7 @@ import blockUser from "./blockUser";
 import setAdminUser from "./setAdminUser";
 import addToCart from "./addToCart";
 import deleteFromCart from "./deleteFromCart";
+import getUserData from "./getUserData";
 
 const router = Router();
 
@@ -18,4 +19,6 @@ router.use("/blockUser", blockUser);
 router.use("/setAdminUser", setAdminUser);
 router.use("/addToCart", addToCart);
 router.use("/deleteFromCart", deleteFromCart);
+router.use("/getUserData", getUserData);
+
 export default router;
