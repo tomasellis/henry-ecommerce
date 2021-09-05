@@ -4,7 +4,22 @@ import React, {useState} from 'react';
 import './filter.css';
 
 export default function Filter() {
+    const [dataFilter, setDataFilter] = useState({
+        gender: undefined,
+        category:undefined,
+        less_than: undefined,
+        greater_than: undefined,
+        color: undefined,
+        size: undefined
+    })
+    const setDataHandler = (e) => {
+        e.preventDefault();
 
+        setDataFilter({
+            ...dataFilter,
+            [e.target.name]: e.target.value
+        })
+    }
     return(
         <>
             <div className = 'container_filters_product'>
@@ -24,7 +39,7 @@ export default function Filter() {
                         <button className="btn btn-ligth dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           ROPA
                         </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <ul onClick={(e) => setDataHandler(e)} className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a className="dropdown-item" id = 'remeras' href="#">REMERAS</a></li>
                             <hr className = 'hr_filter_product' />
                             <li><a className="dropdown-item" id = 'pantalones' href="#">PANTALONES</a></li>

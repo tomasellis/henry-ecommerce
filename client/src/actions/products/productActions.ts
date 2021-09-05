@@ -25,12 +25,12 @@ export const PRODUCTS_ACTIONS = {
 export const getArticles = (gender,category,less_than,greater_than,color,size) => async (dispatch) =>{
     try{
         let res = await axios.get(`http://localhost:4000/products?${
-            gender !== undefined ? `gender=${gender}` : null}&${
-            category !== undefined ? `category=${category}` : null}&${
-            less_than !== undefined ? `less_than=${less_than}` : null}&${
-            greater_than !== undefined ? `greater_than=${greater_than}` : null}&${
-            color !== undefined ? `color=${color}` : null}&${
-            size !== undefined ? `size=${size}` : null} 
+            gender !== undefined ? `gender=${gender}` : "nada"}&${
+            category !== undefined ? `category=${category}` : "nada"}&${
+            less_than !== undefined ? `less_than=${less_than}` : "nada"}&${
+            greater_than !== undefined ? `greater_than=${greater_than}` : "nada"}&${
+            color !== undefined ? `color=${color}` : "nada"}&${
+            size !== undefined ? `size=${size}` : "nada"} 
         `)
         // let result = res.data;
         dispatch({
