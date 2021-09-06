@@ -16,20 +16,22 @@ export const DetailProductCards = () => {
     };
     const {id} = useParams<IDParams>();
     const product = useSelector((state : any) => state.product);
-
+    
+    
     useEffect(() => {
         dispatch(getProduct(id))
-    }, [dispatch])
+    }, [id,dispatch])
     
+    const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
 
-    return (
+    return ( product.length || product.products?.length ?
        <DetailsProductCard 
             id = {id}
             name = {product?.products[0]?.name}
-            image_url = {product?.products[0]?.image_url}
+            image_url = {product.products[0].image_url}
             price = {product?.products[0]?.price}
-            gender = {product?.products[0]?.gender}
-            category = {product?.products[0]?.category}
        />
+       :
+       <div>Loading</div>
     )
 }

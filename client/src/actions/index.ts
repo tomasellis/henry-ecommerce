@@ -8,6 +8,7 @@ export function getProduct (id:any) {
   return async function (dispatch:any){
     let json = await axios(`http://localhost:4000/product?id=${id}`, {
     });
+    
     return dispatch({ type: "GET_PRODUCT_INFO", payload: json.data});
   }
 }
