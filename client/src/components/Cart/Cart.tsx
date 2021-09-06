@@ -34,18 +34,20 @@ const Cart = () => {
     products: [],
   });
 
+  const updateData = async () => {
+    const data = await getProductsInCart(TESTID);
+    if (data) {
+      console.log(data);
+      setProductsInCart({
+        ...productsInCart,
+        products: data,
+        loading: "loaded",
+      });
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await getProductsInCart(TESTID);
-      if (data) {
-        console.log(data);
-        setProductsInCart({
-          ...productsInCart,
-          products: data,
-          loading: "loaded",
-        });
-      }
-    })();
+    (async () => await updateData())();
   }, []);
 
   switch (productsInCart.loading) {
@@ -74,7 +76,7 @@ const Cart = () => {
               product={product}
               index={index}
               productsInCart={productsInCart.products}
-              setProductsInCart={setProductsInCart}
+              updateData={updateData}
             ></CartProductBox>
           ))}
         </div>
