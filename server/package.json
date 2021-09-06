@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
+  "engines": {"node": ">=15.11.0"},
   "scripts": {
-    "dev": "tsnd --respawn index.ts"
+    "dev": "tsnd --respawn index.ts",
+    "publishToHeroku": "cd ../ && git subtree push --prefix server heroku main || true"
   },
   "keywords": [],
   "author": "",
