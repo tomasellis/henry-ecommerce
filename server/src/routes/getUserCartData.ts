@@ -76,6 +76,7 @@ const orderArray = (hasuraData: CartDataFromHasura) => {
         optionStock: option.stock,
         optionQuantity: productOption.quantity,
       },
+      productInCartId: productOption.id,
     };
   });
 
@@ -92,6 +93,7 @@ type CartDataFromHasura = {
 };
 
 type CartProducts = {
+  id: number;
   quantity: number;
   products_option: Products_Option;
 };
