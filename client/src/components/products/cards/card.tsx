@@ -1,10 +1,10 @@
-import React from "react"
 import { Link } from "react-router-dom"
 
 //import css
 import './cards.css'
 
 export default function Card(name, img, price){
+
     return(
         <>
         <div className = 'cards_container_products'>

@@ -22,7 +22,7 @@ export const PRODUCTS_ACTIONS = {
 
 // const URL:string = `http://localhost:4000/products?`;
 
-export const getArticles = (gender,category,less_than,greater_than,color,size) => async (dispatch) =>{
+export const getArticles = (gender : any,category : any,less_than : any,greater_than : any,color : any,size : any) => async (dispatch : any) =>{
     try{
         let res = await axios.get(`http://localhost:4000/products?${
             gender !== undefined ? `gender=${gender}` : "nada"}&${

@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import './filter.css';
 
 export default function Filter() {
+
     const [dataFilter, setDataFilter] = useState({
         gender: undefined,
         category:undefined,
@@ -17,9 +18,10 @@ export default function Filter() {
 
         setDataFilter({
             ...dataFilter,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.id
         })
     }
+
     return(
         <>
             <div className = 'container_filters_product'>
@@ -67,12 +69,12 @@ export default function Filter() {
                         </button>
                         <ul className="dropdown-menu " aria-labelledby="dropdownMenuButton1">
                             <div className = 'div_size_filter_product'>
-                                <li><button value = 'x'>X</button></li>
-                                <li><button value = 's'>S</button></li>
-                                <li><button value = 'm'>M</button></li>
-                                <li><button value = 'l'>L</button></li>
-                                <li><button value = 'xs'>XS</button></li>
-                                <li><button value = 'xl'>XL</button></li>
+                                <li><button id = 'x'>X</button></li>
+                                <li><button id = 's'>S</button></li>
+                                <li><button id = 'm'>M</button></li>
+                                <li><button id = 'l'>L</button></li>
+                                <li><button id = 'xs'>XS</button></li>
+                                <li><button id = 'xl'>XL</button></li>
                             </div>
                                 <hr className = 'hr_filter_product' />
                         </ul>
