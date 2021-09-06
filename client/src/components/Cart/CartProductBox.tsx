@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import "./CartProductBox.css";
+import "./styles.css";
 
 type CartProductBoxProps = {
   product: CartProductData;
@@ -16,10 +16,24 @@ type CartProductData = {
     optionSize: string;
     optionColor: string;
     optionImage: string;
+    optionStock: number;
   };
 };
 
+type AddToCartJson = {
+  product_option_id: string;
+  user_id: string;
+  quantity: number;
+};
+
+const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
+
 const CartProductBox = (props: CartProductBoxProps) => {
+  const addToCartObj: AddToCartJson = {
+    product_option_id: "",
+    quantity: props.product.productOption.optionStock,
+    user_id: "",
+  };
   return (
     <div className="cartProductBox">
       <div
@@ -28,7 +42,11 @@ const CartProductBox = (props: CartProductBoxProps) => {
           padding: "10px",
         }}
       >
-        {props.product.baseName}
+        {props.product.baseName +
+          " " +
+          props.product.productOption.optionColor.toLocaleUpperCase() +
+          " " +
+          props.product.productOption.optionSize}
       </div>
       <div
         style={{
@@ -43,7 +61,9 @@ const CartProductBox = (props: CartProductBoxProps) => {
           border: "1px solid",
           padding: "10px",
         }}
-      ></div>
+      >
+        STOCK: {props.product.productOption.optionStock}
+      </div>
       <button
         onClick={(event) => {
           alert(`te resto`);
@@ -65,7 +85,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
               `Deseas remover este producto de tu lista: ${props.product.baseName}?`
             )
           ) {
-            axios.post("");
+            axios.post(`${BASE_URL}/addToCart`, {});
           }
         }}
       >
