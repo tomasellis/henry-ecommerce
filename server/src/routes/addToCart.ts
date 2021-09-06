@@ -29,8 +29,11 @@ router.post(
             ),
           }, // addToCartMutation returns a string
         });
-
-        response.send(data.data);
+        if (data.errors) {
+          return response.send(data.errors);
+        } else {
+          response.send(data.data);
+        }
       } catch (err) {
         next(err);
       }
