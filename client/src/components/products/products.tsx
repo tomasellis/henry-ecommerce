@@ -40,11 +40,9 @@ export default function Products() {
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
             {
-                articles?.map(e => {
-                    console.log(e);
-                    
+                articles?.map((e,i) => {
                     return (
-                        <Card
+                        <Card key={e.id}
                         id = {e.id}
                         image = {e.image_url}
                         name={e.name}
