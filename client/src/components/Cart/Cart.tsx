@@ -23,9 +23,10 @@ type CartProductData = {
     optionStock: number;
     optionQuantity: number;
   };
+  productInCartId: number;
 };
 
-const TESTUSERID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
+const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const Cart = () => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
@@ -35,7 +36,7 @@ const Cart = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getProductsInCart(TESTUSERID);
+      const data = await getProductsInCart(TESTID);
       if (data) {
         setProductsInCart({
           ...productsInCart,

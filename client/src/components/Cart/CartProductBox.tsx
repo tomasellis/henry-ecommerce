@@ -27,6 +27,7 @@ type CartProductData = {
     optionStock: number;
     optionQuantity: number;
   };
+  productInCartId: number;
 };
 
 type AddToCartJson = {
@@ -36,6 +37,8 @@ type AddToCartJson = {
 };
 
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
+
+const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const CartProductBox = (props: CartProductBoxProps) => {
   const [quantity, setQuantity] = useState(
@@ -73,9 +76,10 @@ const CartProductBox = (props: CartProductBoxProps) => {
         {props.product.productOption.optionStock}
       </div>
       <button
-        onClick={(event) => {
-          alert(`te resto`);
-        }}
+        disabled={props.product.productOption.optionQuantity > 1 ? false : true}
+        onClick={async (event) =>
+          await handleOnClick(false, props.product, TESTID)
+        }
       >
         -
       </button>
@@ -83,13 +87,22 @@ const CartProductBox = (props: CartProductBoxProps) => {
         className="stockInput"
         placeholder={"1"}
         value={quantity}
+        onChange={(event) => {
+          console.log(event);
+        }}
         min={1}
         max={props.product.productOption.optionStock}
       ></input>
       <button
-        onClick={(event) => {
-          alert(`te sumo`);
-        }}
+        disabled={
+          props.product.productOption.optionQuantity <=
+          props.product.productOption.optionStock
+            ? false
+            : true
+        }
+        onClick={async (event) =>
+          await handleOnClick(true, props.product, TESTID)
+        }
       >
         +
       </button>
@@ -100,7 +113,6 @@ const CartProductBox = (props: CartProductBoxProps) => {
               `Deseas remover este producto de tu lista: ${props.product.baseName}?`
             )
           ) {
-            axios.post(`${BASE_URL}/addToCart`, {});
           }
         }}
       >
@@ -120,3 +132,20 @@ const CartProductBox = (props: CartProductBoxProps) => {
 };
 
 export default CartProductBox;
+
+const handleOnClick = async (
+  sum: boolean,
+  product: CartProductData,
+  userId: string
+) => {
+  console.log("sending", product);
+  const data = await axios.post(`${BASE_URL}/addToCart`, {
+    user_id: `${userId}`,
+    product_option_id: `${product.productInCartId}`,
+    quantity: sum
+      ? product.productOption.optionQuantity + 1
+      : product.productOption.optionQuantity - 1,
+  });
+
+  console.log("handleonclick", data);
+};
