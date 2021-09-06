@@ -19,7 +19,7 @@ export default function Products() {
       <Filter />
       <Cards />
       {gender === "men" ? <p>soy hombre</p> : null}
-      {gender === "woman" ? <p>soy mujer</p> : null}
+      {gender === "women" ? <p>soy mujer</p> : null}
       {gender === "kids" ? <p>soy niño</p> : null}
     </div>
   );
