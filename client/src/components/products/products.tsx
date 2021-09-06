@@ -22,16 +22,18 @@ export default function Products(){
     };
     const {gender} = useParams<GenderParams>();
 
-    const dispatchMen = useEffect(() => {
-        dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))}, [dispatch]) 
-    
+    function Genero(){
+        useEffect(function(){
+        dispatch(getArticles('hombre', undefined, undefined, undefined, undefined, undefined))});
+        console.log(articles);
+    }
+
     return(
         <div>
-            {gender === 'men' ? dispatchMen : null}
+            {gender === 'men' ? Genero(): null}
             {gender === 'woman' ? <p>soy mujer</p> : null}
             {gender === 'kids' ? <p>soy niño</p> : null}
             <h1 className = 'ropa_title_prdouct'>Ropa</h1>
-            <Card/>
             <Filter/>
             {
                 articles.map(e => {

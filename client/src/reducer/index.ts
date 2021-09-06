@@ -1,7 +1,8 @@
 import { PRODUCTS_ACTIONS } from "../actions/products/productActions"
 
 const initialState = {
-  articles: []
+  articles: [],
+  products: []
 }
 
 export const rootReducer = (state = initialState, {type, payload}) => {
@@ -11,8 +12,12 @@ export const rootReducer = (state = initialState, {type, payload}) => {
       return{
         ...state,
         articles: payload
-      }
-    
+      };
+    case 'articles' : 
+    return {
+      ...state,
+      products : payload
+    }
       default: 
         return state
   }
