@@ -21,6 +21,7 @@ type CartProductData = {
     optionColor: string;
     optionImage: string;
     optionStock: number;
+    optionQuantity: number;
   };
 };
 
@@ -57,7 +58,7 @@ const Cart = () => {
         <div className="cartDisplay">
           <div className="cartProductBox cartLabels">
             <div>Nombre</div>
-            <div>Stock</div>
+            <div>Disponibles</div>
             <div></div>
             <div>Cantidad</div>
             <div></div>
@@ -65,8 +66,14 @@ const Cart = () => {
             <div></div>
             <div>Precio</div>
           </div>
-          {productsInCart.products.map((product) => (
-            <CartProductBox product={product}></CartProductBox>
+          {productsInCart.products.map((product, index) => (
+            <CartProductBox
+              key={index}
+              product={product}
+              index={index}
+              productsInCart={productsInCart.products}
+              setProductsInCart={setProductsInCart}
+            ></CartProductBox>
           ))}
         </div>
       );

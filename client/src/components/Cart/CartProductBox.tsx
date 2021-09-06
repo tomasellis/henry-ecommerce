@@ -1,9 +1,17 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
+
+type ProductsInCart = {
+  loading: "loaded" | "loading" | "error";
+  products: CartProductData[];
+};
 
 type CartProductBoxProps = {
   product: CartProductData;
+  index: number;
+  productsInCart: CartProductData[];
+  setProductsInCart: React.Dispatch<React.SetStateAction<ProductsInCart>>;
 };
 
 type CartProductData = {
@@ -17,6 +25,7 @@ type CartProductData = {
     optionColor: string;
     optionImage: string;
     optionStock: number;
+    optionQuantity: number;
   };
 };
 
@@ -29,11 +38,16 @@ type AddToCartJson = {
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 
 const CartProductBox = (props: CartProductBoxProps) => {
+  const [quantity, setQuantity] = useState(
+    props.product.productOption.optionQuantity
+  );
+
   const addToCartObj: AddToCartJson = {
     product_option_id: "",
     quantity: props.product.productOption.optionStock,
     user_id: "",
   };
+
   return (
     <div className="cartProductBox">
       <div
@@ -56,7 +70,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
           padding: "10px",
         }}
       >
-        Disponibles: {props.product.productOption.optionStock}
+        {props.product.productOption.optionStock}
       </div>
       <button
         onClick={(event) => {
@@ -65,7 +79,13 @@ const CartProductBox = (props: CartProductBoxProps) => {
       >
         -
       </button>
-      <input className="stockInput" placeholder={"0"}></input>
+      <input
+        className="stockInput"
+        placeholder={"1"}
+        value={quantity}
+        min={1}
+        max={props.product.productOption.optionStock}
+      ></input>
       <button
         onClick={(event) => {
           alert(`te sumo`);
@@ -93,7 +113,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
           padding: "10px",
         }}
       >
-        $ {props.product.basePrice}
+        $ {props.product.basePrice * props.product.productOption.optionQuantity}
       </div>
     </div>
   );
