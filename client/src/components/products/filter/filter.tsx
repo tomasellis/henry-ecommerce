@@ -1,26 +1,31 @@
-import React, {useState} from 'react';
+import { useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
 
 //import css
 import './filter.css';
+import { getArticles } from '../../../actions/products/productActions';
 
 export default function Filter() {
 
-    const [dataFilter, setDataFilter] = useState({
-        gender: undefined,
-        category:undefined,
-        less_than: undefined,
-        greater_than: undefined,
-        color: undefined,
-        size: undefined
-    })
+    type GenderParams = {
+        gender : string
+    };
+    const {gender} = useParams<GenderParams>();
+
+    const dispatch = useDispatch();
+
     const setDataHandler = (e) => {
         e.preventDefault();
-
-        setDataFilter({
-            ...dataFilter,
-            [e.target.name]: e.target.id
-        })
-    }
+        if(gender === 'woman'){
+            dispatch(getArticles('mujer',e.target.id, undefined,undefined,undefined,undefined))
+        };
+        if(gender === 'men'){
+            dispatch(getArticles('hombre',e.target.id, undefined,undefined,undefined,undefined))
+        };
+        if(gender === 'kids'){
+            dispatch(getArticles('niños',e.target.id, undefined,undefined,undefined,undefined))
+        };
+    };
 
     return(
         <>
@@ -42,15 +47,15 @@ export default function Filter() {
                           ROPA
                         </button>
                         <ul onClick={(e) => setDataHandler(e)} className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" id = 'remeras' href="#">REMERAS</a></li>
+                            <li><a className="dropdown-item" id = 'remera' href="#">REMERAS</a></li>
                             <hr className = 'hr_filter_product' />
-                            <li><a className="dropdown-item" id = 'pantalones' href="#">PANTALONES</a></li>
+                            <li><a className="dropdown-item" id = 'pantalon' href="#">PANTALONES</a></li>
                             <hr className = 'hr_filter_product' />
-                            <li><a className="dropdown-item" id='camperas' href="#">CAMPERAS</a></li>
+                            <li><a className="dropdown-item" id='campera' href="#">CAMPERAS</a></li>
                             <hr className = 'hr_filter_product'  />
-                            <li><a className="dropdown-item" id='buzos' href="#">BUZOS</a></li>
+                            <li><a className="dropdown-item" id='buzo' href="#">BUZOS</a></li>
                             <hr className = 'hr_filter_product'  />
-                            <li><a className="dropdown-item" id='calzados' href="#">CALZADOS</a></li>
+                            <li><a className="dropdown-item" id='calzado' href="#">CALZADOS</a></li>
                         </ul>
                     </div>
                     <div className="dropdown" >

@@ -11,8 +11,6 @@ import { getArticles } from "../../actions/products/productActions";
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
-import Cards from "./cards/cards";
-
 
 export default function Products() {
 
@@ -24,21 +22,25 @@ export default function Products() {
     };
     const {gender} = useParams<GenderParams>();
 
-    useEffect(() => {
-        dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))
-    }, [dispatch]) 
     
+    useEffect(() => {
+        if(gender === 'men'){
+            dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))
+        };
+        if(gender === 'woman'){
+            dispatch(getArticles('mujer',  undefined, undefined, undefined,  undefined, undefined))
+        };
+        if(gender === 'kids'){
+            dispatch(getArticles('niños',  undefined, undefined, undefined,  undefined, undefined))
+        };
+    }, [dispatch]) 
     
     return(
         <div>
-            {/* {gender === 'men' ? dispatchMen : null}
-            {gender === 'woman' ? <p>soy mujer</p> : null}
-            {gender === 'kids' ? <p>soy niño</p> : null}
-            <h1 className = 'ropa_title_prdouct'>Ropa</h1> */}
-            {/* <Card/> */}
+            <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
             {
-                articles.length && articles.map(e => {
+                articles?.map(e => {
                     return (
                         <Card
                         name={e.name}

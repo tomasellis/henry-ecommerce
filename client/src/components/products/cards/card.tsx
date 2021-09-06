@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 //import css
-import './cards.css'
+import './card.css'
 
 export default function Card({name,price}){
     

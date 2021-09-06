@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
-.div_container_card_product {
-    width: 25%;
+.cards_container_products{
     display: inline-flex;
+    width: 25%;
+}
+
+.div_container_card_product {
+    width: 100%;
 }
 
 .div_card_product {

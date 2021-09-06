@@ -12,6 +12,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Drawer } from "@material-ui/core";
 import { Link as link } from "@material-ui/core";
+import { IoPersonCircleSharp } from "react-icons/io5";
+import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
 
 export default function NavBar() {
@@ -65,7 +67,7 @@ export default function NavBar() {
     },
     {
       label: (
-        <p style={{ fontWeight: "bold", fontSize: "18px" }}>
+        <p style={{fontWeight: "bold", fontSize: "18px" }}>
           {isAuthenticated ? (
             <Link
               to="/profile"
@@ -125,7 +127,7 @@ export default function NavBar() {
           <div className={classes.bolsa}>
             <IconButton>
               <Link to="/cart">
-                <ShoppingBasketIcon className={classes.icon} />
+                <BiShoppingBag style = {{textDecoration: "none", color : "#000", marginBottom : "7px"}} />
               </Link>
             </IconButton>
           </div>
@@ -142,9 +144,9 @@ export default function NavBar() {
               ) : (
                 <Link
                   to="/login"
-                  style={{ textDecoration: "none", color: "#000" }}
+                  style={{ textDecoration: "none", color: "#000"}}
                 >
-                  Login
+                  <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </Link>
               )}
             </p>
@@ -236,7 +238,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2px",
   },
   appBar: {
-    background: "rgb(170,10,70)",
+    background: "rgba(255, 255, 255, 0.767)",
   },
   login: {
     fontWeight: "bold",
