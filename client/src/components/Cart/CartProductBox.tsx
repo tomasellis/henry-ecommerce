@@ -40,6 +40,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         style={{
           border: "1px solid",
           padding: "10px",
+          overflow: "hidden",
         }}
       >
         {props.product.baseName +
@@ -48,21 +49,14 @@ const CartProductBox = (props: CartProductBoxProps) => {
           " " +
           props.product.productOption.optionSize}
       </div>
+
       <div
         style={{
           border: "1px solid",
           padding: "10px",
         }}
       >
-        {props.product.basePrice}
-      </div>
-      <div
-        style={{
-          border: "1px solid",
-          padding: "10px",
-        }}
-      >
-        STOCK: {props.product.productOption.optionStock}
+        Disponibles: {props.product.productOption.optionStock}
       </div>
       <button
         onClick={(event) => {
@@ -71,6 +65,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
       >
         -
       </button>
+      <input className="stockInput" placeholder={"0"}></input>
       <button
         onClick={(event) => {
           alert(`te sumo`);
@@ -91,6 +86,15 @@ const CartProductBox = (props: CartProductBoxProps) => {
       >
         x
       </button>
+      <div></div>
+      <div
+        style={{
+          border: "1px solid",
+          padding: "10px",
+        }}
+      >
+        $ {props.product.basePrice}
+      </div>
     </div>
   );
 };

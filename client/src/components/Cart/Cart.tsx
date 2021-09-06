@@ -57,8 +57,13 @@ const Cart = () => {
         <div className="cartDisplay">
           <div className="cartProductBox cartLabels">
             <div>Nombre</div>
-            <div>Precio</div>
             <div>Stock</div>
+            <div></div>
+            <div>Cantidad</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>Precio</div>
           </div>
           {productsInCart.products.map((product) => (
             <CartProductBox product={product}></CartProductBox>

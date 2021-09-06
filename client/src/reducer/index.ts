@@ -1,22 +1,22 @@
 const initialState = {
-  product : [],
+  product: [],
   options: [],
-  productsInCartByUser:[]
-}
+  productsInCartByUser: [],
+};
 
-export default function rootReducer(state = initialState, {type, payload}) {
-  switch(type){
+export default function rootReducer(state = initialState, { type, payload }) {
+  switch (type) {
     case "GET_PRODUCT_INFO":
       return {
         ...state,
-        product:payload
-      }
+        product: payload,
+      };
     case "GET_OPTIONS":
       return {
         ...state,
-        options:payload
-      }
+        options: payload,
+      };
     default:
-      return state
+      return state;
   }
 }
