@@ -9,7 +9,7 @@ export default function Cards() {
       <div className="cards_container_products">
         <div className="div_container_card_product">
           <div className="div_card_product">
-            <Link to="#">
+            <Link to="details/1">
               <img
                 src="https://img.hollisterco.com/is/image/anf/KIC_331-2290-2334-280_model1?policy=product-medium"
                 alt=""
@@ -23,7 +23,7 @@ export default function Cards() {
         </div>
         <div className="div_container_card_product">
           <div className="div_card_product">
-            <Link to="#">
+            <Link to="details/2">
               <img
                 src="https://img.hollisterco.com/is/image/anf/KIC_328-1501-0041-279_prod1?policy=product-medium"
                 alt=""
@@ -37,7 +37,7 @@ export default function Cards() {
         </div>
         <div className="div_container_card_product">
           <div className="div_card_product">
-            <Link to="#">
+            <Link to="details/1">
               <img
                 src="https://img.hollisterco.com/is/image/anf/KIC_314-1000-0707-900_prod1?policy=product-medium"
                 alt=""
@@ -53,7 +53,7 @@ export default function Cards() {
         </div>
         <div className="div_container_card_product">
           <div className="div_card_product">
-            <Link to="#">
+            <Link to="details/1">
               <img
                 src="https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-210_prod1?policy=product-medium"
                 alt=""
