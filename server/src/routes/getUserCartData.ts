@@ -40,6 +40,7 @@ export default router;
 const getUserCartDataQuery = (user_id: string) => `query {
     users_by_pk(id: "${user_id}") {
       cart_products {
+        id
         quantity
         products_option {
           id
@@ -76,7 +77,7 @@ const orderArray = (hasuraData: CartDataFromHasura) => {
         optionStock: option.stock,
         optionQuantity: productOption.quantity,
       },
-      productInCartId: productOption.id,
+      inCartId: productOption.id,
     };
   });
 
