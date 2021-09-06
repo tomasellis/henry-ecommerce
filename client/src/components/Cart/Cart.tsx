@@ -48,7 +48,7 @@ const Cart = () => {
 
   useEffect(() => {
     (async () => await updateData())();
-  }, []);
+  }, [updateData]);
 
   switch (productsInCart.loading) {
     case "error":
