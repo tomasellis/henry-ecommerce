@@ -17,7 +17,7 @@ import Cards from "./cards/cards";
 export default function Products() {
 
     const dispatch = useDispatch();
-    const articles = useSelector((state : any) => state);
+    const articles = useSelector((state : any) => state.articles);
 
     type GenderParams = {
         gender : string
@@ -38,7 +38,7 @@ export default function Products() {
             {/* <Card/> */}
             <Filter/>
             {
-                articles?.map(e => {
+                articles.length && articles.map(e => {
                     return (
                         <Card
                         name={e.name}
