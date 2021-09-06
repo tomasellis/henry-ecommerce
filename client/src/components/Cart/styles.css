@@ -9,7 +9,7 @@
   border: 1px solid;
   row-gap: 15px;
   column-gap: 15px;
-  grid-template-columns: 400px 130px repeat(5, 1fr) 200px;
+  grid-template-columns: 50px 400px 130px repeat(5, 1fr) 200px;
 }
 
 .cartLabels {
@@ -19,4 +19,14 @@
 
 .stockInput {
   width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+  width: 35px;
+  height: 35px;
 }

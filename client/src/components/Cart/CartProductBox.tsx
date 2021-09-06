@@ -55,6 +55,16 @@ const CartProductBox = (props: CartProductBoxProps) => {
     <div className="cartProductBox">
       <div
         style={{
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <img style={{ height: "100%" }} src={props.product.baseImage} />
+      </div>
+      <div
+        style={{
           border: "1px solid",
           padding: "10px",
           overflow: "hidden",
@@ -76,6 +86,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         {props.product.productOption.optionStock}
       </div>
       <button
+        className="button"
         disabled={props.product.productOption.optionQuantity > 1 ? false : true}
         onClick={async (event) => {
           setFetchingInfo("loading");
@@ -85,7 +96,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
           setFetchingInfo("loaded");
         }}
       >
-        -
+        <span style={{ alignSelf: "center" }}>-</span>
       </button>
       <input
         id={props.product.inCartId}
@@ -131,6 +142,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         }}
       ></input>
       <button
+        className="button"
         disabled={
           props.product.productOption.optionQuantity <
           props.product.productOption.optionStock
@@ -145,9 +157,10 @@ const CartProductBox = (props: CartProductBoxProps) => {
           setFetchingInfo("loaded");
         }}
       >
-        +
+        <span style={{ alignSelf: "center" }}>+</span>
       </button>
       <button
+        className="button"
         style={{
           borderColor: "red",
           backgroundColor: "red",
@@ -158,7 +171,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
           await props.updateData();
         }}
       >
-        x
+        <span style={{ alignSelf: "center" }}>x</span>
       </button>
       <div
         style={{
