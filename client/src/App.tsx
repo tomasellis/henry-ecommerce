@@ -7,6 +7,7 @@ import Cart from "./components/Cart/Cart";
 import Profile from "./components/Profile";
 import NavBar from "./components/NavBar/NavBar";
 import Login from "./components/Login/Login";
+import { DetailProductCards } from "./components/Details/DetailProductCards";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/login" component={Login} />
       <Route exact path="/cart" component={Cart} />
       <Route exact path="/profile" component={Profile} />
+      <Route exact path="/clothing/details/:id" component={DetailProductCards} />
     </BrowserRouter>
   );
 }
