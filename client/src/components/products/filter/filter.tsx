@@ -1,10 +1,59 @@
 /* eslint-disable */
-import React from "react";
+import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
 
 //import css
 import "./filter.css";
+import { getArticles } from "../../../actions/products/productActions";
 
 export default function Filter() {
+  type GenderParams = {
+    gender: string;
+  };
+  const { gender } = useParams<GenderParams>();
+
+  const dispatch = useDispatch();
+
+  const setDataHandler = (e) => {
+    e.preventDefault();
+    if (gender === "woman") {
+      dispatch(
+        getArticles(
+          "mujer",
+          e.target.id,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        )
+      );
+    }
+    if (gender === "men") {
+      dispatch(
+        getArticles(
+          "hombre",
+          e.target.id,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        )
+      );
+    }
+    if (gender === "kids") {
+      dispatch(
+        getArticles(
+          "niños",
+          e.target.id,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        )
+      );
+    }
+  };
+
   return (
     <>
       <div className="container_filters_product">
@@ -30,33 +79,37 @@ export default function Filter() {
             >
               ROPA
             </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul
+              onClick={(e) => setDataHandler(e)}
+              className="dropdown-menu"
+              aria-labelledby="dropdownMenuButton1"
+            >
               <li>
-                <a className="dropdown-item" id="remeras" href="#">
+                <a className="dropdown-item" id="remera" href="#">
                   REMERAS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="pantalones" href="#">
+                <a className="dropdown-item" id="pantalon" href="#">
                   PANTALONES
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="camperas" href="#">
+                <a className="dropdown-item" id="campera" href="#">
                   CAMPERAS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="buzos" href="#">
+                <a className="dropdown-item" id="buzo" href="#">
                   BUZOS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="calzados" href="#">
+                <a className="dropdown-item" id="calzado" href="#">
                   CALZADOS
                 </a>
               </li>
@@ -105,22 +158,22 @@ export default function Filter() {
             >
               <div className="div_size_filter_product">
                 <li>
-                  <button value="x">X</button>
+                  <button id="x">X</button>
                 </li>
                 <li>
-                  <button value="s">S</button>
+                  <button id="s">S</button>
                 </li>
                 <li>
-                  <button value="m">M</button>
+                  <button id="m">M</button>
                 </li>
                 <li>
-                  <button value="l">L</button>
+                  <button id="l">L</button>
                 </li>
                 <li>
-                  <button value="xs">XS</button>
+                  <button id="xs">XS</button>
                 </li>
                 <li>
-                  <button value="xl">XL</button>
+                  <button id="xl">XL</button>
                 </li>
               </div>
               <hr className="hr_filter_product" />

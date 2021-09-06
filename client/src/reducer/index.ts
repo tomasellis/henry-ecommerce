@@ -1,22 +1,34 @@
+import { PRODUCTS_ACTIONS } from "../actions/products/productActions"
+
 const initialState = {
   product: [],
   options: [],
-  productsInCartByUser: [],
-};
+  productsInCartByUser:[],
+  articles:[]
+}
 
-export default function rootReducer(state = initialState, { type, payload }) {
+export const rootReducer = (state = initialState, {type, payload}) => {
   switch (type) {
-    case "GET_PRODUCT_INFO":
-      return {
+    case PRODUCTS_ACTIONS.BRING_CLOTHER:
+      return{
         ...state,
-        product: payload,
-      };
-    case "GET_OPTIONS":
-      return {
-        ...state,
-        options: payload,
-      };
-    default:
-      return state;
+        articles: payload
+      }
+      case "GET_PRODUCT_INFO":
+        return {
+          ...state,
+          product:payload
+        }
+      case "GET_OPTIONS":
+        return {
+          ...state,
+          options:payload
+        }
+      
+
+      default: 
+        return state
   }
 }
+
+
