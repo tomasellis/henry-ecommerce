@@ -27,7 +27,7 @@ type CartProductData = {
     optionStock: number;
     optionQuantity: number;
   };
-  productInCartId: number;
+  inCartId: string;
 };
 
 type AddToCartJson = {
@@ -138,10 +138,16 @@ const handleOnClick = async (
   product: CartProductData,
   userId: string
 ) => {
-  console.log("sending", product);
+  console.log("llega", {
+    user_id: `${userId}`,
+    product_option_id: `${product.inCartId}`,
+    quantity: sum
+      ? product.productOption.optionQuantity + 1
+      : product.productOption.optionQuantity - 1,
+  });
   const data = await axios.post(`${BASE_URL}/addToCart`, {
     user_id: `${userId}`,
-    product_option_id: `${product.productInCartId}`,
+    product_option_id: `${product.inCartId}`,
     quantity: sum
       ? product.productOption.optionQuantity + 1
       : product.productOption.optionQuantity - 1,

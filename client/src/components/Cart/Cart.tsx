@@ -23,7 +23,7 @@ type CartProductData = {
     optionStock: number;
     optionQuantity: number;
   };
-  productInCartId: number;
+  inCartId: string;
 };
 
 const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
@@ -38,6 +38,7 @@ const Cart = () => {
     (async () => {
       const data = await getProductsInCart(TESTID);
       if (data) {
+        console.log(data);
         setProductsInCart({
           ...productsInCart,
           products: data,
