@@ -15,7 +15,7 @@ export const DetailProductCards = () => {
         id : string
     };
     const {id} = useParams<IDParams>();
-    const product = useSelector((state : any) => state.product);
+    const product = useSelector((state : any) => state.articles);
 
     useEffect(() => {
         dispatch(getProduct(id))
