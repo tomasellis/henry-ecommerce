@@ -36,7 +36,7 @@ const Cart = () => {
 
   const updateData = async () => {
     const data = await getProductsInCart(TESTID);
-    if (data) {
+    if (data[0]) {
       console.log(data);
       setProductsInCart({
         ...productsInCart,
@@ -94,12 +94,9 @@ export default Cart;
 
 const getProductsInCart = async (userId: string) => {
   try {
-    const { data }: AxiosResponse<CartProductData[] | any> = await axios(
+    const { data }: AxiosResponse<CartProductData[]> = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
-    if (data[0].message) {
-      return console.error(data[0]);
-    }
     return data;
   } catch (err) {
     console.error(err);
