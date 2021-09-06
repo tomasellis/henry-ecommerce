@@ -1,7 +1,7 @@
 import { PRODUCTS_ACTIONS } from "../actions/products/productActions"
 
 const initialState = {
-  product : [],
+  product: [],
   options: [],
   productsInCartByUser:[],
   articles:[]

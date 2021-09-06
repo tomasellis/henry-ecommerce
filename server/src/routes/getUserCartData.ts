@@ -36,10 +36,13 @@ router.get(
 );
 
 export default router;
+// Get user info
 
 const getUserCartDataQuery = (user_id: string) => `query {
     users_by_pk(id: "${user_id}") {
-      cart_products {
+      cart_products(order_by: {id:asc_nulls_last}) {
+        id
+        quantity
         products_option {
           id
           size
@@ -60,10 +63,8 @@ const getUserCartDataQuery = (user_id: string) => `query {
 
 const orderArray = (hasuraData: CartDataFromHasura) => {
   const productData = hasuraData.data.users_by_pk.cart_products;
-  console.log("acaorder", productData);
   let newData = productData.map((productOption: CartProducts) => {
     let option: Products_Option = productOption.products_option;
-    console.log("acá option", option);
     return {
       baseId: option.product.id,
       baseName: option.product.name,
@@ -75,7 +76,9 @@ const orderArray = (hasuraData: CartDataFromHasura) => {
         optionColor: option.color,
         optionImage: option.image_url,
         optionStock: option.stock,
+        optionQuantity: productOption.quantity,
       },
+      inCartId: productOption.id,
     };
   });
 
@@ -92,6 +95,8 @@ type CartDataFromHasura = {
 };
 
 type CartProducts = {
+  id: number;
+  quantity: number;
   products_option: Products_Option;
 };
 
