@@ -26,11 +26,3 @@ export function postProduct(payload) {
     return dispatch({ type: "POST_PRODUCT", payload: payload });
   };
 }
-
-export function getProductsInCart (user_id) {
-  return async function (dispatch:any){
-    let json = await axios(`http://localhost:4000/getUserCartData?user_id=${user_id}`, {
-    });
-    return dispatch({ type: "GET_PRODUCTS_IN_CART_by_USER", payload: json.data});
-  }
-}

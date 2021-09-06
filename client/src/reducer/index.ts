@@ -16,11 +16,6 @@ export default function rootReducer(state = initialState, {type, payload}) {
         ...state,
         options:payload
       }
-      case "GET_PRODUCTS_IN_CART_by_USER":
-        return {
-          ...state,
-          productsInCartByUser:payload
-        }
     default:
       return state
   }
