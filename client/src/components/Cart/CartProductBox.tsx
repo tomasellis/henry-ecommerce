@@ -170,25 +170,30 @@ const CartProductBox = (props: CartProductBoxProps) => {
           backgroundColor: "red",
           borderRadius: "5px",
         }}
-        onClick={(event) => {
-          if (
-            window.confirm(
-              `Deseas remover este producto de tu lista: ${props.product.baseName}?`
-            )
-          ) {
-          }
+        onClick={async (event) => {
+          await handleDeleteOnClick(props.product);
+          await props.updateData();
         }}
       >
         x
       </button>
-      <div>{fetchingInfo === "loading" ? "LOADING" : "✔"}</div>
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        {fetchingInfo === "loading" ? "..." : "✔"}
+      </div>
       <div
         style={{
           border: "1px solid",
           padding: "10px",
         }}
       >
-        $ {props.product.basePrice * props.product.productOption.optionQuantity}
+        $ {props.product.basePrice * quantity}
       </div>
     </div>
   );
@@ -209,8 +214,6 @@ const handleOnChange = async (
       quantity: value,
     }
   );
-
-  console.log("handleonchange", data.insert_carts_products_one);
   return data.insert_carts_products_one;
 };
 
@@ -229,6 +232,17 @@ const handleOnClick = async (
         : product.productOption.optionQuantity - 1,
     }
   );
-  console.log("handleonclick", data.insert_carts_products_one);
   return data.insert_carts_products_one;
+};
+
+const handleDeleteOnClick = async (product: CartProductData) => {
+  if (
+    window.confirm(
+      `Deseas remover este producto de tu lista: ${product.baseName}?`
+    )
+  ) {
+    const { data } = await axios.post(`${BASE_URL}/deleteFromCart`, {
+      cart_product_id: `${product.inCartId}`,
+    });
+  }
 };
