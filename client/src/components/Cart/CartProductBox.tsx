@@ -61,7 +61,11 @@ const CartProductBox = (props: CartProductBoxProps) => {
           justifyContent: "center",
         }}
       >
-        <img style={{ height: "100%" }} src={props.product.baseImage} />
+        <img
+          alt={props.product.baseName + props.product.productOption.optionSize}
+          style={{ height: "100%" }}
+          src={props.product.baseImage}
+        />
       </div>
       <div
         style={{
@@ -241,5 +245,6 @@ const handleDeleteOnClick = async (product: CartProductData) => {
     const { data } = await axios.post(`${BASE_URL}/deleteFromCart`, {
       cart_product_id: `${product.inCartId}`,
     });
+    return data;
   }
 };
