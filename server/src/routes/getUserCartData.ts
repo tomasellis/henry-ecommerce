@@ -39,7 +39,7 @@ export default router;
 
 const getUserCartDataQuery = (user_id: string) => `query {
     users_by_pk(id: "${user_id}") {
-      cart_products {
+      cart_products(order_by: {id:asc_nulls_last}) {
         id
         quantity
         products_option {
