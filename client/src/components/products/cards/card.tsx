@@ -11,7 +11,7 @@ export default function Card({name,price}){
 
             <div className = 'div_container_card_product'>
                 <div className = 'div_card_product'>
-                <Link to = '#'>
+                <Link to = '/clothing/details/:id'>
                     <img src="https://img.hollisterco.com/is/image/anf/KIC_331-2290-2334-280_model1?policy=product-medium" alt="" />
                     <h3 className = 'card_name_product'>{name}</h3>
                     <h5 className = 'card_desc_product'><b>{price}</b></h5>
