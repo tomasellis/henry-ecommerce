@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 //import css
 import './cards.css'
 
-export default function Card(name, img, price){
-
+export default function Card({name,price}){
+    
     return(
         <>
         <div className = 'cards_container_products'>
