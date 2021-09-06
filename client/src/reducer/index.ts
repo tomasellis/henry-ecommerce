@@ -25,8 +25,11 @@ export const rootReducer = (state = initialState, {type, payload}) => {
           ...state,
           options:payload
         }
+      
+
       default: 
         return state
   }
 }
+
 

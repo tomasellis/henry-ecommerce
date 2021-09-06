@@ -18,4 +18,4 @@ export const getArticles = (gender : any,category : any,less_than : any,greater_
     }catch(error){
         console.log(error)
     }
-}
+};
