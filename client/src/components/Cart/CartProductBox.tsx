@@ -165,7 +165,6 @@ const CartProductBox = (props: CartProductBoxProps) => {
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
-          border: "1px solid",
         }}
       >
         <div style={{ alignSelf: "center" }}>
