@@ -22,7 +22,7 @@ export const DetailProductCards = () => {
         dispatch(getProduct(id))
     }, [id,dispatch])
     
-    const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
+    // const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
 
     return ( product.length || product.products?.length ?
        <DetailsProductCard 

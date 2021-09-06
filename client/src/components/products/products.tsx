@@ -33,7 +33,7 @@ export default function Products() {
         if(gender === 'kids'){
             dispatch(getArticles('niños',  undefined, undefined, undefined,  undefined, undefined))
         };
-    }, [dispatch]) 
+    }, [dispatch,gender]) 
     
     return(
         <div>
