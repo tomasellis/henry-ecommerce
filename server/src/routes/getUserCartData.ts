@@ -44,6 +44,7 @@ const getUserCartDataQuery = (user_id: string) => `query {
           id
           size
           color
+          stock
           image_url
           product {
             id
@@ -73,6 +74,7 @@ const orderArray = (hasuraData: CartDataFromHasura) => {
         optionSize: option.size,
         optionColor: option.color,
         optionImage: option.image_url,
+        optionStock: option.stock,
       },
     };
   });
@@ -97,6 +99,7 @@ type Products_Option = {
   id: string;
   size: string;
   color: string;
+  stock: number;
   image_url: string;
   product: Product;
 };
