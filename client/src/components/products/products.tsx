@@ -41,8 +41,12 @@ export default function Products() {
             <Filter/>
             {
                 articles?.map(e => {
+                    console.log(e);
+                    
                     return (
                         <Card
+                        id = {e.id}
+                        image = {e.image_url}
                         name={e.name}
                         price={e.price}
                         />
