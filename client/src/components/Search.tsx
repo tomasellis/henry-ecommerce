@@ -11,7 +11,7 @@ export default function Search() {
         type="text"
         name="name"
         autoComplete="off"
-        placeholder='Search'
+        placeholder='Buscar...'
         className='input '
       >
       </input>
@@ -29,21 +29,23 @@ const InputCtn = styled.div`
   align-items: center;
 
   input{
-    border: none;
+  
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid black;
+    padding: 5px;
     outline: 0px;
-    background: rgba(240,240,240,0.5);
     width: 155px;
-    border-radius: 10px;
+    border-radius: 30px;
     font-size: 18px;
     text-align: center;
   }
   input::placeholder {
     text-align: center;
-    color: #000;
+    color: black;
   }
   
   .icon{
-    color: #000;
+    color: rgba(0, 0, 0, 0.788);
   }
 
 `

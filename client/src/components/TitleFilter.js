@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 const TitleFilter = ({mob}) => {
 
@@ -16,9 +17,15 @@ const TitleFilter = ({mob}) => {
     return (
         <TitleCtn>
             <div>
-                <p>MUJERES</p>
-                <p>HOMBRES</p>
-                <p>NIÑOS</p>    
+                 <Link to = '/clothing/woman'>
+                    <p>MUJERES</p>
+                </Link>
+                <Link to = '/clothing/men'>
+                    <p>HOMBRES</p>
+                </Link>
+                <Link to = '/clothing/kids'>
+                    <p>NIÑOS</p>   
+                </Link>
             </div>
         </TitleCtn>
     )
@@ -30,12 +37,17 @@ const TitleCtn = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 170px;
-    margin-right: 20px;
+    margin-right: 300px;
+}
+    a{
+        text-decoration : none;
     }
     p{ 
-        color: #000;
-        margin-left: 10px;
-        font-size: 18px;
+        font-family: Poppins, sans-serif;
+        margin-top: 20px;
+        color: black;
+        margin-left: 80px;
+        font-size: 16px;
         font-weight: bold;
         cursor: pointer;
     }
