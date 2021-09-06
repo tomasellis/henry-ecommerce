@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
+import "./styles.css";
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
@@ -19,12 +20,11 @@ type CartProductData = {
     optionSize: string;
     optionColor: string;
     optionImage: string;
+    optionStock: number;
   };
 };
 
-const { BASE_URL } = process.env;
-console.log(process.env);
-const userId = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
+const TESTUSERID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const Cart = () => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
@@ -34,7 +34,7 @@ const Cart = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getProductsInCart(userId);
+      const data = await getProductsInCart(TESTUSERID);
       if (data) {
         setProductsInCart({
           ...productsInCart,
@@ -54,8 +54,12 @@ const Cart = () => {
 
     case "loaded":
       return (
-        <div id={"cartDisplay"}>
-          Name | Price | Stock
+        <div className="cartDisplay">
+          <div className="cartProductBox cartLabels">
+            <div>Nombre</div>
+            <div>Precio</div>
+            <div>Stock</div>
+          </div>
           {productsInCart.products.map((product) => (
             <CartProductBox product={product}></CartProductBox>
           ))}
@@ -72,7 +76,7 @@ export default Cart;
 const getProductsInCart = async (userId: string) => {
   try {
     const { data }: AxiosResponse<CartProductData[] | any> = await axios(
-      `${REACT_APP_BASE_BACKEND_URL}getUserCartData?user_id=${userId}`
+      `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
     if (data[0].message) {
       return console.error(data[0]);

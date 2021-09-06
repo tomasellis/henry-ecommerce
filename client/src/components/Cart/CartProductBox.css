@@ -1,6 +1,0 @@
-.cartProductBox {
-  display: flex;
-  flex-flow: row nowrap;
-  padding: 10px;
-  border: 1px solid;
-}

@@ -1,0 +1,18 @@
+.cartDisplay {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.cartProductBox {
+  display: grid;
+  padding: 10px;
+  border: 1px solid;
+  row-gap: 15px;
+  column-gap: 15px;
+  grid-template-columns: 500px repeat(5, minmax(0, 1fr));
+}
+
+.cartLabels {
+  font-size: medium;
+  font-weight: bold;
+}
