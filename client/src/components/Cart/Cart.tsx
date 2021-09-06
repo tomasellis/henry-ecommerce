@@ -1,8 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
+import "./styles.css";
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
+
+console.log(REACT_APP_BASE_BACKEND_URL, "urlllllllll");
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -19,12 +22,13 @@ type CartProductData = {
     optionSize: string;
     optionColor: string;
     optionImage: string;
+    optionStock: number;
+    optionQuantity: number;
   };
+  inCartId: string;
 };
 
-const { BASE_URL } = process.env;
-console.log(process.env);
-const userId = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
+const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const Cart = () => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
@@ -32,17 +36,20 @@ const Cart = () => {
     products: [],
   });
 
+  const updateData = async () => {
+    const data = await getProductsInCart(TESTID);
+    if (data[0]) {
+      console.log(data);
+      setProductsInCart({
+        ...productsInCart,
+        products: data,
+        loading: "loaded",
+      });
+    }
+  };
   useEffect(() => {
-    (async () => {
-      const data = await getProductsInCart(userId);
-      if (data) {
-        setProductsInCart({
-          ...productsInCart,
-          products: data,
-          loading: "loaded",
-        });
-      }
-    })();
+    (async () => await updateData())();
+    // eslint-disable-next-line
   }, []);
 
   switch (productsInCart.loading) {
@@ -54,11 +61,29 @@ const Cart = () => {
 
     case "loaded":
       return (
-        <div id={"cartDisplay"}>
-          Name | Price | Stock
-          {productsInCart.products.map((product) => (
-            <CartProductBox product={product}></CartProductBox>
-          ))}
+        <div className="cartDisplay">
+          <div className="cartProductBox cartLabels">
+            <div></div>
+            <div>Nombre</div>
+            <div>Disponibles</div>
+            <div></div>
+            <div>Cantidad</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div>Precio</div>
+          </div>
+          {productsInCart.products[0]
+            ? productsInCart.products.map((product, index) => (
+                <CartProductBox
+                  key={index}
+                  product={product}
+                  index={index}
+                  productsInCart={productsInCart.products}
+                  updateData={updateData}
+                ></CartProductBox>
+              ))
+            : "loading"}
         </div>
       );
 
@@ -71,12 +96,9 @@ export default Cart;
 
 const getProductsInCart = async (userId: string) => {
   try {
-    const { data }: AxiosResponse<CartProductData[] | any> = await axios(
-      `${REACT_APP_BASE_BACKEND_URL}getUserCartData?user_id=${userId}`
+    const { data }: AxiosResponse<CartProductData[]> = await axios(
+      `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
-    if (data[0].message) {
-      return console.error(data[0]);
-    }
     return data;
   } catch (err) {
     console.error(err);
