@@ -61,6 +61,7 @@ const Cart = () => {
       return (
         <div className="cartDisplay">
           <div className="cartProductBox cartLabels">
+            <div></div>
             <div>Nombre</div>
             <div>Disponibles</div>
             <div></div>
