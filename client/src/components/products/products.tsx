@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 //import css
-import './products.css'
+import "./products.css";
 
 //import actions
 import { getArticles } from "../../actions/products/productActions";
@@ -11,8 +11,10 @@ import { getArticles } from "../../actions/products/productActions";
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
+import Cards from "./cards/cards";
 
-export default function Products(){
+
+export default function Products() {
 
     const dispatch = useDispatch();
     const articles = useSelector((state : any) => state);
@@ -26,7 +28,6 @@ export default function Products(){
         dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))
     }, [dispatch]) 
     
-    console.log(articles);
     
     return(
         <div>
@@ -47,5 +48,5 @@ export default function Products(){
                 })
             }
     </div>
-    )   
-};
+  );
+}
