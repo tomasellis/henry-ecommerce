@@ -45,9 +45,9 @@ const Cart = () => {
       });
     }
   };
-
   useEffect(() => {
     (async () => await updateData())();
+    // eslint-disable-next-line
   }, []);
 
   switch (productsInCart.loading) {
