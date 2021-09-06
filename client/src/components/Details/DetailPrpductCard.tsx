@@ -5,9 +5,7 @@ export const DetailsProductCard = ({
     id,
     name,
     image_url,
-    price,
-    gender,
-    category,
+    price
 
 }) => { 
     return (
@@ -21,12 +19,6 @@ x                        <img src={image_url} width='200' alt="" className="cont
                             <h1>{name}</h1>
                             <div>
                                 <span>Precio:</span><span> ${price}</span>
-                            </div>
-                            <div>
-                                <span>Genero:</span><span> {gender}</span>
-                            </div>
-                            <div>
-                                <span>Categoria:</span><span> {category}</span>
                             </div>
 
                             <div>
