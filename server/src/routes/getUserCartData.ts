@@ -36,6 +36,7 @@ router.get(
 );
 
 export default router;
+// Get user info
 
 const getUserCartDataQuery = (user_id: string) => `query {
     users_by_pk(id: "${user_id}") {
