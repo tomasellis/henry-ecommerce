@@ -21,10 +21,12 @@ type CartProductData = {
     optionColor: string;
     optionImage: string;
     optionStock: number;
+    optionQuantity: number;
   };
+  inCartId: string;
 };
 
-const TESTUSERID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
+const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const Cart = () => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
@@ -32,17 +34,20 @@ const Cart = () => {
     products: [],
   });
 
+  const updateData = async () => {
+    const data = await getProductsInCart(TESTID);
+    if (data) {
+      console.log(data);
+      setProductsInCart({
+        ...productsInCart,
+        products: data,
+        loading: "loaded",
+      });
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await getProductsInCart(TESTUSERID);
-      if (data) {
-        setProductsInCart({
-          ...productsInCart,
-          products: data,
-          loading: "loaded",
-        });
-      }
-    })();
+    (async () => await updateData())();
   }, []);
 
   switch (productsInCart.loading) {
@@ -57,11 +62,22 @@ const Cart = () => {
         <div className="cartDisplay">
           <div className="cartProductBox cartLabels">
             <div>Nombre</div>
+            <div>Disponibles</div>
+            <div></div>
+            <div>Cantidad</div>
+            <div></div>
+            <div></div>
+            <div></div>
             <div>Precio</div>
-            <div>Stock</div>
           </div>
-          {productsInCart.products.map((product) => (
-            <CartProductBox product={product}></CartProductBox>
+          {productsInCart.products.map((product, index) => (
+            <CartProductBox
+              key={index}
+              product={product}
+              index={index}
+              productsInCart={productsInCart.products}
+              updateData={updateData}
+            ></CartProductBox>
           ))}
         </div>
       );

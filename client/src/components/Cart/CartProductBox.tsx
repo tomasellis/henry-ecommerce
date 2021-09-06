@@ -1,9 +1,17 @@
-import axios from "axios";
-import React from "react";
+import axios, { AxiosResponse } from "axios";
+import React, { useState } from "react";
 import "./styles.css";
+
+type ProductsInCart = {
+  loading: "loaded" | "loading" | "error";
+  products: CartProductData[];
+};
 
 type CartProductBoxProps = {
   product: CartProductData;
+  index: number;
+  productsInCart: CartProductData[];
+  updateData: () => Promise<void>;
 };
 
 type CartProductData = {
@@ -17,7 +25,9 @@ type CartProductData = {
     optionColor: string;
     optionImage: string;
     optionStock: number;
+    optionQuantity: number;
   };
+  inCartId: string;
 };
 
 type AddToCartJson = {
@@ -26,20 +36,45 @@ type AddToCartJson = {
   quantity: number;
 };
 
+type AddToCartResponse = {
+  insert_carts_products_one: InsertResponse;
+};
+
+type InsertResponse = {
+  id: string;
+  product_option_id: string;
+  quantity: number;
+  user_id: string;
+};
+
+type FetchInfo = "loading" | "loaded" | "error";
+
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 
+const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
+
 const CartProductBox = (props: CartProductBoxProps) => {
+  const [quantity, setQuantity] = useState(
+    props.product.productOption.optionQuantity
+  );
+
+  const [fetchingInfo, setFetchingInfo] = useState<FetchInfo>("loaded");
+
   const addToCartObj: AddToCartJson = {
     product_option_id: "",
     quantity: props.product.productOption.optionStock,
     user_id: "",
   };
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <div className="cartProductBox">
       <div
         style={{
           border: "1px solid",
           padding: "10px",
+          overflow: "hidden",
         }}
       >
         {props.product.baseName +
@@ -48,51 +83,166 @@ const CartProductBox = (props: CartProductBoxProps) => {
           " " +
           props.product.productOption.optionSize}
       </div>
+
       <div
         style={{
           border: "1px solid",
           padding: "10px",
         }}
       >
-        {props.product.basePrice}
-      </div>
-      <div
-        style={{
-          border: "1px solid",
-          padding: "10px",
-        }}
-      >
-        STOCK: {props.product.productOption.optionStock}
+        {props.product.productOption.optionStock}
       </div>
       <button
-        onClick={(event) => {
-          alert(`te resto`);
+        disabled={props.product.productOption.optionQuantity > 1 ? false : true}
+        onClick={async (event) => {
+          setFetchingInfo("loading");
+          await handleOnClick(false, props.product, TESTID);
+          setQuantity(quantity - 1);
+          await props.updateData();
+          setFetchingInfo("loaded");
         }}
       >
         -
       </button>
+      <input
+        id={props.product.inCartId}
+        ref={inputRef}
+        className="stockInput"
+        value={quantity}
+        disabled={fetchingInfo === "loading" ? true : false}
+        type={"number"}
+        onChange={(event) => {
+          event.preventDefault();
+          if (
+            parseInt(event.target.value) >
+            props.product.productOption.optionStock
+          ) {
+            return setQuantity(props.product.productOption.optionStock);
+          }
+          if (
+            event.target.value === "NaN" ||
+            parseInt(event.target.value) <= 0 ||
+            event.target.value === ""
+          ) {
+            return setQuantity(1);
+          }
+          return setQuantity(parseInt(event.target.value));
+        }}
+        onBlur={async (event) => {
+          if (fetchingInfo !== "loading") {
+            setFetchingInfo("loading");
+            handleOnChange(quantity, props.product, TESTID);
+            await props.updateData();
+            setFetchingInfo("loaded");
+          }
+        }}
+        min={1}
+        max={props.product.productOption.optionStock}
+        onKeyPress={async (e) => {
+          if (fetchingInfo !== "loading" && e.key === "Enter") {
+            setFetchingInfo("loading");
+            handleOnChange(quantity, props.product, TESTID);
+            await props.updateData();
+            setFetchingInfo("loaded");
+          }
+        }}
+      ></input>
       <button
-        onClick={(event) => {
-          alert(`te sumo`);
+        disabled={
+          props.product.productOption.optionQuantity <
+          props.product.productOption.optionStock
+            ? false
+            : true
+        }
+        onClick={async (event) => {
+          setFetchingInfo("loading");
+          await handleOnClick(true, props.product, TESTID);
+          setQuantity(quantity + 1);
+          await props.updateData();
+          setFetchingInfo("loaded");
         }}
       >
         +
       </button>
       <button
-        onClick={(event) => {
-          if (
-            window.confirm(
-              `Deseas remover este producto de tu lista: ${props.product.baseName}?`
-            )
-          ) {
-            axios.post(`${BASE_URL}/addToCart`, {});
-          }
+        style={{
+          borderColor: "red",
+          backgroundColor: "red",
+          borderRadius: "5px",
+        }}
+        onClick={async (event) => {
+          await handleDeleteOnClick(props.product);
+          await props.updateData();
         }}
       >
         x
       </button>
+      <div
+        style={{
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        {fetchingInfo === "loading" ? "..." : "✔"}
+      </div>
+      <div
+        style={{
+          border: "1px solid",
+          padding: "10px",
+        }}
+      >
+        $ {props.product.basePrice * quantity}
+      </div>
     </div>
   );
 };
 
 export default CartProductBox;
+
+const handleOnChange = async (
+  value: number,
+  product: CartProductData,
+  userId: string
+) => {
+  const { data }: AxiosResponse<AddToCartResponse> = await axios.post(
+    `${BASE_URL}/addToCart`,
+    {
+      user_id: `${userId}`,
+      product_option_id: `${product.productOption.optionId}`,
+      quantity: value,
+    }
+  );
+  return data.insert_carts_products_one;
+};
+
+const handleOnClick = async (
+  sum: boolean,
+  product: CartProductData,
+  userId: string
+) => {
+  const { data }: AxiosResponse<AddToCartResponse> = await axios.post(
+    `${BASE_URL}/addToCart`,
+    {
+      user_id: `${userId}`,
+      product_option_id: `${product.productOption.optionId}`,
+      quantity: sum
+        ? product.productOption.optionQuantity + 1
+        : product.productOption.optionQuantity - 1,
+    }
+  );
+  return data.insert_carts_products_one;
+};
+
+const handleDeleteOnClick = async (product: CartProductData) => {
+  if (
+    window.confirm(
+      `Deseas remover este producto de tu lista: ${product.baseName}?`
+    )
+  ) {
+    const { data } = await axios.post(`${BASE_URL}/deleteFromCart`, {
+      cart_product_id: `${product.inCartId}`,
+    });
+  }
+};

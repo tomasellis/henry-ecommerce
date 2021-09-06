@@ -9,10 +9,14 @@
   border: 1px solid;
   row-gap: 15px;
   column-gap: 15px;
-  grid-template-columns: 500px repeat(5, minmax(0, 1fr));
+  grid-template-columns: 400px 130px repeat(5, 1fr) 200px;
 }
 
 .cartLabels {
   font-size: medium;
   font-weight: bold;
+}
+
+.stockInput {
+  width: 100%;
 }
