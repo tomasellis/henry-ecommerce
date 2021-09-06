@@ -71,15 +71,17 @@ const Cart = () => {
             <div></div>
             <div>Precio</div>
           </div>
-          {productsInCart.products.map((product, index) => (
-            <CartProductBox
-              key={index}
-              product={product}
-              index={index}
-              productsInCart={productsInCart.products}
-              updateData={updateData}
-            ></CartProductBox>
-          ))}
+          {productsInCart.products[0]
+            ? productsInCart.products.map((product, index) => (
+                <CartProductBox
+                  key={index}
+                  product={product}
+                  index={index}
+                  productsInCart={productsInCart.products}
+                  updateData={updateData}
+                ></CartProductBox>
+              ))
+            : "loading"}
         </div>
       );
 
