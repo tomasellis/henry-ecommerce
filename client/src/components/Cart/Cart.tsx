@@ -38,8 +38,7 @@ const Cart = () => {
 
   const updateData = async () => {
     const data = await getProductsInCart(TESTID);
-    if (data[0]) {
-      console.log(data);
+    if (data && data[0]) {
       setProductsInCart({
         ...productsInCart,
         products: data,

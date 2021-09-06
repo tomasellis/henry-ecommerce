@@ -23,8 +23,11 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
           products(where: {${category},${gender},${price},${name}, product_options: {${color}, ${size}} }) {
             name
             category
+            image_url
             gender
             price
+            id
+            product_options{id}
           }
         }`
       },
