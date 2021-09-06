@@ -5,8 +5,6 @@ import "./styles.css";
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
-console.log(REACT_APP_BASE_BACKEND_URL, "urlllllllll");
-
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
   products: CartProductData[];
@@ -38,7 +36,7 @@ const Cart = () => {
 
   const updateData = async () => {
     const data = await getProductsInCart(TESTID);
-    if (data && data[0]) {
+    if (data) {
       setProductsInCart({
         ...productsInCart,
         products: data,
@@ -56,36 +54,63 @@ const Cart = () => {
       return <div>An error has ocurred</div>;
 
     case "loading":
-      return <div>Loading your cart!</div>;
+      return (
+        <div
+          style={{
+            display: "flex",
+            fontSize: "25px",
+            paddingTop: "30px",
+            justifyContent: "center",
+            alignContent: "center",
+          }}
+        >
+          <span>Loading your cart!</span>
+        </div>
+      );
 
     case "loaded":
       return (
         <div className="cartDisplay">
-          <div className="cartProductBox cartLabels">
-            <div></div>
-            <div>Nombre</div>
-            <div>Disponibles</div>
-            <div></div>
-            <div>Cantidad</div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div>Precio</div>
-          </div>
-          {productsInCart.products[0]
-            ? productsInCart.products.map((product, index) => (
-                <CartProductBox
-                  key={index}
-                  product={product}
-                  index={index}
-                  productsInCart={productsInCart.products}
-                  updateData={updateData}
-                ></CartProductBox>
-              ))
-            : "loading"}
+          {productsInCart.products[0] ? (
+            <div className="cartProductBox cartLabels">
+              <div></div>
+              <div>Nombre</div>
+              <div>Disponibles</div>
+              <div></div>
+              <div>Cantidad</div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div>Precio</div>
+            </div>
+          ) : (
+            ""
+          )}
+          {productsInCart.products[0] ? (
+            productsInCart.products.map((product, index) => (
+              <CartProductBox
+                key={index}
+                product={product}
+                index={index}
+                productsInCart={productsInCart.products}
+                updateData={updateData}
+              ></CartProductBox>
+            ))
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                fontSize: "25px",
+                paddingTop: "30px",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <span>Your cart is empty!</span>
+            </div>
+          )}
         </div>
       );
-
     default:
       return <div>Loading ;)</div>;
   }
@@ -98,6 +123,7 @@ const getProductsInCart = async (userId: string) => {
     const { data }: AxiosResponse<CartProductData[]> = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
+    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
