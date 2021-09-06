@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
+import CartProductBox from "./CartProductBox";
+
+const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -19,6 +22,8 @@ type CartProductData = {
   };
 };
 
+const { BASE_URL } = process.env;
+console.log(process.env);
 const userId = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const Cart = () => {
@@ -49,9 +54,10 @@ const Cart = () => {
 
     case "loaded":
       return (
-        <div id={"cartDisplay"} style={{ border: "5px solid" }}>
+        <div id={"cartDisplay"}>
+          Name | Price | Stock
           {productsInCart.products.map((product) => (
-            <div>{product.baseName}</div>
+            <CartProductBox product={product}></CartProductBox>
           ))}
         </div>
       );
@@ -66,7 +72,7 @@ export default Cart;
 const getProductsInCart = async (userId: string) => {
   try {
     const { data }: AxiosResponse<CartProductData[] | any> = await axios(
-      `http://localhost:4000/getUserCartData?user_id=${userId}`
+      `${REACT_APP_BASE_BACKEND_URL}getUserCartData?user_id=${userId}`
     );
     if (data[0].message) {
       return console.error(data[0]);
