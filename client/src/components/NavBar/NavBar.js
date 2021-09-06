@@ -12,10 +12,16 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Drawer } from "@material-ui/core";
 import { Link as link } from "@material-ui/core";
-import TitleFilter from "../TitleFilter";
+// import TitleFilter from "../TitleFilter";
 
 export default function NavBar() {
   const { user, isAuthenticated } = useAuth0();
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+
+  const { mobileView, drawerOpen } = state;
 
   // return (
   //   <div className="navbar">
@@ -52,17 +58,17 @@ export default function NavBar() {
     },
     {
       label: (
-        <IconButton>
           <Link to="/cart">
-            <ShoppingBasketIcon style={{ color: "#000" }} />
+            <IconButton>
+              <ShoppingBasketIcon style={{ color: "#000" }} />
+            </IconButton>
           </Link>
-        </IconButton>
       ),
     },
 
-    {
-      label: <TitleFilter mob={true} />,
-    },
+    // {
+    //   label: <TitleFilter mob={true} />,
+    // },
     {
       label: (
         <p style={{ fontWeight: "bold", fontSize: "18px" }}>
@@ -83,12 +89,7 @@ export default function NavBar() {
     },
   ];
 
-  const [state, setState] = useState({
-    mobileView: false,
-    drawerOpen: false,
-  });
-
-  const { mobileView, drawerOpen } = state;
+  
 
   useEffect(() => {
     const setResponsiveness = () => {
@@ -113,25 +114,23 @@ export default function NavBar() {
           />
         </Link>
 
-        <div className={classes.titleCtn}>
+        {/* <div className={classes.titleCtn}>
           <TitleFilter mob={false} />
-        </div>
+        </div> */}
 
         <div className={classes.div}>
-          <div>
             <Search />
-          </div>
 
           <div className={classes.bolsa}>
-            <IconButton>
-              <Link to="/cart">
+            <Link to="/cart">
+              <IconButton>
                 <ShoppingBasketIcon className={classes.icon} />
-              </Link>
-            </IconButton>
+              </IconButton>
+            </Link>
           </div>
 
-          <div>
-            <p className={classes.login}>
+          
+          <div className={classes.login}>
               {isAuthenticated ? (
                 <Link
                   to="/profile"
@@ -147,7 +146,7 @@ export default function NavBar() {
                   Login
                 </Link>
               )}
-            </p>
+            
           </div>
         </div>
       </Toolbar>
@@ -226,7 +225,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 
-  titleCtn: {},
   bolsa: {
     marginLeft: "1px",
     marginRight: "1px",
@@ -250,6 +248,7 @@ const useStyles = makeStyles((theme) => ({
   divCtn: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: 'center'
   },
   drawerContainer: {
     padding: "30px 30px",
