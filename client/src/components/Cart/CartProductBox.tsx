@@ -2,11 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import "./styles.css";
 
-type ProductsInCart = {
-  loading: "loaded" | "loading" | "error";
-  products: CartProductData[];
-};
-
 type CartProductBoxProps = {
   product: CartProductData;
   index: number;
@@ -28,12 +23,6 @@ type CartProductData = {
     optionQuantity: number;
   };
   inCartId: string;
-};
-
-type AddToCartJson = {
-  product_option_id: string;
-  user_id: string;
-  quantity: number;
 };
 
 type AddToCartResponse = {
@@ -59,12 +48,6 @@ const CartProductBox = (props: CartProductBoxProps) => {
   );
 
   const [fetchingInfo, setFetchingInfo] = useState<FetchInfo>("loaded");
-
-  const addToCartObj: AddToCartJson = {
-    product_option_id: "",
-    quantity: props.product.productOption.optionStock,
-    user_id: "",
-  };
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -179,13 +162,15 @@ const CartProductBox = (props: CartProductBoxProps) => {
       </button>
       <div
         style={{
-          textAlign: "center",
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
+          border: "1px solid",
         }}
       >
-        {fetchingInfo === "loading" ? "..." : "✔"}
+        <div style={{ alignSelf: "center" }}>
+          {fetchingInfo === "loading" ? "..." : "✔"}
+        </div>
       </div>
       <div
         style={{
