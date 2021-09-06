@@ -45,10 +45,10 @@ const Cart = () => {
       });
     }
   };
-
   useEffect(() => {
     (async () => await updateData())();
-  }, [updateData]);
+    // eslint-disable-next-line
+  }, []);
 
   switch (productsInCart.loading) {
     case "error":
