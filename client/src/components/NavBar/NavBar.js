@@ -14,9 +14,9 @@ import { Drawer } from "@material-ui/core";
 import { Link as link } from "@material-ui/core";
 import TitleFilter from "../TitleFilter";
 
-export default function NavBar() {
-  const { user, isAuthenticated } = useAuth0();
 
+export default function NavBar() {
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   // return (
   //   <div className="navbar">
   //     <Link to="/">
@@ -69,14 +69,14 @@ export default function NavBar() {
           {isAuthenticated ? (
             <Link
               to="/profile"
-              style={{ textDecoration: "none", color: "#000" }}
+              style={{ textDecoration: "none", color: "#000", marginTop: '0' }}
             >
               {user.name}
             </Link>
           ) : (
-            <Link to="/login" style={{ textDecoration: "none", color: "#000" }}>
+            <button style={{ background:'transparent', border: 'none' }} onClick={loginWithRedirect}>
               Login
-            </Link>
+            </button>
           )}
         </p>
       ),
@@ -135,17 +135,14 @@ export default function NavBar() {
               {isAuthenticated ? (
                 <Link
                   to="/profile"
-                  style={{ textDecoration: "none", color: "#000" }}
+                  style={{ textDecoration: "none", color: "#000", marginTop:'0' }}
                 >
                   {user.name}
                 </Link>
               ) : (
-                <Link
-                  to="/login"
-                  style={{ textDecoration: "none", color: "#000" }}
-                >
+                <button style={{ background:'transparent', border: 'none' }} onClick={loginWithRedirect}>
                   Login
-                </Link>
+                </button>
               )}
             </p>
           </div>
