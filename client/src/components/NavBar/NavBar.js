@@ -1,7 +1,6 @@
 import logoTiendaRopa from "../../logoTiendaRopa.png";
 import { Link } from "react-router-dom";
 import Search from "../Search";
-import "./NavBar.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,31 +11,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Drawer } from "@material-ui/core";
 import { Link as link } from "@material-ui/core";
-import TitleFilter from "../TitleFilter";
 
 export default function NavBar() {
   const { user, isAuthenticated } = useAuth0();
-
-  // return (
-  //   <div className="navbar">
-  //     <Link to="/">
-  //       <img className="logo" src={logoTiendaRopa} height={100} alt="Algo bonito" />
-  //     </Link>
-  //     <Search />
-  //     <nav>
-  //       <ul className="list">
-  //         <li className="list-item">
-  //           {isAuthenticated? <Link to="/profile">{user.name}</Link> : <Link to="/login">Login</Link> }
-  //         </li>
-  //         <li className="list-item">
-  //           <Link to="/carrito">Carrito</Link>
-  //         </li>
-  //       </ul>
-  //     </nav>
-  //   </div>
-  // )
-
-  const headersData = [
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+  const { mobileView, drawerOpen } = state;
+  const classes = useStyles();
+  
+  const menuData = [
     {
       label: (
         <Link to="/">
@@ -52,16 +37,12 @@ export default function NavBar() {
     },
     {
       label: (
-        <IconButton>
           <Link to="/cart">
-            <ShoppingBasketIcon style={{ color: "#000" }} />
+            <IconButton>
+              <ShoppingBasketIcon style={{ color: "#000" }} />
+            </IconButton>
           </Link>
-        </IconButton>
       ),
-    },
-
-    {
-      label: <TitleFilter mob={true} />,
     },
     {
       label: (
@@ -83,13 +64,6 @@ export default function NavBar() {
     },
   ];
 
-  const [state, setState] = useState({
-    mobileView: false,
-    drawerOpen: false,
-  });
-
-  const { mobileView, drawerOpen } = state;
-
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
@@ -102,7 +76,8 @@ export default function NavBar() {
 
   const displayDesktop = () => {
     return (
-      <Toolbar className={classes.divCtn}>
+      <Toolbar className={classes.divCtn} >
+        
         <Link to="/">
           <img
             className="logo"
@@ -113,25 +88,21 @@ export default function NavBar() {
           />
         </Link>
 
-        <div className={classes.titleCtn}>
-          <TitleFilter mob={false} />
-        </div>
-
         <div className={classes.div}>
-          <div>
-            <Search />
-          </div>
-
-          <div className={classes.bolsa}>
-            <IconButton>
-              <Link to="/cart">
-                <ShoppingBasketIcon className={classes.icon} />
-              </Link>
+          
+          <Search />
+            
+          <Link to="/cart">
+            <IconButton className={classes.icon}>
+              <ShoppingBasketIcon  />
             </IconButton>
-          </div>
+          </Link>
+          
 
-          <div>
-            <p className={classes.login}>
+          
+
+          <div className={classes.login}>
+            
               {isAuthenticated ? (
                 <Link
                   to="/profile"
@@ -147,7 +118,7 @@ export default function NavBar() {
                   Login
                 </Link>
               )}
-            </p>
+            
           </div>
         </div>
       </Toolbar>
@@ -162,22 +133,19 @@ export default function NavBar() {
     return (
       <Toolbar>
         <IconButton
-          {...{
-            edge: "start",
-            color: "inherit",
-            "aria-label": "menu",
-            "aria-haspopup": "true",
-            onClick: handleDrawerOpen,
-          }}
+          edge= "start"
+          color= "inherit"
+          aria-label= "menu"
+          aria-haspopup= "true"
+          onClick={ handleDrawerOpen}
+        
         >
           <MenuIcon className={classes.menu} />
         </IconButton>
-        <Drawer
-          {...{
-            anchor: "left",
-            open: drawerOpen,
-            onClose: handleDrawerClose,
-          }}
+        <Drawer   
+          anchor= "left"
+          open= {drawerOpen}
+          onClose= {handleDrawerClose}
         >
           <div className={classes.drawerContainer}>{getDrawerChoices()}</div>
         </Drawer>
@@ -186,28 +154,25 @@ export default function NavBar() {
           {" "}
           <Search />{" "}
         </div>
+      
       </Toolbar>
     );
   };
 
   const getDrawerChoices = () => {
-    return headersData.map(({ label }) => {
+    return menuData.map(({ label }) => {
       return (
         <div
-          {...{
-            component: link,
-            color: "inherit",
-            style: { textDecoration: "none", textAlign: "center" },
-            key: label,
-          }}
-        >
-          {label}
+          component= {link}
+          color= "inherit"
+          style= {{ textDecoration: "none", textAlign: "center" }}
+          key= {label}
+        >{label}
         </div>
       );
     });
   };
 
-  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -226,30 +191,28 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 
-  titleCtn: {},
-  bolsa: {
-    marginLeft: "1px",
-    marginRight: "1px",
-  },
+
   icon: {
     color: "#000",
-    marginBottom: "2px",
+    marginBottom: '4px',
+    marginRight: '2px'
   },
   appBar: {
     background: "rgb(170,10,70)",
   },
   login: {
+    display:'flex',
     fontWeight: "bold",
     fontSize: "18px",
-    marginLeft: "10px",
   },
-  div: {
-    display: "flex",
-    alignItems: "center",
+  div:{
+    display:'flex',
+    alignItems: "center"
   },
   divCtn: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center"
   },
   drawerContainer: {
     padding: "30px 30px",
