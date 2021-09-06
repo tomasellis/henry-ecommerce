@@ -15,30 +15,33 @@ import Card from "./cards/card";
 export default function Products(){
 
     const dispatch = useDispatch();
-    const articles = useSelector((state : any) => state.articles);
+    const articles = useSelector((state : any) => state);
 
     type GenderParams = {
         gender : string
     };
     const {gender} = useParams<GenderParams>();
 
-    const dispatchMen = useEffect(() => {
-        dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))}, [dispatch]) 
+    useEffect(() => {
+        dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))
+    }, [dispatch]) 
+    
+    console.log(articles);
     
     return(
         <div>
-            {gender === 'men' ? dispatchMen : null}
+            {/* {gender === 'men' ? dispatchMen : null}
             {gender === 'woman' ? <p>soy mujer</p> : null}
             {gender === 'kids' ? <p>soy niño</p> : null}
-            <h1 className = 'ropa_title_prdouct'>Ropa</h1>
-            <Card/>
+            <h1 className = 'ropa_title_prdouct'>Ropa</h1> */}
+            {/* <Card/> */}
             <Filter/>
             {
-                articles.map(e => {
+                articles?.map(e => {
                     return (
                         <Card
-                        name = {e.name}
-                        price = {e.price}
+                        name={e.name}
+                        price={e.price}
                         />
                     )
                 })
