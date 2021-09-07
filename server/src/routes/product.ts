@@ -16,6 +16,7 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
         color
         size
         stock
+        id
       }
     }
   }`
