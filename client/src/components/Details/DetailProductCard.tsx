@@ -16,14 +16,17 @@ export const DetailsProductCard = ({
 }) => {
 
     const [cookies, setCookie, removeCookie] = useCookies();
-    const { user, isAuthenticated, isLoading } = useAuth0()
+    const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-
+    console.log(user); //temporal para evitar error eslint
+    console.log(removeCookie);
+    
+    
 
     async function addToCart(id: string) { //el id del producto
         if (!isAuthenticated) {
             if (!cookies || !cookies.user_id) setCookie('user_id', uuidv4())
-            const dataAddUser = await axios.post(`${BASE_URL}/addUserToDatabase`, {
+            await axios.post(`${BASE_URL}/addUserToDatabase`, {
                 user_id: cookies.user_id
             })
 
