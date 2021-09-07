@@ -39,11 +39,11 @@ router.post(
       }
     } else {
       console.log(quantity_query);
-      response.send(
+      response.json({ error:
         `Missing ${user_id_query === "" ? "user_id(UUID), " : ""}${
           product_option_id_query === "" ? "product_option_id(UUID), " : ""
         }${quantity_query === 0 ? "quantity(number !== 0)" : ""} `
-      );
+      });
     }
   }
 );
