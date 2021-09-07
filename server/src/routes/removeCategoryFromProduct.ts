@@ -24,7 +24,7 @@ router.post(
           return response.status(400).send(data);
         }
         const res = {
-          ...data.insert_products_categories_one,
+          ...data,
           msg: "Category removed!",
         };
         return response.send(res);
@@ -33,7 +33,9 @@ router.post(
       }
     } else {
       response.send(
-        `Missing: {${product_category_id !== "" ? "" : "product_id"}}`
+        `Missing: {${
+          product_category_id_query !== "" ? "" : "product_category_id"
+        }}`
       );
     }
   }
