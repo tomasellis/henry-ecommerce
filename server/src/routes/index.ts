@@ -8,7 +8,8 @@ import setAdminUser from "./setAdminUser";
 import addToCart from "./addToCart";
 import deleteFromCart from "./deleteFromCart";
 import getUserCartData from "./getUserCartData";
-import addUserToDatabase from './addUserToDatabase'
+import addUserToDatabase from "./addUserToDatabase";
+import addCategoryToProduct from "./addCategoryToProduct";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use("/addToCart", addToCart);
 router.use("/addUserToDatabase", addUserToDatabase);
 router.use("/deleteFromCart", deleteFromCart);
 router.use("/getUserCartData", getUserCartData);
+router.use("/addCategoryToProduct", addCategoryToProduct);
 
 export default router;
