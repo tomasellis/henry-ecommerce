@@ -21,6 +21,19 @@ router.post(
           },
         });
         console.log(data);
+        if (data.errors) {
+          if (
+            (data.errors[0].message as string).includes("Uniqueness violation")
+          ) {
+            return response.send({ msg: "Its already added!" });
+          }
+          return response.status(400).send(data);
+        }
+        const res = {
+          ...data.insert_products_categories_one,
+          msg: "Category added!",
+        };
+        return response.send(res);
       } catch (err) {
         next(err);
       }
