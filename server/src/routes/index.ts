@@ -10,7 +10,7 @@ import deleteFromCart from "./deleteFromCart";
 import getUserCartData from "./getUserCartData";
 import addUserToDatabase from "./addUserToDatabase";
 import addCategoryToProduct from "./addCategoryToProduct";
-
+import removeCategoryFromProduct from "./removeCategoryFromProduct";
 const router = Router();
 
 router.use("/products", products);
@@ -24,5 +24,6 @@ router.use("/addUserToDatabase", addUserToDatabase);
 router.use("/deleteFromCart", deleteFromCart);
 router.use("/getUserCartData", getUserCartData);
 router.use("/addCategoryToProduct", addCategoryToProduct);
+router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
 
 export default router;
