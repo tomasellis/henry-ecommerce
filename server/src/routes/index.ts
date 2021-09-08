@@ -11,6 +11,8 @@ import getUserCartData from "./getUserCartData";
 import addUserToDatabase from "./addUserToDatabase";
 import addCategoryToProduct from "./addCategoryToProduct";
 import removeCategoryFromProduct from "./removeCategoryFromProduct";
+import verifyUserAuth0InDatabase from "./verifyUserAuth0InDatabase";
+
 const router = Router();
 
 router.use("/products", products);
@@ -25,5 +27,6 @@ router.use("/deleteFromCart", deleteFromCart);
 router.use("/getUserCartData", getUserCartData);
 router.use("/addCategoryToProduct", addCategoryToProduct);
 router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
+router.use("/verifyUserAuth0InDatabase", verifyUserAuth0InDatabase);
 
 export default router;

@@ -123,7 +123,7 @@ const getProductsInCart = async (userId: string) => {
     const { data }: AxiosResponse<CartProductData[]> = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
-    console.log(data);
+    console.log('data cart get products in cart', data);
     return data;
   } catch (err) {
     console.error(err);

@@ -31,7 +31,7 @@ export default function Products() {
     const {gender} = useParams<GenderParams>();
 
     useEffect(() => {
-            dispatch(getArticles(gender, undefined, undefined, undefined,  undefined, undefined))
+            dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined))
     }, [dispatch,gender])
 
     return(
