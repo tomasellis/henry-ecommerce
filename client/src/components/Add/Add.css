@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+
+.div_add_product{
+    display: inline-flex;
+    font-family: 'Poppins', sans-serif;
+}
+
+.title_add_product{
+    margin-bottom: 30px;
+}
+
+.image_add_product{
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.div_form_add_product{
+    margin-left: 200px;
+    margin-top: 50px;
+}
+
+.p_add_product{
+    color: black;
+    margin-bottom: 0px;
+    font-size: 15px;
+}
+
+.div_name_add_product {
+    margin-bottom: 10px;
+}
+
+.div_category_add_product{
+    margin-bottom: 10px;
+}
+
+.div_category_add_product select{
+    padding: 5px 72px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.555);
+    color: white;
+}
+
+.div_category_add_product button{
+    margin-left: 10px;
+    background-color: rgba(0, 0, 0, 0.555);
+    color: white;
+    border: none;
+    padding: 5px 30px;
+}
+
+.div_size_add_product{
+    margin-bottom: 10px;
+}
+
+.div_size_add_product p{
+    margin-bottom: 7px;
+}
+
+.div_size_add_product button{
+    background-color: white;
+    color: black;
+    margin-right: 20px;
+    padding: 7px 12px;
+    border: rgba(0, 0, 0, 0.548) 1px solid;
+}
+
+.div_colors_add_product{
+    margin-bottom: 10px;
+}
+
+.div_colors_add_product button{
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+}
+
+.div_image_add_product{
+    margin-bottom: 15px;
+}
+
+.div_button_add_product button{
+    margin-left: 90px;
+    padding: 5px 50px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.555);
+    color: white;
+}
