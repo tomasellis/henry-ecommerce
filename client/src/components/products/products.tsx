@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Pagination from './Pagination/Pagination'
+
 //import css
 import "./products.css";
 
@@ -11,6 +11,7 @@ import { getArticles } from "../../actions/products/productActions";
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
+import Pagination from './Pagination/Pagination';
 
 export default function Products() {
 
@@ -37,6 +38,7 @@ export default function Products() {
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
+            <div>
             {
                 currentArticles?.map((e,i) => {
                     return (
@@ -49,10 +51,12 @@ export default function Products() {
                     )
                 })
             }
+            </div>
             <Pagination
             articlesPerPage={articlesPerPage}
             articlesLength={articles.length}
             paginate={paginate}
+            currentPage={currentPage}
             />
     </div>
   );
