@@ -55,7 +55,7 @@ router.post(
       }
     } else {
       response.send(
-        `Missing data, make sure you send: {
+        `Missing data, make sure you send an object with the following properties: {
           ${gender ? "" : "gender(string),"} 
           ${image_url ? "" : "image_url(string),"} 
           ${name ? "" : "name(string),"} 
