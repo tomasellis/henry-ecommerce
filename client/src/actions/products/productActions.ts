@@ -8,7 +8,7 @@ const URL = process.env.REACT_APP_BASE_BACKEND_URL || "http://localhost:4000";
 export const getArticles =
   (
     gender: any,
-    category: any,
+    categories: any,
     less_than: any,
     greater_than: any,
     color: any,
@@ -17,8 +17,8 @@ export const getArticles =
   async (dispatch: any) => {
     try {
       let res = await axios.get(
-        `${URL}/products?gender=${gender || ""}&category=${
-          category || ""
+        `${URL}/products?gender=${gender || ""}&categories=${
+          categories || ""
         }&less_than=${less_than || ""}&greater_than=${
           greater_than || ""
         }&color=${color || ""}&size=${size || ""}`

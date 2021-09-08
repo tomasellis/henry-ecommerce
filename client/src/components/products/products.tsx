@@ -22,19 +22,19 @@ export default function Products() {
     };
     const {gender} = useParams<GenderParams>();
 
-    
+
     useEffect(() => {
         if(gender === 'men'){
-            dispatch(getArticles('hombre',  undefined, undefined, undefined,  undefined, undefined))
+            dispatch(getArticles('men',  undefined, undefined, undefined,  undefined, undefined))
         };
         if(gender === 'woman'){
-            dispatch(getArticles('mujer',  undefined, undefined, undefined,  undefined, undefined))
+            dispatch(getArticles('women',  undefined, undefined, undefined,  undefined, undefined))
         };
         if(gender === 'kids'){
-            dispatch(getArticles('niños',  undefined, undefined, undefined,  undefined, undefined))
+            dispatch(getArticles('kids',  undefined, undefined, undefined,  undefined, undefined))
         };
-    }, [dispatch,gender]) 
-    
+    }, [dispatch,gender])
+
     return(
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
