@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/index";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { CookiesProvider } from 'react-cookie';
 
 const domain = process.env.REACT_APP_DOMAIN_AUTH0;
 const clientId = process.env.REACT_APP_CLIENT_ID_AUTH0;
@@ -19,9 +20,11 @@ ReactDOM.render(
       redirectUri={window.location.origin}
     >
       <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <CookiesProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CookiesProvider>
       </Provider>
     </Auth0Provider>
   </React.StrictMode>,
