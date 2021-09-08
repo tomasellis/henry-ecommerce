@@ -21,6 +21,7 @@ export const DetailProductCards = () => {
     useEffect(() => {
         dispatch(getProduct(id))
     }, [id,dispatch])
+    console.log(product)
     
 
     return ( product.length || product.products?.length ?
