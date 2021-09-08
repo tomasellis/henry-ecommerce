@@ -55,6 +55,7 @@ export const DetailsProductCard = ({
             }
             console.log(validId, 'y', validId.data.user_id);
             
+            
             const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
                 user_id: validId.data.user_id,
                 product_option_id: id_option,
