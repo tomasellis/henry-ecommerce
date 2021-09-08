@@ -5,7 +5,7 @@ const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
 
-  const category = req.query.category? `category: {_eq: ${req.query.category}}` : ' '
+  const category_name = req.query.category_name? `category: {_eq: ${req.query.category_name}}` : ' '
   const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
@@ -20,9 +20,8 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
       data: { query:
         `query {
 
-          products(where: {${category},${gender},${price},${name}, product_options: {${color}, ${size}} }) {
+          products(where: {${gender},${price},${name}, product_categories: {category_name: {${category_name}}}, product_options: {${color}, ${size}} }) {
             name
-            category
             image_url
             gender
             price
