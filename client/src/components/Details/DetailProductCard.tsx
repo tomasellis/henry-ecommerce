@@ -23,7 +23,8 @@ export const DetailsProductCard = ({
         id_option: id_option,
         quantity: 1
     })
-
+    console.log(setCart);
+    
     // const [cookies, setCookie, removeCookie] = useCookies();
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
