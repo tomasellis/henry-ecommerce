@@ -1,6 +1,11 @@
 /* eslint-disable */
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
+import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 //import css
 import "./filter.css";
@@ -53,6 +58,65 @@ export default function Filter() {
       );
     }
   };
+
+    const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        '& .MuiTextField-root': {
+          margin: theme.spacing(1),
+          width: '25ch',
+        }},
+        margin: {
+          margin: theme.spacing(1),
+        },
+        extendedIcon: {
+          marginRight: theme.spacing(1),
+        },
+    }),
+  );
+
+  const classes = useStyles();
+  const [dataFilter, setDataFilter] = useState({
+    gender: undefined,
+    category: undefined,
+    less_than: undefined,
+    greater_than: undefined,
+    color: undefined,
+    size: undefined
+  });
+
+  const handleInputChange = (event) => {
+    setDataFilter({
+      ...dataFilter,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleChange = (event) => {
+    setDataFilter({
+      ...dataFilter,
+      [event.target.name]: event.target.value})};
+    
+    type Inputs = {
+      less_than: string,
+      greater_than: string,
+    };
+
+    const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
+      
+      const onSubmit = (event) => {
+        event.preventDefault();
+        dispatch(
+          getArticles(
+            dataFilter.gender,
+            dataFilter.category,
+            dataFilter.less_than,
+            dataFilter.greater_than,
+            dataFilter.color,
+            dataFilter.size
+          )
+        );
+      } 
 
   return (
     <>
@@ -129,17 +193,42 @@ export default function Filter() {
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
-              <li>
-                <a className="dropdown-item" id="alto" href="#">
-                  PRECIO MAS ALTO
-                </a>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <a className="dropdown-item" id="bajo" href="#">
-                  PRECIO MAS BAJO
-                </a>
-              </li>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.root} noValidate autoComplete="off">
+        <div>
+        <TextField
+            id="standard-multiline-flexible"
+            label="Min"
+            maxRows={4}
+            type="number"
+            placeholder="$0"
+            onChange={handleInputChange}
+            {...register('less_than', { required: {value: true, message:'Obligatorio' }})}
+            />
+        </div>
+        <div>
+        <TextField
+            id="standard-multiline-flexible"
+            label="Max"
+            maxRows={4}
+            type="number"
+            placeholder="$5.000"
+            onChange={handleInputChange}
+            {...register('greater_than', { required: {value: true, message:'Obligatorio' }})}
+          />
+
+        </div>
+        <div>
+        <Button
+         variant="outlined" 
+         size="small"
+         color="default"
+         type="submit"
+         className={classes.margin}
+         /* onClick={(e) => handleChange(e)} */>
+          Aplicar
+        </Button>
+        </div>
+      </form>
             </ul>
           </div>
           <div className="dropdown">
