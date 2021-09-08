@@ -6,47 +6,103 @@ const router = Router();
 router.post(
   "/",
   async (req: Request, response: Response, next: NextFunction) => {
-    const { name, category, image_url, gender, price, color, size, stock } =
-      req.body;
-    let mutation = `mutation  {
-    insert_products(
-      objects:
-      {
-        category: ${category}
-        gender: ${gender}
-        image_url: ${image_url}
-        name: ${name}
-        price: ${price}
-        product_options: {
-          data: {
-            color:${color}
-            size: ${size}
-            stock:${stock}
-            image_url: ${image_url}
-          }
-          }
-        }) {
-          returning {
-            id
-            gender
-            image_url
-            name
-            price
-          }
+    const { name, categories, image_url, gender, price, options } = req.body;
+
+    if (
+      name &&
+      (categories as string[]) &&
+      image_url &&
+      gender &&
+      price &&
+      options
+    ) {
+      const productCategoriesArray: string[] = (categories as string[]).map(
+        (category_name) => {
+          const obj = `{ category_name: ${category_name} }`;
+          return obj;
         }
-  }`;
-    try {
-      const { data } = await axios({
-        url: "https://henry-pg-api.herokuapp.com/v1/graphql",
-        method: "POST",
-        data: { query: mutation },
-      });
-      console.log(data.data.insert_products, "ACAAAAAAAAAAA");
-      response.status(200).json(data.data.insert_products.returning);
-    } catch (err) {
-      next(err);
+      );
+
+      const productOptionsArray: string[] = (options as ProductOptions[]).map(
+        (option) => {
+          return `{color: ${option.color}, image_url: "${option.image_url}", size: ${option.size}, stock: ${option.stock}}`;
+        }
+      );
+
+      console.log(productOptionsArray);
+      try {
+        const { data } = await axios({
+          url: "https://henry-pg-api.herokuapp.com/v1/graphql",
+          method: "POST",
+          data: {
+            query: createProductMutation(
+              gender,
+              image_url,
+              name,
+              price,
+              productCategoriesArray,
+              productOptionsArray
+            ),
+          },
+        });
+
+        if (data.errors) {
+          return response.status(400).send(data);
+        }
+        return response.status(200).send(data);
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      response.send(
+        `Missing data, make sure you send: {
+          ${gender ? "" : "gender(string),"} 
+          ${image_url ? "" : "image_url(string),"} 
+          ${name ? "" : "name(string),"} 
+          ${price ? "" : "price(number),"}
+          ${categories ? "" : "categories([name])"}, 
+          ${options ? "" : "options([{color, size, stock, image_url}])"}`
+      );
     }
   }
 );
 
 export default router;
+
+type ProductOptions = {
+  color: string;
+  size: string;
+  stock: number;
+  image_url: string;
+};
+
+const createProductMutation = (
+  gender: string,
+  image_url: string,
+  name: string,
+  price: number,
+  productCategoriesArray: string[],
+  options: string[]
+) => `mutation CreateAProduct{
+  insert_products_one(object: {
+    gender: ${gender}, 
+    image_url: "${image_url}", 
+    name: "${name}", 
+    price: ${price}, 
+    product_categories: {data: [${productCategoriesArray}]}, 
+    product_options: {
+      data: [${options}]
+    }}) {
+    id
+    name
+    product_categories {
+      category_name
+    }
+    product_options {
+      color
+      size
+      stock
+    }
+  }
+}
+`;
