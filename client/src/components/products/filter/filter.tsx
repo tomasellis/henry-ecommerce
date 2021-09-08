@@ -24,7 +24,7 @@ export default function Filter() {
     if (gender === "woman") {
       dispatch(
         getArticles(
-          "mujer",
+          gender,
           e.target.id,
           undefined,
           undefined,
@@ -36,7 +36,7 @@ export default function Filter() {
     if (gender === "men") {
       dispatch(
         getArticles(
-          "hombre",
+          gender,
           e.target.id,
           undefined,
           undefined,
@@ -48,7 +48,7 @@ export default function Filter() {
     if (gender === "kids") {
       dispatch(
         getArticles(
-          "niños",
+          gender,
           e.target.id,
           undefined,
           undefined,
@@ -78,7 +78,7 @@ export default function Filter() {
   const classes = useStyles();
   const [dataFilter, setDataFilter] = useState({
     gender: undefined,
-    category: undefined,
+    category: [],
     less_than: undefined,
     greater_than: undefined,
     color: undefined,
@@ -107,38 +107,38 @@ export default function Filter() {
 
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
       
-      const onSubmit = (event,e) => {
-        e.target.reset();
-        e.preventDefault();
-        dispatch(
-          getArticles(
-            dataFilter.gender,
-            dataFilter.category,
-            dataFilter.less_than,
-            dataFilter.greater_than,
-            dataFilter.color,
-            dataFilter.size
-          )
-        );
-      } 
+    const onSubmit = (event,e) => {
+      e.target.reset();
+      e.preventDefault();
+      dispatch(
+        getArticles(
+          dataFilter.gender,
+          dataFilter.category,
+          dataFilter.less_than,
+          dataFilter.greater_than,
+          dataFilter.color,
+          dataFilter.size
+        )
+      );
+    } 
 
     const handleChangeSize = (e) => {
-      if(e.target.id === "x") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"x"))
-      if(e.target.id === "s") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"s"))
-      if(e.target.id === "m") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"m"))
-      if(e.target.id === "l") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"l"))
-      if(e.target.id === "xs") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"xs"))
-      if(e.target.id === "xl") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"xl"))
+      if(e.target.id === "x") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"x"))
+      if(e.target.id === "s") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"s"))
+      if(e.target.id === "m") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"m"))
+      if(e.target.id === "l") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"l"))
+      if(e.target.id === "xs") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"xs"))
+      if(e.target.id === "xl") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"xl"))
     }
 
     const handleChangeColor = (e) => {
-      if(e.target.id === "white") dispatch(getArticles(undefined,undefined,undefined,undefined,"white",undefined))
-      if(e.target.id === "black") dispatch(getArticles(undefined,undefined,undefined,undefined,"black",undefined))
-      if(e.target.id === "grey") dispatch(getArticles(undefined,undefined,undefined,undefined,"grey",undefined))
-      if(e.target.id === "green") dispatch(getArticles(undefined,undefined,undefined,undefined,"green",undefined))
-      if(e.target.id === "yellow") dispatch(getArticles(undefined,undefined,undefined,undefined,"yellow",undefined))
-      if(e.target.id === "pink") dispatch(getArticles(undefined,undefined,undefined,undefined,"pink",undefined))
-      if(e.target.id === "sienna") dispatch(getArticles(undefined,undefined,undefined,undefined,"sienna",undefined))
+      if(e.target.id === "white") dispatch(getArticles(gender,undefined,undefined,undefined,"white",undefined))
+      if(e.target.id === "black") dispatch(getArticles(gender,undefined,undefined,undefined,"black",undefined))
+      if(e.target.id === "grey") dispatch(getArticles(gender,undefined,undefined,undefined,"grey",undefined))
+      if(e.target.id === "green") dispatch(getArticles(gender,undefined,undefined,undefined,"green",undefined))
+      if(e.target.id === "yellow") dispatch(getArticles(gender,undefined,undefined,undefined,"yellow",undefined))
+      if(e.target.id === "pink") dispatch(getArticles(gender,undefined,undefined,undefined,"pink",undefined))
+      if(e.target.id === "sienna") dispatch(getArticles(gender,undefined,undefined,undefined,"sienna",undefined))
     }
   return (
     <>
@@ -146,7 +146,7 @@ export default function Filter() {
         <div className="btn_menu_product">
           <label htmlFor="btn_menu_product">
             <div className="cont_filter_product">
-              <h1 className="title_filter_product">FILTRAR</h1>
+              <h1 className="title_filter_product">FILTER</h1>
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
@@ -163,7 +163,7 @@ export default function Filter() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              ROPA
+              CLOTHER
             </button>
             <ul
               onClick={(e) => setDataHandler(e)}
@@ -171,32 +171,32 @@ export default function Filter() {
               aria-labelledby="dropdownMenuButton1"
             >
               <li>
-                <a className="dropdown-item" id="remera" href="#">
-                  REMERAS
+                <a className="dropdown-item" id="t-shirt" href="#">
+                  T-SHIRT
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="pantalon" href="#">
-                  PANTALONES
+                <a className="dropdown-item" id="pants" href="#">
+                PANTS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="campera" href="#">
-                  CAMPERAS
+                <a className="dropdown-item" id="jacket" href="#">
+                  JACKETS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="buzo" href="#">
-                  BUZOS
+                <a className="dropdown-item" id="diver" href="#">
+                  DIVERS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="calzado" href="#">
-                  CALZADOS
+                <a className="dropdown-item" id="footwear" href="#">
+                  FOOTWEAR
                 </a>
               </li>
             </ul>
@@ -209,7 +209,7 @@ export default function Filter() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              PRECIO
+              PRICE
             </button>
             <ul
               className="dropdown-menu "
@@ -253,7 +253,7 @@ export default function Filter() {
          type="submit"
          className={classes.margin}
          onClick={(e) => handleChange(e)}>
-          Aplicar
+          APPLY
         </Button>
         </div>
       </form>
@@ -267,7 +267,7 @@ export default function Filter() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              TALLES
+              SIZES
             </button>
             <ul
               onClick = {(e) => handleChangeSize(e)}
@@ -305,7 +305,7 @@ export default function Filter() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              COLORES
+              COLORS
             </button>
             <ul
               onClick = {(e) => handleChangeColor(e)}

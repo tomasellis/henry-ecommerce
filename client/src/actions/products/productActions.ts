@@ -1,4 +1,5 @@
 import axios from "axios";
+import { isArray } from "util";
 
 export const PRODUCTS_ACTIONS = {
   BRING_CLOTHER: "BRING_CLOTHER",
@@ -17,8 +18,12 @@ export const getArticles =
   async (dispatch: any) => {
     try {
       let res = await axios.get(
-        `${URL}/products?gender=${gender || ""}&category=${
-          category || ""
+        `${URL}/products?gender=${gender || ""}&${
+          Array.isArray(category)
+          ? category.map((x) => `category=${x}`)
+          : category !== undefined
+          ? `category=${category}&`
+          : ""
         }&less_than=${less_than || ""}&greater_than=${
           greater_than || ""
         }&color=${color || ""}&size=${size || ""}`
