@@ -92,11 +92,14 @@ export default function Filter() {
     })
   }
 
-  const handleChange = (event) => {
-    setDataFilter({
-      ...dataFilter,
-      [event.target.name]: event.target.value})};
-    
+  const handleChange = (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+  })
+  }
+
     type Inputs = {
       less_than: string,
       greater_than: string,
@@ -104,8 +107,9 @@ export default function Filter() {
 
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
       
-      const onSubmit = (event) => {
-        event.preventDefault();
+      const onSubmit = (event,e) => {
+        e.target.reset();
+        e.preventDefault();
         dispatch(
           getArticles(
             dataFilter.gender,
@@ -118,6 +122,24 @@ export default function Filter() {
         );
       } 
 
+    const handleChangeSize = (e) => {
+      if(e.target.id === "x") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"x"))
+      if(e.target.id === "s") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"s"))
+      if(e.target.id === "m") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"m"))
+      if(e.target.id === "l") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"l"))
+      if(e.target.id === "xs") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"xs"))
+      if(e.target.id === "xl") dispatch(getArticles(undefined,undefined,undefined,undefined,undefined,"xl"))
+    }
+
+    const handleChangeColor = (e) => {
+      if(e.target.id === "white") dispatch(getArticles(undefined,undefined,undefined,undefined,"white",undefined))
+      if(e.target.id === "black") dispatch(getArticles(undefined,undefined,undefined,undefined,"black",undefined))
+      if(e.target.id === "grey") dispatch(getArticles(undefined,undefined,undefined,undefined,"grey",undefined))
+      if(e.target.id === "green") dispatch(getArticles(undefined,undefined,undefined,undefined,"green",undefined))
+      if(e.target.id === "yellow") dispatch(getArticles(undefined,undefined,undefined,undefined,"yellow",undefined))
+      if(e.target.id === "pink") dispatch(getArticles(undefined,undefined,undefined,undefined,"pink",undefined))
+      if(e.target.id === "sienna") dispatch(getArticles(undefined,undefined,undefined,undefined,"sienna",undefined))
+    }
   return (
     <>
       <div className="container_filters_product">
@@ -204,6 +226,9 @@ export default function Filter() {
             onChange={handleInputChange}
             {...register('less_than', { required: {value: true, message:'Obligatorio' }})}
             />
+            <span className="text-danger text-small d-block mb-2">
+              {errors?.less_than?.message}
+            </span>
         </div>
         <div>
         <TextField
@@ -215,6 +240,9 @@ export default function Filter() {
             onChange={handleInputChange}
             {...register('greater_than', { required: {value: true, message:'Obligatorio' }})}
           />
+          <span className="text-danger text-small d-block mb-2">
+              {errors?.greater_than?.message}
+            </span>
 
         </div>
         <div>
@@ -224,7 +252,7 @@ export default function Filter() {
          color="default"
          type="submit"
          className={classes.margin}
-         /* onClick={(e) => handleChange(e)} */>
+         onClick={(e) => handleChange(e)}>
           Aplicar
         </Button>
         </div>
@@ -242,6 +270,7 @@ export default function Filter() {
               TALLES
             </button>
             <ul
+              onClick = {(e) => handleChangeSize(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
@@ -279,6 +308,7 @@ export default function Filter() {
               COLORES
             </button>
             <ul
+              onClick = {(e) => handleChangeColor(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
@@ -286,7 +316,7 @@ export default function Filter() {
                 <li>
                   <button
                     className="color_filter color_one_filter"
-                    value="withe"
+                    id="withe"
                   >
                     {" "}
                   </button>
@@ -294,37 +324,37 @@ export default function Filter() {
                 <li>
                   <button
                     className="color_filter color_two_filter"
-                    value="black"
+                    id="black"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_three_filter"
-                    value="grey"
+                    id="grey"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_four_filter"
-                    value="green"
+                    id="green"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_five_filter"
-                    value="yellow"
+                    id="yellow"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_six_filter"
-                    value="pink"
+                    id="pink"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_seven_filter"
-                    value="sienna"
+                    id="sienna"
                   ></button>
                 </li>
               </div>
