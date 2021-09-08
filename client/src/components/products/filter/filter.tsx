@@ -21,7 +21,6 @@ export default function Filter() {
 
   const setDataHandler = (e) => {
     e.preventDefault();
-    if (gender === "woman") {
       dispatch(
         getArticles(
           gender,
@@ -32,31 +31,6 @@ export default function Filter() {
           undefined
         )
       );
-    }
-    if (gender === "men") {
-      dispatch(
-        getArticles(
-          gender,
-          e.target.id,
-          undefined,
-          undefined,
-          undefined,
-          undefined
-        )
-      );
-    }
-    if (gender === "kids") {
-      dispatch(
-        getArticles(
-          gender,
-          e.target.id,
-          undefined,
-          undefined,
-          undefined,
-          undefined
-        )
-      );
-    }
   };
 
     const useStyles = makeStyles((theme: Theme) =>
