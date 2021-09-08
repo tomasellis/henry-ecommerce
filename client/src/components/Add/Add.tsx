@@ -14,7 +14,8 @@ export default function Add(){
         stock : '',
         image : ''
     })
-
+    console.log(setInput);
+    
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>
