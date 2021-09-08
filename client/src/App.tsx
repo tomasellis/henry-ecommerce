@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import NavBar from "./components/NavBar/NavBar";
 import Login from "./components/Login/Login";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
+import { TableProducts } from "./components/products/table/TableProducts";
 
 function App() {
   console.log(Storage);
@@ -21,6 +22,8 @@ function App() {
       <Route exact path="/cart" component={Cart} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards} />
+      <Route exact path="/admin/Products" component={TableProducts} />
+
     </BrowserRouter>
   );
 }
