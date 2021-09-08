@@ -16,10 +16,10 @@ export default function Filter() {
 
   const setDataHandler = (e) => {
     e.preventDefault();
-    if (gender === "woman") {
+    if (gender === "women") {
       dispatch(
         getArticles(
-          "mujer",
+          "women",
           e.target.id,
           undefined,
           undefined,
@@ -31,7 +31,7 @@ export default function Filter() {
     if (gender === "men") {
       dispatch(
         getArticles(
-          "hombre",
+          "men",
           e.target.id,
           undefined,
           undefined,
@@ -43,7 +43,7 @@ export default function Filter() {
     if (gender === "kids") {
       dispatch(
         getArticles(
-          "niños",
+          "kids",
           e.target.id,
           undefined,
           undefined,

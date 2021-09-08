@@ -10,6 +10,8 @@ import Login from "./components/Login/Login";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 
 function App() {
+  console.log(Storage);
+
   return (
     <BrowserRouter>
       <Route path="/" component={NavBar} />

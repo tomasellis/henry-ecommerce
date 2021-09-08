@@ -7,9 +7,9 @@ const TitleFilter = ({mob}) => {
     if(mob){
         return (
             <TitleCtn>
-                <p>MUJERES</p>
-                <p>HOMBRES</p>
-                <p>NIÑOS</p>
+                <p>WOMEN</p>
+                <p>MEN</p>
+                <p>Kids</p>
             </TitleCtn>
         )
     }
@@ -17,14 +17,14 @@ const TitleFilter = ({mob}) => {
     return (
         <TitleCtn>
             <div>
-                 <Link to = '/clothing/woman'>
-                    <p>MUJERES</p>
+                 <Link to = '/clothing/women'>
+                    <p>WOMEN</p>
                 </Link>
                 <Link to = '/clothing/men'>
-                    <p>HOMBRES</p>
+                    <p>MEN</p>
                 </Link>
                 <Link to = '/clothing/kids'>
-                    <p>NIÑOS</p>   
+                    <p>KIDS</p>
                 </Link>
             </div>
         </TitleCtn>
@@ -42,7 +42,7 @@ const TitleCtn = styled.div`
     a{
         text-decoration : none;
     }
-    p{ 
+    p{
         font-family: Poppins, sans-serif;
         margin-top: 20px;
         color: black;

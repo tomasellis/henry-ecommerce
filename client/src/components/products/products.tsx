@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import Pagination from './Pagination/Pagination'
 //import css
 import "./products.css";
 
@@ -16,23 +16,21 @@ export default function Products() {
 
     const dispatch = useDispatch();
     const articles = useSelector((state : any) => state.articles);
+    const [currentPage,setCurrentPage] = useState<number>(1);
+    const [articlesPerPage]= useState<number>(8);
+    const indexOfLastArticle = currentPage * articlesPerPage;
+    const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+    const currentArticles = articles.slice(indexOfFirstArticle,indexOfLastArticle);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     type GenderParams = {
         gender : string
     };
+
     const {gender} = useParams<GenderParams>();
 
-
     useEffect(() => {
-        if(gender === 'men'){
-            dispatch(getArticles('men',  undefined, undefined, undefined,  undefined, undefined))
-        };
-        if(gender === 'woman'){
-            dispatch(getArticles('women',  undefined, undefined, undefined,  undefined, undefined))
-        };
-        if(gender === 'kids'){
-            dispatch(getArticles('kids',  undefined, undefined, undefined,  undefined, undefined))
-        };
+            dispatch(getArticles(gender, undefined, undefined, undefined,  undefined, undefined))
     }, [dispatch,gender])
 
     return(
@@ -40,7 +38,7 @@ export default function Products() {
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
             {
-                articles?.map((e,i) => {
+                currentArticles?.map((e,i) => {
                     return (
                         <Card key={e.id}
                         id = {e.id}
@@ -51,6 +49,11 @@ export default function Products() {
                     )
                 })
             }
+            <Pagination
+            articlesPerPage={articlesPerPage}
+            articlesLength={articles.length}
+            paginate={paginate}
+            />
     </div>
   );
 }
