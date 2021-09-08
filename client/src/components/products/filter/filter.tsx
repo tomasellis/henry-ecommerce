@@ -16,10 +16,9 @@ export default function Filter() {
 
   const setDataHandler = (e) => {
     e.preventDefault();
-    if (gender === "woman") {
       dispatch(
         getArticles(
-          "mujer",
+          gender,
           e.target.id,
           undefined,
           undefined,
@@ -27,31 +26,7 @@ export default function Filter() {
           undefined
         )
       );
-    }
-    if (gender === "men") {
-      dispatch(
-        getArticles(
-          "hombre",
-          e.target.id,
-          undefined,
-          undefined,
-          undefined,
-          undefined
-        )
-      );
-    }
-    if (gender === "kids") {
-      dispatch(
-        getArticles(
-          "niños",
-          e.target.id,
-          undefined,
-          undefined,
-          undefined,
-          undefined
-        )
-      );
-    }
+
   };
 
   return (
@@ -85,32 +60,32 @@ export default function Filter() {
               aria-labelledby="dropdownMenuButton1"
             >
               <li>
-                <a className="dropdown-item" id="remera" href="#">
-                  REMERAS
+                <a className="dropdown-item" id="tshirts" href="#">
+                  T-SHIRTS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="pantalon" href="#">
-                  PANTALONES
+                <a className="dropdown-item" id="pants" href="#">
+                  PANTS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="campera" href="#">
-                  CAMPERAS
+                <a className="dropdown-item" id="jackets" href="#">
+                  JACKETS
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="buzo" href="#">
-                  BUZOS
+                <a className="dropdown-item" id="sweater" href="#">
+                  SWEATER
                 </a>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="calzado" href="#">
-                  CALZADOS
+                <a className="dropdown-item" id="shoes" href="#">
+                  SHOES
                 </a>
               </li>
             </ul>
