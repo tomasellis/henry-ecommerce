@@ -43,7 +43,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case 'UPDATE_QUANTITY':
-      const cartUpdate = state.cart.some(product => {
+      state.cart.some(product => {
         if(product.id_option === payload.id_option){
           product.quantity = payload.quantity
           return true
