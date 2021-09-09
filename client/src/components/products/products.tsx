@@ -29,7 +29,6 @@ export default function Products() {
 
     useEffect(() => {
             dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
-            // eslint-disable-next-line
     }, [dispatch,gender, page])
 
     return(

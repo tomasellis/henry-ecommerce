@@ -11,11 +11,12 @@ import "./filter.css";
 import { getArticles } from "../../../actions/products/productActions";
 
 export default function Filter() {
-  type GenderParams = {
+  type Params = {
     gender: string;
+    page: string
   };
-  const { gender } = useParams<GenderParams>();
-
+  const { gender } = useParams<Params>();
+  const {page} = useParams<Params>();
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
@@ -44,7 +45,7 @@ export default function Filter() {
         dataFilter.greater_than,
         dataFilter.color,
         dataFilter.size,
-        0,
+        page,
         8
       )
     )
