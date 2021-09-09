@@ -4,7 +4,9 @@ const initialState = {
   product: [],
   options: [],
   productsInCartByUser:[],
-  articles:[]
+  articles:[],
+  cart:[],
+  idsInCart:[]
 }
 
 export const rootReducer = (state = initialState, {type, payload}) => {
@@ -24,7 +26,12 @@ export const rootReducer = (state = initialState, {type, payload}) => {
           ...state,
           options:payload
         }
-      
+      case 'ADD_TO_CART':
+        return {
+          ...state,
+          cart:[...state.cart,payload],
+          idsInCart:[...state.idsInCart, payload.id_option]
+        }
 
       default: 
         return state
