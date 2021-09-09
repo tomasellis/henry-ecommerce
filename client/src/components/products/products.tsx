@@ -29,7 +29,7 @@ export default function Products() {
 
     useEffect(() => {
             dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
-    }, [dispatch,gender, page])
+    }, [dispatch,gender, page, limit])
 
     return(
         <div>
