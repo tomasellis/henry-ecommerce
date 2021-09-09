@@ -34,16 +34,31 @@ export const DetailsProductCard = ({
     const state = useSelector((state: RootState) => state)
 
     const [productDetail, setProductDetail] = useState({
-        id_option: id_option,
-        quantity: 1
+        id,
+        name,
+        image_url,
+        price,
+        id_option,
+        color,
+        size,
+        stock,
+        quantity: 1,
     })
 
     useEffect(() => {
         setProductDetail({
-            id_option: id_option,
-            quantity: 1
+            id,
+            name,
+            image_url,
+            price,
+            id_option,
+            color,
+            size,
+            stock,
+            quantity: 1,
         })
         return () => {
+            //limpiar el componente
 
         }
     }, [id_option])
@@ -74,7 +89,7 @@ export const DetailsProductCard = ({
             const existProductInCartRedux = state.cart.some(product => product.id_option === id_option)
             if (existProductInCartRedux) alert('El proudcto ya existe en el carrito')
             else dispatch(addToCartStorage(productDetail))
-            
+
         } else {
             let validId = await axios.get(`${BASE_URL}/verifyUserAuth0InDatabase?id_auth0=${user.sub}`)
             if (!validId.data.user_id) {
