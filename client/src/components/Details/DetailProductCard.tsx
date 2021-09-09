@@ -2,9 +2,20 @@
 import "./DetailProductCard.css";
 // import { useCookies } from 'react-cookie';
 import { useAuth0 } from '@auth0/auth0-react'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from "react-redux";
+import { addToCartStorage } from "../../actions";
+
+type User = {
+    id_option: string
+}
+
+interface RootState {
+    cart: Array<User>,
+    idsInCart: string
+}
 
 
 export const DetailsProductCard = ({
@@ -19,43 +30,61 @@ export const DetailsProductCard = ({
 
 }) => {
 
-    const [cart, setCart] = useState({
+    const dispatch = useDispatch()
+    const state = useSelector((state: RootState) => state)
+
+    const [productDetail, setProductDetail] = useState({
         id_option: id_option,
         quantity: 1
     })
-    console.log(setCart);
-    
-    // const [cookies, setCookie, removeCookie] = useCookies();
+
+    useEffect(() => {
+        setProductDetail({
+            id_option: id_option,
+            quantity: 1
+        })
+        return () => {
+
+        }
+    }, [id_option])
+
+    useEffect(() => {
+        localStorage.cartStorage = JSON.stringify(state.cart)
+    }, [state.cart])
+
+
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
     console.log('user auth0', user); //temporal para evitar error eslint
 
+    async function joinCarts() {
+        let cartStorage = []
+        if (localStorage.cartStorage) cartStorage = JSON.parse(localStorage.cartStorage)
+
+        cartStorage.forEach(productInLocalStorage => {
+            if (!state.idsInCart.includes(productInLocalStorage.id_option)) {
+                dispatch(addToCartStorage(productInLocalStorage))
+            }
+        })
+    }
+
     async function addToCart(id: string) { //el id del producto
         if (!isAuthenticated) {
-            // if (!cookies || !cookies.user_id) setCookie('user_id', uuidv4())
-            // await axios.post(`${BASE_URL}/addUserToDatabase`, {
-            //     user_id: cookies.user_id
-            // })
-
-            if (localStorage.cartStorage) {
-                let cartStorage: Array<Object> = JSON.parse(localStorage.cartStorage)
-                cartStorage.push(cart)
-                localStorage.cartStorage = (JSON.stringify(cartStorage))
-            } else {
-                localStorage.cartStorage = (JSON.stringify([cart]))
-            }
+            joinCarts()
+            const existProductInCartRedux = state.cart.some(product => product.id_option === id_option)
+            if (existProductInCartRedux) alert('El proudcto ya existe en el carrito')
+            else dispatch(addToCartStorage(productDetail))
+            
         } else {
             let validId = await axios.get(`${BASE_URL}/verifyUserAuth0InDatabase?id_auth0=${user.sub}`)
             if (!validId.data.user_id) {
-                validId  = await axios.post(`${BASE_URL}/addUserToDatabase`, {
+                validId = await axios.post(`${BASE_URL}/addUserToDatabase`, {
                     auth0_id: user.sub,
                     email: user.email,
                     name: user.name
                 })
             }
-            console.log(validId, 'y', validId.data.user_id);
-            
-            
+
             const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
                 user_id: validId.data.user_id,
                 product_option_id: id_option,
@@ -74,7 +103,7 @@ export const DetailsProductCard = ({
 
     return (
         <div className="mainDetailCard" >
-        <div className="mainDetailCard__container">
+            <div className="mainDetailCard__container">
                 <div className="container__img">
                     <img src={image_url} width='100%' alt="" className="container__card-img" />
                 </div>
@@ -83,23 +112,23 @@ export const DetailsProductCard = ({
                         <h1>{name}</h1>
 
                     </div>
-                    <div className = 'div_price_product_details'>
-                        <span className = 'price_product_details'> ${price}</span>
+                    <div className='div_price_product_details'>
+                        <span className='price_product_details'> ${price}</span>
                     </div>
-                    <div className = 'div_color_product_details'>
+                    <div className='div_color_product_details'>
                         <span>{color}</span>
                     </div>
-                    <div className = 'div_size_product_details'>
+                    <div className='div_size_product_details'>
                         <span>{size}</span>
                     </div>
-                    <div className = 'div_stock_product_details'>
-                        <span>Stock:</span><span> disponible </span>                           
-                    </div>    
-                <div className="container__button-buy">
-                    <button onClick = {e => addToCart(id)}>Agregar al carrito</button>
+                    <div className='div_stock_product_details'>
+                        <span>Stock:</span><span> disponible </span>
+                    </div>
+                    <div className="container__button-buy">
+                        <button onClick={e => addToCart(id)}>Agregar al carrito</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>  
     )
 }
