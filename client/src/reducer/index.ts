@@ -5,8 +5,8 @@ const initialState = {
   options: [],
   productsInCartByUser: [],
   articles: [],
-  cart: JSON.parse(localStorage.cartStorage) || [],
-  idsInCart: []
+  cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
+  idsInCart: localStorage.idsInCartStorage ? JSON.parse(localStorage.idsInCartStorage) : []
 }
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -28,6 +28,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
     case 'ADD_TO_CART':
       localStorage.cartStorage = JSON.stringify([...state.cart, payload])
+      localStorage.idsInCartStorage = JSON.stringify([...state.idsInCart, payload.id_option])
       return {
         ...state,
         cart: [...state.cart, payload],
@@ -38,6 +39,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       const cartFiltered = state.cart.filter(product => product.id_option !== payload)
       const idsFiltered = state.idsInCart.filter(product => product !== payload)
       localStorage.cartStorage = JSON.stringify(cartFiltered)
+      localStorage.idsInCartStorage = JSON.stringify(idsFiltered)
       return {
         ...state,
         cart: cartFiltered,
