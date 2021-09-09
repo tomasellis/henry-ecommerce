@@ -1,6 +1,5 @@
 import React from 'react';
 import "./Pagination.css"
-import { Link } from 'react-router-dom';
 
 export default function Pagination ({currentPage, nextLength, gender}) {
   let route1=`/clothing/${gender}/${+currentPage - 1}`
