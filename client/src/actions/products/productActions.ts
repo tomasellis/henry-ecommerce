@@ -1,5 +1,4 @@
 import axios from "axios";
-import { isArray } from "util";
 
 export const PRODUCTS_ACTIONS = {
   BRING_CLOTHER: "BRING_CLOTHER",
