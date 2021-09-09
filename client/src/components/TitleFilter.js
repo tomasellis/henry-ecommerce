@@ -17,7 +17,7 @@ const TitleFilter = ({mob}) => {
     return (
         <TitleCtn>
             <div>
-                 <Link to = '/clothing/woman'>
+                 <Link to = '/clothing/women'>
                     <p>MUJERES</p>
                 </Link>
                 <Link to = '/clothing/men'>
