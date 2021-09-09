@@ -21,7 +21,7 @@ export default function Products() {
     const [articlesPerPage]= useState<number>(8);
     const indexOfLastArticle = currentPage * articlesPerPage;
     const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-    const currentArticles = articles.slice(indexOfFirstArticle,indexOfLastArticle);
+    const currentArticles = articles ? articles.slice(indexOfFirstArticle,indexOfLastArticle) : [];
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     type GenderParams = {
@@ -39,7 +39,7 @@ export default function Products() {
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
             <div>
-            {
+            { 
                 currentArticles?.map((e,i) => {
                     return (
                         <Card key={e.id}

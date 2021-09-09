@@ -4,14 +4,16 @@ import {Response, Request, Router, NextFunction} from 'express';
 const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
-
+  let page = req.query._page
+  let limit =req.query._limit
   const category_name = req.query.category_name? `category_name: {_eq: ${req.query.category_name}}` : ' '
   const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
   const price = `price: {_gte: ${req.query.greater_than || "0"}, _lte: ${req.query.less_than || "999999"}}`
   const name = req.query.name? `name: {_ilike: "%${req.query.name}%"}`: ' '
-
+  const _page = page? `offset: ${+page}`: ' '
+  const _limit = limit? `limit: ${+limit}`: ' '
 
   try {
     const {data} = await axios({
@@ -20,7 +22,7 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
       data: { query:
         `query {
 
-          products(where: {${gender},${price},${name}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }) {
+          products(where: {${gender},${price},${name}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${_page}, ${_limit}) {
             name
             image_url
             gender

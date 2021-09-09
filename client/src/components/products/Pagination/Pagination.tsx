@@ -8,7 +8,7 @@ export default function Pagination ({articlesPerPage, articlesLength,paginate, c
         }
     return(
         <div className="pagination">
-              <a href="#" onClick={() =>paginate(currentPage - 1)}
+              <a onClick={() =>paginate(currentPage - 1)}
               className={currentPage===1 ? "disabled":""}
               >&laquo;</a>
                 {pageNumbers && pageNumbers.map (number => (
@@ -17,7 +17,7 @@ export default function Pagination ({articlesPerPage, articlesLength,paginate, c
                       key={number}>{number}</a>
                     ))
                 }
-             <a href="#"
+             <a
              onClick={() =>paginate(currentPage + 1)}
              className={currentPage === pageNumbers[pageNumbers.length -1]? "disabled":""}
              >&raquo;</a>
