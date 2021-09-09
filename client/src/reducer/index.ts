@@ -27,6 +27,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         options: payload
       }
     case 'ADD_TO_CART':
+      localStorage.cartStorage = JSON.stringify([...state.cart, payload])
       return {
         ...state,
         cart: [...state.cart, payload],
@@ -36,6 +37,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case 'REMOVE_FROM_CART':
       const cartFiltered = state.cart.filter(product => product.id_option !== payload)
       const idsFiltered = state.idsInCart.filter(product => product !== payload)
+      localStorage.cartStorage = JSON.stringify(cartFiltered)
       return {
         ...state,
         cart: cartFiltered,
@@ -49,6 +51,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           return true
         }
       })
+      localStorage.cartStorage = JSON.stringify(state.cart)
       return state
 
     default:

@@ -8,12 +8,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage } from "../../actions";
 
-type User = {
+type Product = {
     id_option: string
 }
 
 interface RootState {
-    cart: Array<User>,
+    cart: Array<Product>,
     idsInCart: string
 }
 
@@ -62,10 +62,6 @@ export const DetailsProductCard = ({
 
         }
     }, [id_option])
-
-    useEffect(() => {
-        localStorage.cartStorage = JSON.stringify(state.cart)
-    }, [state.cart])
 
 
     const { user, isAuthenticated } = useAuth0()

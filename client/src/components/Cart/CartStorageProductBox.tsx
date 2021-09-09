@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
-import {removeToCartStorage,updateQuantity} from '../../actions'
+import { removeToCartStorage, updateQuantity } from '../../actions'
 
 type CartProductBoxProps = {
   product: CartProductData;
-  key:number
+  key: number
 };
 
 type CartProductData = {
@@ -20,6 +20,15 @@ type CartProductData = {
   stock,
   quantity
 };
+
+type Product = {
+  id_option: string
+}
+
+interface RootState {
+  cart: Array<Product>,
+  idsInCart: string
+}
 
 type AddToCartResponse = {
   insert_carts_products_one: InsertResponse;
@@ -36,6 +45,7 @@ type FetchInfo = "loading" | "loaded" | "error";
 
 
 const CartStorageProductBox = (props: CartProductBoxProps) => {
+  const state = useSelector((state: RootState) => state)
   const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(
     props.product.quantity
@@ -50,15 +60,22 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
       )
     ) {
       dispatch(removeToCartStorage(product.id_option))
-      };
+    };
+  }
+
+  useEffect(() => {
+    dispatch(updateQuantity(props.product.id_option, quantity))
+    return () => {
+      // cleanup
     }
-  
-    useEffect(() => {
-      dispatch(updateQuantity(props.product.id_option,quantity))
-      return () => {
-        // cleanup
-      }
-    }, [quantity])
+  }, [quantity])
+
+  useEffect(() => {
+    localStorage.cartStorage = JSON.stringify(state.cart)
+    console.log('se actualizo el carrito');
+    
+  }, [state.cart])
+
 
   return (
     <div className="cartProductBox">
@@ -102,9 +119,9 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         className="button"
         disabled={quantity > 1 ? false : true}
         onClick={async (event) => {
-          
+
           setQuantity(quantity - 1);
-          
+
         }}
       >
         <span style={{ alignSelf: "center" }}>-</span>
@@ -136,18 +153,18 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
           // if (fetchingInfo !== "loading") {
           //   setFetchingInfo("loading");
           //   handleOnChange(quantity, props.product, TESTID);
-            
+
           //   setFetchingInfo("loaded");
           // }
         }}
         min={1}
         max={props.product.stock}
         onKeyPress={async (e) => {
-          if ( e.key === "Enter") {
-            
+          if (e.key === "Enter") {
+
             handleOnChange(quantity, props.product);
-            
-            
+
+
           }
         }}
       ></input>
@@ -160,11 +177,11 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
             : true
         }
         onClick={async (event) => {
-          
-          
+
+
           setQuantity(quantity + 1);
-          
-          
+
+
         }}
       >
         <span style={{ alignSelf: "center" }}>+</span>
@@ -178,7 +195,7 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         }}
         onClick={async (event) => {
           await handleDeleteOnClick(props.product);
-          
+
         }}
       >
         <span style={{ alignSelf: "center" }}>x</span>
