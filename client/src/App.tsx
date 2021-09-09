@@ -21,7 +21,7 @@ function App() {
       <Route exact path="/login" component={Login} />
       <Route exact path="/cart" component={Cart} />
       <Route exact path="/profile" component={Profile} />
-      <Route exact path="/clothing/details/:id" component={DetailProductCards} />
+      <Route exact path="/clothing/:id" component={DetailProductCards} />
     </BrowserRouter>
   );
 }
