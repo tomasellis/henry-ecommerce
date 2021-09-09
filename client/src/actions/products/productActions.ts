@@ -9,7 +9,7 @@ const URL = process.env.REACT_APP_BASE_BACKEND_URL || "http://localhost:4000";
 export const getArticles =
   (
     gender: any,
-    category: any,
+    category: Array<String>,
     less_than: any,
     greater_than: any,
     color: any,

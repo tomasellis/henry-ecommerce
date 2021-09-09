@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -19,20 +19,23 @@ export default function Filter() {
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
-      setDataFilter({
-        ...dataFilter,
-        [e.target.name]: e.target.id
-      })
-  };
-
-  const inputHandler = (e) => {
     setDataFilter({
       ...dataFilter,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.id
     })
-  }
+  };
 
-/*   useEffect(() => {
+
+  const [dataFilter, setDataFilter] = useState({
+    gender: gender,
+    category: [],
+    less_than: undefined,
+    greater_than: undefined,
+    color: undefined,
+    size: undefined
+  });
+
+  useEffect(() => {
     dispatch(
       getArticles(
         gender,
@@ -43,60 +46,63 @@ export default function Filter() {
         dataFilter.size
       )
     )
-  },[]) */
+  }, [dataFilter])
 
-    const useStyles = makeStyles((theme: Theme) =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
         '& .MuiTextField-root': {
           margin: theme.spacing(1),
           width: '25ch',
-        }},
-        margin: {
-          margin: theme.spacing(1),
-        },
-        extendedIcon: {
-          marginRight: theme.spacing(1),
-        },
+        }
+      },
+      margin: {
+        margin: theme.spacing(1),
+      },
+      extendedIcon: {
+        marginRight: theme.spacing(1),
+      },
     }),
   );
 
   const classes = useStyles();
-  const [dataFilter, setDataFilter] = useState({
-    gender: gender,
-    category: [],
-    less_than: undefined,
-    greater_than: undefined,
-    color: undefined,
-    size: undefined
-  });
 
   const handleChange = (e) => {
     e.preventDefault();
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
-  })
+    })
   }
 
-      
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      dispatch(
-        getArticles(
-          dataFilter.gender,
-          dataFilter.category,
-          dataFilter.less_than,
-          dataFilter.greater_than,
-          dataFilter.color,
-          dataFilter.size
-        )
-      );
-    } 
-
-    const handlesize = (e) =>{
-      dispatch(getArticles(gender,undefined,undefined,undefined,undefined,e.target.id))
+  const inputHandler = (e) => {
+    if (e.target.name !== "less_than" || e.target.name !== "greater_than") {
+      setDataFilter({
+        ...dataFilter,
+        [e.target.name]: e.target.value
+      })
+    } else {
+      setDataPrice({
+        ...dataPrice,
+        [e.target.name]: e.target.id
+      })
     }
+  }
+
+  const [dataPrice, setDataPrice] = useState({
+    less_than: undefined,
+    greater_than: undefined
+  })
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setDataFilter({
+      ...dataFilter,
+      less_than: dataPrice.less_than,
+      greater_than: dataPrice.greater_than
+    })
+  }
+
   return (
     <>
       <div className="container_filters_product">
@@ -135,7 +141,7 @@ export default function Filter() {
               <hr className="hr_filter_product" />
               <li>
                 <button className="dropdown-item" id="pants" name="category">
-                PANTS
+                  PANTS
                 </button>
               </li>
               <hr className="hr_filter_product" />
@@ -172,41 +178,41 @@ export default function Filter() {
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
-      <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
-        <div>
-        <TextField
-            id="less_than"
-            label="Min"
-            maxRows={4}
-            type="number"
-            placeholder="$0"
-            name="less_than"
-            onChange={(e) => inputHandler(e)}
-            />
-        </div>
-        <div>
-        <TextField
-            id="greater_than"
-            label="Max"
-            maxRows={4}
-            type="number"
-            placeholder="$5.000"
-            name="greater_than"
-            onChange={(e) => inputHandler(e)} 
-          />
-        </div>
-        <div>
-        <Button
-         variant="outlined" 
-         size="small"
-         color="default"
-         type="submit"
-         className={classes.margin}
-         onClick={(e) => handleChange(e)}>
-          APPLY
-        </Button>
-        </div>
-      </form>
+              <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
+                <div>
+                  <TextField
+                    id="greater_than"
+                    label="Min"
+                    maxRows={4}
+                    type="number"
+                    placeholder="$0"
+                    name="greater_than"
+                    onChange={(e) => inputHandler(e)}
+                  />
+                </div>
+                <div>
+                  <TextField
+                    id="less_than"
+                    label="Max"
+                    maxRows={4}
+                    type="number"
+                    placeholder="$5.000"
+                    name="less_than"
+                    onChange={(e) => inputHandler(e)}
+                  />
+                </div>
+{/*                 <div>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    color="default"
+                    type="submit"
+                    className={classes.margin}
+                    onClick={(e) => handleChange(e)}>
+                    APPLY
+                  </Button>
+                </div> */}
+              </form>
             </ul>
           </div>
           <div className="dropdown">
@@ -220,7 +226,7 @@ export default function Filter() {
               SIZES
             </button>
             <ul
-              onClick = {(e) => handlesize(e)}
+              onClick={(e) => setDataHandler(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
@@ -258,7 +264,7 @@ export default function Filter() {
               COLORS
             </button>
             <ul
-              onClick = {(e) => setDataHandler(e)}
+              onClick={(e) => setDataHandler(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
