@@ -5,7 +5,7 @@ const initialState = {
   options: [],
   productsInCartByUser: [],
   articles: [],
-  cart: [],
+  cart: JSON.parse(localStorage.cartStorage) || [],
   idsInCart: []
 }
 
@@ -45,6 +45,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case 'UPDATE_QUANTITY':
+      // eslint-disable-next-line 
       state.cart.some(product => {
         if(product.id_option === payload.id_option){
           product.quantity = payload.quantity

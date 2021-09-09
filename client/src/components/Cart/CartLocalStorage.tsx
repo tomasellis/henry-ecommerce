@@ -1,10 +1,7 @@
-import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import  { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import CartStorageProductBox from "./CartStorageProductBox";
 import "./styles.css";
-
-const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -28,11 +25,9 @@ interface RootState {
   cart: Array<CartProductData>,
 }
 
-const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const CartLocalStorage = () => {
 
-  const dispatch = useDispatch()
   const state = useSelector((state: RootState) => state)
 
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({

@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
@@ -30,20 +29,6 @@ interface RootState {
   idsInCart: string
 }
 
-type AddToCartResponse = {
-  insert_carts_products_one: InsertResponse;
-};
-
-type InsertResponse = {
-  id: string;
-  product_option_id: string;
-  quantity: number;
-  user_id: string;
-};
-
-type FetchInfo = "loading" | "loaded" | "error";
-
-
 const CartStorageProductBox = (props: CartProductBoxProps) => {
   const state = useSelector((state: RootState) => state)
   const dispatch = useDispatch()
@@ -68,6 +53,7 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
     return () => {
       // cleanup
     }
+    // eslint-disable-next-line 
   }, [quantity])
 
   useEffect(() => {

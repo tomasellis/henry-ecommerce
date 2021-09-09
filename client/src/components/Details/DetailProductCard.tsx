@@ -61,6 +61,7 @@ export const DetailsProductCard = ({
             //limpiar el componente
 
         }
+        // eslint-disable-next-line 
     }, [id_option])
 
 
@@ -68,20 +69,9 @@ export const DetailsProductCard = ({
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
     console.log('user auth0', user); //temporal para evitar error eslint
 
-    async function joinCarts() {
-        let cartStorage = []
-        if (localStorage.cartStorage) cartStorage = JSON.parse(localStorage.cartStorage)
-
-        cartStorage.forEach(productInLocalStorage => {
-            if (!state.idsInCart.includes(productInLocalStorage.id_option)) {
-                dispatch(addToCartStorage(productInLocalStorage))
-            }
-        })
-    }
 
     async function addToCart(id: string) { //el id del producto
         if (!isAuthenticated) {
-            joinCarts()
             const existProductInCartRedux = state.cart.some(product => product.id_option === id_option)
             if (existProductInCartRedux) alert('El proudcto ya existe en el carrito')
             else dispatch(addToCartStorage(productDetail))
