@@ -6,7 +6,7 @@ require("dotenv").config();
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { user_id } = request.body;
+    const { auth0_id, email, name } = request.body;
 
       try {
         const { data } = await axios({
@@ -14,7 +14,7 @@ router.post(
           method: "POST",
           data: {
             query: `mutation {
-              insert_users_one(object: {id: "${user_id}"}) {
+              insert_users_one(object: {auth0_id: "${auth0_id}", email: "${email}", name: "${name}"}) {
                 id
               }
             }`,
@@ -23,7 +23,7 @@ router.post(
         if (data.errors) {
           return response.json({errors: data.errors});
         } else {
-          response.json({data: data.data});
+          response.json({user_id: data.data.insert_users_one.id});
         }
       } catch (err) {
         next(err);

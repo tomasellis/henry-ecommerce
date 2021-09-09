@@ -21,18 +21,9 @@ export default function Products() {
         gender : string
     };
     const {gender} = useParams<GenderParams>();
-
-
+    
     useEffect(() => {
-        if(gender === 'men'){
-            dispatch(getArticles('men',  undefined, undefined, undefined,  undefined, undefined))
-        };
-        if(gender === 'woman'){
-            dispatch(getArticles('women',  undefined, undefined, undefined,  undefined, undefined))
-        };
-        if(gender === 'kids'){
-            dispatch(getArticles('kids',  undefined, undefined, undefined,  undefined, undefined))
-        };
+            dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined))
     }, [dispatch,gender])
 
     return(

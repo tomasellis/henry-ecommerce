@@ -21,6 +21,7 @@ export const DetailProductCards = () => {
     useEffect(() => {
         dispatch(getProduct(id))
     }, [id,dispatch])
+    console.log(product)
     
 
     return ( product.length || product.products?.length ?
@@ -30,6 +31,9 @@ export const DetailProductCards = () => {
             image_url = {product.products[0].image_url}
             price = {product?.products[0]?.price}
             id_option = {product?.products[0]?.product_options[0].id}
+            color = {product?.products[0]?.product_options[0].color}
+            size = {product?.products[0]?.product_options[0].size}
+            stock = {product?.products[0]?.product_options[0].stock}
        />
        :
        <div>Loading</div>
