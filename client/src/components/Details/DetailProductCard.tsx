@@ -8,12 +8,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage } from "../../actions";
 
-type User = {
+type Product = {
     id_option: string
 }
 
 interface RootState {
-    cart: Array<User>,
+    cart: Array<Product>,
     idsInCart: string
 }
 
@@ -34,47 +34,48 @@ export const DetailsProductCard = ({
     const state = useSelector((state: RootState) => state)
 
     const [productDetail, setProductDetail] = useState({
-        id_option: id_option,
-        quantity: 1
+        id,
+        name,
+        image_url,
+        price,
+        id_option,
+        color,
+        size,
+        stock,
+        quantity: 1,
     })
 
     useEffect(() => {
         setProductDetail({
-            id_option: id_option,
-            quantity: 1
+            id,
+            name,
+            image_url,
+            price,
+            id_option,
+            color,
+            size,
+            stock,
+            quantity: 1,
         })
         return () => {
+            //limpiar el componente
 
         }
+        // eslint-disable-next-line 
     }, [id_option])
-
-    useEffect(() => {
-        localStorage.cartStorage = JSON.stringify(state.cart)
-    }, [state.cart])
 
 
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
     console.log('user auth0', user); //temporal para evitar error eslint
 
-    async function joinCarts() {
-        let cartStorage = []
-        if (localStorage.cartStorage) cartStorage = JSON.parse(localStorage.cartStorage)
-
-        cartStorage.forEach(productInLocalStorage => {
-            if (!state.idsInCart.includes(productInLocalStorage.id_option)) {
-                dispatch(addToCartStorage(productInLocalStorage))
-            }
-        })
-    }
 
     async function addToCart(id: string) { //el id del producto
         if (!isAuthenticated) {
-            joinCarts()
             const existProductInCartRedux = state.cart.some(product => product.id_option === id_option)
             if (existProductInCartRedux) alert('El proudcto ya existe en el carrito')
             else dispatch(addToCartStorage(productDetail))
-            
+
         } else {
             let validId = await axios.get(`${BASE_URL}/verifyUserAuth0InDatabase?id_auth0=${user.sub}`)
             if (!validId.data.user_id) {

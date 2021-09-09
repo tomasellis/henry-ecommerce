@@ -29,8 +29,14 @@ export function postProduct(payload) {
 }
 
 
-export function addToCartStorage(productDetail) {
+export function addToCartStorage(productDetail : Object) {
   return { type: "ADD_TO_CART", payload: productDetail };
 }
 
+export function removeToCartStorage(id_option : string){
+  return { type: "REMOVE_FROM_CART", payload: id_option };
+}
 
+export function updateQuantity(id_option:string, quantity:number){
+  return { type: "UPDATE_QUANTITY", payload: {id_option,quantity} };
+}
