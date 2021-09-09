@@ -1,6 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -20,18 +19,31 @@ export default function Filter() {
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
-    e.preventDefault();
-      dispatch(
-        getArticles(
-          gender,
-          e.target.id,
-          undefined,
-          undefined,
-          undefined,
-          undefined
-        )
-      );
+      setDataFilter({
+        ...dataFilter,
+        [e.target.name]: e.target.id
+      })
   };
+
+  const inputHandler = (e) => {
+    setDataFilter({
+      ...dataFilter,
+      [e.target.name]: e.target.value
+    })
+  }
+
+/*   useEffect(() => {
+    dispatch(
+      getArticles(
+        gender,
+        dataFilter.category,
+        dataFilter.less_than,
+        dataFilter.greater_than,
+        dataFilter.color,
+        dataFilter.size
+      )
+    )
+  },[]) */
 
     const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,20 +63,13 @@ export default function Filter() {
 
   const classes = useStyles();
   const [dataFilter, setDataFilter] = useState({
-    gender: undefined,
+    gender: gender,
     category: [],
     less_than: undefined,
     greater_than: undefined,
     color: undefined,
     size: undefined
   });
-
-  const handleInputChange = (event) => {
-    setDataFilter({
-      ...dataFilter,
-      [event.target.name]: event.target.value
-    })
-  }
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -74,16 +79,9 @@ export default function Filter() {
   })
   }
 
-    type Inputs = {
-      less_than: string,
-      greater_than: string,
-    };
-
-    const {register, handleSubmit, formState: {errors}} = useForm<Inputs>();
       
-    const onSubmit = (event,e) => {
-      e.target.reset();
-      e.preventDefault();
+    const handleSubmit = (event) => {
+      event.preventDefault();
       dispatch(
         getArticles(
           dataFilter.gender,
@@ -96,23 +94,8 @@ export default function Filter() {
       );
     } 
 
-    const handleChangeSize = (e) => {
-      if(e.target.id === "x") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"x"))
-      if(e.target.id === "s") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"s"))
-      if(e.target.id === "m") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"m"))
-      if(e.target.id === "l") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"l"))
-      if(e.target.id === "xs") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"xs"))
-      if(e.target.id === "xl") dispatch(getArticles(gender,undefined,undefined,undefined,undefined,"xl"))
-    }
-
-    const handleChangeColor = (e) => {
-      if(e.target.id === "white") dispatch(getArticles(gender,undefined,undefined,undefined,"white",undefined))
-      if(e.target.id === "black") dispatch(getArticles(gender,undefined,undefined,undefined,"black",undefined))
-      if(e.target.id === "grey") dispatch(getArticles(gender,undefined,undefined,undefined,"grey",undefined))
-      if(e.target.id === "green") dispatch(getArticles(gender,undefined,undefined,undefined,"green",undefined))
-      if(e.target.id === "yellow") dispatch(getArticles(gender,undefined,undefined,undefined,"yellow",undefined))
-      if(e.target.id === "pink") dispatch(getArticles(gender,undefined,undefined,undefined,"pink",undefined))
-      if(e.target.id === "sienna") dispatch(getArticles(gender,undefined,undefined,undefined,"sienna",undefined))
+    const handlesize = (e) =>{
+      dispatch(getArticles(gender,undefined,undefined,undefined,undefined,e.target.id))
     }
   return (
     <>
@@ -145,33 +128,33 @@ export default function Filter() {
               aria-labelledby="dropdownMenuButton1"
             >
               <li>
-                <a className="dropdown-item" id="t-shirt" href="#">
+                <button className="dropdown-item" id="t-shirt" name="category">
                   T-SHIRT
-                </a>
+                </button>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="pants" href="#">
+                <button className="dropdown-item" id="pants" name="category">
                 PANTS
-                </a>
+                </button>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="jacket" href="#">
+                <button className="dropdown-item" id="jacket" name="category">
                   JACKETS
-                </a>
+                </button>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="diver" href="#">
+                <button className="dropdown-item" id="diver" name="category">
                   DIVERS
-                </a>
+                </button>
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <a className="dropdown-item" id="footwear" href="#">
+                <button className="dropdown-item" id="footwear" name="category">
                   FOOTWEAR
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -189,35 +172,28 @@ export default function Filter() {
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.root} noValidate autoComplete="off">
+      <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
         <div>
         <TextField
-            id="standard-multiline-flexible"
+            id="less_than"
             label="Min"
             maxRows={4}
             type="number"
             placeholder="$0"
-            onChange={handleInputChange}
-            {...register('less_than', { required: {value: true, message:'Obligatorio' }})}
+            name="less_than"
+            onChange={(e) => inputHandler(e)}
             />
-            <span className="text-danger text-small d-block mb-2">
-              {errors?.less_than?.message}
-            </span>
         </div>
         <div>
         <TextField
-            id="standard-multiline-flexible"
+            id="greater_than"
             label="Max"
             maxRows={4}
             type="number"
             placeholder="$5.000"
-            onChange={handleInputChange}
-            {...register('greater_than', { required: {value: true, message:'Obligatorio' }})}
+            name="greater_than"
+            onChange={(e) => inputHandler(e)} 
           />
-          <span className="text-danger text-small d-block mb-2">
-              {errors?.greater_than?.message}
-            </span>
-
         </div>
         <div>
         <Button
@@ -244,28 +220,28 @@ export default function Filter() {
               SIZES
             </button>
             <ul
-              onClick = {(e) => handleChangeSize(e)}
+              onClick = {(e) => handlesize(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
               <div className="div_size_filter_product">
                 <li>
-                  <button id="x">X</button>
+                  <button id="X" name="size">X</button>
                 </li>
                 <li>
-                  <button id="s">S</button>
+                  <button id="S" name="size">S</button>
                 </li>
                 <li>
-                  <button id="m">M</button>
+                  <button id="M" name="size">M</button>
                 </li>
                 <li>
-                  <button id="l">L</button>
+                  <button id="L" name="size">L</button>
                 </li>
                 <li>
-                  <button id="xs">XS</button>
+                  <button id="XS" name="size">XS</button>
                 </li>
                 <li>
-                  <button id="xl">XL</button>
+                  <button id="XL" name="size">XL</button>
                 </li>
               </div>
               <hr className="hr_filter_product" />
@@ -282,7 +258,7 @@ export default function Filter() {
               COLORS
             </button>
             <ul
-              onClick = {(e) => handleChangeColor(e)}
+              onClick = {(e) => setDataHandler(e)}
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
@@ -291,6 +267,7 @@ export default function Filter() {
                   <button
                     className="color_filter color_one_filter"
                     id="withe"
+                    name="color"
                   >
                     {" "}
                   </button>
@@ -299,36 +276,42 @@ export default function Filter() {
                   <button
                     className="color_filter color_two_filter"
                     id="black"
+                    name="color"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_three_filter"
                     id="grey"
+                    name="color"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_four_filter"
                     id="green"
+                    name="color"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_five_filter"
                     id="yellow"
+                    name="color"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_six_filter"
                     id="pink"
+                    name="color"
                   ></button>
                 </li>
                 <li>
                   <button
                     className="color_filter color_seven_filter"
                     id="sienna"
+                    name="color"
                   ></button>
                 </li>
               </div>
