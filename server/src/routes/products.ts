@@ -14,15 +14,16 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
   const name = req.query.name? `name: {_ilike: "%${req.query.name}%"}`: ' '
   const _page = page? `offset: ${+page}`: ' '
   const _limit = limit? `limit: ${+limit}`: ' '
-
+  let pages = [page? `offset: ${(+page + 0) * 8}`: ' ', page? `offset: ${(+page + 1) * 8}`: ' ']
   try {
+    let arr = [];
+    for (let i=0; i<2; i++) {
     const {data} = await axios({
       url: "https://henry-pg-api.herokuapp.com/v1/graphql",
       method: "POST",
       data: { query:
         `query {
-
-          products(where: {${gender},${price},${name}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${_page}, ${_limit}) {
+          products(where: {${gender},${price},${name}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${pages[i]}, ${_limit}) {
             name
             image_url
             gender
@@ -41,7 +42,13 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
         }`
       },
     });
-    response.send(data.data);
+    arr.push(data.data)
+    }
+    let obj = {
+      data: arr[0],
+      next: arr[1]
+    }
+    response.send(obj);
   } catch (err) {
     next(err)
   }

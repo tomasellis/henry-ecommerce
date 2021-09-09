@@ -4,7 +4,10 @@ const initialState = {
   product: [],
   options: [],
   productsInCartByUser:[],
-  articles:[]
+  articles:{
+    products: [],
+    next: []
+  }
 }
 
 export const rootReducer = (state = initialState, {type, payload}) => {
@@ -12,7 +15,10 @@ export const rootReducer = (state = initialState, {type, payload}) => {
     case PRODUCTS_ACTIONS.BRING_CLOTHER:
       return{
         ...state,
-        articles: payload
+        articles: {
+          products: payload.data.products,
+          next:payload.next.products
+        }
       }
       case "GET_PRODUCT_INFO":
         return {
@@ -24,11 +30,9 @@ export const rootReducer = (state = initialState, {type, payload}) => {
           ...state,
           options:payload
         }
-      
 
-      default: 
+
+      default:
         return state
   }
 }
-
-

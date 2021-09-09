@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/clothing/:gender" component={Products} />
+      <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path = '/created' component = {Add} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/cart" component={Cart} />

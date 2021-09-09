@@ -17,30 +17,27 @@ export default function Products() {
 
     const dispatch = useDispatch();
     const articles = useSelector((state : any) => state.articles);
-    const [currentPage,setCurrentPage] = useState<number>(1);
-    const [articlesPerPage]= useState<number>(8);
-    const indexOfLastArticle = currentPage * articlesPerPage;
-    const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-    const currentArticles = articles ? articles.slice(indexOfFirstArticle,indexOfLastArticle) : [];
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const [limit]= useState<number>(8);
 
-    type GenderParams = {
-        gender : string
+    type Params = {
+        gender : string,
+        page: string
     };
 
-    const {gender} = useParams<GenderParams>();
+    const {gender} = useParams<Params>();
+    const {page} = useParams<Params>();
 
     useEffect(() => {
-            dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined))
-    }, [dispatch,gender])
+            dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
+    }, [dispatch,gender, page])
 
     return(
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
             <div>
-            { 
-                currentArticles?.map((e,i) => {
+            {
+                articles.products?.map((e,i) => {
                     return (
                         <Card key={e.id}
                         id = {e.id}
@@ -53,10 +50,9 @@ export default function Products() {
             }
             </div>
             <Pagination
-            articlesPerPage={articlesPerPage}
-            articlesLength={articles.length}
-            paginate={paginate}
-            currentPage={currentPage}
+            currentPage={page}
+            nextLength = {articles.next.length}
+            gender = {gender}
             />
     </div>
   );

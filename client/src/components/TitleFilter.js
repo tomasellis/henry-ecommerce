@@ -17,13 +17,13 @@ const TitleFilter = ({mob}) => {
     return (
         <TitleCtn>
             <div>
-                 <Link to = '/clothing/women'>
+                 <Link to = '/clothing/women/0'>
                     <p>WOMEN</p>
                 </Link>
-                <Link to = '/clothing/men'>
+                <Link to = '/clothing/men/0'>
                     <p>MEN</p>
                 </Link>
-                <Link to = '/clothing/kids'>
+                <Link to = '/clothing/kids/0'>
                     <p>KIDS</p>
                 </Link>
             </div>

@@ -4,29 +4,22 @@
   padding:40px;
 }
 
-.pagination a.active {
-  background-color: #6495ED;
-  color: white;
-  border-radius: 10px
-}
-
 .disabled {
   pointer-events: none;
   cursor: default;
   opacity: 0.6;
 }
 
-.pagination a:hover:not(.active) {
+.pagination a:hover {
   background-color: #ddd;
-  border-radius: 10px
 }
 
 .pagination a {
   color: black;
   float: left;
-  font-size: 20px;
+  font-size: 25px;
   cursor:pointer;
   margin:1px;
-  padding: 8px 16px;
+  padding: 6px 12px;
   text-decoration: none;
 }

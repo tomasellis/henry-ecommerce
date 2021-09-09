@@ -1,27 +1,17 @@
 import React from 'react';
 import "./Pagination.css"
+import { Link } from 'react-router-dom';
 
-export default function Pagination ({articlesPerPage, articlesLength,paginate, currentPage}) {
-    const pageNumbers = [];
-    for(let i=1; i<=Math.ceil(articlesLength / articlesPerPage); i++){
-            pageNumbers.push(i);
-        }
+export default function Pagination ({currentPage, nextLength, gender}) {
+  let route1=`/clothing/${gender}/${+currentPage - 1}`
+  let route2=`/clothing/${gender}/${+currentPage + 1}`
     return(
         <div className="pagination">
-              <a onClick={() =>paginate(currentPage - 1)}
-              className={currentPage===1 ? "disabled":""}
-              >&laquo;</a>
-                {pageNumbers && pageNumbers.map (number => (
-                      <a onClick={() =>paginate(number)}
-                      className={number===currentPage ? "active":""}
-                      key={number}>{number}</a>
-                    ))
-                }
-             <a
-             onClick={() =>paginate(currentPage + 1)}
-             className={currentPage === pageNumbers[pageNumbers.length -1]? "disabled":""}
-             >&raquo;</a>
-
+              <a href = {route1}
+              className={currentPage<=0 ? "disabled":""}
+              >&laquo; Previous</a>
+             <a href = {route2} className={nextLength===0? "disabled":""}
+             >Next &raquo;</a>
         </div>
     )
 }
