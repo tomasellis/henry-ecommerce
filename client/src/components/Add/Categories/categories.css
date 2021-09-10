@@ -1,0 +1,12 @@
+.categories_collection_add{
+    margin-top: 20px;
+    padding: 80px 10px;
+}
+
+.categories_collection_add  {
+    padding: 5px 17px;
+    margin-right: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.555);
+    color: white;
+}

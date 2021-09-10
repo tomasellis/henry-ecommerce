@@ -18,12 +18,11 @@ export default function Add(){
         image_url : '',
         gender : '',
         price : '',
-        options : [{image_url : '', color : '', size : '', stock : ''}]
+        options : [{image_url : '#', color : '', size : '', stock : ''}]
     })
-<<<<<<< HEAD
-
+    
     const dispatch = useDispatch();
-
+    
     const handleChange = (e) => {
         setInput({
             ...input,
@@ -49,14 +48,10 @@ export default function Add(){
             image_url : '',
             gender: '',
             price : '',
-            options : [{image_url : '', color : '', size : '', stock : ''}]
+            options : [{image_url : '#', color : '', size : '', stock : ''}]
         })
     }
 
-=======
-    console.log(setInput);
-    
->>>>>>> 6f629af0b01d90673fc62d42996d344260ff115d
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>
@@ -74,83 +69,91 @@ export default function Add(){
                             />
                         </div>
                         <div className = 'div_category_add_product'>
-                            <select name="gender" id="" onChange = {e => handleChange(e)}>
+                            <select className = 'select_category_add_product' name="gender" id="" onChange = {e => handleChange(e)}>
                                 <option>Gender</option>
-                                <option value="woman">Woman</option>
+                                <option value="women">Woman</option>
                                 <option value="men">Men</option>
                                 <option value="kids">Kids</option>
                             </select>
-                        </div>
                         <Categories
                         input = {input}
                         setInput = {setInput} 
                         />
+                        </div>
                         <div className = 'div_size_add_product'>
                             <p className = 'p_add_product'>Size</p>
                             <button 
-                            // className = {/*input.size === 'x' ? 'select' : null*/} 
+                            className = {input.options[0].size === 'X' ? 'select' : null} 
                             name = 'size' 
                             value = 'X' 
-                            onClick = {e => handleOptions(e)}>X</button >
+                            onClick = {e => handleOptions(e)}>X</button>
+                            
                             <button  
-                            // className = {/*input.size === 's' ? 'select' : null*/} 
+                            className = {input.options[0].size === 'S' ? 'select' : null} 
                             name = 'size' 
                             value = 'S' 
                             onClick = {e => handleOptions(e)}>S</button>
                             <button    
-                            // {/*input.size === 'm' ? 'select' : null*/}  
+                            className = {input.options[0].size === 'M' ? 'select' : null} 
                             name = 'size' 
                             value = 'M' 
                             onClick = {e => handleOptions(e)}>M</button>
                             <button    
-                            // {/*input.size === 'l' ? 'select' : null*/}  
+                            className = {input.options[0].size === 'L' ? 'select' : null} 
                             name = 'size' 
                             value = 'L' 
                             onClick = {e => handleOptions(e)}>L</button>
                             <button   
-                            // {/*input.size === 'xs' ? 'select' : null*/} 
+                            className = {input.options[0].size === 'XS' ? 'select' : null}  
                             name = 'size' 
                             value = 'XS' 
                             onClick = {e => handleOptions(e)}>XS</button>
                             <button    
-                            // {/*input.size === 'xl' ? 'select' : null*/}
+                            className = {input.options[0].size === 'XL' ? 'select' : null} 
                             name = 'size' 
                             value = 'XL' 
                             onClick = {e => handleOptions(e)}>XL</button>
                         </div>
                         <div className = 'div_colors_add_product'>
                             <p className = 'p_add_product'>Color</p>
-                            <button /*{input.color === 'white' ? 'color_select color_one_filter' : 'color_one_filter color_filter'}*/
+                            <button 
+                            className = {input.options[0].color === 'white' ? 'color_select color_one_filter' : 'color_one_filter color_filter'}
                              name = 'color' 
                              value = 'white'
                              onClick = {e => handleOptions(e)}
                              />
-                            <button /*{input.color === 'black' ? 'color_select color_two_filter' :'color_two_filter color_filter'}*/
+                            <button
+                            className = {input.options[0].color === 'black' ? 'color_select color_two_filter' : 'color_two_filter color_filter'}
                              name = 'color' 
                              value = 'black'
                              onClick = {e => handleOptions(e)}
                              />
-                            <button /*{input.color === 'grey' ? 'color_select color_three_filter' : 'color_three_filter color_filter'}*/
+                            <button
+                            className = {input.options[0].color === 'grey' ? 'color_select color_three_filter' : 'color_three_filter color_filter'}
                             name = 'color' 
                             value = 'grey'
                             onClick = {e => handleOptions(e)}
                             />
-                            <button /*{input.color === 'green' ? 'color_select color_four_filter' :'color_four_filter color_filter'}*/
+                            <button
+                            className = {input.options[0].color === 'green' ? 'color_select color_four_filter' : 'color_four_filter color_filter'}
                             name = 'color' 
                             value = 'green'
                             onClick = {e => handleOptions(e)}
                             />
-                            <button  /*{input.color === 'yellow' ? 'color_select color_five_filter' :'color_five_filter color_filter'}*/
+                            <button
+                            className = {input.options[0].color === 'yellow' ? 'color_select color_five_filter' : 'color_five_filter color_filter'}
                             name = 'color' 
                             value = 'yellow'
                             onClick = {e => handleOptions(e)}
                             />
-                            <button /*{input.color === 'pink' ? 'color_select color_six_filter' :'color_six_filter color_filter'}*/ 
+                            <button
+                            className = {input.options[0].color === 'pink' ? 'color_select color_six_filter' : 'color_six_filter color_filter'}
                             name = 'color' 
                             value = 'pink'
                             onClick = {e => handleOptions(e)}
                             />
-                            <button /*{input.color === 'sienna' ? 'color_select color_seven_filter' :'color_seven_filter color_filter'}*/ 
+                            <button
+                            className = {input.options[0].color === 'sienna' ? 'color_select color_seven_filter' : 'color_seven_filter color_filter'}
                             name = 'color' 
                             value = 'sienna'
                             onClick = {e => handleOptions(e)}
@@ -160,8 +163,8 @@ export default function Add(){
                             <p className = 'p_add_product'>Image URL</p>
                             <input type="text" 
                             name = 'image_url' 
+                            value = {input.image_url}
                             onChange = {e => {
-                                handleOptions(e);
                                 handleChange(e);
                             }}
                             />

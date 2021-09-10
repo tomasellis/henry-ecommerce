@@ -12,7 +12,7 @@
 
 .image_add_product{
     margin-left: 50px;
-    margin-top: 30px;
+    margin-top: 65px;
 }
 
 .div_form_add_product{
@@ -31,11 +31,12 @@
 }
 
 .div_category_add_product{
+    max-width: 400px;
     margin-bottom: 10px;
 }
 
-.div_category_add_product select{
-    padding: 5px 26.5px;
+.div_category_add_product .select_category_add_product{
+    padding: 5px 25px;
     margin-right: 20px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
@@ -43,11 +44,12 @@
 }
 
 .div_category_add_product button{
+    border-radius: 2px;
     margin-left: 10px;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 5px 30px;
+    padding: 5px 27px;
 }
 
 .div_size_add_product{
