@@ -106,7 +106,6 @@ export default function Filter() {
   return (
     <>
       <div className="container_filters_product">
-      {!dataFilter.category ? null : <button>{dataFilter.category}x</button>}
         <div className="btn_menu_product">
           <label htmlFor="btn_menu_product">
             <div className="cont_filter_product">
@@ -114,6 +113,14 @@ export default function Filter() {
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
+      {dataFilter.category.length < 1  ? null : 
+      <div className = 'div_quitar_filter'>
+        <button>
+          {dataFilter.category}
+          <p>x</p>
+        </button>
+      </div>
+      }
         </div>
       </div>
       <input type="checkbox" id="btn_menu_product" />
