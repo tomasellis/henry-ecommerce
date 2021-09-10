@@ -7,7 +7,7 @@
 }
 
 .title_add_product{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .image_add_product{
@@ -16,8 +16,8 @@
 }
 
 .div_form_add_product{
-    margin-left: 200px;
-    margin-top: 50px;
+    margin-left: 100px;
+    margin-top: 25px;
 }
 
 .p_add_product{
@@ -35,7 +35,8 @@
 }
 
 .div_category_add_product select{
-    padding: 5px 72px;
+    padding: 5px 26.5px;
+    margin-right: 20px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
@@ -63,6 +64,10 @@
     margin-right: 20px;
     padding: 7px 12px;
     border: rgba(0, 0, 0, 0.548) 1px solid;
+}   
+
+.div_size_add_product .select {
+    border: rgba(0, 47, 255, 0.548) 3px solid;
 }
 
 .div_colors_add_product{
@@ -75,14 +80,31 @@
     margin-right: 13px;
 }
 
+.color_select {
+    border: rgba(0, 47, 255, 0.747) 3px solid;    
+    border-radius: 100px;
+}
+
 .div_image_add_product{
     margin-bottom: 15px;
 }
 
 .div_button_add_product button{
-    margin-left: 90px;
-    padding: 5px 50px;
+    padding: 5px 147px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
+    margin-bottom: 20px;
 }
+
+.div_input_stock_adn_price{
+    display: inline-flex;
+    margin-bottom: 20px;
+}
+
+.div_input_stock_adn_price input{
+    text-align: center;
+    margin-right: 40px;
+    width: 100px;
+}
+

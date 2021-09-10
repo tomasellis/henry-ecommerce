@@ -68,9 +68,6 @@ export const DetailsProductCard = ({
 
     }
 
-
-
-
     return (
         <div className="mainDetailCard" >
         <div className="mainDetailCard__container">
