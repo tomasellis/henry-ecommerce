@@ -20,6 +20,7 @@ export default function Add(){
         price : '',
         options : [{image_url : '', color : '', size : '', stock : ''}]
     })
+<<<<<<< HEAD
 
     const dispatch = useDispatch();
 
@@ -52,6 +53,10 @@ export default function Add(){
         })
     }
 
+=======
+    console.log(setInput);
+    
+>>>>>>> 6f629af0b01d90673fc62d42996d344260ff115d
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>

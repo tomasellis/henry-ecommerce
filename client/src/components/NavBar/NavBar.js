@@ -147,7 +147,7 @@ export default function NavBar() {
                 </button>
               )}
                 <Link to = '/created'> 
-                <p>Agregar</p>
+                Agregar
                 </Link>
             </p>
           </div>

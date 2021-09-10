@@ -12,6 +12,7 @@ import addUserToDatabase from "./addUserToDatabase";
 import addCategoryToProduct from "./addCategoryToProduct";
 import removeCategoryFromProduct from "./removeCategoryFromProduct";
 import verifyUserAuth0InDatabase from "./verifyUserAuth0InDatabase";
+import fuzzySearch from "./fuzzySearch";
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use("/getUserCartData", getUserCartData);
 router.use("/addCategoryToProduct", addCategoryToProduct);
 router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
 router.use("/verifyUserAuth0InDatabase", verifyUserAuth0InDatabase);
+router.use("/fuzzySearch", fuzzySearch);
 
 export default router;

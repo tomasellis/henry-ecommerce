@@ -21,6 +21,8 @@ export default function Products() {
         gender : string
     };
     const {gender} = useParams<GenderParams>();
+    console.log(gender);
+    
     
     useEffect(() => {
             dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined))
