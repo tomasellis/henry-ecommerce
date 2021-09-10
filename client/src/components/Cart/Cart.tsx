@@ -1,13 +1,16 @@
+import { User } from "@auth0/auth0-spa-js";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
 import "./styles.css";
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
+const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
   products: CartProductData[];
+  user_id: string
 };
 
 type CartProductData = {
@@ -26,21 +29,31 @@ type CartProductData = {
   inCartId: string;
 };
 
-const TESTID = "c369aa1c-a46c-43be-93f3-69740bab4037";
 
-const Cart = () => {
+const Cart = ({user}:{user:User}) => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
     products: [],
+    user_id:''
   });
-
+  
+  
   const updateData = async () => {
-    const data = await getProductsInCart(TESTID);
+  
+  
+    var dataUser = await axios.post(`${BASE_URL}/findOrCreateUserInDatabase`, {
+      auth0_id: user.sub,
+      email: user.email,
+      name: user.name
+    })
+
+    const data = await getProductsInCart(dataUser.data.user_id);
     if (data) {
       setProductsInCart({
         ...productsInCart,
         products: data,
         loading: "loaded",
+        user_id : dataUser.data.user_id
       });
     }
   };
@@ -89,6 +102,7 @@ const Cart = () => {
           {productsInCart.products[0] ? (
             productsInCart.products.map((product, index) => (
               <CartProductBox
+                user={productsInCart.user_id}
                 key={index}
                 product={product}
                 index={index}
