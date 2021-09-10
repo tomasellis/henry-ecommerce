@@ -106,6 +106,7 @@ export default function Filter() {
   return (
     <>
       <div className="container_filters_product">
+      {!dataFilter.category ? null : <button>{dataFilter.category}x</button>}
         <div className="btn_menu_product">
           <label htmlFor="btn_menu_product">
             <div className="cont_filter_product">
