@@ -18,7 +18,7 @@ export default function Add(){
         image_url : '',
         gender : '',
         price : '',
-        options : [{color : '', size : '', stock : ''}]
+        options : [{image_url : '', color : '', size : '', stock : ''}]
     })
 
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function Add(){
     }
     
     const handleOptions = (e) => {
-        e.preventDefault();        
+        e.preventDefault();
         setInput({
             ...input,
             options : [{ ...input.options[0], [e.target.name] : e.target.value}]
@@ -48,7 +48,7 @@ export default function Add(){
             image_url : '',
             gender: '',
             price : '',
-            options : [{color : '', size : '', stock : ''}]
+            options : [{image_url : '', color : '', size : '', stock : ''}]
         })
     }
 
@@ -68,6 +68,14 @@ export default function Add(){
                             onChange = {e => handleChange(e)}
                             />
                         </div>
+                        <div className = 'div_category_add_product'>
+                            <select name="gender" id="" onChange = {e => handleChange(e)}>
+                                <option>Gender</option>
+                                <option value="woman">Woman</option>
+                                <option value="men">Men</option>
+                                <option value="kids">Kids</option>
+                            </select>
+                        </div>
                         <Categories
                         input = {input}
                         setInput = {setInput} 
@@ -77,32 +85,32 @@ export default function Add(){
                             <button 
                             // className = {/*input.size === 'x' ? 'select' : null*/} 
                             name = 'size' 
-                            value = 'x' 
+                            value = 'X' 
                             onClick = {e => handleOptions(e)}>X</button >
                             <button  
                             // className = {/*input.size === 's' ? 'select' : null*/} 
                             name = 'size' 
-                            value = 's' 
+                            value = 'S' 
                             onClick = {e => handleOptions(e)}>S</button>
                             <button    
                             // {/*input.size === 'm' ? 'select' : null*/}  
                             name = 'size' 
-                            value = 'm' 
+                            value = 'M' 
                             onClick = {e => handleOptions(e)}>M</button>
                             <button    
                             // {/*input.size === 'l' ? 'select' : null*/}  
                             name = 'size' 
-                            value = 'l' 
+                            value = 'L' 
                             onClick = {e => handleOptions(e)}>L</button>
                             <button   
                             // {/*input.size === 'xs' ? 'select' : null*/} 
                             name = 'size' 
-                            value = 'xs' 
+                            value = 'XS' 
                             onClick = {e => handleOptions(e)}>XS</button>
                             <button    
                             // {/*input.size === 'xl' ? 'select' : null*/}
                             name = 'size' 
-                            value = 'xl' 
+                            value = 'XL' 
                             onClick = {e => handleOptions(e)}>XL</button>
                         </div>
                         <div className = 'div_colors_add_product'>
@@ -147,8 +155,10 @@ export default function Add(){
                             <p className = 'p_add_product'>Image URL</p>
                             <input type="text" 
                             name = 'image_url' 
-                            value = {input.image_url}
-                            onChange = {e => handleChange(e)}
+                            onChange = {e => {
+                                handleOptions(e);
+                                handleChange(e);
+                            }}
                             />
                         </div>
                         <div className = 'div_input_stock_adn_price'>
