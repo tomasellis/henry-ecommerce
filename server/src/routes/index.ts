@@ -13,6 +13,7 @@ import addCategoryToProduct from "./addCategoryToProduct";
 import removeCategoryFromProduct from "./removeCategoryFromProduct";
 import verifyUserAuth0InDatabase from "./verifyUserAuth0InDatabase";
 import fuzzySearch from "./fuzzySearch";
+import mercadoPago from "./mercadoPago";
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use("/addCategoryToProduct", addCategoryToProduct);
 router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
 router.use("/verifyUserAuth0InDatabase", verifyUserAuth0InDatabase);
 router.use("/fuzzySearch", fuzzySearch);
+router.use("/mercadopago", mercadoPago);
 
 export default router;
