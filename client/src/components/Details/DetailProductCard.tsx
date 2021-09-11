@@ -92,7 +92,8 @@ export const DetailsProductCard = ({
                 product_option_id: id_option,
                 quantity: 1
             });
-
+            console.log('add to cart response',dataAddToCart);
+            
             if (!dataAddToCart.data.errors) alert('producto agregado al carrito') //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
             else alert(dataAddToCart.data.errors)
 
