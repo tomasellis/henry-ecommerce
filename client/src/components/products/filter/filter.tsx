@@ -67,13 +67,13 @@ export default function Filter() {
 
   const classes = useStyles();
 
-  const handleChange = (e) => {
+/*   const handleChange = (e) => {
     e.preventDefault();
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
-  }
+  } */
 
   const inputHandler = (e) => {
     if (e.target.name !== "less_than" || e.target.name !== "greater_than") {
@@ -103,6 +103,17 @@ export default function Filter() {
     })
   }
 
+  const [data, setData] = useState([])
+
+  const removeFilter = () =>{
+    dispatch(getArticles(gender,
+      dataFilter.category,
+      dataFilter.less_than,
+      dataFilter.greater_than,
+      dataFilter.color,
+      dataFilter.size))
+  }
+
   return (
     <>
       <div className="container_filters_product">
@@ -115,7 +126,7 @@ export default function Filter() {
           </label>
       {!dataFilter.category.length ||
       <div className = 'div_quitar_filter'>
-        <button>
+        <button onClick={() => removeFilter()}>
           {dataFilter.category}
           <p>x</p>
         </button>
@@ -123,7 +134,7 @@ export default function Filter() {
       }
       {!dataFilter.color ||
       <div className = 'div_quitar_filter'>
-        <button>
+        <button onClick={() => removeFilter()}>
           {dataFilter.color}
           <p>x</p>
         </button>
@@ -131,7 +142,7 @@ export default function Filter() {
       }
       {!dataFilter.size ||
       <div className = 'div_quitar_filter'>
-        <button>
+        <button onClick={() => removeFilter()}>
           {dataFilter.size}
           <p>x</p>
         </button>
