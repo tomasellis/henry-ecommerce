@@ -67,7 +67,6 @@ export const DetailsProductCard = ({
 
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-    console.log('user auth0', user); //temporal para evitar error eslint
 
 
     async function addToCart() { //el id del producto
@@ -92,7 +91,7 @@ export const DetailsProductCard = ({
                 product_option_id: id_option,
                 quantity: 1
             });
-            console.log('add to cart response',dataAddToCart);
+            
             
             if (!dataAddToCart.data.errors) alert('producto agregado al carrito') //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
             else alert(dataAddToCart.data.errors)
