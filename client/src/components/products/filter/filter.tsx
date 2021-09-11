@@ -25,7 +25,6 @@ export default function Filter() {
     })
   };
 
-
   const [dataFilter, setDataFilter] = useState({
     gender: gender,
     category: [],
@@ -103,15 +102,16 @@ export default function Filter() {
     })
   }
 
-  const [data, setData] = useState([])
-
-  const removeFilter = () =>{
-    dispatch(getArticles(gender,
-      dataFilter.category,
-      dataFilter.less_than,
-      dataFilter.greater_than,
-      dataFilter.color,
-      dataFilter.size))
+  const removeFilter = (e) =>{
+    if(e === "category"){
+      setDataFilter({...dataFilter, category:[] })
+    }
+    else  if(e === "color"){
+      setDataFilter({...dataFilter, color:undefined })
+    }
+    else if(e === "size"){
+      setDataFilter({...dataFilter, size:undefined })
+    }
   }
 
   return (
@@ -126,7 +126,7 @@ export default function Filter() {
           </label>
       {!dataFilter.category.length ||
       <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter()}>
+        <button onClick={() => removeFilter("category")}>
           {dataFilter.category}
           <p>x</p>
         </button>
@@ -134,7 +134,7 @@ export default function Filter() {
       }
       {!dataFilter.color ||
       <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter()}>
+        <button onClick={() => removeFilter("color")}>
           {dataFilter.color}
           <p>x</p>
         </button>
@@ -142,7 +142,7 @@ export default function Filter() {
       }
       {!dataFilter.size ||
       <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter()}>
+        <button onClick={() => removeFilter("size")}>
           {dataFilter.size}
           <p>x</p>
         </button>
