@@ -113,10 +113,26 @@ export default function Filter() {
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
-      {dataFilter.category.length < 1  ? null : 
+      {!dataFilter.category.length ||
       <div className = 'div_quitar_filter'>
         <button>
           {dataFilter.category}
+          <p>x</p>
+        </button>
+      </div>
+      }
+      {!dataFilter.color ||
+      <div className = 'div_quitar_filter'>
+        <button>
+          {dataFilter.color}
+          <p>x</p>
+        </button>
+      </div>
+      }
+      {!dataFilter.size ||
+      <div className = 'div_quitar_filter'>
+        <button>
+          {dataFilter.size}
           <p>x</p>
         </button>
       </div>
