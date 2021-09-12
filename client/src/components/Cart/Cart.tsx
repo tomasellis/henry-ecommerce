@@ -1,12 +1,12 @@
 import { User } from "@auth0/auth0-spa-js";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
-import { setTimeout } from "timers";
 import CartProductBox from "./CartProductBox";
-import CheckoutForm from "./CheckoutForm";
 import "./styles.css";
 
-const { REACT_APP_BASE_BACKEND_URL } = process.env;
+const MercadoPago = window[`MercadoPago`];
+
+const { REACT_APP_BASE_BACKEND_URL, REACT_APP_MP_PUBLIC_KEY } = process.env;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -73,6 +73,8 @@ const Cart = ({ user }: { user: User }) => {
     active: false,
   });
 
+  const [checkoutButton, setCheckoutButton] = useState(null);
+
   const updateData = async () => {
     var dataUser = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/findOrCreateUserInDatabase`,
@@ -104,9 +106,26 @@ const Cart = ({ user }: { user: User }) => {
       ...toCheckout,
       checkoutData: createCheckoutData(productsInCart.products, 6, "", user),
     });
+
     // eslint-disable-next-line
   }, [productsInCart]);
 
+  useEffect(() => {
+    (async () => {
+      const checkoutId = await createPreference(toCheckout.checkoutData);
+      const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
+        locale: "es-AR",
+      });
+
+      const checkout = mp.checkout({
+        preference: {
+          id: checkoutId,
+          autoOpen: true, // Habilita la apertura automática del Checkout Pro
+        },
+      });
+      setCheckoutButton(checkout);
+    })();
+  }, [toCheckout.checkoutData]);
   switch (productsInCart.loading) {
     case "error":
       return <div>An error has ocurred</div>;
@@ -171,31 +190,19 @@ const Cart = ({ user }: { user: User }) => {
             )}
           </div>
           <div>
-            {toCheckout.active === false && productsInCart.products[0] ? (
-              <div
-                onClick={() => {
-                  const cartList = document.getElementById("cartListDisplay");
-                  cartList.className = "fade-out";
-                  setTimeout(() => {
-                    cartList.hidden = true;
-                  }, 2000);
-                  setToCheckout({ ...toCheckout, active: true });
-                }}
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  border: "2px solid blue",
-                  alignSelf: "center",
-                }}
-              >
-                To Checkout
-              </div>
-            ) : (
-              <CheckoutForm
-                active={toCheckout.active}
-                data={toCheckout.checkoutData}
-              />
-            )}
+            <button
+              style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                border: "2px solid blue",
+                alignSelf: "center",
+                borderRadius: "5px",
+              }}
+              onClick={() => checkoutButton.open()}
+            >
+              Checkout
+            </button>
+            <div className="bnRender"></div>
           </div>
         </>
       );
@@ -240,4 +247,14 @@ const createCheckoutData = (
     }),
   };
   return data;
+};
+
+const createPreference = async (data) => {
+  const res = await axios.post(
+    `${REACT_APP_BASE_BACKEND_URL}/mercadopago/create_preference`,
+    data
+  );
+  if (res) {
+    return res.data.response.id;
+  }
 };
