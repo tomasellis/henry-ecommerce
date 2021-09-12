@@ -42,6 +42,9 @@ type CheckoutData = {
   items: CheckoutItem[];
   id: string;
   installments: number;
+  payer: {
+    email: string;
+  };
 };
 
 type ToCheckout = {
@@ -58,6 +61,9 @@ const Cart = ({ user }: { user: User }) => {
 
   const [toCheckout, setToCheckout] = useState<ToCheckout>({
     checkoutData: {
+      payer: {
+        email: "",
+      },
       id: "",
       installments: 0,
       items: [
@@ -96,7 +102,7 @@ const Cart = ({ user }: { user: User }) => {
   useEffect(() => {
     setToCheckout({
       ...toCheckout,
-      checkoutData: createCheckoutData(productsInCart.products, 6, ""),
+      checkoutData: createCheckoutData(productsInCart.products, 6, "", user),
     });
     // eslint-disable-next-line
   }, [productsInCart]);
@@ -214,11 +220,15 @@ const getProductsInCart = async (userId: string) => {
 const createCheckoutData = (
   products: CartProductData[],
   installments: number,
-  id: string
+  id: string,
+  user: any
 ): CheckoutData => {
   const data: CheckoutData = {
     id: `${id}`,
     installments: installments,
+    payer: {
+      email: user.email,
+    },
     items: products.map((item) => {
       return {
         id: "fashion",
