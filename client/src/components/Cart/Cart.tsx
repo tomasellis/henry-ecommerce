@@ -7,6 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import "./styles.css";
 import { Switch } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 const MercadoPago = window[`MercadoPago`];
 
@@ -65,6 +66,8 @@ const Cart = ({ user }: { user: User }) => {
     products: [],
     user_id: "",
   });
+
+  const history = useHistory();
 
   const [toCheckout, setToCheckout] = useState<ToCheckout>({
     checkoutData: {
@@ -166,7 +169,7 @@ const Cart = ({ user }: { user: User }) => {
 
     case "loaded":
       return (
-        <>
+        <div>
           <span>ESTAS EN EL CART DE USUARIO</span>
           <div className="cartDisplay" id={"cartListDisplay"}>
             {productsInCart.products[0] ? (
@@ -210,33 +213,51 @@ const Cart = ({ user }: { user: User }) => {
               </div>
             )}
           </div>
-          <div>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={checkoutButton.active}
-                  onChange={handleChange}
-                  name="checkedB"
-                  color="primary"
-                />
-              }
-              label="Check when ready for payment"
-            />
-            <button
-              disabled={!checkoutButton.active}
-              style={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                border: "2px solid blue",
-                alignSelf: "center",
-                borderRadius: "5px",
-              }}
-              onClick={() => checkoutButton.button.open()}
-            >
-              Checkout
-            </button>
-          </div>
-        </>
+          {productsInCart.products[0] ? (
+            <div id="checkoutForm">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={checkoutButton.active}
+                    onChange={handleChange}
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label="Check when ready for payment"
+              />
+              <button
+                disabled={!checkoutButton.active}
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  border: "2px solid blue",
+                  alignSelf: "center",
+                  borderRadius: "5px",
+                }}
+                onClick={async () => {
+                  const list = document.getElementById("cartListDisplay");
+                  list.className = "fade-out";
+                  setTimeout(() => {
+                    list.hidden = true;
+                  }, 2000);
+                  await axios.post(
+                    `${REACT_APP_BASE_BACKEND_URL}/deleteUserCart`,
+                    { userId: `${productsInCart.user_id}` }
+                  );
+                  checkoutButton.button.open();
+                  const checkoutForm = document.getElementById("checkoutForm");
+                  checkoutForm.hidden = true;
+                  history.push("/");
+                }}
+              >
+                Checkout
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
       );
     default:
       return <div>Loading ;)</div>;
