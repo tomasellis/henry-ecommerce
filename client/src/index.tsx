@@ -17,7 +17,7 @@ ReactDOM.render(
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.origin}
+      redirectUri={`${window.location.origin}/loggedin`}
     >
       <Provider store={store}>
         <CookiesProvider>

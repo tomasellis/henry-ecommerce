@@ -31,7 +31,7 @@ export default function Products() {
     return(
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
-            <Filter/>
+            <Filter/> 
             {
                 articles?.map((e,i) => {
                     return (
