@@ -169,7 +169,7 @@ export default function Filter() {
               aria-labelledby="dropdownMenuButton1"
             >
               <li>
-                <button className="dropdown-item" id="t-shirt" name="category">
+                <button className="dropdown-item" id="tshirts" name="category">
                   T-SHIRT
                 </button>
               </li>
@@ -181,7 +181,7 @@ export default function Filter() {
               </li>
               <hr className="hr_filter_product" />
               <li>
-                <button className="dropdown-item" id="jacket" name="category">
+                <button className="dropdown-item" id="jackets" name="category">
                   JACKETS
                 </button>
               </li>

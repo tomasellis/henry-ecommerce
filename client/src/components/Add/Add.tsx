@@ -1,4 +1,12 @@
-import { useState } from 'react'
+import {  useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+//import component
+import Categories from './Categories/categories';
+import OptionsAdd from './Options/Options';
+
+//import action
+import { postProduct } from '../../actions';
 
 //import css 
 import './Add.css'
@@ -7,15 +15,44 @@ export default function Add(){
 
     const [input, setInput] = useState({
         name: '',
-        category : '',
-        size : '',
-        colors : '',
+        categories : [],
+        image_url : '',
+        gender : '',
         price : '',
-        stock : '',
-        image : ''
+        options : [{image_url : '#', color : '', size : '', stock : ''}]
     })
-    console.log(setInput);
     
+    const dispatch = useDispatch();
+    
+    const handleChange = (e) => {
+        setInput({
+            ...input,
+            [e.target.name] : e.target.value
+        })
+    }
+    
+    const handleOptions = (e) => {
+        e.preventDefault();
+        setInput({
+            ...input,
+            options : [{ ...input.options[0], [e.target.name] : e.target.value}]
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postProduct(input))
+        console.log(input);
+        setInput({
+            name: '',
+            categories : [],
+            image_url : '',
+            gender: '',
+            price : '',
+            options : [{image_url : '#', color : '', size : '', stock : ''}]
+        })
+    }
+
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>
@@ -23,46 +60,58 @@ export default function Add(){
                 </div>
                 <div className = 'div_form_add_product'>
                     <h1 className = 'title_add_product'>Create Product</h1>
-                    <form action="">
+                    <form >
                         <div className = 'div_name_add_product'>
                             <p className = 'p_add_product'>Name</p>
-                            <input type="text" />
+                            <input type="text" 
+                            name = 'name' 
+                            value = {input.name} 
+                            onChange = {e => handleChange(e)}
+                            />
                         </div>
                         <div className = 'div_category_add_product'>
-                            <select name="" id="">
-                                <option value="category">Category</option>
-                                <option value="shirt">T-shirt</option>
-                                <option value="pants">Pants</option>
-                                <option value="jacket">Jacket</option>
-                                <option value="diver">Diver</option>
-                            </select>
-                            <button>+</button>
-                        </div>
-                        <div className = 'div_size_add_product'>
-                            <p className = 'p_add_product'>Size</p>
-                            <button id = 'x'>X</button>
-                            <button id = 's'>S</button>
-                            <button id = 'm'>M</button>
-                            <button id = 'l'>L</button>
-                            <button id = 'xs'>XS</button>
-                            <button id = 'xl'>XL</button>
-                        </div>
-                        <div className = 'div_colors_add_product'>
-                            <p className = 'p_add_product'>Colors</p>
-                            <button className = 'color_one_filter color_filter' id = 'white'></button>
-                            <button className = 'color_two_filter color_filter' id = 'black'></button>
-                            <button className = 'color_three_filter color_filter' id = 'grey'></button>
-                            <button className = 'color_four_filter color_filter' id = 'green'></button>
-                            <button className = 'color_five_filter color_filter' id = 'yellow' ></button>
-                            <button className = 'color_six_filter color_filter' id = 'pink'></button>
-                            <button className = 'color_seven_filter color_filter' id = 'sienna'></button>
+                            <Categories
+                            handleChange = {handleChange}
+                            input = {input}
+                            setInput = {setInput} 
+                            />
                         </div>
                         <div className = 'div_image_add_product'>
                             <p className = 'p_add_product'>Image URL</p>
-                            <input type="text" />
+                            <input type="text" 
+                            name = 'image_url' 
+                            value = {input.image_url}
+                            onChange = {e => {
+                                handleChange(e);
+                            }}
+                            />
+                        </div>
+                        <OptionsAdd 
+                        input = {input}
+                        setInput = {input}
+                        handleOptions = {handleOptions}
+                        />
+                        <div className = 'div_input_stock_adn_price'>
+                            <div>
+                                <p className = 'p_add_product'>Stock</p>
+                                <input type="number" 
+                                name = 'stock' 
+                                min = '1'
+                                onChange = {e => handleOptions(e)}
+                                />
+                            </div>
+                            <div>
+                                <p className = 'p_add_product'>Price</p>
+                                <input type="number" 
+                                min = '1'
+                                name = 'price' 
+                                value = {input.price} 
+                                onChange = {e => handleChange(e)}
+                                />
+                            </div>
                         </div>
                         <div className = 'div_button_add_product'>
-                            <button>Add</button>
+                            <button onClick = {e => handleSubmit(e)}>Add</button>
                         </div>
                     </form>
                 </div>
