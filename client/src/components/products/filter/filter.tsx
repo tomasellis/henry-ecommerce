@@ -45,7 +45,7 @@ export default function Filter() {
         dataFilter.greater_than,
         dataFilter.color,
         dataFilter.size,
-        page,
+        0,
         8
       )
     )
