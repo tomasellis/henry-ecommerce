@@ -218,3 +218,25 @@
     border: sienna;
     background-color: sienna;
 }
+
+
+/*quitar filter*/
+.div_quitar_filter {
+    display: inline-flex;
+    margin-left: 15px;
+}
+
+.div_quitar_filter button{
+    color: rgba(0, 0, 0, 0.651);
+    border: 1px solid #ffffff3d;
+    padding: 8px;
+    width: 100px;
+    height: 39px;
+    cursor: pointer;
+    display: inline-flex;
+    background-color: #E5E5E5;
+}
+
+.div_quitar_filter p{
+    margin-left: 25px;
+}
