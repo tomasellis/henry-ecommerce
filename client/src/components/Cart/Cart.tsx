@@ -2,7 +2,11 @@ import { User } from "@auth0/auth0-spa-js";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
+
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+
 import "./styles.css";
+import { Switch } from "@material-ui/core";
 
 const MercadoPago = window[`MercadoPago`];
 
@@ -36,7 +40,7 @@ type CheckoutItem = {
   unit_price: number;
   quantity: number;
   description: string;
-};
+} | null;
 
 type CheckoutData = {
   items: CheckoutItem[];
@@ -47,8 +51,11 @@ type CheckoutData = {
   };
 };
 
-type ToCheckout = {
+type CheckoutButton = {
   active: boolean;
+  button: any;
+};
+type ToCheckout = {
   checkoutData: CheckoutData;
 };
 
@@ -66,14 +73,19 @@ const Cart = ({ user }: { user: User }) => {
       },
       id: "",
       installments: 0,
-      items: [
-        { id: "", description: "", quantity: 0, title: "", unit_price: 0 },
-      ],
+      items: null,
     },
-    active: false,
   });
 
-  const [checkoutButton, setCheckoutButton] = useState(null);
+  const [checkoutButton, setCheckoutButton] = useState<CheckoutButton>({
+    active: false,
+    button: null,
+  });
+
+  const handleChange = (event) => {
+    console.log(event.target.checked);
+    setCheckoutButton({ ...checkoutButton, active: event.target.checked });
+  };
 
   const updateData = async () => {
     var dataUser = await axios.post(
@@ -111,21 +123,29 @@ const Cart = ({ user }: { user: User }) => {
   }, [productsInCart]);
 
   useEffect(() => {
-    (async () => {
-      const checkoutId = await createPreference(toCheckout.checkoutData);
-      const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
-        locale: "es-AR",
-      });
+    console.log(toCheckout.checkoutData.items, "array");
+    if (
+      toCheckout.checkoutData.items !== null &&
+      toCheckout.checkoutData.items.length > 0 &&
+      checkoutButton.active === true
+    ) {
+      (async () => {
+        const checkoutId = await createPreference(toCheckout.checkoutData);
+        const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
+          locale: "es-AR",
+        });
 
-      const checkout = mp.checkout({
-        preference: {
-          id: checkoutId,
-          autoOpen: true, // Habilita la apertura automática del Checkout Pro
-        },
-      });
-      setCheckoutButton(checkout);
-    })();
-  }, [toCheckout.checkoutData]);
+        const checkout = mp.checkout({
+          preference: {
+            id: checkoutId,
+          },
+        });
+        setCheckoutButton({ ...checkoutButton, button: checkout });
+      })();
+    }
+    // eslint-disable-next-line
+  }, [toCheckout.checkoutData, checkoutButton.active]);
+
   switch (productsInCart.loading) {
     case "error":
       return <div>An error has ocurred</div>;
@@ -173,6 +193,7 @@ const Cart = ({ user }: { user: User }) => {
                   index={index}
                   productsInCart={productsInCart.products}
                   updateData={updateData}
+                  active={!checkoutButton.active}
                 ></CartProductBox>
               ))
             ) : (
@@ -190,7 +211,19 @@ const Cart = ({ user }: { user: User }) => {
             )}
           </div>
           <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={checkoutButton.active}
+                  onChange={handleChange}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Check when ready for payment"
+            />
             <button
+              disabled={!checkoutButton.active}
               style={{
                 fontSize: "20px",
                 fontWeight: "bold",
@@ -198,11 +231,10 @@ const Cart = ({ user }: { user: User }) => {
                 alignSelf: "center",
                 borderRadius: "5px",
               }}
-              onClick={() => checkoutButton.open()}
+              onClick={() => checkoutButton.button.open()}
             >
               Checkout
             </button>
-            <div className="bnRender"></div>
           </div>
         </>
       );

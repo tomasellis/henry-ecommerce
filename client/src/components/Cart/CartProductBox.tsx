@@ -7,7 +7,8 @@ type CartProductBoxProps = {
   index: number;
   productsInCart: CartProductData[];
   updateData: () => Promise<void>;
-  user:string
+  user: string;
+  active: boolean;
 };
 
 type CartProductData = {
@@ -40,8 +41,6 @@ type InsertResponse = {
 type FetchInfo = "loading" | "loaded" | "error";
 
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-
-
 
 const CartProductBox = (props: CartProductBoxProps) => {
   const [quantity, setQuantity] = useState(
@@ -92,7 +91,11 @@ const CartProductBox = (props: CartProductBoxProps) => {
       </div>
       <button
         className="button"
-        disabled={props.product.productOption.optionQuantity > 1 ? false : true}
+        disabled={
+          props.product.productOption.optionQuantity > 1
+            ? !props.active ?? false
+            : true
+        }
         onClick={async (event) => {
           setFetchingInfo("loading");
           await handleOnClick(false, props.product, props.user);
@@ -108,7 +111,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         ref={inputRef}
         className="stockInput"
         value={quantity}
-        disabled={fetchingInfo === "loading" ? true : false}
+        disabled={fetchingInfo === "loading" ? true : !props.active ?? false}
         type={"number"}
         onChange={(event) => {
           event.preventDefault();
@@ -151,7 +154,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         disabled={
           props.product.productOption.optionQuantity <
           props.product.productOption.optionStock
-            ? false
+            ? !props.active ?? false
             : true
         }
         onClick={async (event) => {
@@ -165,6 +168,12 @@ const CartProductBox = (props: CartProductBoxProps) => {
         <span style={{ alignSelf: "center" }}>+</span>
       </button>
       <button
+        disabled={
+          props.product.productOption.optionQuantity <
+          props.product.productOption.optionStock
+            ? !props.active ?? false
+            : true
+        }
         className="button"
         style={{
           borderColor: "red",
