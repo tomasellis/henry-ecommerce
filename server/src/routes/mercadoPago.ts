@@ -27,6 +27,7 @@ type MercadopagoPreference = {
     excluded_payment_types: ExcludedType[];
     installments: number;
   };
+  payer: any;
 };
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:4000";
@@ -43,8 +44,9 @@ mercadopago.configure({ access_token: MPACCESS_TOKEN });
 router.post(
   "/create_preference",
   async (req: Request, response: Response, next: NextFunction) => {
-    const { items, id, installments, excluded_payment_types } = req.body;
+    const { items, id, installments, excluded_payment_types, payer } = req.body;
     console.log("datahere", items);
+
     const items_body: MercadopagoItems[] = items as MercadopagoItems[];
     const id_body: string = id as string;
     const installments_body: number = installments as number;
@@ -63,6 +65,7 @@ router.post(
         excluded_payment_types: excluded_payment_types_body ?? [],
         installments: installments_body,
       },
+      payer,
     };
 
     try {
