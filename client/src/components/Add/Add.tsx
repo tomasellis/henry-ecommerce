@@ -1,11 +1,12 @@
-import {  useState } from 'react'
-import { useDispatch } from 'react-redux'
+import {  useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 //import component
-import Categories from './Categories/categories'
+import Categories from './Categories/categories';
+import OptionsAdd from './Options/Options';
 
 //import action
-import { postProduct } from '../../actions'
+import { postProduct } from '../../actions';
 
 //import css 
 import './Add.css'
@@ -69,94 +70,10 @@ export default function Add(){
                             />
                         </div>
                         <div className = 'div_category_add_product'>
-                            <select className = 'select_category_add_product' name="gender" id="" onChange = {e => handleChange(e)}>
-                                <option>Gender</option>
-                                <option value="women">Woman</option>
-                                <option value="men">Men</option>
-                                <option value="kids">Kids</option>
-                            </select>
-                        <Categories
-                        input = {input}
-                        setInput = {setInput} 
-                        />
-                        </div>
-                        <div className = 'div_size_add_product'>
-                            <p className = 'p_add_product'>Size</p>
-                            <button 
-                            className = {input.options[0].size === 'X' ? 'select' : null} 
-                            name = 'size' 
-                            value = 'X' 
-                            onClick = {e => handleOptions(e)}>X</button>
-                            
-                            <button  
-                            className = {input.options[0].size === 'S' ? 'select' : null} 
-                            name = 'size' 
-                            value = 'S' 
-                            onClick = {e => handleOptions(e)}>S</button>
-                            <button    
-                            className = {input.options[0].size === 'M' ? 'select' : null} 
-                            name = 'size' 
-                            value = 'M' 
-                            onClick = {e => handleOptions(e)}>M</button>
-                            <button    
-                            className = {input.options[0].size === 'L' ? 'select' : null} 
-                            name = 'size' 
-                            value = 'L' 
-                            onClick = {e => handleOptions(e)}>L</button>
-                            <button   
-                            className = {input.options[0].size === 'XS' ? 'select' : null}  
-                            name = 'size' 
-                            value = 'XS' 
-                            onClick = {e => handleOptions(e)}>XS</button>
-                            <button    
-                            className = {input.options[0].size === 'XL' ? 'select' : null} 
-                            name = 'size' 
-                            value = 'XL' 
-                            onClick = {e => handleOptions(e)}>XL</button>
-                        </div>
-                        <div className = 'div_colors_add_product'>
-                            <p className = 'p_add_product'>Color</p>
-                            <button 
-                            className = {input.options[0].color === 'white' ? 'color_select color_one_filter' : 'color_one_filter color_filter'}
-                             name = 'color' 
-                             value = 'white'
-                             onClick = {e => handleOptions(e)}
-                             />
-                            <button
-                            className = {input.options[0].color === 'black' ? 'color_select color_two_filter' : 'color_two_filter color_filter'}
-                             name = 'color' 
-                             value = 'black'
-                             onClick = {e => handleOptions(e)}
-                             />
-                            <button
-                            className = {input.options[0].color === 'grey' ? 'color_select color_three_filter' : 'color_three_filter color_filter'}
-                            name = 'color' 
-                            value = 'grey'
-                            onClick = {e => handleOptions(e)}
-                            />
-                            <button
-                            className = {input.options[0].color === 'green' ? 'color_select color_four_filter' : 'color_four_filter color_filter'}
-                            name = 'color' 
-                            value = 'green'
-                            onClick = {e => handleOptions(e)}
-                            />
-                            <button
-                            className = {input.options[0].color === 'yellow' ? 'color_select color_five_filter' : 'color_five_filter color_filter'}
-                            name = 'color' 
-                            value = 'yellow'
-                            onClick = {e => handleOptions(e)}
-                            />
-                            <button
-                            className = {input.options[0].color === 'pink' ? 'color_select color_six_filter' : 'color_six_filter color_filter'}
-                            name = 'color' 
-                            value = 'pink'
-                            onClick = {e => handleOptions(e)}
-                            />
-                            <button
-                            className = {input.options[0].color === 'sienna' ? 'color_select color_seven_filter' : 'color_seven_filter color_filter'}
-                            name = 'color' 
-                            value = 'sienna'
-                            onClick = {e => handleOptions(e)}
+                            <Categories
+                            handleChange = {handleChange}
+                            input = {input}
+                            setInput = {setInput} 
                             />
                         </div>
                         <div className = 'div_image_add_product'>
@@ -169,6 +86,11 @@ export default function Add(){
                             }}
                             />
                         </div>
+                        <OptionsAdd 
+                        input = {input}
+                        setInput = {input}
+                        handleOptions = {handleOptions}
+                        />
                         <div className = 'div_input_stock_adn_price'>
                             <div>
                                 <p className = 'p_add_product'>Stock</p>

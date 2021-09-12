@@ -7,6 +7,7 @@
 }
 
 .title_add_product{
+    margin-left: 5px;
     margin-bottom: 10px;
 }
 
@@ -36,7 +37,7 @@
 }
 
 .div_category_add_product .select_category_add_product{
-    padding: 5px 25px;
+    padding: 5px 28px;
     margin-right: 20px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
@@ -49,7 +50,7 @@
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 5px 27px;
+    padding: 5px 26px;
 }
 
 .div_size_add_product{
