@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CartStorageProductBox from "./CartStorageProductBox";
 import "./styles.css";
@@ -9,45 +9,42 @@ type ProductsInCart = {
 };
 
 type CartProductData = {
-  id,
-  name,
-  image_url,
-  price,
-  id_option,
-  color,
-  size,
-  stock,
-  product,
-  quantity
+  id;
+  name;
+  image_url;
+  price;
+  id_option;
+  color;
+  size;
+  stock;
+  product;
+  quantity;
 };
 
 interface RootState {
-  cart: Array<CartProductData>,
+  cart: Array<CartProductData>;
 }
 
-
 const CartLocalStorage = () => {
-
-  const state = useSelector((state: RootState) => state)
+  const state = useSelector((state: RootState) => state);
 
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
     products: [],
   });
 
-
   useEffect(() => {
     setProductsInCart({
-      loading: 'loaded',
-      products: state.cart
-    })
+      loading: "loaded",
+      products: state.cart,
+    });
 
     return () => {
       setProductsInCart({
         loading: "loading",
         products: [],
-      })
-    }
+      });
+    };
     // eslint-disable-next-line
   }, [state.cart]);
 
@@ -101,4 +98,3 @@ const CartLocalStorage = () => {
 };
 
 export default CartLocalStorage;
-
