@@ -10,7 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
   products: CartProductData[];
-  user_id: string
+  user_id: string;
 };
 
 type CartProductData = {
@@ -29,23 +29,19 @@ type CartProductData = {
   inCartId: string;
 };
 
-
-const Cart = ({user}:{user:User}) => {
+const Cart = ({ user }: { user: User }) => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
     products: [],
-    user_id:''
+    user_id: "",
   });
-  
-  
+
   const updateData = async () => {
-  
-  
     var dataUser = await axios.post(`${BASE_URL}/findOrCreateUserInDatabase`, {
       auth0_id: user.sub,
       email: user.email,
-      name: user.name
-    })
+      name: user.name,
+    });
 
     const data = await getProductsInCart(dataUser.data.user_id);
     if (data) {
@@ -53,7 +49,7 @@ const Cart = ({user}:{user:User}) => {
         ...productsInCart,
         products: data,
         loading: "loaded",
-        user_id : dataUser.data.user_id
+        user_id: dataUser.data.user_id,
       });
     }
   };
@@ -137,7 +133,7 @@ const getProductsInCart = async (userId: string) => {
     const { data }: AxiosResponse<CartProductData[]> = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
-    console.log('data cart get products in cart', data);
+    console.log("data cart get products in cart", data);
     return data;
   } catch (err) {
     console.error(err);
