@@ -178,6 +178,7 @@ const Cart = ({ user }: { user: User }) => {
     } else {
       setShippingForm({ ...shippingForm, formComplete: false });
     }
+    // eslint-disable-next-line
   }, [shippingForm.shippingAddress]);
 
   switch (productsInCart.loading) {
