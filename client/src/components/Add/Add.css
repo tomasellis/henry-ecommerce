@@ -12,28 +12,34 @@
 }
 
 .image_add_product{
-    margin-left: 50px;
+    margin-left: 80px;
     margin-top: 65px;
 }
 
 .div_form_add_product{
-    margin-left: 100px;
+    margin-left: 150px;
     margin-top: 25px;
 }
 
 .p_add_product{
     color: black;
-    margin-bottom: auto;
+    margin-bottom: 0px;
     font-size: 15px;
 }
 
 .div_name_add_product {
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
 .div_category_add_product{
     max-width: 400px;
     margin-bottom: 10px;
+}
+
+.div_category_add_product input{
+    margin-top: 20px;
+    text-align: center;
+    width: 250px;
 }
 
 .div_category_add_product .select_category_add_product{
@@ -50,22 +56,23 @@
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 5px 26px;
+    padding: 3px 17px;
 }
 
 .div_size_add_product{
-    margin-bottom: 2%;
+    display: inline-flex;
+    margin-bottom: 10px;
 }
 
 .div_size_add_product p{
-    margin-bottom: 2%;
+    margin-bottom: 7px;
 }
 
 .div_size_add_product button{
     background-color: white;
     color: black;
-    margin-right: 5%;
-    padding: 2% 3.5%;
+    margin-right: 20px;
+    padding: 7px 12px;
     border: rgba(0, 0, 0, 0.548) 1px solid;
 }   
 
@@ -74,13 +81,14 @@
 }
 
 .div_colors_add_product{
-    margin-bottom: 3%;
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
 .div_colors_add_product button{
-    width: 2rem;
-    height: 2rem;
-    margin-right: 1rem;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
 }
 
 .color_select {
@@ -89,10 +97,11 @@
 }
 
 .div_image_add_product{
-    margin-bottom: 4%;
+    margin-bottom: 15px;
 }
 
 .div_button_add_product button{
+    border-radius: 2px;
     padding: 5px 147px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
@@ -101,7 +110,7 @@
 }
 
 .div_input_stock_adn_price{
-    display: inline-flex;
+    display: block ruby;
     margin-bottom: 20px;
 }
 
@@ -111,3 +120,8 @@
     width: 100px;
 }
 
+.err_add_product{
+    font-size: 13px;
+    margin-top: 2px;
+    color: red;
+}

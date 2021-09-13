@@ -83,14 +83,14 @@ const Cart = ({ user }: { user: User }) => {
           {productsInCart.products[0] ? (
             <div className="cartProductBox cartLabels">
               <div></div>
-              <div>Name</div>
-              <div>Available</div>
+              <div>Nombre</div>
+              <div>Disponibles</div>
               <div></div>
-              <div>Amount</div>
+              <div>Cantidad</div>
               <div></div>
               <div></div>
               <div></div>
-              <div>Price</div>
+              <div>Precio</div>
             </div>
           ) : (
             ""

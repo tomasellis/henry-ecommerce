@@ -15,7 +15,6 @@ import { Link as link } from "@material-ui/core";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
-import SearchList from "../SearchList";
 
 
 export default function NavBar() {
@@ -123,7 +122,6 @@ export default function NavBar() {
         <div className={classes.div}>
           <div>
             <Search />
-            <SearchList/>
           </div>
 
           <div className={classes.bolsa}>
@@ -148,10 +146,9 @@ export default function NavBar() {
                   <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </button>
               )}
-                <Link to = '/created' style={{textDecoration:"none", marginTop:"16px"}}> 
-                Add
+                <Link to = '/created'> 
+                Agregar
                 </Link>
-
             </p>
           </div>
         </div>
@@ -188,11 +185,8 @@ export default function NavBar() {
         </Drawer>
 
         <div className={classes.searchMobile}>
-          <Search />
-
-        <div className={classes.listMobile}>
-          <SearchList/>
-        </div>
+          {" "}
+          <Search />{" "}
         </div>
       </Toolbar>
     );
@@ -247,8 +241,6 @@ const useStyles = makeStyles((theme) => ({
     background: "rgba(255, 255, 255, 0.767)",
   },
   login: {
-    alignItems: "center",
-    display:"flex",
     fontWeight: "bold",
     fontSize: "18px",
     marginLeft: "10px",
@@ -269,12 +261,8 @@ const useStyles = makeStyles((theme) => ({
   searchMobile: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     flexGrow: 1,
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  listMobile:{
-    marginRight: '250px'
   },
   menu: {
     color: "#000",

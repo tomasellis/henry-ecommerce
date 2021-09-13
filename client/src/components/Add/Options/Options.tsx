@@ -3,21 +3,63 @@ import { useDispatch, useSelector } from "react-redux"
 
 //import action
 import { getOptions } from "../../../actions"
+import { validate } from "../Add"
 
 
-export default function OptionsAdd({input, setInput, handleOptions}){
+export default function OptionsAdd({input, setInput, handleOptions, err, setErr}){
 
     const dispatch = useDispatch();
     const options = useSelector((state : any) => state.options);
     useEffect(() => {
         dispatch(getOptions());
-    }, [dispatch])
-
-    console.log(options);
+    }, [dispatch]);
     
     return(
         <>
-            <div className = 'div_size_add_product'>
+            <p className = 'p_add_product'>Size</p>
+                {
+                    options.size?.map(e => {                         
+                        return(
+                            <div className = 'div_size_add_product'>
+                                <button
+                                key = {e.name}
+                                className = {input.options[0].size === e.name ? 'select' : null}
+                                name = 'size' 
+                                value = {e.name}
+                                onClick = {e => handleOptions(e)}
+                                >{e.name}</button>
+                            </div>
+                        )
+                    })
+                }
+                {
+                    !err.size ? null : <p className = 'err_add_product'>{err.size}</p>
+                }
+            <p className = 'p_add_product'>Color</p>
+            {
+                options.colors?.map(e => {
+                    const colorsButton = {
+                        backgroundColor: e.name,
+                    }
+                    return(
+                        <div className = 'div_colors_add_product'>
+                            <button 
+                            key = {e.name}
+                            style = {colorsButton}
+                            className = {input.options[0].color === e.name ? 'color_select color_one_filter' : 'color_one_filter color_filter'}
+                            name = 'color' 
+                            value = {e.name}
+                            onClick = {e => handleOptions(e)}
+                            />
+                        </div>
+                    )
+                })
+            }
+            {
+                !err.color ? null : <p className = 'err_add_product'>{err.color}</p>
+            }
+
+            {/* <div className = 'div_size_add_product'>
                 <p className = 'p_add_product'>Size</p>
                 <button 
                 className = {input.options[0].size === 'X' ? 'select' : null} 
@@ -49,8 +91,8 @@ export default function OptionsAdd({input, setInput, handleOptions}){
                 name = 'size' 
                 value = 'XL' 
                 onClick = {e => handleOptions(e)}>XL</button>
-            </div>
-            <div className = 'div_colors_add_product'>
+            </div> */}
+            {/* <div className = 'div_colors_add_product'>
                 <p className = 'p_add_product'>Color</p>
                 <button 
                 className = {input.options[0].color === 'white' ? 'color_select color_one_filter' : 'color_one_filter color_filter'}
@@ -94,7 +136,7 @@ export default function OptionsAdd({input, setInput, handleOptions}){
                 value = 'sienna'
                 onClick = {e => handleOptions(e)}
                 />
-            </div>
+            </div> */}
 
         </>
     )

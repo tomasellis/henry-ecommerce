@@ -9,9 +9,34 @@ import OptionsAdd from './Options/Options';
 import { postProduct } from '../../actions';
 
 //import css 
-import './Add.css'
+import './Add.css';
+
+export const validate = (input) => {
+    let err = {
+        name : '',
+        size : '',
+        color : '',
+        price : '',
+        stock : '',
+    };
+    const error = 'This field can not be blank';
+    if(!input.name) err.name = error;
+    if(!input.options[0].size) err.size = error;
+    if(!input.options[0].color) err.color = error;
+    if(!input.options[0].stock) err.stock = error;
+    if(!input.price) err.price = error;
+    return err; 
+};
 
 export default function Add(){
+
+    const[err, setErr] = useState({
+        name : '',
+        size : '',
+        color : '',
+        price : '',
+        stock : ''
+    })
 
     const [input, setInput] = useState({
         name: '',
@@ -20,7 +45,7 @@ export default function Add(){
         gender : '',
         price : '',
         options : [{image_url : '#', color : '', size : '', stock : ''}]
-    })
+    });
     
     const dispatch = useDispatch();
     
@@ -28,35 +53,48 @@ export default function Add(){
         setInput({
             ...input,
             [e.target.name] : e.target.value
-        })
-    }
+        });
+        setErr(validate({
+            ...input,
+            [e.target.name] : e.target.value
+        }));
+    };
     
     const handleOptions = (e) => {
         e.preventDefault();
         setInput({
             ...input,
             options : [{ ...input.options[0], [e.target.name] : e.target.value}]
-        })
-    }
+        });
+        setErr(validate({
+            ...input,
+            [e.target.name] : e.target.value
+        }));
+    };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(postProduct(input))
-        console.log(input);
-        setInput({
-            name: '',
-            categories : [],
-            image_url : '',
-            gender: '',
-            price : '',
-            options : [{image_url : '#', color : '', size : '', stock : ''}]
-        })
-    }
+        if(!err.name && input.gender && input.price && input.options[0].color && input.options[0].size){
+            e.preventDefault();
+            dispatch(postProduct(input))
+            setInput({
+                name: '',
+                categories : [],
+                image_url : '',
+                gender: '',
+                price : '',
+                options : [{image_url : '#', color : '', size : '', stock : ''}]
+            });
+            alert('Product created successfully');
+        } else {
+            e.preventDefault();
+            alert('There are empty fields');
+        }
+    };
 
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>
-                    <img src="https://images.unsplash.com/photo-1619032561786-ff6c371e0c74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=537&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1619032561786-ff6c371e0c74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=537&q=80" alt="no cargo :(" />
                 </div>
                 <div className = 'div_form_add_product'>
                     <h1 className = 'title_add_product'>Create Product</h1>
@@ -68,6 +106,9 @@ export default function Add(){
                             value = {input.name} 
                             onChange = {e => handleChange(e)}
                             />
+                            {
+                                !err.name ? null : <p className = 'err_add_product'>{err.name}</p>
+                            }
                         </div>
                         <div className = 'div_category_add_product'>
                             <Categories
@@ -88,7 +129,9 @@ export default function Add(){
                         </div>
                         <OptionsAdd 
                         input = {input}
-                        setInput = {input}
+                        setInput = {setInput}
+                        err = {err}
+                        setErr = {setErr}
                         handleOptions = {handleOptions}
                         />
                         <div className = 'div_input_stock_adn_price'>
@@ -110,6 +153,9 @@ export default function Add(){
                                 />
                             </div>
                         </div>
+                            {
+                                !err.price && !err.stock ? null : <p className = 'err_add_product'>{err.size}</p>
+                            }
                         <div className = 'div_button_add_product'>
                             <button onClick = {e => handleSubmit(e)}>Add</button>
                         </div>
