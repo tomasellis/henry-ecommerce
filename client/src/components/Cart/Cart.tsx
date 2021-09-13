@@ -6,7 +6,7 @@ import CartProductBox from "./CartProductBox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import "./styles.css";
-import { Switch } from "@material-ui/core";
+import { Button, Switch } from "@material-ui/core";
 import { useHistory } from "react-router";
 
 const MercadoPago = window[`MercadoPago`];
@@ -225,15 +225,9 @@ const Cart = ({ user }: { user: User }) => {
                 }
                 label="Check when ready for payment"
               />
-              <button
+              <Button
+                variant="contained"
                 disabled={!checkoutButton.active}
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  border: "2px solid blue",
-                  alignSelf: "center",
-                  borderRadius: "5px",
-                }}
                 onClick={async () => {
                   const list = document.getElementById("cartListDisplay");
                   list.className = "fade-out";
@@ -250,8 +244,8 @@ const Cart = ({ user }: { user: User }) => {
                   history.push("/");
                 }}
               >
-                Checkout
-              </button>
+                Go to Payment!
+              </Button>
             </div>
           ) : (
             <div></div>
