@@ -28,8 +28,8 @@ export default function Products() {
 
     return(
         <div>
-            <h1 className = 'title_ropa_products'>Ropa</h1>
-            <Filter/>
+            <h1 className = 'title_ropa_products'>CLOTHES</h1>
+            <Filter/> 
             {
                 articles?.map((e,i) => {
                     return (

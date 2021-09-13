@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import { addToCartStorage } from "../../actions";
 
 type Product = {
@@ -16,6 +18,7 @@ interface RootState {
     cart: Array<Product>,
     idsInCart: string
 }
+
 
 
 export const DetailsProductCard = ({
@@ -29,7 +32,10 @@ export const DetailsProductCard = ({
     stock
 
 }) => {
-
+    type GenderParams = {
+        gender : string
+    };
+    const {gender} = useParams<GenderParams>();
     const dispatch = useDispatch()
     const state = useSelector((state: RootState) => state)
 
@@ -67,31 +73,32 @@ export const DetailsProductCard = ({
 
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-    console.log('user auth0', user); //temporal para evitar error eslint
 
 
-    async function addToCart(id: string) { //el id del producto
+    async function addToCart() { //el id del producto
         if (!isAuthenticated) {
             const existProductInCartRedux = state.cart.some(product => product.id_option === id_option)
             if (existProductInCartRedux) alert('El proudcto ya existe en el carrito')
-            else dispatch(addToCartStorage(productDetail))
-
-        } else {
-            let validId = await axios.get(`${BASE_URL}/verifyUserAuth0InDatabase?id_auth0=${user.sub}`)
-            if (!validId.data.user_id) {
-                validId = await axios.post(`${BASE_URL}/addUserToDatabase`, {
-                    auth0_id: user.sub,
-                    email: user.email,
-                    name: user.name
-                })
+            else {
+                dispatch(addToCartStorage(productDetail))
+                alert('producto agregado al carrito')
             }
 
+        } else { //si esta autenticado...
+
+            const { data } = await axios.post(`${BASE_URL}/findOrCreateUserInDatabase`, {
+                auth0_id: user.sub,
+                email: user.email,
+                name: user.name
+            })
+
             const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
-                user_id: validId.data.user_id,
+                user_id: data.user_id,
                 product_option_id: id_option,
                 quantity: 1
             });
-
+            
+            
             if (!dataAddToCart.data.errors) alert('producto agregado al carrito') //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
             else alert(dataAddToCart.data.errors)
 
@@ -104,6 +111,11 @@ export const DetailsProductCard = ({
 
     return (
         <div className="mainDetailCard" >
+{/*             <div className="link-back">
+                <Link to = {`/clothing/${gender}`}>
+                Back
+                </Link>
+            </div> */}
             <div className="mainDetailCard__container">
                 <div className="container__img">
                     <img src={image_url} width='100%' alt="" className="container__card-img" />
@@ -123,10 +135,10 @@ export const DetailsProductCard = ({
                         <span>{size}</span>
                     </div>
                     <div className='div_stock_product_details'>
-                        <span>Stock:</span><span> disponible </span>
+                        <span>Stock:</span><span> Available </span>
                     </div>
                     <div className="container__button-buy">
-                        <button onClick={e => addToCart(id)}>Agregar al carrito</button>
+                        <button onClick={e => addToCart()}>Add to cart</button>
                     </div>
                 </div>
             </div>
