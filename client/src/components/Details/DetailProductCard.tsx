@@ -147,7 +147,7 @@ export const DetailsProductCard = ({
                      </div>
                      <div className='div_size_product_details'>
                         {opciones.filter(obj => obj.color===productDetail['color'])[0]['options'].map((option) => {
-                          return( <label>
+                          return(<label>
                             {option.size}
                             <input
                             type="radio"
