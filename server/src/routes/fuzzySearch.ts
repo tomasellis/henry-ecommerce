@@ -48,7 +48,7 @@ router.get(
         );
       } else {
         return response.send(
-          `Missing: ${search_query !== "" ? "" : "search_query(string)"}`
+          `Missing: ${search_query !== "" ? "" : "search(string)"}`
         );
       }
     }
