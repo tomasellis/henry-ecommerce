@@ -148,11 +148,10 @@ const Cart = ({ user }: { user: User }) => {
   }, [productsInCart]);
 
   useEffect(() => {
-    console.log(toCheckout.checkoutData.items, "array");
     if (
       toCheckout.checkoutData.items !== null &&
       toCheckout.checkoutData.items.length > 0 &&
-      checkoutButton.active === true
+      shippingForm.checkbox === true
     ) {
       (async () => {
         const checkoutId = await createPreference(toCheckout.checkoutData);
@@ -169,7 +168,7 @@ const Cart = ({ user }: { user: User }) => {
       })();
     }
     // eslint-disable-next-line
-  }, [toCheckout.checkoutData, checkoutButton.active]);
+  }, [toCheckout.checkoutData, shippingForm.checkbox]);
 
   // To check shipping form
   useEffect(() => {
@@ -221,7 +220,7 @@ const Cart = ({ user }: { user: User }) => {
             {productsInCart.products[0] ? (
               productsInCart.products.map((product, index) => (
                 <CartProductBox
-                  user={productsInCart.user_id}
+                  user_id={productsInCart.user_id}
                   key={index}
                   product={product}
                   index={index}

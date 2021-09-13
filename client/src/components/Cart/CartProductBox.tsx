@@ -7,7 +7,7 @@ type CartProductBoxProps = {
   index: number;
   productsInCart: CartProductData[];
   updateData: () => Promise<void>;
-  user: string;
+  user_id: string;
   active: boolean;
 };
 
@@ -98,7 +98,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         }
         onClick={async (event) => {
           setFetchingInfo("loading");
-          await handleOnClick(false, props.product, props.user);
+          await handleOnClick(false, props.product, props.user_id);
           setQuantity(quantity - 1);
           await props.updateData();
           setFetchingInfo("loaded");
@@ -133,7 +133,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         onBlur={async (event) => {
           if (fetchingInfo !== "loading") {
             setFetchingInfo("loading");
-            handleOnChange(quantity, props.product, props.user);
+            handleOnChange(quantity, props.product, props.user_id);
             await props.updateData();
             setFetchingInfo("loaded");
           }
@@ -143,7 +143,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         onKeyPress={async (e) => {
           if (fetchingInfo !== "loading" && e.key === "Enter") {
             setFetchingInfo("loading");
-            handleOnChange(quantity, props.product, props.user);
+            handleOnChange(quantity, props.product, props.user_id);
             await props.updateData();
             setFetchingInfo("loaded");
           }
@@ -159,7 +159,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         }
         onClick={async (event) => {
           setFetchingInfo("loading");
-          await handleOnClick(true, props.product, props.user);
+          await handleOnClick(true, props.product, props.user_id);
           setQuantity(quantity + 1);
           await props.updateData();
           setFetchingInfo("loaded");
