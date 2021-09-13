@@ -15,7 +15,6 @@ function App() {
     <BrowserRouter>
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path="/created" component={Add} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
@@ -25,6 +24,8 @@ function App() {
         path="/clothing/details/:id"
         component={DetailProductCards}
       />
+      <Route exact path="/clothing/:gender/:page" component={Products} />
+      <Route exact path="/clothing/:id" component={DetailProductCards} />
     </BrowserRouter>
   );
 }

@@ -11,11 +11,12 @@ import "./filter.css";
 import { getArticles } from "../../../actions/products/productActions";
 
 export default function Filter() {
-  type GenderParams = {
+  type Params = {
     gender: string;
+    page: string
   };
-  const { gender } = useParams<GenderParams>();
-
+  const { gender } = useParams<Params>();
+  const {page} = useParams<Params>();
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
@@ -24,6 +25,7 @@ export default function Filter() {
       [e.target.name]: e.target.id
     })
   };
+
 
   const [dataFilter, setDataFilter] = useState({
     gender: gender,
@@ -42,7 +44,9 @@ export default function Filter() {
         dataFilter.less_than,
         dataFilter.greater_than,
         dataFilter.color,
-        dataFilter.size
+        dataFilter.size,
+        0,
+        8
       )
     )
   }, [dataFilter])
@@ -66,13 +70,13 @@ export default function Filter() {
 
   const classes = useStyles();
 
-/*   const handleChange = (e) => {
+  const handleChange = (e) => {
     e.preventDefault();
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
-  } */
+  }
 
   const inputHandler = (e) => {
     if (e.target.name !== "less_than" || e.target.name !== "greater_than") {
@@ -102,18 +106,6 @@ export default function Filter() {
     })
   }
 
-  const removeFilter = (e) =>{
-    if(e === "category"){
-      setDataFilter({...dataFilter, category:[] })
-    }
-    else  if(e === "color"){
-      setDataFilter({...dataFilter, color:undefined })
-    }
-    else if(e === "size"){
-      setDataFilter({...dataFilter, size:undefined })
-    }
-  }
-
   return (
     <>
       <div className="container_filters_product">
@@ -124,30 +116,6 @@ export default function Filter() {
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
-      {!dataFilter.category.length ||
-      <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter("category")}>
-          {dataFilter.category}
-          <p>x</p>
-        </button>
-      </div>
-      }
-      {!dataFilter.color ||
-      <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter("color")}>
-          {dataFilter.color}
-          <p>x</p>
-        </button>
-      </div>
-      }
-      {!dataFilter.size ||
-      <div className = 'div_quitar_filter'>
-        <button onClick={() => removeFilter("size")}>
-          {dataFilter.size}
-          <p>x</p>
-        </button>
-      </div>
-      }
         </div>
       </div>
       <input type="checkbox" id="btn_menu_product" />

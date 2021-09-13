@@ -4,9 +4,13 @@ const initialState = {
   product: [],
   options: [],
   productsInCartByUser: [],
-  articles: [],
+  articles: {
+    products: [],
+    next: []
+  },
   cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
-  idsInCart: localStorage.idsInCartStorage ? JSON.parse(localStorage.idsInCartStorage) : []
+  idsInCart: localStorage.idsInCartStorage ? JSON.parse(localStorage.idsInCartStorage) : [],
+  searchArticles: []
 }
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -14,7 +18,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case PRODUCTS_ACTIONS.BRING_CLOTHER:
       return {
         ...state,
-        articles: payload
+        articles: {
+          products: payload.data.products,
+          next:payload.next.products
+        }
       }
     case "GET_PRODUCT_INFO":
       return {
@@ -28,15 +35,15 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
     case 'ADD_TO_CART':
       localStorage.cartStorage = JSON.stringify([...state.cart, payload])
-      localStorage.idsInCartStorage = JSON.stringify([...state.idsInCart, payload.id_option])
+      localStorage.idsInCartStorage = JSON.stringify([...state.idsInCart, payload.id])
       return {
         ...state,
         cart: [...state.cart, payload],
-        idsInCart: [...state.idsInCart, payload.id_option]
+        idsInCart: [...state.idsInCart, payload.id]
       }
 
     case 'REMOVE_FROM_CART':
-      const cartFiltered = state.cart.filter(product => product.id_option !== payload)
+      const cartFiltered = state.cart.filter(product => product.id !== payload)
       const idsFiltered = state.idsInCart.filter(product => product !== payload)
       localStorage.cartStorage = JSON.stringify(cartFiltered)
       localStorage.idsInCartStorage = JSON.stringify(idsFiltered)
@@ -47,7 +54,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case 'UPDATE_QUANTITY':
-      // eslint-disable-next-line 
+      // eslint-disable-next-line
       state.cart.some(product => {
         if(product.id_option === payload.id_option){
           product.quantity = payload.quantity
@@ -57,9 +64,13 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       localStorage.cartStorage = JSON.stringify(state.cart)
       return state
 
+    case 'SEARCH_ARTICLES':
+      return{
+        ...state,
+        searchArticles : payload.fuzzy_search
+      }
+
     default:
       return state
   }
 }
-
-

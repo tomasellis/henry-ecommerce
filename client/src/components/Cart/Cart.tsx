@@ -1,8 +1,7 @@
-import { User } from "@auth0/auth0-spa-js";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
-
+import { User } from "@auth0/auth0-spa-js";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import "./styles.css";
@@ -121,7 +120,6 @@ const Cart = ({ user }: { user: User }) => {
         name: user.name,
       }
     );
-
     const data = await getProductsInCart(dataUser.data.user_id);
     if (data) {
       setProductsInCart({
@@ -222,6 +220,7 @@ const Cart = ({ user }: { user: User }) => {
               productsInCart.products.map((product, index) => (
                 <CartProductBox
                   user={productsInCart.user_id}
+                  user_id={productsInCart.user_id}
                   key={index}
                   product={product}
                   index={index}
@@ -314,7 +313,33 @@ const Cart = ({ user }: { user: User }) => {
               </form>
             </div>
           ) : (
-            <div></div>
+            ""
+          )}
+          {productsInCart.products[0] ? (
+            productsInCart.products.map((product, index) => (
+              <CartProductBox
+                active={!checkoutButton.active}
+                user={productsInCart.user_id}
+                key={index}
+                product={product}
+                index={index}
+                productsInCart={productsInCart.products}
+                updateData={updateData}
+                user_id={productsInCart.user_id}
+              ></CartProductBox>
+            ))
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                fontSize: "25px",
+                paddingTop: "30px",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <span>Your cart is empty!</span>
+            </div>
           )}
         </div>
       );

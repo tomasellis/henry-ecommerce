@@ -18,6 +18,12 @@
     margin-left: 100px;
 }
 
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
 .div_price_product_details{
     margin-top: 15px;
     font-size: 25px;
@@ -25,7 +31,7 @@
 
 .price_product_details {
     margin-left: 100px;
-} 
+}
 
 
 .div_color_product_details{
