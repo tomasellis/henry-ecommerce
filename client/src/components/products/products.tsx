@@ -23,10 +23,15 @@ export default function Products() {
         gender : string,
         page: string
     };
+<<<<<<< HEAD
 
     const {gender} = useParams<Params>();
     const {page} = useParams<Params>();
 
+=======
+    const {gender} = useParams<GenderParams>();
+    
+>>>>>>> 167faa1c53f911f4da367fc9f421ceff55925fd3
     useEffect(() => {
             dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
     }, [dispatch,gender, page, limit])
@@ -35,7 +40,10 @@ export default function Products() {
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
+<<<<<<< HEAD
             <div>
+=======
+>>>>>>> 167faa1c53f911f4da367fc9f421ceff55925fd3
             {
                 articles.products?.map((e,i) => {
                     return (

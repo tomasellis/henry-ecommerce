@@ -8,13 +8,12 @@ import setAdminUser from "./setAdminUser";
 import addToCart from "./addToCart";
 import deleteFromCart from "./deleteFromCart";
 import getUserCartData from "./getUserCartData";
-import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
+import addUserToDatabase from "./addUserToDatabase";
 import addCategoryToProduct from "./addCategoryToProduct";
 import removeCategoryFromProduct from "./removeCategoryFromProduct";
 import verifyUserAuth0InDatabase from "./verifyUserAuth0InDatabase";
-import addLocalStorageToCart from "./addLocalStorageToCart";
 import fuzzySearch from "./fuzzySearch";
-import createNewCategory from "./createNewCategory";
+
 const router = Router();
 
 router.use("/products", products);
@@ -24,14 +23,12 @@ router.use("/createProduct", createProduct);
 router.use("/blockUser", blockUser);
 router.use("/setAdminUser", setAdminUser);
 router.use("/addToCart", addToCart);
-router.use("/findOrCreateUserInDatabase", findOrCreateUserInDatabase);
+router.use("/addUserToDatabase", addUserToDatabase);
 router.use("/deleteFromCart", deleteFromCart);
 router.use("/getUserCartData", getUserCartData);
 router.use("/addCategoryToProduct", addCategoryToProduct);
 router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
 router.use("/verifyUserAuth0InDatabase", verifyUserAuth0InDatabase);
-router.use("/addLocalStorageToCart", addLocalStorageToCart);
-
 router.use("/fuzzySearch", fuzzySearch);
-router.use("/createNewCategories", createNewCategory);
+
 export default router;
