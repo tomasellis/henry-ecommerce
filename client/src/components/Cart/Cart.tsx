@@ -170,19 +170,18 @@ const Cart = ({ user }: { user: User }) => {
     case "loaded":
       return (
         <div>
-          <span>ESTAS EN EL CART DE USUARIO</span>
           <div className="cartDisplay" id={"cartListDisplay"}>
             {productsInCart.products[0] ? (
               <div className="cartProductBox cartLabels">
                 <div></div>
-                <div>Nombre</div>
-                <div>Disponibles</div>
+                <div>Name</div>
+                <div>Available</div>
                 <div></div>
-                <div>Cantidad</div>
+                <div>Quantity</div>
                 <div></div>
                 <div></div>
                 <div></div>
-                <div>Precio</div>
+                <div>Price</div>
               </div>
             ) : (
               ""
