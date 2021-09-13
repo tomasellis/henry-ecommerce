@@ -164,7 +164,7 @@ export const DetailsProductCard = ({
                         <span>Stock:</span> {
                           opciones.filter(obj => obj.color===productDetail['color'])[0]['options'].filter(obj =>
                             obj.size===productDetail['size'])[0]['stock']
-                        }
+                        } u.
                     </div>
                 <div className="container__button-buy">
                     <button onClick = {e => addToCart(id)}
