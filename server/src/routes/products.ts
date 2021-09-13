@@ -4,8 +4,10 @@ import {Response, Request, Router, NextFunction} from 'express';
 const router = Router()
 
 router.get("/", async (req: Request, response: Response, next: NextFunction) => {
+
   let page = req.query._page
   let limit =req.query._limit
+
   const category_name = req.query.category_name? `category_name: {_eq: ${req.query.category_name}}` : ' '
   const gender = req.query.gender? `gender: {_eq: ${req.query.gender}}` : ' '
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '

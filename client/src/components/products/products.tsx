@@ -27,6 +27,7 @@ export default function Products() {
     const {gender} = useParams<Params>();
     const {page} = useParams<Params>();
 
+
     useEffect(() => {
             dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
     }, [dispatch,gender, page, limit])
@@ -35,7 +36,7 @@ export default function Products() {
         <div>
             <h1 className = 'title_ropa_products'>Ropa</h1>
             <Filter/>
-            <div>
+
             {
                 articles.products?.map((e,i) => {
                     return (

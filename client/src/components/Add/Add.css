@@ -7,18 +7,17 @@
 }
 
 .title_add_product{
-    margin-left: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .image_add_product{
-    margin-left: 80px;
-    margin-top: 65px;
+    margin-left: 50px;
+    margin-top: 30px;
 }
 
 .div_form_add_product{
-    margin-left: 150px;
-    margin-top: 25px;
+    margin-left: 200px;
+    margin-top: 50px;
 }
 
 .p_add_product{
@@ -32,35 +31,25 @@
 }
 
 .div_category_add_product{
-    max-width: 400px;
     margin-bottom: 10px;
 }
 
-.div_category_add_product input{
-    margin-top: 20px;
-    text-align: center;
-    width: 250px;
-}
-
-.div_category_add_product .select_category_add_product{
-    padding: 5px 28px;
-    margin-right: 20px;
+.div_category_add_product select{
+    padding: 5px 72px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
 }
 
 .div_category_add_product button{
-    border-radius: 2px;
     margin-left: 10px;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 3px 17px;
+    padding: 5px 30px;
 }
 
 .div_size_add_product{
-    display: inline-flex;
     margin-bottom: 10px;
 }
 
@@ -74,14 +63,9 @@
     margin-right: 20px;
     padding: 7px 12px;
     border: rgba(0, 0, 0, 0.548) 1px solid;
-}   
-
-.div_size_add_product .select {
-    border: rgba(0, 47, 255, 0.548) 3px solid;
 }
 
 .div_colors_add_product{
-    display: inline-block;
     margin-bottom: 10px;
 }
 
@@ -91,37 +75,14 @@
     margin-right: 13px;
 }
 
-.color_select {
-    border: rgba(0, 47, 255, 0.747) 3px solid;    
-    border-radius: 100px;
-}
-
 .div_image_add_product{
     margin-bottom: 15px;
 }
 
 .div_button_add_product button{
-    border-radius: 2px;
-    padding: 5px 147px;
+    margin-left: 90px;
+    padding: 5px 50px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
-    margin-bottom: 20px;
-}
-
-.div_input_stock_adn_price{
-    display: block ruby;
-    margin-bottom: 20px;
-}
-
-.div_input_stock_adn_price input{
-    text-align: center;
-    margin-right: 40px;
-    width: 100px;
-}
-
-.err_add_product{
-    font-size: 13px;
-    margin-top: 2px;
-    color: red;
 }

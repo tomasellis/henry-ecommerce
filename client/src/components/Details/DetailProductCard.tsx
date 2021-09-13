@@ -80,6 +80,7 @@ export const DetailsProductCard = ({
 
     const { user, isAuthenticated } = useAuth0()
     const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
+    console.log('user auth0', user); //temporal para evitar error eslint
 
 
     async function addToCart() { //el id del producto
@@ -101,13 +102,15 @@ export const DetailsProductCard = ({
 
             const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
                 user_id: data.user_id,
-                product_option_id: id,
+                product_option_id: id_option,
                 quantity: 1
             });
-            if (!dataAddToCart.data.errors) alert('Product added to cart!') //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
-            else alert(dataAddToCart.data.errors);
-        };
-    }
+
+            if (!dataAddToCart.data.errors) alert('producto agregado al carrito') //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
+            else alert(dataAddToCart.data.errors)
+
+        }
+      }
 
     function onChange (e){
         setProductDetail ({
@@ -115,7 +118,6 @@ export const DetailsProductCard = ({
         [e.target.name] : e.target.value
       })
     }
-
 
     return (
         <div className="mainDetailCard" >
