@@ -6,7 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Cart from "./components/Cart/PrevCart";
 import Profile from "./components/Profile";
 import NavBar from "./components/NavBar/NavBar";
-import Login from "./components/Login/Login";
+import LoggedIn from "./components/Login/LoggedIn";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 import Add from "./components/Add/Add";
 
@@ -18,7 +18,7 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path = '/created' component = {Add} />
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={Cart} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />

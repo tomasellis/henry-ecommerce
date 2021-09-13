@@ -23,8 +23,15 @@ export function getOptions() {
 
 export function postProduct(payload) {
   return async function (dispatch) {
-    await axios.post(`http://localhost:3001/createProduct`, payload);
-    return dispatch({ type: "POST_PRODUCT", payload: payload });
+    const json = await axios.post(`http://localhost:4000/createProduct`, payload);
+    return json;
+  };
+}
+
+export function postCategory(payload) {
+  return async function (dispatch) {
+    const json = await axios.post(`http://localhost:4000/createNewCategories`, payload);
+    return json;
   };
 }
 
