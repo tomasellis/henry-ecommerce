@@ -6,7 +6,8 @@ const initialState = {
   productsInCartByUser: [],
   articles: [],
   cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
-  idsInCart: localStorage.idsInCartStorage ? JSON.parse(localStorage.idsInCartStorage) : []
+  idsInCart: localStorage.idsInCartStorage ? JSON.parse(localStorage.idsInCartStorage) : [],
+  searchArticles: []
 }
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -56,6 +57,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       })
       localStorage.cartStorage = JSON.stringify(state.cart)
       return state
+
+    case 'SEARCH_ARTICLES':
+      return{
+        ...state,
+        searchArticles : payload.fuzzy_search
+      }
 
     default:
       return state
