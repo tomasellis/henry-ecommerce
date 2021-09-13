@@ -71,6 +71,21 @@ const CartLocalStorage = () => {
       return (
         <div className="cartDisplay">
           {productsInCart.products[0] ? (
+            <div className="cartProductBox cartLabels">
+              <div></div>
+              <div>Name</div>
+              <div>Available</div>
+              <div></div>
+              <div>Quantity</div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div>Price</div>
+            </div>
+          ) : (
+            ""
+          )}
+          {productsInCart.products[0] ? (
             productsInCart.products.map((product, index) => (
               <CartStorageProductBox
                 key={index}
