@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux"
 
 //import action
 import { getOptions } from "../../../actions"
-import { validate } from "../Add"
-
 
 export default function OptionsAdd({input, setInput, handleOptions, err, setErr}){
 

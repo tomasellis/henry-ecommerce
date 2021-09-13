@@ -50,7 +50,6 @@ export default function Categories({input, setInput, handleChange}){
             categories : [],
         })
     };
-    console.log(options);
     
 
     return(
@@ -96,7 +95,7 @@ export default function Categories({input, setInput, handleChange}){
                             className = 'div_li_category_select_add_product'
                             onClick = {() => handleDeletle(el)}
                             >
-                                <li>{el}</li>
+                                <li>{name}</li>
                                 <p>x</p>
                             </div>
                         )
