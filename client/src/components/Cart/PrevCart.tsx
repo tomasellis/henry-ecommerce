@@ -1,14 +1,11 @@
 import Cart from "./Cart";
 import CartLocalStorage from "./CartLocalStorage";
-import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0 } from "@auth0/auth0-react";
 
+const PrevCart = () => {
+  const { user, isAuthenticated } = useAuth0();
 
-export default function PrevCart(){
-  const { isAuthenticated } = useAuth0()
-  
-  return isAuthenticated? <Cart /> : <CartLocalStorage />
+  return isAuthenticated ? <Cart user={user} /> : <CartLocalStorage />;
+};
 
-}
-
-
-
+export default PrevCart;

@@ -13,6 +13,10 @@ import addCategoryToProduct from "./addCategoryToProduct";
 import removeCategoryFromProduct from "./removeCategoryFromProduct";
 import verifyUserAuth0InDatabase from "./verifyUserAuth0InDatabase";
 import fuzzySearch from "./fuzzySearch";
+import mercadoPago from "./mercadoPago";
+import createNewCategory from "./createNewCategory";
+import deleteUserCart from "./deleteUserCart";
+import addLocalStorageToCart from "./addLocalStorageToCart";
 
 const router = Router();
 
@@ -30,5 +34,9 @@ router.use("/addCategoryToProduct", addCategoryToProduct);
 router.use("/removeCategoryFromProduct", removeCategoryFromProduct);
 router.use("/verifyUserAuth0InDatabase", verifyUserAuth0InDatabase);
 router.use("/fuzzySearch", fuzzySearch);
+router.use("/mercadopago", mercadoPago);
+router.use("/addLocalStorageToCart", addLocalStorageToCart);
+router.use("/deleteUserCart", deleteUserCart);
+router.use("/createNewCategories", createNewCategory);
 
 export default router;
