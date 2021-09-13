@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from '../../actions/index';
 
 //import component
-import { DetailsProductCard } from "./DetailPrpductCard";
+import { DetailsProductCard } from "./DetailProductCard";
 
 export const DetailProductCards = () => {
 
@@ -16,20 +16,22 @@ export const DetailProductCards = () => {
     };
     const {id} = useParams<IDParams>();
     const product = useSelector((state : any) => state.product);
-    
-    
+
+
     useEffect(() => {
         dispatch(getProduct(id))
     }, [id,dispatch])
-    
-    // const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
+    console.log(product)
+
 
     return ( product.length || product.products?.length ?
-       <DetailsProductCard 
+       <DetailsProductCard
             id = {id}
             name = {product?.products[0]?.name}
+            product={product}
             image_url = {product.products[0].image_url}
             price = {product?.products[0]?.price}
+            product_options = {product?.products[0]?.product_options}
        />
        :
        <div>Loading</div>

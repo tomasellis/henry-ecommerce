@@ -7,6 +7,9 @@ type CartProductBoxProps = {
   index: number;
   productsInCart: CartProductData[];
   updateData: () => Promise<void>;
+  user: string;
+  active: boolean;
+  user_id: string;
 };
 
 type CartProductData = {
@@ -39,8 +42,6 @@ type InsertResponse = {
 type FetchInfo = "loading" | "loaded" | "error";
 
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-
-const TESTID = "2c6dc53e-dc41-4cd0-95fe-42451d750711";
 
 const CartProductBox = (props: CartProductBoxProps) => {
   const [quantity, setQuantity] = useState(
@@ -91,10 +92,14 @@ const CartProductBox = (props: CartProductBoxProps) => {
       </div>
       <button
         className="button"
-        disabled={props.product.productOption.optionQuantity > 1 ? false : true}
+        disabled={
+          props.product.productOption.optionQuantity > 1
+            ? !props.active ?? false
+            : true
+        }
         onClick={async (event) => {
           setFetchingInfo("loading");
-          await handleOnClick(false, props.product, TESTID);
+          await handleOnClick(false, props.product, props.user_id);
           setQuantity(quantity - 1);
           await props.updateData();
           setFetchingInfo("loaded");
@@ -107,7 +112,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         ref={inputRef}
         className="stockInput"
         value={quantity}
-        disabled={fetchingInfo === "loading" ? true : false}
+        disabled={fetchingInfo === "loading" ? true : !props.active ?? false}
         type={"number"}
         onChange={(event) => {
           event.preventDefault();
@@ -129,7 +134,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         onBlur={async (event) => {
           if (fetchingInfo !== "loading") {
             setFetchingInfo("loading");
-            handleOnChange(quantity, props.product, TESTID);
+            handleOnChange(quantity, props.product, props.user_id);
             await props.updateData();
             setFetchingInfo("loaded");
           }
@@ -139,7 +144,7 @@ const CartProductBox = (props: CartProductBoxProps) => {
         onKeyPress={async (e) => {
           if (fetchingInfo !== "loading" && e.key === "Enter") {
             setFetchingInfo("loading");
-            handleOnChange(quantity, props.product, TESTID);
+            handleOnChange(quantity, props.product, props.user_id);
             await props.updateData();
             setFetchingInfo("loaded");
           }
@@ -150,12 +155,12 @@ const CartProductBox = (props: CartProductBoxProps) => {
         disabled={
           props.product.productOption.optionQuantity <
           props.product.productOption.optionStock
-            ? false
+            ? !props.active ?? false
             : true
         }
         onClick={async (event) => {
           setFetchingInfo("loading");
-          await handleOnClick(true, props.product, TESTID);
+          await handleOnClick(true, props.product, props.user_id);
           setQuantity(quantity + 1);
           await props.updateData();
           setFetchingInfo("loaded");
@@ -164,6 +169,12 @@ const CartProductBox = (props: CartProductBoxProps) => {
         <span style={{ alignSelf: "center" }}>+</span>
       </button>
       <button
+        disabled={
+          props.product.productOption.optionQuantity <
+          props.product.productOption.optionStock
+            ? !props.active ?? false
+            : true
+        }
         className="button"
         style={{
           borderColor: "red",
