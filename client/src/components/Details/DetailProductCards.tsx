@@ -28,6 +28,7 @@ export const DetailProductCards = () => {
        <DetailsProductCard
             id = {id}
             name = {product?.products[0]?.name}
+            product={product}
             image_url = {product.products[0].image_url}
             price = {product?.products[0]?.price}
             product_options = {product?.products[0]?.product_options}

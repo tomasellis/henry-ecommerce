@@ -21,6 +21,7 @@ interface RootState {
 export const DetailsProductCard = ({
     id,
     name,
+    product,
     image_url,
     price,
     product_options
@@ -55,11 +56,13 @@ export const DetailsProductCard = ({
     let opciones = createOptions(product_options)
 
     const [productDetail, setProductDetail] = useState<object>({
-        id,
-        name,
-        image_url,
-        price,
-        product_options,
+        id:id,
+        name:name,
+        image_url:image_url,
+        price:price,
+        product:product,
+        stock:opciones[0].options[0].stock,
+        id_option:product_options[0]['id'],
         color:opciones[0].color,
         size:opciones[0].options[0].size,
         quantity: 1,
@@ -67,7 +70,7 @@ export const DetailsProductCard = ({
 
 
     useEffect(() => {
-      console.log(typeof(opciones[0].color))
+      console.log(opciones, productDetail)
         return () => {
             //limpiar el componente
         };
@@ -108,7 +111,7 @@ export const DetailsProductCard = ({
 
     function onChange (e){
         setProductDetail ({
-        productDetail,
+        ...productDetail,
         [e.target.name] : e.target.value
       })
     }
@@ -122,7 +125,7 @@ export const DetailsProductCard = ({
                 </div>
                 <div className="container__card-content">
                     <div className='div_name_product_details'>
-                        <h1>{name}</h1>
+                        <h1>{productDetail['name']}</h1>
                     </div>
                     <div className='div_price_product_details'>
                         <span className='price_product_details'> ${price}</span>
@@ -143,7 +146,7 @@ export const DetailsProductCard = ({
                       }
                      </div>
                      <div className='div_size_product_details'>
-                        {opciones.filter(obj => obj.color===productDetail['color'])[0].options.map((option) => {
+                        {opciones.filter(obj => obj.color===productDetail['color'])[0]['options'].map((option) => {
                           return( <label>
                             {option.size}
                             <input
@@ -158,10 +161,14 @@ export const DetailsProductCard = ({
                      </div>
                     </form>
                     <div className = 'div_stock_product_details'>
-                        <span>Stock:</span><span> disponible </span>
+                        <span>Stock:</span> {
+                          opciones.filter(obj => obj.color===productDetail['color'])[0]['options'].filter(obj =>
+                            obj.size===productDetail['size'])[0]['stock']
+                        }
                     </div>
                 <div className="container__button-buy">
-                    <button onClick = {e => addToCart(id)}>Agregar al carrito</button>
+                    <button onClick = {e => addToCart(id)}
+                    className={productDetail['stock']<=0? "disabled":""}>Agregar al carrito</button>
                 </div>
             </div>
         </div>
