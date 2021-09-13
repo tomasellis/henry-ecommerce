@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import { addToCartStorage } from "../../actions";
 
 type Product = {
@@ -16,6 +18,7 @@ interface RootState {
     cart: Array<Product>,
     idsInCart: string
 }
+
 
 
 export const DetailsProductCard = ({
@@ -29,7 +32,10 @@ export const DetailsProductCard = ({
     stock
 
 }) => {
-
+    type GenderParams = {
+        gender : string
+    };
+    const {gender} = useParams<GenderParams>();
     const dispatch = useDispatch()
     const state = useSelector((state: RootState) => state)
 
@@ -102,6 +108,11 @@ export const DetailsProductCard = ({
 
     return (
         <div className="mainDetailCard" >
+{/*             <div className="link-back">
+                <Link to = {`/clothing/${gender}`}>
+                Back
+                </Link>
+            </div> */}
             <div className="mainDetailCard__container">
                 <div className="container__img">
                     <img src={image_url} width='100%' alt="" className="container__card-img" />
@@ -121,10 +132,10 @@ export const DetailsProductCard = ({
                         <span>{size}</span>
                     </div>
                     <div className='div_stock_product_details'>
-                        <span>Stock:</span><span> disponible </span>
+                        <span>Stock:</span><span> Available </span>
                     </div>
                     <div className="container__button-buy">
-                        <button onClick={e => addToCart()}>Agregar al carrito</button>
+                        <button onClick={e => addToCart()}>Add to cart</button>
                     </div>
                 </div>
             </div>
