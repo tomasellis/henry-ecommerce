@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-//import componet
-import AddCategory from '../AddCategory/AddCategory'
-
 //import action
 import { postCategory } from '../../../actions'
 
@@ -32,14 +29,21 @@ export default function Categories({input, setInput, handleChange}){
         })
     };
 
+    const handleDeletle = (el) => {
+        setInput({
+            ...input,
+            categories :  input.categories.filter(e => e !== el)
+        })
+    };
+
     const handleButton = (e) => {
-        e.preventDefault();
         const repeat = options.categories?.find(e => e.name.toUpperCase() === category.categories[0]?.name.toUpperCase());
         if(!repeat){
             dispatch(postCategory(category));
             alert('Category created successfully.')
         }
         else {
+            e.preventDefault();
             alert('That category already exists.')
         }
         setCategory({
@@ -63,27 +67,42 @@ export default function Categories({input, setInput, handleChange}){
                 <option value="kids">Kids</option>
             </select>
             <select 
-            className = 'select_category_add_product' 
-            name="categories"
-            onChange = {e => handleSelect(e)}
-            >
-                <option>Collection</option>
-                <option value='spring'>Spring</option>
-                <option value='summer'>Summer</option>
-                <option value='autumn'>Autumn</option>
-                <option value="winter">Winter</option>
-                {/* <option value='divers'>Diver</option> */}
-            </select>
-            <select 
             className = 'categories_collection_add' 
             name="collection"
             onChange = {e => handleSelect(e)}
             >
                 <option> Categories</option>
-                <option value="tshirts">T-shirt</option>
-                <option value="pants">Pants</option>
-                <option value="jackets">Jacket</option>
+                {
+                    options.categories?.map(e => {
+                        function NameInUpperCase(str) {
+                            return str.charAt(0).toUpperCase() + str.slice(1);
+                          }
+                        const name = NameInUpperCase(e.name)                         
+                        return(
+                            <option value={e.name}>{name}</option>
+                        )
+                    })
+                }
             </select>
+            <ul>
+                {
+                    input.categories?.map(el => {
+                        function NameInUpperCase(str) {
+                            return str.charAt(0).toUpperCase() + str.slice(1);
+                          }
+                        const name = NameInUpperCase(el);  
+                        return(
+                            <div 
+                            className = 'div_li_category_select_add_product'
+                            onClick = {() => handleDeletle(el)}
+                            >
+                                <li>{el}</li>
+                                <p>x</p>
+                            </div>
+                        )
+                    })
+                }
+            </ul>
             <input 
             type="text" 
             name="categories"

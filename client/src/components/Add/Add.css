@@ -12,12 +12,12 @@
 }
 
 .image_add_product{
-    margin-left: 50px;
+    margin-left: 80px;
     margin-top: 65px;
 }
 
 .div_form_add_product{
-    margin-left: 100px;
+    margin-left: 150px;
     margin-top: 25px;
 }
 
@@ -120,3 +120,8 @@
     width: 100px;
 }
 
+.err_add_product{
+    font-size: 13px;
+    margin-top: 2px;
+    color: red;
+}

@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux"
 
 //import action
 import { getOptions } from "../../../actions"
+import { validate } from "../Add"
 
 
-export default function OptionsAdd({input, setInput, handleOptions}){
+export default function OptionsAdd({input, setInput, handleOptions, err, setErr}){
 
     const dispatch = useDispatch();
     const options = useSelector((state : any) => state.options);
@@ -31,6 +32,9 @@ export default function OptionsAdd({input, setInput, handleOptions}){
                         )
                     })
                 }
+                {
+                    !err.size ? null : <p className = 'err_add_product'>{err.size}</p>
+                }
             <p className = 'p_add_product'>Color</p>
             {
                 options.colors?.map(e => {
@@ -50,6 +54,9 @@ export default function OptionsAdd({input, setInput, handleOptions}){
                         </div>
                     )
                 })
+            }
+            {
+                !err.color ? null : <p className = 'err_add_product'>{err.color}</p>
             }
 
             {/* <div className = 'div_size_add_product'>

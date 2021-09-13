@@ -1,12 +1,35 @@
 .categories_collection_add{
-    margin-top: 20px;
     padding: 80px 10px;
 }
 
 .categories_collection_add  {
-    padding: 5px 16px;
+    padding: 5px 24px;
     margin-right: 10px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
 }
+
+.div_li_category_select_add_product{
+    cursor: pointer;
+    border: rgba(0, 0, 0, 0.301) 1px solid;
+    height: 25px;
+    padding: 0px 10px;
+    display: inline-flex;
+    margin-right: 50px;
+    list-style:none;
+    margin-top: 10px;
+    margin-left: -32px
+}
+
+.div_li_category_select_add_product:hover{
+    background-color: rgba(0, 0, 0, 0.445);
+    border: white 1px solid;
+    color: white;
+}
+
+.div_li_category_select_add_product li{
+    margin-right: 15px;
+}
+
+
