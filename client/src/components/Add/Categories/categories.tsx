@@ -15,8 +15,8 @@ export default function Categories({input, setInput, handleChange}){
 
     const dispatch = useDispatch();
     const options = useSelector((state : any) => state.options)
-    
-    const handleSelect = (e) => {        
+
+    const handleSelect = (e) => {
         setInput({
             ...input,
             categories : [...input.categories, e.target.value]
@@ -51,13 +51,13 @@ export default function Categories({input, setInput, handleChange}){
         })
     };
     console.log(options);
-    
+
 
     return(
         <>
         <div className = 'div_categories_add'>
-             <select 
-             className = 'select_category_add_product' 
+             <select
+             className = 'select_category_add_product'
              name="gender"
              onChange = {e => handleChange(e)}
              >
@@ -66,8 +66,8 @@ export default function Categories({input, setInput, handleChange}){
                 <option value="men">Men</option>
                 <option value="kids">Kids</option>
             </select>
-            <select 
-            className = 'categories_collection_add' 
+            <select
+            className = 'categories_collection_add'
             name="collection"
             onChange = {e => handleSelect(e)}
             >
@@ -77,7 +77,7 @@ export default function Categories({input, setInput, handleChange}){
                         function NameInUpperCase(str) {
                             return str.charAt(0).toUpperCase() + str.slice(1);
                           }
-                        const name = NameInUpperCase(e.name)                         
+                        const name = NameInUpperCase(e.name)
                         return(
                             <option value={e.name}>{name}</option>
                         )
@@ -87,12 +87,8 @@ export default function Categories({input, setInput, handleChange}){
             <ul>
                 {
                     input.categories?.map(el => {
-                        function NameInUpperCase(str) {
-                            return str.charAt(0).toUpperCase() + str.slice(1);
-                          }
-                        const name = NameInUpperCase(el);  
                         return(
-                            <div 
+                            <div
                             className = 'div_li_category_select_add_product'
                             onClick = {() => handleDeletle(el)}
                             >
@@ -103,8 +99,8 @@ export default function Categories({input, setInput, handleChange}){
                     })
                 }
             </ul>
-            <input 
-            type="text" 
+            <input
+            type="text"
             name="categories"
             placeholder = 'add category'
             onChange = {e => handleCategoryChange(e)}

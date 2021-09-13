@@ -13,6 +13,13 @@ export function getProduct(id: any) {
   }
 }
 
+export function postCategory(payload) {
+  return async function (dispatch) {
+    const json = await axios.post(`http://localhost:4000/createNewCategories, ${payload}`);
+    return json;
+  };
+}
+
 export function getOptions() {
   return async function (dispatch: any) {
     let json = await axios(`http://localhost:4000/options`, {
