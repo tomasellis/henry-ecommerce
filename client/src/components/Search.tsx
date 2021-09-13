@@ -1,8 +1,49 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import { searchArticles } from '../actions/searchArticles/searchArticles';  
+
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
 import { IconButton } from '@material-ui/core';
+import { getCombinedModifierFlags } from 'typescript';
 
-export default function Search() {
+
+export default function Search(): JSX.Element {
+  const dispatch = useDispatch();
+  const [search, setSearch]  = useState<string>('');
+  // const busqueda = useSelector((state : any) => state.searchArticles);
+  
+  // useEffect(() => {
+
+    
+    
+  // },[busqueda,dispatch])
+  
+  
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    dispatch(searchArticles(search))
+    
+  }
+  
+  
+  
+  const handleSubmit = (e : React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if(search !== ''){
+      
+      console.log(`funciona ${search.toLowerCase()}`)
+
+      // setTimeout(() => {
+      //   dispatch(searchArticles(search))
+      // },1000)
+    
+    }else{
+      alert('Ingrese algo por favor...')
+    }    
+  }
+
 
   return (
     <InputCtn>
@@ -21,15 +62,16 @@ export default function Search() {
         </IconButton>
       </div>
     </InputCtn>
+  
   )
 }
 
-const InputCtn = styled.div`
+const InputCtn = styled.form`
   display: flex;
   align-items: center;
+  /* position: fixed; */
 
   input{
-  
     font-family: 'Poppins', sans-serif;
     border: 1px solid black;
     padding: 5px;
@@ -47,5 +89,5 @@ const InputCtn = styled.div`
   .icon{
     color: rgba(0, 0, 0, 0.788);
   }
-
 `
+
