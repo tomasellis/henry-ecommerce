@@ -30,12 +30,12 @@ export default SearchList;
 const List = styled.div` 
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 19px;
     display: flex;
     flex-direction: column;
     position: absolute;
     background: rgb(255, 255, 255);
-    max-width: 235px;
+    max-width: 245px;
     color: rgb(0,0,0);
     border-radius: 5px;
     z-index: 99999;
@@ -47,10 +47,10 @@ const List = styled.div`
     .listItem{
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
+        align-items: center;
         margin-bottom: 2px;
-        margin-left: 4px;
-        margin-right: 4px;
+        margin-left: 5px;
+        margin-right: 5px;
         img{
             margin-left: 10px;
             width: 70px;
@@ -62,7 +62,8 @@ const List = styled.div`
         }
     }
     .listItem:hover{
-        box-shadow: 0 0px 4px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        
     }
     
 `
