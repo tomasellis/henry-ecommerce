@@ -11,7 +11,7 @@ export default function Search() {
         type="text"
         name="name"
         autoComplete="off"
-        placeholder='Buscar...'
+        placeholder='Search...'
         className='input '
       >
       </input>

@@ -7,9 +7,9 @@ const TitleFilter = ({mob}) => {
     if(mob){
         return (
             <TitleCtn>
-                <p>MUJERES</p>
-                <p>HOMBRES</p>
-                <p>NIÑOS</p>
+                <p>WOMEN</p>
+                <p>MEN</p>
+                <p>KIDS</p>
             </TitleCtn>
         )
     }
@@ -18,13 +18,13 @@ const TitleFilter = ({mob}) => {
         <TitleCtn>
             <div>
                  <Link to = '/clothing/women'>
-                    <p>MUJERES</p>
+                    <p>WOMEN</p>
                 </Link>
                 <Link to = '/clothing/men'>
-                    <p>HOMBRES</p>
+                    <p>MEN</p>
                 </Link>
                 <Link to = '/clothing/kids'>
-                    <p>NIÑOS</p>   
+                    <p>KIDS</p>   
                 </Link>
             </div>
         </TitleCtn>
