@@ -17,7 +17,8 @@ export function getProduct(id: any) {
 export function postCategory(payload) {
   return async function (dispatch) {
     const json = await axios.post(
-      `${REACT_APP_BASE_BACKEND_URL}/createNewCategories, ${payload}`
+      `${REACT_APP_BASE_BACKEND_URL}/createNewCategories`,
+      payload
     );
     return json;
   };
@@ -32,8 +33,11 @@ export function getOptions() {
 
 export function postProduct(payload) {
   return async function (dispatch) {
-    await axios.post(`${REACT_APP_BASE_BACKEND_URL}/createProduct`, payload);
-    return dispatch({ type: "POST_PRODUCT", payload: payload });
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/createProduct`,
+      payload
+    );
+    return json;
   };
 }
 
