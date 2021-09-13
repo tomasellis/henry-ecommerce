@@ -6,7 +6,7 @@ import CartProductBox from "./CartProductBox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import "./styles.css";
-import { Button, Switch } from "@material-ui/core";
+import { Button, Checkbox, Switch, TextField } from "@material-ui/core";
 import { useHistory } from "react-router";
 
 const MercadoPago = window[`MercadoPago`];
@@ -60,6 +60,12 @@ type ToCheckout = {
   checkoutData: CheckoutData;
 };
 
+type ShippingForm = {
+  shippingAddress: string;
+  formComplete: boolean;
+  checkbox: boolean;
+};
+
 const Cart = ({ user }: { user: User }) => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
@@ -85,8 +91,24 @@ const Cart = ({ user }: { user: User }) => {
     button: null,
   });
 
+  const [checkSlider, setCheckSlider] = useState(
+    "Check when ready for payment"
+  );
+
+  const [shippingForm, setShippingForm] = useState<ShippingForm>({
+    shippingAddress: "",
+    checkbox: false,
+    formComplete: false,
+  });
+
   const handleChange = (event) => {
-    console.log(event.target.checked);
+    console.log("eves", event);
+    event.target.disabled = true;
+    setCheckSlider("Check when ready for payment ...");
+    setTimeout(() => {
+      event.target.disabled = false;
+      setCheckSlider("Check when ready for payment");
+    }, 1000);
     setCheckoutButton({ ...checkoutButton, active: event.target.checked });
   };
 
@@ -148,6 +170,15 @@ const Cart = ({ user }: { user: User }) => {
     }
     // eslint-disable-next-line
   }, [toCheckout.checkoutData, checkoutButton.active]);
+
+  // To check shipping form
+  useEffect(() => {
+    if (shippingForm.shippingAddress.length > 0) {
+      setShippingForm({ ...shippingForm, formComplete: true });
+    } else {
+      setShippingForm({ ...shippingForm, formComplete: false });
+    }
+  }, [shippingForm.shippingAddress]);
 
   switch (productsInCart.loading) {
     case "error":
@@ -213,7 +244,7 @@ const Cart = ({ user }: { user: User }) => {
             )}
           </div>
           {productsInCart.products[0] ? (
-            <div id="checkoutForm">
+            <div id="checkoutForm" className="checkoutForm">
               <FormControlLabel
                 control={
                   <Switch
@@ -223,29 +254,63 @@ const Cart = ({ user }: { user: User }) => {
                     color="primary"
                   />
                 }
-                label="Check when ready for payment"
+                label={`${checkSlider}`}
               />
-              <Button
-                variant="contained"
-                disabled={!checkoutButton.active}
-                onClick={async () => {
-                  const list = document.getElementById("cartListDisplay");
-                  list.className = "fade-out";
-                  setTimeout(() => {
-                    list.hidden = true;
-                  }, 2000);
-                  await axios.post(
-                    `${REACT_APP_BASE_BACKEND_URL}/deleteUserCart`,
-                    { userId: `${productsInCart.user_id}` }
-                  );
-                  checkoutButton.button.open();
-                  const checkoutForm = document.getElementById("checkoutForm");
-                  checkoutForm.hidden = true;
-                  history.push("/");
-                }}
-              >
-                Go to Payment!
-              </Button>
+              <form hidden={!checkoutButton.active}>
+                <div className="shippingForm">
+                  <TextField
+                    id="standard-disabled"
+                    label="Shipping Address"
+                    defaultValue="Address for shipping"
+                    value={shippingForm.shippingAddress}
+                    onChange={(e) => {
+                      setShippingForm({
+                        ...shippingForm,
+                        shippingAddress: e.target.value,
+                      });
+                    }}
+                  />
+                  <br></br>
+
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value={shippingForm.checkbox}
+                        onChange={(e) =>
+                          setShippingForm({
+                            ...shippingForm,
+                            checkbox: e.target.checked,
+                          })
+                        }
+                      ></Checkbox>
+                    }
+                    label={`I confirm the information provided is correct`}
+                  />
+                </div>
+                <br></br>
+                <Button
+                  variant="contained"
+                  hidden={!shippingForm.formComplete || !shippingForm.checkbox}
+                  onClick={async () => {
+                    const list = document.getElementById("cartListDisplay");
+                    list.className = "fade-out";
+                    setTimeout(() => {
+                      list.hidden = true;
+                    }, 2000);
+                    await axios.post(
+                      `${REACT_APP_BASE_BACKEND_URL}/deleteUserCart`,
+                      { userId: `${productsInCart.user_id}` }
+                    );
+                    checkoutButton.button.open();
+                    const checkoutForm =
+                      document.getElementById("checkoutForm");
+                    checkoutForm.hidden = true;
+                    history.push("/");
+                  }}
+                >
+                  Go to Payment!
+                </Button>
+              </form>
             </div>
           ) : (
             <div></div>
