@@ -46,21 +46,27 @@ export default function Search(): JSX.Element {
 
 
   return (
-    <InputCtn>
-      <input
-        id='search-bar'
-        type="text"
-        name="name"
-        autoComplete="off"
-        placeholder='Search...'
-        className='input '
-      >
-      </input>
-      <div>
-        <IconButton>
-          <SearchIcon className='icon'/>
-        </IconButton>
-      </div>
+    
+    <InputCtn onSubmit={e => handleSubmit(e)}>
+      
+        <input
+          id='search-bar'
+          type="text"
+          name="name"
+          autoComplete="off"
+          placeholder='Buscar...'
+          className='input'
+          value={search}
+          onChange = {e => handleChange(e)}
+        >
+       
+        </input>
+        <div onClick={e => handleSubmit(e)}>
+          <IconButton>
+            {/* <SearchIcon className='icon' /> */}
+            <SearchIcon className='icon' />
+          </IconButton>
+        </div>
     </InputCtn>
   
   )

@@ -148,10 +148,9 @@ export default function NavBar() {
                   <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </button>
               )}
-                <Link to = '/created' style={{textDecoration:"none", marginTop:"16px"}}> 
-                Add
+                <Link to = '/created'> 
+                Agregar
                 </Link>
-
             </p>
           </div>
         </div>
@@ -247,8 +246,6 @@ const useStyles = makeStyles((theme) => ({
     background: "rgba(255, 255, 255, 0.767)",
   },
   login: {
-    alignItems: "center",
-    display:"flex",
     fontWeight: "bold",
     fontSize: "18px",
     marginLeft: "10px",

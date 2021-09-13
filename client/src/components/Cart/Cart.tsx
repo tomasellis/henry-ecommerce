@@ -1,16 +1,13 @@
-import { User } from "@auth0/auth0-spa-js";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import CartProductBox from "./CartProductBox";
 import "./styles.css";
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
-const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
   products: CartProductData[];
-  user_id: string;
 };
 
 type CartProductData = {
@@ -29,27 +26,21 @@ type CartProductData = {
   inCartId: string;
 };
 
-const Cart = ({ user }: { user: User }) => {
+const TESTID = "c369aa1c-a46c-43be-93f3-69740bab4037";
+
+const Cart = () => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
     products: [],
-    user_id: "",
   });
 
   const updateData = async () => {
-    var dataUser = await axios.post(`${BASE_URL}/findOrCreateUserInDatabase`, {
-      auth0_id: user.sub,
-      email: user.email,
-      name: user.name,
-    });
-
-    const data = await getProductsInCart(dataUser.data.user_id);
+    const data = await getProductsInCart(TESTID);
     if (data) {
       setProductsInCart({
         ...productsInCart,
         products: data,
         loading: "loaded",
-        user_id: dataUser.data.user_id,
       });
     }
   };
@@ -83,14 +74,14 @@ const Cart = ({ user }: { user: User }) => {
           {productsInCart.products[0] ? (
             <div className="cartProductBox cartLabels">
               <div></div>
-              <div>Name</div>
-              <div>Available</div>
+              <div>Nombre</div>
+              <div>Disponibles</div>
               <div></div>
-              <div>Amount</div>
+              <div>Cantidad</div>
               <div></div>
               <div></div>
               <div></div>
-              <div>Price</div>
+              <div>Precio</div>
             </div>
           ) : (
             ""
@@ -98,7 +89,6 @@ const Cart = ({ user }: { user: User }) => {
           {productsInCart.products[0] ? (
             productsInCart.products.map((product, index) => (
               <CartProductBox
-                user={productsInCart.user_id}
                 key={index}
                 product={product}
                 index={index}
@@ -133,7 +123,7 @@ const getProductsInCart = async (userId: string) => {
     const { data }: AxiosResponse<CartProductData[]> = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/getUserCartData?user_id=${userId}`
     );
-    console.log("data cart get products in cart", data);
+    console.log('data cart get products in cart', data);
     return data;
   } catch (err) {
     console.error(err);

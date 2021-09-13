@@ -7,31 +7,31 @@
 }
 
 .title_add_product{
-    margin-bottom: 8%;
+    margin-bottom: 30px;
 }
 
 .image_add_product{
-    margin-left: 4rem;
-    margin-top: 4rem;
+    margin-left: 50px;
+    margin-top: 30px;
 }
 
 .div_form_add_product{
-    margin-left: 12rem;
-    margin-top: 4rem;
+    margin-left: 200px;
+    margin-top: 50px;
 }
 
 .p_add_product{
     color: black;
-    margin-bottom: auto;
+    margin-bottom: 0px;
     font-size: 15px;
 }
 
 .div_name_add_product {
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
 }
 
 .div_category_add_product{
-    margin-bottom: auto;
+    margin-bottom: 10px;
 }
 
 .div_category_add_product select{
@@ -42,46 +42,46 @@
 }
 
 .div_category_add_product button{
-    margin-left: 2%;
+    margin-left: 10px;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 1.5% 9%;
+    padding: 5px 30px;
 }
 
 .div_size_add_product{
-    margin-bottom: 2%;
+    margin-bottom: 10px;
 }
 
 .div_size_add_product p{
-    margin-bottom: 2%;
+    margin-bottom: 7px;
 }
 
 .div_size_add_product button{
     background-color: white;
     color: black;
-    margin-right: 5%;
-    padding: 2% 3.5%;
+    margin-right: 20px;
+    padding: 7px 12px;
     border: rgba(0, 0, 0, 0.548) 1px solid;
 }
 
 .div_colors_add_product{
-    margin-bottom: 3%;
+    margin-bottom: 10px;
 }
 
 .div_colors_add_product button{
-    width: 2rem;
-    height: 2rem;
-    margin-right: 1rem;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
 }
 
 .div_image_add_product{
-    margin-bottom: 4%;
+    margin-bottom: 15px;
 }
 
 .div_button_add_product button{
-    margin-left: 30%;
-    padding: 2% 15%;
+    margin-left: 90px;
+    padding: 5px 50px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
