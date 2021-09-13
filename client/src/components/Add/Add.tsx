@@ -51,12 +51,13 @@ export default function Add(){
             price : '',
             options : [{image_url : '#', color : '', size : '', stock : ''}]
         })
+        alert('Product created successfully')
     }
 
     return(
         <>  <div className = 'div_add_product'>
                 <div className = 'image_add_product'>
-                    <img src="https://images.unsplash.com/photo-1619032561786-ff6c371e0c74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=537&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1619032561786-ff6c371e0c74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=537&q=80" alt="no cargo :(" />
                 </div>
                 <div className = 'div_form_add_product'>
                     <h1 className = 'title_add_product'>Create Product</h1>

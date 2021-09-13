@@ -36,6 +36,12 @@
     margin-bottom: 10px;
 }
 
+.div_category_add_product input{
+    margin-top: 20px;
+    text-align: center;
+    width: 250px;
+}
+
 .div_category_add_product .select_category_add_product{
     padding: 5px 28px;
     margin-right: 20px;
@@ -50,10 +56,11 @@
     background-color: rgba(0, 0, 0, 0.555);
     color: white;
     border: none;
-    padding: 5px 26px;
+    padding: 3px 17px;
 }
 
 .div_size_add_product{
+    display: inline-flex;
     margin-bottom: 10px;
 }
 
@@ -74,6 +81,7 @@
 }
 
 .div_colors_add_product{
+    display: inline-block;
     margin-bottom: 10px;
 }
 
@@ -93,6 +101,7 @@
 }
 
 .div_button_add_product button{
+    border-radius: 2px;
     padding: 5px 147px;
     border: none;
     background-color: rgba(0, 0, 0, 0.555);
@@ -101,7 +110,7 @@
 }
 
 .div_input_stock_adn_price{
-    display: inline-flex;
+    display: block ruby;
     margin-bottom: 20px;
 }
 

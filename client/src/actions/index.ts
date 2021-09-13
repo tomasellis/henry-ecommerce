@@ -28,6 +28,13 @@ export function postProduct(payload) {
   };
 }
 
+export function postCategory(payload) {
+  return async function (dispatch) {
+    const json = await axios.post(`http://localhost:4000/createNewCategories`, payload);
+    return json;
+  };
+}
+
 
 export function addToCartStorage(productDetail : Object) {
   return { type: "ADD_TO_CART", payload: productDetail };
