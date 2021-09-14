@@ -52,3 +52,7 @@ export function removeToCartStorage(id_option: string) {
 export function updateQuantity(id_option: string, quantity: number) {
   return { type: "UPDATE_QUANTITY", payload: { id_option, quantity } };
 }
+
+export function cleanProductDetail() {
+  return { type: "CLEAN_PRODUCT_DETAIL" };
+}

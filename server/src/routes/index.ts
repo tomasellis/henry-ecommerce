@@ -17,7 +17,7 @@ import mercadoPago from "./mercadoPago";
 import createNewCategory from "./createNewCategory";
 import deleteUserCart from "./deleteUserCart";
 import addLocalStorageToCart from "./addLocalStorageToCart";
-
+import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
 const router = Router();
 
 router.use("/products", products);
@@ -38,5 +38,6 @@ router.use("/mercadopago", mercadoPago);
 router.use("/addLocalStorageToCart", addLocalStorageToCart);
 router.use("/deleteUserCart", deleteUserCart);
 router.use("/createNewCategories", createNewCategory);
+router.use("/findOrCreateUserInDatabase", findOrCreateUserInDatabase);
 
 export default router;

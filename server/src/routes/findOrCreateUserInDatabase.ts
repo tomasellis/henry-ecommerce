@@ -13,16 +13,17 @@ router.post(
         url: "https://henry-pg-api.herokuapp.com/v1/graphql",
         method: "POST",
         data: {
-          query: //verifico si el usuario existe
-            `query {
+          //verifico si el usuario existe
+          query: `query {
                 users(where: {auth0_id: {_eq: "${auth0_id}"}}) {
                   id
                 }
-              }`
+              }`,
         },
-      })
-
-      if (data.data.users.length) return response.json({ user_id: data.data.users[0].id });
+      });
+      console.log("findorcreateresponse", data);
+      if (data.data.users.length)
+        return response.send({ user_id: data.data.users[0].id });
       ({ data } = await axios({
         url: "https://henry-pg-api.herokuapp.com/v1/graphql",
         method: "POST",
@@ -33,13 +34,12 @@ router.post(
                 }
               }`,
         },
-      }))
+      }));
       if (data.errors) {
-        return response.json({ errors: data.errors });
+        return response.send({ errors: data.errors });
       } else {
-        response.json({ user_id: data.data.insert_users_one.id });
+        response.send({ user_id: data.data.insert_users_one.id });
       }
-
     } catch (err) {
       next(err);
     }
