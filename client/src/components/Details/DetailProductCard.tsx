@@ -37,7 +37,8 @@ export const DetailsProductCard = ({
           color: array[i].color,
           options:[{
             size: array[i].size,
-            stock: array[i].stock
+            stock: array[i].stock,
+            id_option: array[i].id
           }]
         }
         const length = options.length
@@ -62,7 +63,7 @@ export const DetailsProductCard = ({
         price:price,
         product:product,
         stock:opciones[0].options[0].stock,
-        id_option:product_options[0]['id'],
+        id_option:product_options[0].id,
         color:opciones[0].color,
         size:opciones[0].options[0].size,
         quantity: 1,
@@ -70,7 +71,7 @@ export const DetailsProductCard = ({
 
 
     useEffect(() => {
-      console.log(opciones, productDetail)
+      console.log(productDetail['id_option'])
         return () => {
             //limpiar el componente
         };
@@ -85,7 +86,7 @@ export const DetailsProductCard = ({
 
     async function addToCart() { //el id del producto
         if (!isAuthenticated) {
-            const existProductInCartRedux = state.cart.some(product => product[id] === productDetail[id])
+            const existProductInCartRedux = state.cart.some(product => product['id_option'] === productDetail['id_option'])
             if (existProductInCartRedux) alert('Product already in cart!')
             else{
               dispatch(addToCartStorage(productDetail));
