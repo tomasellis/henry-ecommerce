@@ -35,14 +35,16 @@ export default function LoggedIn() {
             }
           );
           if (data.insert_carts_products) {
-            alert(
+            console.log(
               "se agregaron los productos de localstorage a la db (averiguar por que sale 2 veces el cartel. no afecta el funcionamiento...)"
             );
             localStorage.cartStorage = [];
             localStorage.idsInCartStorage = [];
           } else {
             console.log("errDataLoggedIn", data);
-            alert("no se agregaron los productos de localstorage a la db");
+            console.log(
+              "no se agregaron los productos de localstorage a la db"
+            );
           }
         }
         setLoaded(true);
