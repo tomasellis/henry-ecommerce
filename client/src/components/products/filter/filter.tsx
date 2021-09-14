@@ -102,6 +102,7 @@ export default function Filter() {
     })
   }
 
+  
   const removeFilter = (e) =>{
     if(e === "category"){
       setDataFilter({...dataFilter, category:[] })
