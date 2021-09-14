@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
-import { removeToCartStorage, updateQuantity } from '../../actions'
+import { removeToCartStorage, updateQuantity } from "../../actions";
 
 type CartProductBoxProps = {
   product: CartProductData;
-  key: number
+  key: number;
 };
 
 type CartProductData = {
-  id,
-  name,
-  image_url,
-  price,
-  id_option,
-  color,
-  size,
-  stock,
-  quantity
+  id;
+  name;
+  image_url;
+  price;
+  id_option;
+  color;
+  size;
+  stock;
+  quantity;
 };
 
 type Product = {
-  id_option: string
-}
+  id_option: string;
+};
 
 interface RootState {
-  cart: Array<Product>,
-  idsInCart: string
+  cart: Array<Product>;
+  idsInCart: string;
 }
 
 const CartStorageProductBox = (props: CartProductBoxProps) => {
-  const state = useSelector((state: RootState) => state)
-  const dispatch = useDispatch()
-  const [quantity, setQuantity] = useState(
-    props.product.quantity
-  );
+  const state = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(props.product.quantity);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -44,24 +42,23 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         `Deseas remover este producto de tu lista: ${product.name}?`
       )
     ) {
-      dispatch(removeToCartStorage(product.id_option))
-    };
-  }
+      console.log("porborrar", product);
+      dispatch(removeToCartStorage(product.id_option));
+    }
+  };
 
   useEffect(() => {
-    dispatch(updateQuantity(props.product.id_option, quantity))
+    dispatch(updateQuantity(props.product.id_option, quantity));
     return () => {
       // cleanup
-    }
-    // eslint-disable-next-line 
-  }, [quantity])
+    };
+    // eslint-disable-next-line
+  }, [quantity]);
 
   useEffect(() => {
-    localStorage.cartStorage = JSON.stringify(state.cart)
-    console.log('se actualizo el carrito');
-    
-  }, [state.cart])
-
+    localStorage.cartStorage = JSON.stringify(state.cart);
+    console.log("se actualizo el carrito");
+  }, [state.cart]);
 
   return (
     <div className="cartProductBox">
@@ -105,9 +102,7 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         className="button"
         disabled={quantity > 1 ? false : true}
         onClick={async (event) => {
-
           setQuantity(quantity - 1);
-
         }}
       >
         <span style={{ alignSelf: "center" }}>-</span>
@@ -120,10 +115,7 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         type={"number"}
         onChange={(event) => {
           event.preventDefault();
-          if (
-            parseInt(event.target.value) >
-            props.product.stock
-          ) {
+          if (parseInt(event.target.value) > props.product.stock) {
             return setQuantity(props.product.stock);
           }
           if (
@@ -139,7 +131,6 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
           // if (fetchingInfo !== "loading") {
           //   setFetchingInfo("loading");
           //   handleOnChange(quantity, props.product, TESTID);
-
           //   setFetchingInfo("loaded");
           // }
         }}
@@ -147,27 +138,15 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         max={props.product.stock}
         onKeyPress={async (e) => {
           if (e.key === "Enter") {
-
             handleOnChange(quantity, props.product);
-
-
           }
         }}
       ></input>
       <button
         className="button"
-        disabled={
-          props.product.quantity <
-            props.product.stock
-            ? false
-            : true
-        }
+        disabled={props.product.quantity < props.product.stock ? false : true}
         onClick={async (event) => {
-
-
           setQuantity(quantity + 1);
-
-
         }}
       >
         <span style={{ alignSelf: "center" }}>+</span>
@@ -181,7 +160,6 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         }}
         onClick={async (event) => {
           await handleDeleteOnClick(props.product);
-
         }}
       >
         <span style={{ alignSelf: "center" }}>x</span>
@@ -200,10 +178,7 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
 
 export default CartStorageProductBox;
 
-const handleOnChange = async (
-  value: number,
-  product: CartProductData,
-) => {
+const handleOnChange = async (value: number, product: CartProductData) => {
   // const { data }: AxiosResponse<AddToCartResponse> = await axios.post(
   //   `${BASE_URL}/addToCart`,
   //   {
@@ -232,5 +207,3 @@ const handleOnChange = async (
 //   );
 //   return data.insert_carts_products_one;
 // };
-
-
