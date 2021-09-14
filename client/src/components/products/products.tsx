@@ -11,48 +11,58 @@ import { getArticles } from "../../actions/products/productActions";
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
-import Pagination from './Pagination/Pagination';
+import Pagination from "./Pagination/Pagination";
 
 export default function Products() {
+  const dispatch = useDispatch();
+  const articles = useSelector((state: any) => state.articles);
+  const [limit] = useState<number>(8);
 
-    const dispatch = useDispatch();
-    const articles = useSelector((state : any) => state.articles);
-    const [limit]= useState<number>(8);
+  type Params = {
+    gender: string;
+    page: string;
+  };
 
-    type Params = {
-        gender : string,
-        page: string
-    };
+  const { gender } = useParams<Params>();
+  const { page } = useParams<Params>();
 
-    const {gender} = useParams<Params>();
-    const {page} = useParams<Params>();
+  useEffect(() => {
+    dispatch(
+      getArticles(
+        gender,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        page,
+        limit
+      )
+    );
+  }, [dispatch, gender, page, limit]);
 
-    useEffect(() => {
-            dispatch(getArticles(gender,  undefined, undefined, undefined,  undefined, undefined, page, limit))
-    }, [dispatch,gender, page, limit])
-
-    return(
-        <div>
-            <h1 className = 'title_ropa_products'>Ropa</h1>
-            <Filter/>
-            <div>
-            {articles.products?.map((e,i) => {
-                    return (
-                        <Card key={e.id}
-                        id = {e.id}
-                        image = {e.image_url}
-                        name={e.name}
-                        price={e.price}
-                        />
-                    )
-                })
-            }
-            </div>
-            <Pagination
-            currentPage={page}
-            nextLength = {articles.next.length}
-            gender = {gender}
+  return (
+    <div>
+      <h1 className="title_ropa_products">Ropa</h1>
+      <Filter />
+      <div>
+        {articles.products?.map((e, i) => {
+          return (
+            <Card
+              key={e.id}
+              id={e.id}
+              image={e.image_url}
+              name={e.name}
+              price={e.price}
             />
+          );
+        })}
+      </div>
+      <Pagination
+        currentPage={page}
+        nextLength={articles.next.length}
+        gender={gender}
+      />
     </div>
   );
 }
