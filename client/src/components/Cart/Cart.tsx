@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CartProductBox from "./CartProductBox";
 import { User } from "@auth0/auth0-spa-js";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -179,6 +179,8 @@ const Cart = ({ user }: { user: User }) => {
     // eslint-disable-next-line
   }, [shippingForm.shippingAddress]);
 
+  const refToCheckbox = useRef(null);
+
   switch (productsInCart.loading) {
     case "error":
       return <div>An error has ocurred</div>;
@@ -264,8 +266,10 @@ const Cart = ({ user }: { user: User }) => {
                     defaultValue="Address for shipping"
                     value={shippingForm.shippingAddress}
                     onChange={(e) => {
+                      refToCheckbox.current.value = false;
                       setShippingForm({
                         ...shippingForm,
+                        checkbox: false,
                         shippingAddress: e.target.value,
                       });
                     }}
@@ -275,6 +279,7 @@ const Cart = ({ user }: { user: User }) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        ref={refToCheckbox}
                         value={shippingForm.checkbox}
                         onChange={(e) =>
                           setShippingForm({
@@ -314,32 +319,6 @@ const Cart = ({ user }: { user: User }) => {
             </div>
           ) : (
             ""
-          )}
-          {productsInCart.products[0] ? (
-            productsInCart.products.map((product, index) => (
-              <CartProductBox
-                active={!checkoutButton.active}
-                user={productsInCart.user_id}
-                key={index}
-                product={product}
-                index={index}
-                productsInCart={productsInCart.products}
-                updateData={updateData}
-                user_id={productsInCart.user_id}
-              ></CartProductBox>
-            ))
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                fontSize: "25px",
-                paddingTop: "30px",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <span>Your cart is empty!</span>
-            </div>
           )}
         </div>
       );
