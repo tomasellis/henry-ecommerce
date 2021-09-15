@@ -13,9 +13,11 @@ export default function OptionsAdd({
 }) {
   const dispatch = useDispatch();
   const options = useSelector((state: any) => state.options);
+  
   useEffect(() => {
     dispatch(getOptions());
   }, [dispatch]);
+  
 
   return (
     <>
