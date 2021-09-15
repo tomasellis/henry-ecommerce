@@ -7,7 +7,8 @@ interface Review {
   user_id: string,
   id_product_general: string,
   stars: number,
-  comment:string
+  comment:string,
+  user_email:string
 }
 
 
@@ -15,17 +16,18 @@ interface Review {
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { id_product_general, user_id, stars, comment } = request.body;
+    const { id_product_general, user_id, stars, comment, user_email} = request.body;
 
     if (
-      id_product_general && user_id && stars && comment 
+      id_product_general && user_id && stars && comment && user_email
     ) {
 
       const review:Review = {
         id_product_general,
         user_id,
         stars,
-        comment
+        comment,
+        user_email
     }
 
       try {
@@ -40,6 +42,7 @@ router.post(
                 id_product_general
                 stars
                 user_id
+                user_email
               }
             }`, 
             variables:{review:review}
@@ -57,7 +60,7 @@ router.post(
     } else {
       response.json({
         error:
-          `Missing user_id OR id_product_general OR stars OR comment'`
+          `Missing user_id OR id_product_general OR stars OR comment OR user_email'`
       });
     }
   }

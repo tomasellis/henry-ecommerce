@@ -7,6 +7,7 @@ import { getProduct } from "../../actions/index";
 
 //import component
 import { DetailsProductCard } from "./DetailProductCard";
+import { DetailProductReview } from "./DetailProductReview";
 
 export const DetailProductCards = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,17 @@ export const DetailProductCards = () => {
   }, [id, dispatch]);
 
   return product.length || product.products?.length ? (
-    <DetailsProductCard
-      id={id}
-      name={product?.products[0]?.name}
-      product={product}
-      image_url={product.products[0].image_url}
-      price={product?.products[0]?.price}
-      product_options={product?.products[0]?.product_options}
-    />
+    <>
+      <DetailsProductCard
+        id={id}
+        name={product?.products[0]?.name}
+        product={product}
+        image_url={product.products[0].image_url}
+        price={product?.products[0]?.price}
+        product_options={product?.products[0]?.product_options}
+      />
+      <DetailProductReview product_id={id} />
+    </>
   ) : (
     <div>Loading detail</div>
   );
