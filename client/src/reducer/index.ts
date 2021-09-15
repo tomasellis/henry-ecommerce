@@ -83,6 +83,15 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         product: [],
       };
 
+      case "CLEAN_PRODUCTS":
+        return {
+          ...state,
+          articles: {
+            products: [],
+            next: [],
+          },
+        };
+
     default:
       return state;
   }

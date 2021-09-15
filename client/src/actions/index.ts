@@ -56,3 +56,7 @@ export function updateQuantity(id_option: string, quantity: number) {
 export function cleanProductDetail() {
   return { type: "CLEAN_PRODUCT_DETAIL" };
 }
+
+export function cleanProducts() {
+  return { type: "CLEAN_PRODUCTS" };
+}
