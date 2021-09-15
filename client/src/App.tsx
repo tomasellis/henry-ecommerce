@@ -19,13 +19,10 @@ function App() {
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route exact path="/profile" component={Profile} />
-      <Route
-        exact
-        path="/clothing/details/:id"
-        component={DetailProductCards}
-      />
+      <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />
+      <Route exact path="/profile" component={Profile} />
     </BrowserRouter>
   );
 }
