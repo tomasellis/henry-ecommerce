@@ -1,0 +1,9 @@
+.conteiner-perfil{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.conteiner-datos{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+}
