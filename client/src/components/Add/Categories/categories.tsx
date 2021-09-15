@@ -22,6 +22,8 @@ export default function Categories({ input, setInput, handleChange }) {
     });
   };
 
+  let selectNewCategory = category.categories[0]?.name;
+
   const handleCategoryChange = (e) => {
     setCategory({
       categories: [{ name: e.target.value }],
@@ -35,13 +37,18 @@ export default function Categories({ input, setInput, handleChange }) {
     });
   };
 
-  const handleButton = (e) => {
+  const handleButton = (e) => {    
     const repeat = options.categories?.find(
       (e) => e.name.toUpperCase() === category.categories[0]?.name.toUpperCase()
     );
     if (!repeat) {
+      e.preventDefault();
       dispatch(postCategory(category));
       alert("Category created successfully.");
+      setInput({
+        ...input,
+        categories : [...input.categories , selectNewCategory]
+      })      
     } else {
       e.preventDefault();
       alert("That category already exists.");
@@ -50,8 +57,7 @@ export default function Categories({ input, setInput, handleChange }) {
       categories: [],
     });
   };
-  console.log(options);
-
+  
   return (
     <>
       <div className="div_categories_add">
@@ -80,7 +86,7 @@ export default function Categories({ input, setInput, handleChange }) {
           })}
         </select>
         <ul>
-          {input.categories?.map((el) => {
+          {!input.categories ? null : input.categories?.map((el) => {
             function NameInUpperCase(str) {
               return str.charAt(0).toUpperCase() + str.slice(1);
             }

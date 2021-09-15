@@ -91,6 +91,9 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
+  console.log(productDetail);
+  
+
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());

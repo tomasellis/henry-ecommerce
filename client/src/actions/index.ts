@@ -19,14 +19,14 @@ export function postCategory(payload) {
     const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/createNewCategories`,
       payload
-    );
+    );    
     return json;
   };
 }
 
 export function getOptions() {
-  return async function (dispatch: any) {
-    let json = await axios(`${REACT_APP_BASE_BACKEND_URL}/options`, {});
+  return async function (dispatch : any) {
+    let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});        
     return dispatch({ type: "GET_OPTIONS", payload: json.data });
   };
 }
