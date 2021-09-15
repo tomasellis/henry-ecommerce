@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {useAuth0} from '@auth0/auth0-react'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: "1fr 1fr",
     gap:"1em" 
   },
+  root2:{
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gap:"1em"
+  },
   selectEmpty: {
     marginTop: theme.spacing(1),
     width: '25ch',
@@ -31,12 +40,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const provinces = ["Buenos Aires",
+"Capital Federal",
+"Catamarca",
+"Chaco",
+"Chubut",
+"Córdoba",
+"Corrientes",
+"Entre Ríos",
+"Formosa",
+"Jujuy",
+"La Pampa",
+"La Rioja",
+"Mendoza",
+"Misiones",
+"Neuquén",
+"Río Negro",
+"Salta",
+"San Juan",
+"San Luis",
+"Santa Cruz",
+"Santa Fe",
+"Santiago del Estero",
+"Tierra del Fuego",
+"Tucumán"]
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 export default function EditProfile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
   const classes = useStyles();
-  if(isLoading) return <div>Loading...</div>
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
 
+  const handleChange2 = (event) => {
+    setPersonName(event.target.value);
+  };
+  if(isLoading) return <div>Loading...</div>
 
   const handleChange = (event) => {
     
@@ -45,10 +103,11 @@ export default function EditProfile() {
   return (
     <div>
       <div className='div-conteiner'>
-                <h3>Profile</h3>
+                <hr></hr>
+                <h3 className='titulo'>PROFILE</h3>
             <div className='conteiner-perfil'>
-                <h6>-Data</h6>
-                <h6>-Change password</h6>
+                <h5>- Data</h5>
+                <h5>- Change password</h5>
             </div>
             <div className="conteiner-datos">
               <form className={classes.root} noValidate autoComplete="off">
@@ -74,7 +133,7 @@ export default function EditProfile() {
                   id="demo-simple-select-helper"
                   className={classes.selectEmpty}
                   >
-                  <MenuItem value="">
+                  <MenuItem disabled value="">
                     <em>Select an option</em>
                   </MenuItem>
                   <MenuItem value={20}>Male</MenuItem>
@@ -102,8 +161,11 @@ export default function EditProfile() {
                     <InputLabel htmlFor="component-disabled">Email</InputLabel>
                     <Input id="component-disabled" value="email"/>
                 </FormControl>
+                <button style={{width:"40%"}} className="btn">
+                  Update
+                </button>
               </form>
-              <form className={classes.root} noValidate autoComplete="off">
+              <form className={classes.root2} noValidate autoComplete="off">
                 <TextField
                     id="filled-secondary"
                     label="Current Password"
@@ -119,7 +181,93 @@ export default function EditProfile() {
                     label="Repeat Password"
                     color="secondary"
                 />
+                <button style={{width:"20%"}} className="btn">
+                  Update
+                </button>
               </form>
+            </div>
+            <hr></hr>
+            <div className='conteiner-perfil'>
+              <h5>- Delivery address</h5>
+            </div>
+            <div>
+              <form className="adicional-data">
+                <TextField
+                    id="filled-secondary"
+                    label="Delivery"
+                    color="secondary"
+                />
+                <TextField
+                    id="filled-secondary"
+                    label="N°"
+                    color="secondary"
+                />
+                <TextField
+                    id="standard-multiline-flexible"
+                    label="Floor"
+                    multiline
+                    maxRows={4}
+                    
+                />
+                <TextField
+                    id="standard-multiline-flexible"
+                    label="Apartament"
+                    multiline
+                    maxRows={4}
+                    
+                />
+                <TextField
+                    id="filled-secondary"
+                    label="Postal code"
+                    color="secondary"
+                />
+                <Select
+                  multiple
+                  displayEmpty
+                  value={personName}
+                  onChange={handleChange2} 
+                  input={<Input />}
+                  renderValue={(selected) => {
+                    if ((selected as string[]).length === 0) {
+                      return <em>Select an option</em>;
+                    }
+
+                    return (selected as string[]).join(', ');
+                  }}
+                  MenuProps={MenuProps} 
+                  inputProps={{ 'aria-label': 'Without label' }}
+                  >
+                  <MenuItem disabled value="">
+                    <em>Select an option</em>
+                  </MenuItem>
+                  {provinces.map((prov) => (
+                    <MenuItem key={prov} value={prov} style={getStyles(prov, personName, theme)}>
+                      {prov}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <TextField
+                    id="filled-secondary"
+                    label="Locality"
+                    color="secondary"
+                />
+                <TextField
+                    id="filled-secondary"
+                    label="Phone"
+                    color="secondary"
+                />
+                <TextField
+                    id="standard-multiline-flexible"
+                    label="Additional data"
+                    multiline
+                    maxRows={4}
+                    
+                />
+                <button style={{width:"40%"}} className='btn'> 
+                  Update
+                </button>
+              </form>
+              <hr></hr>
             </div>
         </div>
     </div>
