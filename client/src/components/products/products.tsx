@@ -17,7 +17,7 @@ import Pagination from "./Pagination/Pagination";
 export default function Products() {
   const dispatch = useDispatch();
   const articles = useSelector((state: any) => state.articles);
-  const [limit] = useState<number>(8);
+  const [limit] = useState<number>(12);
 
   type Params = {
     gender: string;
@@ -26,7 +26,7 @@ export default function Products() {
 
   const { gender } = useParams<Params>();
   const { page } = useParams<Params>();
-
+  console.log(typeof(page))
   useEffect(() => {
     dispatch(
       getArticles(
@@ -37,7 +37,8 @@ export default function Products() {
         undefined,
         undefined,
         page,
-        limit
+        limit,
+        undefined
       )
     );
     return () => {
@@ -47,7 +48,7 @@ export default function Products() {
 
   return (
     <div>
-      <h1 className="title_ropa_products">Ropa</h1>
+      <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div>
         {articles.products?.map((e, i) => {

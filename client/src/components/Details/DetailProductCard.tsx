@@ -149,7 +149,7 @@ export const DetailsProductCard = ({
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
-        id_option: chosenOptionSize[0].optionId,
+        id_option: chosenOptionSize[0]?.optionId,
       });
     }
     return setProductDetail({

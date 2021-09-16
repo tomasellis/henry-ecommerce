@@ -45,7 +45,8 @@ export default function Filter() {
         dataFilter.color,
         dataFilter.size,
         0,
-        8
+        12,
+        undefined
       )
     )
   }, [dataFilter])
