@@ -1,6 +1,6 @@
 import "./DetailProductCard.css";
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import './FormReview.css'
 
