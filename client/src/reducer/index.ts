@@ -13,6 +13,10 @@ const initialState = {
     ? JSON.parse(localStorage.idsInCartStorage)
     : [],
   searchArticles: [],
+  user:{
+    id: '',
+    email: ''
+  }
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -82,6 +86,30 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         product: [],
       };
+
+      case "CLEAN_PRODUCTS":
+        return {
+          ...state,
+          articles: {
+            products: [],
+            next: [],
+          },
+        };
+
+      case 'SET_DATA_USER':
+        return {
+          ...state,
+          user: {
+            id: payload.user_id,
+            email: payload.user_email
+          }
+        }
+
+      case 'SET_PRODUCTS_IDS_IN_CART':
+        return {
+          ...state,
+          idsInCart:payload
+        }
 
     default:
       return state;
