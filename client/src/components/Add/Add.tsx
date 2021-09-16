@@ -90,6 +90,7 @@ export default function Add(){
             alert('There are empty fields');
         }
     };
+console.log(input);
 
     return(
         <>  <div className = 'div_add_product'>
