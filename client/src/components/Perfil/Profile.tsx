@@ -36,17 +36,6 @@ export default function Profile() {
                     <hr className = 'hr_profile' />
                 </div>
             </div>
-      <div className='div-conteiner'>
-            <div className='cont-data'>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-     
     </div>
   )
 }
