@@ -9,6 +9,7 @@ import LoggedIn from "./components/Login/LoggedIn";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 import Add from "./components/Add/Add";
 import PrevCart from "./components/Cart/PrevCart";
+import Favorites from './components/Perfil/Favorites/Favorites'
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
       <Route exact path="/created" component={Add} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
-      <Route exact path="/profile" component={Profile} />
+      <Route path="/profile" component={Profile} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />
+      <Route exact path='/profile/favorites' component={Favorites} />
     </BrowserRouter>
   );
 }

@@ -1,19 +1,42 @@
-import {useAuth0} from '@auth0/auth0-react'
-import Logout from '../Logout'
+import {useAuth0} from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
+
+//import css
+import './Profile.css'
+
+//import component
+import Logout from './Logout';
+import Favorites from './Favorites/Favorites';
 
 export default function Profile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
-
-  if(isLoading) return <div>Loading...</div>
-
+  console.log(user);
+  
+  if(isLoading) return <div>Loading...</div>  
   return (
     isAuthenticated && <div>
-      <div className='div-conteiner'>
-                <h3>Profile</h3>
-            <div className='conteiner-perfil'>
-                <h6>-Data</h6>
-                <h6>-Change password</h6>
+      <div className = 'div_lateralProfile'>
+                <div className = 'div_profile'>
+                    <img className = 'img_profile_profile' src={user.picture} alt={user.name} />
+                    <h1 className = 'name_title_profile'>{user.name}</h1>
+                    <p className = 'email_p_profile'>{user.email}</p>
+                    <Logout  />  
+                    <hr className = 'hr_profile'/>
+                    <Link to = '/profile'>
+                      <h1 className = 'edit_profile_h1_profile'>Edit Profile</h1>
+                      <hr className = 'hr_profile' />
+                    </Link>
+                    <Link to = '/profile/shopping-history'>
+                        <h1 className = 'history_h1_profile'>Shopping History</h1>
+                    </Link>
+                    <hr  className = 'hr_profile' />
+                    <Link to = '/profile/favorites'>
+                        <h1 className = 'favorites_h1_profile'>Favorites</h1>
+                    </Link>
+                    <hr className = 'hr_profile' />
+                </div>
             </div>
+      <div className='div-conteiner'>
             <div className='cont-data'>
                 <div></div>
                 <div></div>
@@ -23,10 +46,7 @@ export default function Profile() {
                 <div></div>
             </div>
         </div>
-      <img src={user.picture} alt={user.name} />
-      <h3>{user.name}</h3>
-      <p>{user.email}</p>
-      <Logout />
+     
     </div>
   )
 }

@@ -41,6 +41,15 @@ export function postProduct(payload) {
   };
 }
 
+export function favoriteProducts(payload){
+  console.log(payload);
+  
+  return{
+    type : 'ADD_FAVORITE_PRODUCT',
+    payload : payload
+  }
+}
+
 export function addToCartStorage(productDetail: Object) {
   return { type: "ADD_TO_CART", payload: productDetail };
 }

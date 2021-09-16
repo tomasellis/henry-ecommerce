@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+.div_lateralProfile{
+    font-family: 'Poppins', sans-serif;
+    width: 300px;
+    height: 430px;
+    position: fixed;
+}
+
+.div_fav_products{
+    max-width: 70%;
+    margin-left: 400px;
+    display: block;
+}
+
+.mama{
+    
+}
+
+.div_fav_products img{
+    width: 200px;
+}
+
+.div_profile{
+    margin-left: 40px;
+}
+
+.img_profile_profile{
+    margin-top: 20px;
+    border-radius: 100px;
+    width: 23%;
+}
+
+.name_title_profile{
+    font-size: 17px;
+    margin-top: 10px;
+}
+
+.email_p_profile{
+    font-size: 14px;
+}
+
+.button_logout_profile{
+    border-radius: 2px;
+    padding: 5px 20px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.555);
+    color: white;
+    margin-bottom: 20px;
+}
+
+.hr_profile{
+    width: 320px;
+}
+
+.edit_profile_h1_profile{
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+}
+
+.history_h1_profile{
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+}
+
+.favorites_h1_profile{
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+}

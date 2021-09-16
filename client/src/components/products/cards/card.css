@@ -26,9 +26,19 @@
     color: black;
 }
 
-.div_card_product img {
+.img_product{
     width: 330px;
     height: 370px;
+}
+
+.img_fav_product{
+    display: flex;
+    margin-left: 270px;
+}
+
+.button_fav_product{
+    background-color: transparent;
+    display: contents;
 }
 
 .card_name_product {
@@ -47,7 +57,7 @@
     text-align: left;
     text-decoration: none;
     color: black;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 10px;
     font-size: 16px;
     font-weight: 300;
