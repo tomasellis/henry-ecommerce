@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '30ch',
     },
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   root2:{
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '30ch',
     },
     display: "grid",
     gridTemplateColumns: "1fr",
@@ -30,13 +30,13 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
-    width: '25ch',
+    width: '30ch',
     marginLeft: "8px",
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '25ch',
+    width: '30ch',
   },
 }));
 
@@ -103,7 +103,6 @@ export default function EditProfile() {
   return (
     <div>
       <div className='div-conteiner'>
-                <hr></hr>
                 <h3 className='titulo'>PROFILE</h3>
             <div className='conteiner-perfil'>
                 <h5>- Data</h5>

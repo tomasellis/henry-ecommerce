@@ -7,6 +7,7 @@ import './Profile.css'
 //import component
 import Logout from './Logout';
 import Favorites from './Favorites/Favorites';
+import EditProfile from './EditProfile/EditProfile';
 
 export default function Profile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
@@ -35,6 +36,7 @@ export default function Profile() {
                     </Link>
                     <hr className = 'hr_profile' />
                 </div>
+                    {/* <EditProfile/> */}
             </div>
     </div>
   )
