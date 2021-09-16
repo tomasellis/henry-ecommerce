@@ -56,3 +56,15 @@ export function updateQuantity(id_option: string, quantity: number) {
 export function cleanProductDetail() {
   return { type: "CLEAN_PRODUCT_DETAIL" };
 }
+
+export function cleanProducts() {
+  return { type: "CLEAN_PRODUCTS" };
+}
+
+export function setDataUser(user_id:string,user_email:string){
+  return {type: 'SET_DATA_USER', payload: {user_id, user_email} }
+}
+
+export function setProductsIdsInCart(idsInCart){
+  return {type: 'SET_PRODUCTS_IDS_IN_CART', payload: idsInCart}
+}

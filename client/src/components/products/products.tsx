@@ -7,6 +7,7 @@ import "./products.css";
 
 //import actions
 import { getArticles } from "../../actions/products/productActions";
+import { cleanProducts } from "../../actions";
 
 //import components
 import Filter from "./filter/filter";
@@ -39,6 +40,9 @@ export default function Products() {
         limit
       )
     );
+    return () => {
+      dispatch(cleanProducts())
+    }
   }, [dispatch, gender, page, limit]);
 
   return (

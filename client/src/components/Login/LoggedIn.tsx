@@ -1,19 +1,21 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { setDataUser, setProductsIdsInCart } from "../../actions";
 import "./styles.css";
 
 export default function LoggedIn() {
   const { user, isAuthenticated } = useAuth0();
   const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
   const history = useHistory();
-
+  const dispatch = useDispatch()
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
-      if (isAuthenticated === true) {
+      if (isAuthenticated) {
         // get user data
         const dataUser = await axios.post(
           `${BASE_URL}/findOrCreateUserInDatabase`,
@@ -24,8 +26,16 @@ export default function LoggedIn() {
           }
         );
 
+        dispatch(setDataUser(dataUser.data.user_id, user.email))
+
+        let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.user_id}`)
+        
+        idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
+        dispatch(setProductsIdsInCart(idsInCart))
+        
         // Check storage
-        console.log(localStorage.cartStorage);
+        // console.log(localStorage.cartStorage);
+
         if (localStorage.cartStorage) {
           const { data } = await axios.post(
             `${BASE_URL}/addLocalStorageToCart`,
