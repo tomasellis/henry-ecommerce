@@ -23,15 +23,15 @@ export default function Profile() {
                     <p className = 'email_p_profile'>{user.email}</p>
                     <Logout  />  
                     <hr className = 'hr_profile'/>
-                    <Link to = '/profile/editprofile'>
+                    <Link to = '/profile/editprofile' style={{textDecoration:"none"}}>
                       <h1 className = 'edit_profile_h1_profile'>Edit Profile</h1>
                       <hr className = 'hr_profile' />
                     </Link>
-                    <Link to = '/profile/shopping-history'>
+                    <Link to = '/profile/shopping-history' style={{textDecoration:"none"}}>
                         <h1 className = 'history_h1_profile'>Shopping History</h1>
                     </Link>
                     <hr  className = 'hr_profile' />
-                    <Link to = '/profile/favorites'>
+                    <Link to = '/profile/favorites' style={{textDecoration:"none"}}>
                         <h1 className = 'favorites_h1_profile'>Favorites</h1>
                     </Link>
                     <hr className = 'hr_profile' />
