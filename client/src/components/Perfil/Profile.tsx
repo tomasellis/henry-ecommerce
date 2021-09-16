@@ -14,6 +14,8 @@ export default function Profile() {
   console.log(user);
   
   if(isLoading) return <div>Loading...</div>  
+
+  
   return (
     isAuthenticated && <div>
       <div className = 'div_lateralProfile'>

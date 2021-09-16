@@ -158,7 +158,7 @@ export default function EditProfile() {
                   />
                 <FormControl className={classes.selectEmpty} disabled>
                     <InputLabel htmlFor="component-disabled">Email</InputLabel>
-                    <Input id="component-disabled" value="email"/>
+                    <Input id="component-disabled" value={user.email}/>
                 </FormControl>
                 <button style={{width:"40%"}} className="btn">
                   Update
