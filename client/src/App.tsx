@@ -9,11 +9,9 @@ import LoggedIn from "./components/Login/LoggedIn";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 import Add from "./components/Add/Add";
 import PrevCart from "./components/Cart/PrevCart";
-<<<<<<< HEAD
 import Favorites from './components/Perfil/Favorites/Favorites'
-=======
 import EditProfile from "./components/Perfil/EditProfile/EditProfile";
->>>>>>> cdb557e016b99b6b7ee16321c23e2aadb898fc9f
+import Profile from "./components/Perfil/Profile";
 
 function App() {
   return (
@@ -28,9 +26,8 @@ function App() {
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />
       <Route exact path='/profile/favorites' component={Favorites} />
-      {/* <Route exact path="/profile" component={Profile} /> */}
       <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
-      <Route exact path="/editprofile" component={EditProfile} />
+      <Route exact path="/profile/editprofile" component={EditProfile} />
     </BrowserRouter>
   );
 }
