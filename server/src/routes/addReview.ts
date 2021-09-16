@@ -50,7 +50,7 @@ router.post(
         })
         if (data.errors) {
           next(data.errors);
-          return response.send(data.errors);
+          return response.send(data.errors[0].message);
         } else {
           response.json(data.data);
         }

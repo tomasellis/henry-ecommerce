@@ -69,7 +69,7 @@ export const DetailProductReview = ({
     <div className="boxReview" style={{textAlign:'center'}}>
       {reviews.map((review: Review) => {
 
-        return (<div>
+        return (<div key={review.user_email}>
           <h3>{review.user_email}</h3>
           <h4>stars: {review.stars}</h4>
           <h4>{review.comment}</h4>
@@ -80,3 +80,4 @@ export const DetailProductReview = ({
   );
 };
 
+export default DetailProductReview

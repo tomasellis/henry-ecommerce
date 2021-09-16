@@ -7,7 +7,7 @@ import { getProduct } from "../../actions/index";
 
 //import component
 import { DetailsProductCard } from "./DetailProductCard";
-import { DetailProductReview } from "./DetailProductReview";
+// import { DetailProductReview } from "./DetailProductReview";
 
 export const DetailProductCards = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export const DetailProductCards = () => {
         price={product?.products[0]?.price}
         product_options={product?.products[0]?.product_options}
       />
-      <DetailProductReview product_id={id} />
+      
     </>
   ) : (
     <div>Loading detail</div>
