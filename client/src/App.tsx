@@ -3,7 +3,6 @@ import "./App.css";
 import Products from "./components/products/products";
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-/* import Profile from "./components/Perfil/Profile"; */
 import NavBar from "./components/NavBar/NavBar";
 import LoggedIn from "./components/Login/LoggedIn";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
