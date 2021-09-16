@@ -15,8 +15,6 @@ import { Link as link } from "@material-ui/core";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
-import SearchList from "../Search/SearchList";
-
 
 export default function NavBar() {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();

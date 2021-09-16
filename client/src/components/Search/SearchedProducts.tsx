@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
@@ -28,7 +28,7 @@ export default function SearchedProducts() {
       value.name
     )
   )
-}, []);
+}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
