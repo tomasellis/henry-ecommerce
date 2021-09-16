@@ -16,7 +16,7 @@ import Pagination from "./Pagination/Pagination";
 export default function Products() {
   const dispatch = useDispatch();
   const articles = useSelector((state: any) => state.articles);
-  const [limit] = useState<number>(8);
+  const [limit] = useState<number>(12);
 
   type Params = {
     gender: string;

@@ -18,11 +18,11 @@ export default function Search(): JSX.Element {
   const [search, setSearch]  = useState<string>('');
   // const busqueda = useSelector((state : any) => state.searchArticles);
 
-  // useEffect(() => {
+ //useEffect(() => {
 
 
 
-  // },[busqueda,dispatch])
+ //},[search,dispatch])
 
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ export default function Search(): JSX.Element {
   const handleSubmit = (e : React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if(search !== ''){
-      window.location.replace(`http://localhost:3000/search?name=${search}`);
+      window.location.replace(`http://localhost:3000/search?name=${search}`);//Cambiar URL.
       setSearch('')
       console.log(`funciona ${search.toLowerCase()}`)
 
