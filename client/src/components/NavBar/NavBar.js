@@ -138,7 +138,7 @@ export default function NavBar() {
             <p className={classes.login}>
               {isAuthenticated ? (
                 <Link
-                  to="/profile"
+                  to="/profile/editprofile"
                   style={{ textDecoration: "none", color: "#000", marginTop:'0' }}
                 >
                   {user.name}

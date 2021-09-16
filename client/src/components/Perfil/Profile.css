@@ -4,7 +4,7 @@
   /*   display: grid;
     grid-template-columns: 1fr 1fr; */
     font-family: 'Poppins', sans-serif;
-    width: 300px;
+    width: 250px;
     height: 430px;
     position: fixed;
 }
@@ -48,23 +48,23 @@
 }
 
 .hr_profile{
-    width: 320px;
+    width: 280px;
 }
 
 .edit_profile_h1_profile{
-    font-size: 25px;
+    font-size: 20px;
     text-decoration: none;
     color: black;
 }
 
 .history_h1_profile{
-    font-size: 25px;
+    font-size: 20px;
     text-decoration: none;
     color: black;
 }
 
 .favorites_h1_profile{
-    font-size: 25px;
+    font-size: 20px;
     text-decoration: none;
     color: black;
 }

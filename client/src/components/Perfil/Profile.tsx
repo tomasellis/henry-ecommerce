@@ -23,7 +23,7 @@ export default function Profile() {
                     <p className = 'email_p_profile'>{user.email}</p>
                     <Logout  />  
                     <hr className = 'hr_profile'/>
-                    <Link to = '/profile'>
+                    <Link to = '/profile/editprofile'>
                       <h1 className = 'edit_profile_h1_profile'>Edit Profile</h1>
                       <hr className = 'hr_profile' />
                     </Link>
