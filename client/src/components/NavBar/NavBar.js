@@ -1,6 +1,6 @@
 import logoTiendaRopa from "../../logoTiendaRopa.png";
 import { Link } from "react-router-dom";
-import Search from "../Search";
+import Search from "../Search/Search";
 import "./NavBar.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
@@ -15,7 +15,7 @@ import { Link as link } from "@material-ui/core";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
-import SearchList from "../SearchList";
+import SearchList from "../Search/SearchList";
 
 
 export default function NavBar() {
@@ -123,7 +123,7 @@ export default function NavBar() {
         <div className={classes.div}>
           <div>
             <Search />
-            <SearchList/>
+
           </div>
 
           <div className={classes.bolsa}>
@@ -148,7 +148,7 @@ export default function NavBar() {
                   <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </button>
               )}
-                <Link to = '/created'> 
+                <Link to = '/created'>
                 Agregar
                 </Link>
             </p>
@@ -190,7 +190,7 @@ export default function NavBar() {
           <Search />
 
         <div className={classes.listMobile}>
-          <SearchList/>
+
         </div>
         </div>
       </Toolbar>

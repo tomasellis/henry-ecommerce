@@ -1,17 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
 import { useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 
 const SearchList = () => {
     const busqueda = useSelector((state : any) => state.searchArticles);
+
+    useEffect (()=>{
+    }, [busqueda])
+
     return (
         <List>
-            {
-                busqueda.length > 0 && busqueda.map((item:any, index:number) => {
-                    console.log(busqueda)
+            {busqueda.length>0 &&
+                busqueda.map((item:any, index:number) => {
                     return (
-                            <Link to = {`/clothing/details/${item.id}`}>        
+                            <Link to = {`/clothing/${item.id}`}>
                             <div className='listItem' key={index}>
                                 <p>{item.name}</p>
                                 <img src={item.image_url} alt='img'/>
@@ -19,7 +22,7 @@ const SearchList = () => {
                             </Link>
                     )
                 })
-            
+
             }
         </List>
     )
@@ -27,7 +30,7 @@ const SearchList = () => {
 
 export default SearchList;
 
-const List = styled.div` 
+const List = styled.div`
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 19px;
@@ -57,13 +60,13 @@ const List = styled.div`
             height: 70px;
         }
         img:hover{
-            transform: scale(1.1); 
+            transform: scale(1.1);
             border-radius: 50%;
         }
     }
     .listItem:hover{
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-        
+
     }
-    
+
 `

@@ -9,6 +9,7 @@ import LoggedIn from "./components/Login/LoggedIn";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 import Add from "./components/Add/Add";
 import PrevCart from "./components/Cart/PrevCart";
+import SearchedProducts from "./components/Search/SearchedProducts";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route exact path="/profile" component={Profile} />
+      <Route exact path="/search" component={SearchedProducts} />
       <Route
         exact
         path="/clothing/details/:id"
