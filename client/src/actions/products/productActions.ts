@@ -28,11 +28,11 @@ export const getArticles =
         &_limit=${limit || ""}&_search=${search || ""}`
       );
 
-      dispatch({
-        type: PRODUCTS_ACTIONS.BRING_CLOTHER,
-        payload: res.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        dispatch({
+          type: PRODUCTS_ACTIONS.BRING_CLOTHER,
+          payload: res.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
