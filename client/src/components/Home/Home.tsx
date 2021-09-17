@@ -5,6 +5,7 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import sale from "../../sale.png";
 import shoes from "../../shoes.png";
+import Footer from "../Footer/Footer";
 import tshirt from "../../t-shirt.png";
 import parka from "../../parka.png";
 import tshirt2 from "../../t-shirt2.png";
@@ -15,7 +16,9 @@ const Home = (props) => {
 
   return (
     <>
-      <div className="navigation-wrapper">
+    <div className="page-container">
+      <div className="content-wrap">
+       <div className="navigation-wrapper">
         <div ref={ref} className="keen-slider">
           <div className="keen-slider__slide number-slide1">
             <img src={sale} width="22%" alt="sale" />
@@ -74,6 +77,9 @@ const Home = (props) => {
         )}
       </div>
       <CategorySlide />
+      </div>
+      <Footer />
+    </div>
     </>
   );
 };

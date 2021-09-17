@@ -11,10 +11,10 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
   const color = req.query.color? `color:{_eq:${req.query.color}}` : ' '
   const size = req.query.size? `size:{_eq:${req.query.size}}` : ' '
   const price = `price: {_gte: ${req.query.greater_than || "0"}, _lte: ${req.query.less_than || "999999"}}`
-  const name = req.query.name? `name: {_ilike: "%${req.query.name}%"}`: ' '
+  const _search = req.query._search? `name: {_ilike: "%${req.query._search}%"}`: ' '
   const _page = page? `offset: ${+page}`: ' '
   const _limit = limit? `limit: ${+limit}`: ' '
-  let pages = [page? `offset: ${(+page + 0) * 8}`: ' ', page? `offset: ${(+page + 1) * 8}`: ' ']
+  let pages = [page? `offset: ${(+page + 0) * 12}`: ' ', page? `offset: ${(+page + 1) * 12}`: ' ']
   try {
     let arr = [];
     for (let i=0; i<2; i++) {
@@ -23,7 +23,7 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
       method: "POST",
       data: { query:
         `query {
-          products(where: {${gender},${price},${name}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${pages[i]}, ${_limit}) {
+          products(where: {${gender},${price},${_search}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${pages[i]}, ${_limit}) {
             name
             image_url
             gender

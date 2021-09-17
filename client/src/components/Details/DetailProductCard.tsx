@@ -2,11 +2,13 @@
 import "./DetailProductCard.css";
 // import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail } from "../../actions";
+import DetailProductReview from "./DetailProductReview";
+import FormReview from './FormReview'
 
 type Product = {
   id_option: string;
@@ -91,6 +93,9 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
+  console.log(productDetail);
+
+
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -144,7 +149,7 @@ export const DetailsProductCard = ({
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
-        id_option: chosenOptionSize[0].optionId,
+        id_option: chosenOptionSize[0]?.optionId,
       });
     }
     return setProductDetail({
@@ -154,26 +159,30 @@ export const DetailsProductCard = ({
   }
 
   return (
-    <div className="mainDetailCard">
-      <div className="mainDetailCard__container">
-        <div className="container__img">
-          <img
-            src={image_url}
-            width="100%"
-            alt=""
-            className="container__card-img"
-          />
+    <React.Fragment>
+      <div className="mainDetailCard">
+        <div className="mainDetailCard__container">
+          <div className="container__img">
+            <img
+              src={image_url}
+              width="100%"
+              alt=""
+              className="container__card-img"
+            />
+          </div>
+          {product &&
+            productDetailDisplay(
+              price,
+              optionsByColor,
+              onChange,
+              addToCart,
+              productDetail
+            )}
         </div>
-        {product &&
-          productDetailDisplay(
-            price,
-            optionsByColor,
-            onChange,
-            addToCart,
-            productDetail
-          )}
       </div>
-    </div>
+      {isAuthenticated && state.idsInCart.includes(id) && <FormReview product_id={id}/>}
+      <DetailProductReview product_id={id} />
+    </React.Fragment>
   );
 };
 
@@ -216,23 +225,23 @@ const productDetailDisplay = (
         {opciones.length &&
           opciones
             .filter((obj) => obj.color === productDetail["color"])[0]
-            ["options"].map((option) => {
-              return (
-                <label>
-                  {option.size}
-                  <input
-                    type="radio"
-                    name="size"
-                    key={option.size}
-                    checked={productDetail["size"] === option.size}
-                    value={option.size}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
-                  />
-                </label>
-              );
-            })}
+          ["options"].map((option) => {
+            return (
+              <label>
+                {option.size}
+                <input
+                  type="radio"
+                  name="size"
+                  key={option.size}
+                  checked={productDetail["size"] === option.size}
+                  value={option.size}
+                  onChange={(e) => {
+                    onChange(e);
+                  }}
+                />
+              </label>
+            );
+          })}
       </div>
     </form>
     <div className="div_stock_product_details">
@@ -240,8 +249,8 @@ const productDetailDisplay = (
       {opciones.length &&
         opciones
           .filter((obj) => obj.color === productDetail["color"])[0]
-          ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-          "stock"
+        ["options"].filter((obj) => obj.size === productDetail["size"])[0][
+        "stock"
         ]}{" "}
       u.
     </div>

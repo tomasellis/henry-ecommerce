@@ -6,7 +6,8 @@ export const searchArticles = (
     formSearch:string
     ) => async (dispatch:any) => {
     try{
-      let res = await axios.get(`${URL}/fuzzySearch?search=${formSearch}&maxProducts=6`)
+      let res = await axios.get(`${URL}/fuzzySearch?search=${formSearch}&maxProducts=6
+        `)
       dispatch({type: "SEARCH_ARTICLES", payload: res.data.data});
     }catch(error){
       console.log(error);

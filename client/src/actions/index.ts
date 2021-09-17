@@ -19,14 +19,14 @@ export function postCategory(payload) {
     const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/createNewCategories`,
       payload
-    );
+    );    
     return json;
   };
 }
 
 export function getOptions() {
-  return async function (dispatch: any) {
-    let json = await axios(`${REACT_APP_BASE_BACKEND_URL}/options`, {});
+  return async function (dispatch : any) {
+    let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});        
     return dispatch({ type: "GET_OPTIONS", payload: json.data });
   };
 }
@@ -64,4 +64,16 @@ export function updateQuantity(id_option: string, quantity: number) {
 
 export function cleanProductDetail() {
   return { type: "CLEAN_PRODUCT_DETAIL" };
+}
+
+export function cleanProducts() {
+  return { type: "CLEAN_PRODUCTS" };
+}
+
+export function setDataUser(user_id:string,user_email:string){
+  return {type: 'SET_DATA_USER', payload: {user_id, user_email} }
+}
+
+export function setProductsIdsInCart(idsInCart){
+  return {type: 'SET_PRODUCTS_IDS_IN_CART', payload: idsInCart}
 }
