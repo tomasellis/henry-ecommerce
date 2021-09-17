@@ -196,7 +196,7 @@ const createCheckoutData = (
   shippingAddress: string
 ): PreferenceData => {
   const data: PreferenceData = {
-    id: `${userId}`,
+    id: ``,
     installments: installments,
     payer: {
       email: email,
@@ -204,6 +204,7 @@ const createCheckoutData = (
         street_name: shippingAddress,
       },
     },
+    external_reference: userId,
     items: products.map((item) => {
       return {
         id: item.productOption.optionId,
@@ -266,6 +267,7 @@ type PreferenceData = {
       street_name: string;
     };
   };
+  external_reference: string;
   id: string;
   installments: number;
   items: CheckoutItem[];
