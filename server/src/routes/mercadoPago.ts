@@ -22,7 +22,7 @@ type MercadopagoPreference = {
     failure: string;
     pending: string;
   };
-  external_reference: string;
+  external_reference: any;
   payment_methods: {
     excluded_payment_types: ExcludedType[];
     installments: number;
@@ -44,23 +44,27 @@ mercadopago.configure({ access_token: MPACCESS_TOKEN });
 router.post(
   "/create_preference",
   async (req: Request, response: Response, next: NextFunction) => {
-    const { items, id, installments, excluded_payment_types, payer } = req.body;
+    const { items, installments, excluded_payment_types, payer } = req.body;
     console.log("datahere", items);
 
     const items_body: MercadopagoItems[] = items as MercadopagoItems[];
-    const id_body: string = id as string;
     const installments_body: number = installments as number;
     const excluded_payment_types_body: ExcludedType[] =
       excluded_payment_types as ExcludedType[];
 
+    const external_reference_body = JSON.stringify({
+      userId: "asldkjalskjd21j3lk3",
+      userOrderNumber: 5,
+    });
+
     const preference: MercadopagoPreference = {
       items: items_body,
       back_urls: {
-        failure: `${REQUESTS_URL}/home`,
-        pending: `${REQUESTS_URL}/cart`,
-        success: `${REQUESTS_URL}/cart`,
+        failure: `${REQUESTS_URL}/payment/failure`,
+        pending: `${REQUESTS_URL}/payment/pending`,
+        success: `${REQUESTS_URL}/payment/success`,
       },
-      external_reference: `${id_body}`,
+      external_reference: external_reference_body,
       payment_methods: {
         excluded_payment_types: excluded_payment_types_body ?? [],
         installments: installments_body,

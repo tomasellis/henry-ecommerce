@@ -182,6 +182,7 @@ const Cart = ({ user }: { user: User }) => {
                 active={checkoutActive}
                 setActive={setCheckoutActive}
                 productsToCheckout={productsInCart.products}
+                auth0User={user}
                 userId={productsInCart.user_id}
               ></CheckoutForm>
             </div>
