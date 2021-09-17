@@ -186,7 +186,7 @@ const Cart = ({ user }: { user: User }) => {
               ></CheckoutForm>
             </div>
           ) : (
-            <div>SHOWING NOTHING IN CHECKOUT BUTTON</div>
+            <div></div>
           )}
         </div>
       );

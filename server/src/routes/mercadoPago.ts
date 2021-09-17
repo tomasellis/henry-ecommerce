@@ -30,7 +30,7 @@ type MercadopagoPreference = {
   payer: any;
 };
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:4000";
+const REQUESTS_URL = process.env.REQUESTS_URL || "http://localhost:3000";
 
 const MPACCESS_TOKEN =
   process.env.MPACCESS_TOKEN ||
@@ -56,9 +56,9 @@ router.post(
     const preference: MercadopagoPreference = {
       items: items_body,
       back_urls: {
-        failure: `${BACKEND_URL}/FalloMáquina`,
-        pending: `${BACKEND_URL}/mercadoPago/payments`,
-        success: `${BACKEND_URL}/mercadoPago/payments`,
+        failure: `${REQUESTS_URL}/home`,
+        pending: `${REQUESTS_URL}/cart`,
+        success: `${REQUESTS_URL}/cart`,
       },
       external_reference: `${id_body}`,
       payment_methods: {
@@ -74,22 +74,6 @@ router.post(
     } catch (err) {
       console.error(err);
     }
-  }
-);
-
-router.get("/feedback", function (request, response) {
-  response.json({
-    Payment: request.query.payment_id,
-    Status: request.query.status,
-    MerchantOrder: request.query.merchant_order_id,
-  });
-});
-
-router.get(
-  "/payments",
-  async (req: Request, response: Response, next: NextFunction) => {
-    console.log(req);
-    response.send({ ...req.query, return: "http://localhost:3000/cart" });
   }
 );
 
