@@ -7,6 +7,7 @@ import { getProduct } from "../../actions/index";
 
 //import component
 import { DetailsProductCard } from "./DetailProductCard";
+import Footer from "../Footer/Footer";
 // import { DetailProductReview } from "./DetailProductReview";
 
 export const DetailProductCards = () => {
@@ -23,6 +24,8 @@ export const DetailProductCards = () => {
 
   return product.length || product.products?.length ? (
     <>
+    <div className="page-container">
+      <div className="content-wrap">
       <DetailsProductCard
         id={id}
         name={product?.products[0]?.name}
@@ -31,7 +34,9 @@ export const DetailProductCards = () => {
         price={product?.products[0]?.price}
         product_options={product?.products[0]?.product_options}
       />
-      
+      </div>
+       <Footer />
+    </div>
     </>
   ) : (
     <div>Loading detail</div>
