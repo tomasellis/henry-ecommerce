@@ -17,6 +17,7 @@ export const getArticles =
     limit: any,
     search:any
   ) =>
+
   async (dispatch: any) => {
     try {
       let res = await axios.get(
@@ -27,6 +28,7 @@ export const getArticles =
         }&color=${color || ""}&size=${size || ""}&_page=${page || ""}
         &_limit=${limit || ""}&_search=${search || ""}`
       );
+
 
         dispatch({
           type: PRODUCTS_ACTIONS.BRING_CLOTHER,
