@@ -20,7 +20,6 @@ import addLocalStorageToCart from "./addLocalStorageToCart";
 import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
 import addReview from "./addReview";
 
-
 const router = Router();
 
 router.use("/products", products);
