@@ -13,6 +13,7 @@ import { cleanProducts } from "../../actions";
 import Filter from "./filter/filter";
 import Card from "./cards/card";
 import Pagination from "./Pagination/Pagination";
+import Footer from "../Footer/Footer";
 
 export default function Products() {
   const dispatch = useDispatch();
@@ -47,7 +48,8 @@ export default function Products() {
   }, [dispatch, gender, page, limit]);
 
   return (
-    <div>
+    <div className="page-container">
+      <div className="content-wrap">
       <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div>
@@ -68,6 +70,8 @@ export default function Products() {
         nextLength={articles.next.length}
         gender={gender}
       />
+      </div>
+      <Footer />
     </div>
   );
 }
