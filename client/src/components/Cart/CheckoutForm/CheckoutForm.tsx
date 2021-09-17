@@ -170,7 +170,7 @@ const CheckoutForm = ({
                 Proceed to payment!
               </Button>
             ) : (
-              <span>f</span>
+              <span></span>
             )}
           </div>
         </BouncyDiv>
