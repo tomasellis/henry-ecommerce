@@ -239,7 +239,7 @@ export default function EditProfile() {
                   />
                 <TextField
                   value={info.lastname}
-                  label={"Last name"}
+                  label="Last name"
                   name="lastname"
                   multiline
                   maxRows={4}
@@ -287,7 +287,10 @@ export default function EditProfile() {
                     <InputLabel htmlFor="component-disabled">Email</InputLabel>
                     <Input id="component-disabled" value={user.email}/>
                 </FormControl>
-                <button style={{width:"50%"}} className="btn">
+                <button 
+                  type="submit"
+                  style={{width:"50%"}}
+                  className="btn">
                   Update
                 </button>
               </form>
@@ -319,7 +322,10 @@ export default function EditProfile() {
                     type="password"
                     onChange={(e) => inputChangePassword(e)}
                 />
-                <button style={{width:"40%"}} className="btn">
+                <button 
+                  type="submit"
+                  style={{width:"40%"}} 
+                  className="btn">
                   Update
                 </button>
               </form>
@@ -418,7 +424,10 @@ export default function EditProfile() {
                     onChange={(e) => handleChangeData(e)}
                     maxRows={4}
                 />
-                <button style={{width:"40%", marginLeft:"10%", marginTop:"2%"}} className='btn'> 
+                <button 
+                  type="submit"
+                  style={{width:"40%", marginLeft:"10%", marginTop:"2%"}} 
+                  className='btn'> 
                   Update
                 </button>
               </form>
