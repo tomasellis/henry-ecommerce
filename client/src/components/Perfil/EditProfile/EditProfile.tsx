@@ -117,7 +117,6 @@ export default function EditProfile() {
   })
   
   const [changePassword, setChangePassword] = useState({
-    currentpassword: "",
     newpassword: "",
     repeatpassword: "",
   })
@@ -139,10 +138,6 @@ export default function EditProfile() {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
-    if(changePassword.currentpassword === ""){
-      Swal.fire({title: "Write e password", confirmButtonColor: '#9ea03b'})
-      return;
-    }
     if(changePassword.newpassword === ""){
       Swal.fire({title: "Write e new password", confirmButtonColor: '#9ea03b'})
       return;
@@ -150,6 +145,9 @@ export default function EditProfile() {
     if(changePassword.repeatpassword !== changePassword.newpassword){
       Swal.fire({title: "Passwords do not match", confirmButtonColor: '#9ea03b'})
       return;
+    }
+    else{
+      alert("Password changed successfully")
     }
   }
 
