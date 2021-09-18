@@ -136,7 +136,7 @@ export default function NavBar() {
             <p className={classes.login}>
               {isAuthenticated ? (
                 <Link
-                  to="/profile"
+                  to="/profile/editprofile"
                   style={{ textDecoration: "none", color: "#000", marginTop:'0' }}
                 >
                   {user.name}
@@ -226,6 +226,7 @@ export default function NavBar() {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    
   },
   menuButton: {
     marginRight: theme.spacing(2),
