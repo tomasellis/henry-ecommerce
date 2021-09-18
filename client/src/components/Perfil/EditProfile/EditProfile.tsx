@@ -8,7 +8,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Swal from 'sweetalert2'
+import { changePassword2 } from '../../../actions';
 import './EditProfile.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap:"1em"
+    gap:"3em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
@@ -86,12 +88,25 @@ function getStyles(name, personName, theme) {
   };
 }
 
+type User = {
+  id:string,
+  email:string,
+  auth0_id:string
+}
+
+interface RootState {
+  user:User
+}
+
 export default function EditProfile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
   const classes = useStyles();
   const theme = useTheme();
   const personName=[]
+  const dispatch = useDispatch()
+  const state = useSelector((state: RootState) => state);
 
+  
   const [info, setInfo] = useState({
     name: "",
     lastname: "",
@@ -99,12 +114,13 @@ export default function EditProfile() {
     date: "",
     dni: undefined,    
   })
-
+  
   const [changePassword, setChangePassword] = useState({
     currentpassword: "",
     newpassword: "",
     repeatpassword: "",
   })
+  
 
   const [data, setData] = useState({
     delivery: "",
@@ -212,6 +228,15 @@ export default function EditProfile() {
  /*  const handleChange = (event) => {
   }; */
 
+  const changeNewPassword = (e) =>{
+    dispatch(changePassword2({
+      auth0_id: state.user.auth0_id,
+      newPassword: changePassword.repeatpassword
+    }))
+    console.log(state.user.auth0_id,
+      changePassword.repeatpassword)
+  }
+
   return (
     isAuthenticated && <div>
       <div className='div-conteiner'>
@@ -298,14 +323,6 @@ export default function EditProfile() {
                 noValidate autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}>
                 <TextField
-                    label="Current Password"
-                    name="currentpassword"
-                    value={changePassword.currentpassword}
-                    color="secondary"
-                    type="password"
-                    onChange={(e) => inputChangePassword(e)}
-                />
-                <TextField
                     label="New Password"
                     name="newpassword"
                     value={changePassword.newpassword}
@@ -323,8 +340,10 @@ export default function EditProfile() {
                 />
                 <button 
                   type="submit"
-                  style={{width:"40%"}} 
-                  className="btn">
+                  style={{width:"40%",height:"75%",marginTop:"15px"}} 
+                  className="btn"
+                  onClick={(e) => changeNewPassword(e)}
+                  >
                   Update
                 </button>
               </form>
