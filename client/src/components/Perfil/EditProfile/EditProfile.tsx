@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap:"1em"
+    gap:"3em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
@@ -121,11 +121,7 @@ export default function EditProfile() {
     repeatpassword: "",
   })
   
-  let datos = {
-    auth0_id: state.user.auth0_id,
-    newPassword: changePassword.repeatpassword
-  }
-  
+
   const [data, setData] = useState({
     delivery: "",
     number: undefined,
@@ -233,7 +229,12 @@ export default function EditProfile() {
   }; */
 
   const changeNewPassword = (e) =>{
-    dispatch(changePassword2(datos))
+    dispatch(changePassword2({
+      auth0_id: state.user.auth0_id,
+      newPassword: changePassword.repeatpassword
+    }))
+    console.log(state.user.auth0_id,
+      changePassword.repeatpassword)
   }
 
   return (
@@ -322,14 +323,6 @@ export default function EditProfile() {
                 noValidate autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}>
                 <TextField
-                    label="Current Password"
-                    name="currentpassword"
-                    value={changePassword.currentpassword}
-                    color="secondary"
-                    type="password"
-                    onChange={(e) => inputChangePassword(e)}
-                />
-                <TextField
                     label="New Password"
                     name="newpassword"
                     value={changePassword.newpassword}
@@ -347,7 +340,7 @@ export default function EditProfile() {
                 />
                 <button 
                   type="submit"
-                  style={{width:"40%"}} 
+                  style={{width:"40%",height:"75%",marginTop:"15px"}} 
                   className="btn"
                   onClick={(e) => changeNewPassword(e)}
                   >
