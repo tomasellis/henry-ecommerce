@@ -8,7 +8,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Swal from 'sweetalert2'
+import { changePassword2 } from '../../../actions';
 import './EditProfile.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,12 +88,25 @@ function getStyles(name, personName, theme) {
   };
 }
 
+type User = {
+  id:string,
+  email:string,
+  auth0_id:string
+}
+
+interface RootState {
+  user:User
+}
+
 export default function EditProfile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
   const classes = useStyles();
   const theme = useTheme();
   const personName=[]
+  const dispatch = useDispatch()
+  const state = useSelector((state: RootState) => state);
 
+  
   const [info, setInfo] = useState({
     name: "",
     lastname: "",
@@ -99,13 +114,18 @@ export default function EditProfile() {
     date: "",
     dni: undefined,    
   })
-
+  
   const [changePassword, setChangePassword] = useState({
     currentpassword: "",
     newpassword: "",
     repeatpassword: "",
   })
-
+  
+  let datos = {
+    auth0_id: state.user.auth0_id,
+    newPassword: changePassword.repeatpassword
+  }
+  
   const [data, setData] = useState({
     delivery: "",
     number: undefined,
@@ -211,6 +231,10 @@ export default function EditProfile() {
 
  /*  const handleChange = (event) => {
   }; */
+
+  const changeNewPassword = (e) =>{
+    dispatch(changePassword2(datos))
+  }
 
   return (
     isAuthenticated && <div>
@@ -324,7 +348,9 @@ export default function EditProfile() {
                 <button 
                   type="submit"
                   style={{width:"40%"}} 
-                  className="btn">
+                  className="btn"
+                  onClick={(e) => changeNewPassword(e)}
+                  >
                   Update
                 </button>
               </form>
