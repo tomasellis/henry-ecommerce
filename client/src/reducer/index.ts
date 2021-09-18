@@ -3,6 +3,7 @@ import { PRODUCTS_ACTIONS } from "../actions/products/productActions";
 const initialState = {
   product: [],
   options: [],
+  favoriteProducts : [],
   productsInCartByUser: [],
   articles: {
     products: [],
@@ -80,6 +81,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         searchArticles: payload.fuzzy_search,
       };
+
+    case 'ADD_FAVORITE_PRODUCT' :
+      return {
+        ...state,
+        favoriteProducts : [...state.favoriteProducts, payload]
+      }
 
     case "CLEAN_PRODUCT_DETAIL":
       return {
