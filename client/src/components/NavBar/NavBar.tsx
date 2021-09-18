@@ -9,60 +9,51 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Drawer } from "@material-ui/core";
-import { Link as link } from "@material-ui/core";
+// import { Link as link } from "@material-ui/core";
+import CancelIcon from "@material-ui/icons/Cancel"
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
 
 export default function NavBar() {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
-  // return (
-  //   <div className="navbar">
-  //     <Link to="/">
-  //       <img className="logo" src={logoTiendaRopa} height={100} alt="Algo bonito" />
-  //     </Link>
-  //     <Search />
-  //     <nav>
-  //       <ul className="list">
-  //         <li className="list-item">
-  //           {isAuthenticated? <Link to="/profile">{user.name}</Link> : <Link to="/login">Login</Link> }
-  //         </li>
-  //         <li className="list-item">
-  //           <Link to="/carrito">Carrito</Link>
-  //         </li>
-  //       </ul>
-  //     </nav>
-  //   </div>
-  // )
 
+  const [state, setState] = useState({
+    mobileView: false,
+    drawerOpen: false,
+  });
+
+  const { mobileView, drawerOpen } = state;
+  
+  const handleDrawerOpen = () =>
+    setState((prevState) => ({ ...prevState, drawerOpen: true }));
+  const handleDrawerClose = () =>
+    setState((prevState) => ({ ...prevState, drawerOpen: false }));
+
+  let id:number = 0;
   const headersData = [
     {
-      label: (
-        <Link to="/">
-          <img
-            className="logo"
-            src={logoTiendaRopa}
-            height={70}
-            width={120}
-            alt="Algo bonito"
-          />
-        </Link>
-      ),
-    },
-    {
-      label: (
-        <IconButton>
-          <Link to="/cart">
-            <ShoppingBasketIcon style={{ color: "#000" }} />
-          </Link>
+      label:(
+        <IconButton  onClick={handleDrawerClose}>
+          <CancelIcon fontSize="large" />        
         </IconButton>
       ),
+      id: ++id
     },
-
     {
       label: <TitleFilter mob={true} />,
+      id: ++id
+    },
+    {
+      label: (
+        <Link to="/cart">
+          <IconButton>
+            <BiShoppingBag style = {{textDecoration: "none", color : "#000"}} />
+          </IconButton>
+        </Link>
+      ),
+      id: ++id
     },
     {
       label: (
@@ -75,21 +66,31 @@ export default function NavBar() {
               {user.name}
             </Link>
           ) : (
-            <button style={{ background:'transparent', border: 'none' }} onClick={loginWithRedirect}>
-              Login
-            </button>
+            <IconButton onClick={loginWithRedirect}>
+              <IoPersonCircleSharp style = {{fontSize: "23px", color: "#000"}}/>
+            </IconButton>
           )}
         </p>
       ),
+      id: ++id
+    },
+    {
+      label: (
+        <Link to="/">
+          <img
+            className="logo"
+            src={logoTiendaRopa}
+            height={70}
+            width={120}
+            alt="Algo bonito"
+          />
+        </Link>
+      ),
+      id: ++id
     },
   ];
 
-  const [state, setState] = useState({
-    mobileView: false,
-    drawerOpen: false,
-  });
-
-  const { mobileView, drawerOpen } = state;
+  
 
   useEffect(() => {
     const setResponsiveness = () => {
@@ -136,12 +137,13 @@ export default function NavBar() {
             <p className={classes.login}>
               {isAuthenticated ? (
                 <Link
-                  to="/profile/editprofile"
+                  to="/profile"
                   style={{ textDecoration: "none", color: "#000", marginTop:'0' }}
                 >
                   {user.name}
                 </Link>
               ) : (
+                
                 <button style={{ background:'transparent', border: 'none' }} onClick={loginWithRedirect}>
                   <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </button>
@@ -157,10 +159,7 @@ export default function NavBar() {
   };
 
   const displayMobile = () => {
-    const handleDrawerOpen = () =>
-      setState((prevState) => ({ ...prevState, drawerOpen: true }));
-    const handleDrawerClose = () =>
-      setState((prevState) => ({ ...prevState, drawerOpen: false }));
+    
     return (
       <Toolbar>
         <IconButton
@@ -196,20 +195,9 @@ export default function NavBar() {
   };
 
   const getDrawerChoices = () => {
-    return headersData.map(({ label }) => {
-      return (
-        <div
-          {...{
-            component: link,
-            color: "inherit",
-            style: { textDecoration: "none", textAlign: "center" },
-            key: label,
-          }}
-        >
-          {label}
-        </div>
-      );
-    });
+    return headersData.map((ele) =>{
+      return (<div style={{display: "flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}} key={ele.id}>{ele.label}</div>)
+    })
   };
 
   const classes = useStyles();
@@ -226,7 +214,6 @@ export default function NavBar() {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -260,7 +247,7 @@ const useStyles = makeStyles((theme) => ({
   drawerContainer: {
     padding: "30px 30px",
     height: "100%",
-    background: "rgb(170,10,70)",
+    background: "rgba(255, 255, 255, 0.767)",
   },
   searchMobile: {
     display: "flex",
@@ -275,4 +262,7 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     color: "#000",
   },
+  labelItem:{
+    display: 'flex'
+  }
 }));
