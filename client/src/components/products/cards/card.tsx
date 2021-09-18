@@ -38,7 +38,7 @@ export default function Card({name,price,image,id}){
                 <button
                 className = 'button_fav_product'
                 onClick = {AddFavoriteProduct}
-                ><img className = 'img_fav_product' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABF0lEQVRIieWUUbGDMBBFjwQkIKESkIAEJNRB46DPQZHwHBQHxEErAQf0I5thSYCQPvrxpndmP5K5uXez2Q18GyzQf0q8AUaJ5hMGnTK4Hy1eifAgMcreYWhF1EiMsncISqbSFBJ+XeYI1cAFuOFqfMd1jBdrFbdV+73i30SjXjIYN2IIsi2Z3mItIjRBthVwSl1bOBVuRpJt3OwhBShwpfE3TZ7TJtcd4v6dBvbdODLZysiXJUvc44ep99fw5A9D18nhxZYTtMI5v2OghwtcCXoJX45aOF2ueCUHrawNcZ9fmE91EYps4cw0pXqaTWDWAw/SpYzwG2RrmXfJiflgZX9++hswGzyjeI8cA0uc9Rr8bWyK+D/xApb0gEHaryczAAAAAElFTkSuQmCC"/></button>
+                ><img className = 'img_fav_product' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABF0lEQVRIieWUUbGDMBBFjwQkIKESkIAEJNRB46DPQZHwHBQHxEErAQf0I5thSYCQPvrxpndmP5K5uXez2Q18GyzQf0q8AUaJ5hMGnTK4Hy1eifAgMcreYWhF1EiMsncISqbSFBJ+XeYI1cAFuOFqfMd1jBdrFbdV+73i30SjXjIYN2IIsi2Z3mItIjRBthVwSl1bOBVuRpJt3OwhBShwpfE3TZ7TJtcd4v6dBvbdODLZysiXJUvc44ep99fw5A9D18nhxZYTtMI5v2OghwtcCXoJX45aOF2ueCUHrawNcZ9fmE91EYps4cw0pXqaTWDWAw/SpYzwG2RrmXfJiflgZX9++hswGzyjeI8cA0uc9Rr8bWyK+D/xApb0gEHaryczAAAAAElFTkSuQmCC" alt=""/></button>
                 
                 </div>
             </div>

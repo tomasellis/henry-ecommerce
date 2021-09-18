@@ -90,8 +90,7 @@ export default function EditProfile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
   const classes = useStyles();
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
+  const personName=[]
 
   const [info, setInfo] = useState({
     name: "",
@@ -210,8 +209,8 @@ export default function EditProfile() {
     })
   };
 
-  const handleChange = (event) => {
-  };
+ /*  const handleChange = (event) => {
+  }; */
 
   return (
     isAuthenticated && <div>

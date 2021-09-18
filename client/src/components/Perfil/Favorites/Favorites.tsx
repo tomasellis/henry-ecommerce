@@ -1,15 +1,15 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+/* import { useEffect } from "react" */
+import { useSelector } from "react-redux"
 
 //import actions
-import { getProduct } from "../../../actions";
+/* import { getProduct } from "../../../actions"; */
 
 //import component
 import Card from "../../products/cards/card";
 
 export default function Favorites( ){
     
-    const dispatch = useDispatch();
+    /* const dispatch = useDispatch(); */
     const favProducts = useSelector((state : any) => state.favoriteProducts);
 
     console.log(favProducts);
