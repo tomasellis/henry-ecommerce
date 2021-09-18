@@ -93,9 +93,6 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
-  console.log(productDetail);
-
-
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -231,12 +228,12 @@ const productDetailDisplay = (
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
-              <label>
+              <label key={option.size}>
                 {option.size}
                 <input
                   type="radio"
                   name="size"
-                  key={option.size}
+                  
                   checked={productDetail["size"] === option.size}
                   value={option.size}
                   onChange={(e) => {

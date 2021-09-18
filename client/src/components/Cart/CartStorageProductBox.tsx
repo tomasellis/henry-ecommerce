@@ -42,7 +42,6 @@ const CartStorageProductBox = (props: CartProductBoxProps) => {
         `Deseas remover este producto de tu lista: ${product.name}?`
       )
     ) {
-      console.log("porborrar", product);
       dispatch(removeToCartStorage(product.id_option));
     }
   };

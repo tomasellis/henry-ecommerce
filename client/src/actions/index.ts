@@ -42,8 +42,6 @@ export function postProduct(payload) {
 }
 
 export function favoriteProducts(payload){
-  console.log(payload);
-  
   return{
     type : 'ADD_FAVORITE_PRODUCT',
     payload : payload

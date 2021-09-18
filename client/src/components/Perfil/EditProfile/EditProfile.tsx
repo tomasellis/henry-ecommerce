@@ -9,6 +9,8 @@ import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Swal from 'sweetalert2'
 import './EditProfile.css';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,19 +87,28 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
+type User = {
+  id:string,
+  email:string,
+  auth0_id:string
+}
+interface RootState {
+  user:User
+}
 
 export default function EditProfile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
   const classes = useStyles();
   const theme = useTheme();
   const personName=[]
+  const state = useSelector((state: RootState) => state)
 
   const [info, setInfo] = useState({
     name: "",
     lastname: "",
     sex: "",
     date: "",
-    dni: undefined,    
+    dni: null,    
   })
 
   const [changePassword, setChangePassword] = useState({
@@ -106,15 +117,25 @@ export default function EditProfile() {
     repeatpassword: "",
   })
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<{
+    delivery: string,
+    number: number,
+    floor: string,
+    apartament: string,
+    postalcode: number,
+    city: string,
+    locality: string,
+    phone: number,
+    additionaldata: string,
+  }>({
     delivery: "",
-    number: undefined,
+    number: null,
     floor: "",
     apartament: "",
-    postalcode: undefined,
+    postalcode: null,
     city: "",
     locality: "",
-    phone: undefined,
+    phone: null,
     additionaldata: "",
   })
 
@@ -135,6 +156,32 @@ export default function EditProfile() {
       return;
     }
   }
+  const updateProfile = async () => {
+    let responseAxios = await axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_user`,
+    {
+      auth0_id:state.user.auth0_id,
+      name:info.name,
+      last_name: info.lastname,
+      birthday:info.date,
+      identity_document_type:info.dni
+    })
+    alert(responseAxios.data)
+  }
+
+  const updateAditionalData = async () => {
+    console.log(data);
+    
+    let responseAxios = await axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_user`,
+    {
+      auth0_id:state.user.auth0_id,
+      address:data.delivery,
+      address_number: Number(data.number),
+      postal_code:Number(data.postalcode),
+      locality:data.locality,
+      phone_number:Number(data.phone)
+    })
+    alert(responseAxios.data)
+  }
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -154,10 +201,11 @@ export default function EditProfile() {
       Swal.fire({title: "Enter a date", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if(info.dni > 8 || info.dni < 8){
+    if(String(info.dni).length > 8 || String(info.dni).length < 7){
       Swal.fire({title: "Enter a valid ID", confirmButtonColor: '#9ea03b'})
       return;
-    }  
+    }
+    updateProfile()
   }
 
   const handleAdditionalData = (e) => {
@@ -186,7 +234,10 @@ export default function EditProfile() {
       Swal.fire({title: "Write a phone", confirmButtonColor: '#9ea03b'})
       return;
     }
+    updateAditionalData()
   }
+
+  
 
   const inputChange = (e) => {
     setInfo({
@@ -218,7 +269,7 @@ export default function EditProfile() {
                 <h3 className='titulo'>PROFILE</h3>
             <div className='conteiner-perfil'>
                 <h5>- Data</h5>
-                <h5>- Change password</h5>
+                {state.user.auth0_id.slice(0,5) === 'auth0' && <h5>- Change password</h5>}
             </div>
             <div className="conteiner-datos">
               <form 
@@ -293,7 +344,7 @@ export default function EditProfile() {
                   Update
                 </button>
               </form>
-              <form 
+              {state.user.auth0_id.slice(0,5) === 'auth0' && <form 
                 className={classes.root2}
                 noValidate autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}>
@@ -327,7 +378,7 @@ export default function EditProfile() {
                   className="btn">
                   Update
                 </button>
-              </form>
+              </form>}
             </div>
             <hr></hr>
             <div className='conteiner-perfil'>
@@ -349,6 +400,7 @@ export default function EditProfile() {
                     value={data.number}
                     label="N°"
                     color="secondary"
+                    type="number"
                     name="number"
                     onChange={(e) => handleChangeData(e)}
                 />
