@@ -187,6 +187,7 @@ export default function EditProfile() {
       address:data.delivery,
       address_number: Number(data.number),
       postal_code:Number(data.postalcode),
+      city:data.city,
       locality:data.locality,
       phone_number:Number(data.phone)
     })
@@ -224,11 +225,11 @@ export default function EditProfile() {
       Swal.fire({title: "Write a address", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if(data.number === undefined){
+    if(!data.number){
       Swal.fire({title: "Write a number", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if(data.postalcode === undefined){
+    if(!data.postalcode){
       Swal.fire({title: "Write a postal code", confirmButtonColor: '#9ea03b'})
       return;
     }
@@ -240,7 +241,7 @@ export default function EditProfile() {
       Swal.fire({title: "Write a locality", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if(data.phone === undefined){
+    if(!data.phone){
       Swal.fire({title: "Write a phone", confirmButtonColor: '#9ea03b'})
       return;
     }
