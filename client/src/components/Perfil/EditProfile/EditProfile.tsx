@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap:"3em"
+    gridTemplateRows:"1fr 1fr",
+    gap:"1em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
@@ -270,7 +271,7 @@ export default function EditProfile() {
                   onChange={(e) => inputChange(e)}
                   />
                 <div style={{marginTop:"15px"}}>
-                {/* <InputLabel>Sex</InputLabel> */}
+                <InputLabel className="hardcore">Sex</InputLabel>
                 <Select
                   labelId="demo-simple-select-helper-label"
                   label="Select an option"
@@ -403,7 +404,7 @@ export default function EditProfile() {
                   name="city"
                   renderValue={(selected) => {
                     if ((selected as string).length === 0) {
-                      return <em>Select an option</em>;
+                      return <em>Select an city</em>;
                     }
                     return selected ;
                   }}
