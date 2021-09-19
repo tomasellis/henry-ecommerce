@@ -137,7 +137,7 @@ export const DetailsProductCard = ({
       if (!dataAddToCart.data.errors) {
         dispatch(setProductsIdsInCart(id))
         alert("producto agregado al carrito");
-      
+
       }
 
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
@@ -154,6 +154,14 @@ export const DetailsProductCard = ({
         ...productDetail,
         [e.target.name]: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
+      });
+    }
+    else if (e.target.name === "color") {
+      console.log('hola')
+      console.log(productDetail['size'])
+      return setProductDetail({
+        ...productDetail,
+        color: e.target.value,
       });
     }
     return setProductDetail({
@@ -192,7 +200,7 @@ export const DetailsProductCard = ({
 
 const productDetailDisplay = (
   price,
-  opciones,
+  optionsByColor,
   onChange,
   addToCart,
   productDetail
@@ -206,8 +214,8 @@ const productDetailDisplay = (
     </div>
     <form>
       <div className="div_color_product_details">
-        {opciones.length &&
-          opciones.map((opcion) => {
+        {optionsByColor.length &&
+          optionsByColor.map((opcion) => {
             return (
               <label>
                 {opcion.color}
@@ -226,8 +234,8 @@ const productDetailDisplay = (
           })}
       </div>
       <div className="div_size_product_details">
-        {opciones.length &&
-          opciones
+        {optionsByColor.length &&
+          optionsByColor
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
@@ -250,13 +258,13 @@ const productDetailDisplay = (
     </form>
     <div className="div_stock_product_details">
       <span>Stock:</span>{" "}
-      {opciones.length &&
-        opciones
+      {optionsByColor.length &&
+        optionsByColor
+          .filter((obj) => obj.color === productDetail["color"])[0]
+        ["options"].filter((obj) => obj.size === productDetail["size"])[0] ? optionsByColor
           .filter((obj) => obj.color === productDetail["color"])[0]
         ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-        "stock"
-        ]}{" "}
-      u.
+        "stock"] : '-'}{" "} u.
     </div>
     <div className="container__button-buy">
       <button

@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
 
-import { getArticles } from "../../actions/products/productActions";
+import { searchProducts } from "../../actions/searchArticles/searchArticles";
 
 import Card from "../products/cards/card";
+import Footer from "../Footer/Footer";
 
 export default function SearchedProducts() {
 
@@ -13,39 +14,33 @@ export default function SearchedProducts() {
   const { search } = useLocation()
   const value = queryString.parse(search)
   const articles = useSelector((state: any) => state.articles);
+  console.log(value)
 
   useEffect(() => {
     dispatch(
-      getArticles(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      30,
-      value.name
-    )
+      searchProducts(value.word)
   )
 }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div>
-    <h1 className="title_ropa_products">Cloth</h1>
-    <div>
-      {articles.products?.map((e, i) => {
-        return (
-          <Card
-            key={e.id}
-            id={e.id}
-            image={e.image_url}
-            name={e.name}
-            price={e.price}
-          />
-        );
-      })}
+    <div className="page-container">
+      <div className="content-wrap">
+        <h1 className="title_ropa_products">Cloth</h1>
+         <div>
+           {articles.products?.map((e, i) => {
+             return (
+             <Card
+               key={e.id}
+               id={e.id}
+               image={e.image_url}
+               name={e.name}
+               price={e.price}
+             />
+             );
+          })}
+       </div>
     </div>
-    </div>
+    <Footer />
+  </div>
   );
 }

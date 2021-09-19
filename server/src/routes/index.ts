@@ -21,6 +21,7 @@ import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
 import addReview from "./addReview";
 import sendMail from "./sendMail";
 import changePassword from './changePassword'
+import search from './search'
 
 
 const router = Router();
@@ -47,5 +48,6 @@ router.use("/findOrCreateUserInDatabase", findOrCreateUserInDatabase);
 router.use("/addReview", addReview);
 router.use("/sendMail", sendMail);
 router.use("/changePassword", changePassword);
+router.use("/search", search);
 
 export default router;

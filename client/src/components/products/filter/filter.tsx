@@ -106,7 +106,7 @@ export default function Filter() {
     })
   }
 
-  
+
   const removeFilter = (e) =>{
     if(e === "category"){
       setDataFilter({...dataFilter, category:[] })
@@ -312,7 +312,7 @@ export default function Filter() {
                 <li>
                   <button
                     className="color_filter color_one_filter"
-                    id="withe"
+                    id="white"
                     name="color"
                   >
                     {" "}
