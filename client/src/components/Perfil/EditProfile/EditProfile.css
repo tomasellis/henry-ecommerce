@@ -35,7 +35,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1em;
     margin-left: 8px;
-    width: 105ch 
+    width: 100% 
 }
 
 .hardcore{
