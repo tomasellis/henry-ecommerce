@@ -10,15 +10,16 @@
     max-width: 70%;
 }
 
-.conteiner-perfil{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    color: rgba(0, 0, 0, 0.692);
-}
 
 .conteiner-datos{
     display: grid;
     grid-template-columns: 1fr 1fr ;
+}
+
+ @media (max-width: 50rem) {
+    .conteiner-datos {
+        grid-template-columns: 1fr;
+    }
 }
 
 .btn{
@@ -32,10 +33,17 @@
 
 .adicional-data{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 1em;
     margin-left: 8px;
-    width: 100% 
+    width: 100ch 
+}
+
+@media (max-width: 50rem) {
+    .adicional-data {
+        grid-template-columns: 1fr;
+        width: 70%;
+    }
 }
 
 .hardcore{

@@ -4,8 +4,7 @@
   /*   display: grid;
     grid-template-columns: 1fr 1fr; */
     font-family: 'Poppins', sans-serif;
-    width: 250px;
-    height: 430px;
+    width: 20%;
     position: fixed;
 }
 

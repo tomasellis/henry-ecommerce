@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: '30ch',
     },
+    marginLeft:"1rem",
     display: "grid",
     gridTemplateColumns: "1fr",
     gridTemplateRows:"1fr 1fr",
@@ -246,18 +247,15 @@ export default function EditProfile() {
     isAuthenticated && <div>
       <div className='div-conteiner'>
                 <h3 className='titulo'>PROFILE</h3>
-            <div className='conteiner-perfil'>
-                <h5>- Data</h5>
-                <h5>- Change password</h5>
-            </div>
             <div className="conteiner-datos">
-              <form 
-                className={classes.root}
+              <form   
                 noValidate autoComplete="off"
                 onSubmit={(e) => 
                   handleUpdate(e)
                 }
                 >
+                <h5>- Data</h5>
+                <div className={classes.root}>
                 <TextField
                   value={info.name}
                   label="Name"
@@ -322,11 +320,14 @@ export default function EditProfile() {
                   className="btn">
                   Update
                 </button>
+                </div>
               </form>
               <form 
                 className={classes.root2}
                 noValidate autoComplete="off"
-                onSubmit={(e) => handleChangePassword(e)}>
+                onSubmit={(e) => handleChangePassword(e)}
+                >
+                  <h5>- Change password</h5>
                 <TextField
                     label="New Password"
                     name="newpassword"
@@ -357,11 +358,10 @@ export default function EditProfile() {
             <div className='conteiner-perfil'>
               <h5>- Delivery address</h5>
             </div>
-            <div>
               <form 
-                className="adicional-data"
                 onSubmit={(e) => handleAdditionalData(e)}
                 >
+            <div className="adicional-data">
                 <TextField
                     value={data.delivery}
                     label="Delivery"
@@ -453,9 +453,9 @@ export default function EditProfile() {
                   className='btn'> 
                   Update
                 </button>
+            </div>
               </form>
               <hr></hr>
-            </div>
         </div>
     </div>
   )
