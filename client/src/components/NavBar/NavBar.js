@@ -146,8 +146,8 @@ export default function NavBar() {
                   <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
                 </button>
               )}
-                <Link to = '/created'>
-                Agregar
+                <Link to = '/created' className="link-add">
+                Add
                 </Link>
             </p>
           </div>

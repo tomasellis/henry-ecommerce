@@ -139,7 +139,7 @@ export default function EditProfile() {
   const handleChangePassword = (e) => {
     e.preventDefault();
     if(changePassword.newpassword === ""){
-      Swal.fire({title: "Write e new password", confirmButtonColor: '#9ea03b'})
+      Swal.fire({title: "Write a new password", confirmButtonColor: '#9ea03b'})
       return;
     }
     if(changePassword.repeatpassword !== changePassword.newpassword){
@@ -169,10 +169,13 @@ export default function EditProfile() {
       Swal.fire({title: "Enter a date", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if(info.dni > 8 || info.dni < 8){
+    if(String(info.dni).length > 8 || String(info.dni).length < 8){
       Swal.fire({title: "Enter a valid ID", confirmButtonColor: '#9ea03b'})
       return;
     }  
+    else {
+      alert("Dates updates")
+    }
   }
 
   const handleAdditionalData = (e) => {
@@ -200,6 +203,9 @@ export default function EditProfile() {
     if(data.phone === undefined){
       Swal.fire({title: "Write a phone", confirmButtonColor: '#9ea03b'})
       return;
+    }
+    else {
+      alert("Dates updates")
     }
   }
 
