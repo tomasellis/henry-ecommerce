@@ -1,64 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-.cards_container_products{
-    display: inline-flex;
-    width: 25%;
-}
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
 .div_container_card_product {
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 360px;
+}
+
+.div_container_card_product a {
+  text-decoration: none;
 }
 
 .div_card_product {
-    background-color: #fff;
-    height: 460px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    margin: 20px;
-    text-align: center;
-    transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 18px;
+  text-align: center;
+  transition: all 0.25s;
 }
 
-.div_card_product:hover{
-    transform: translateY(-15px);
-    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3); 
-    text-decoration: none;
-    color: black;
+.div_card_product:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: black;
 }
 
-.img_product{
-    width: 330px;
-    height: 370px;
-}
-
-.img_fav_product{
-    display: flex;
-    margin-left: 270px;
-}
-
-.button_fav_product{
-    background-color: transparent;
-    display: contents;
+.img_product {
+  width: 330px;
+  height: 370px;
+  padding: 10px;
 }
 
 .card_name_product {
-    font-family: 'Poppins', sans-serif;
-    text-align: left;
-    margin-left: 10px;
-    margin-top: 6px;
-    font-size: 15px;
-    font-weight: 1000;
-    text-decoration: none;
-    color: rgb(51, 51, 51);
+  display: flex;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 1000;
+  color: rgb(51, 51, 51);
+  height: 60px;
+  text-transform: capitalize;
 }
 
 .card_desc_product {
-    font-family: 'Poppins', sans-serif;
-    text-align: left;
-    text-decoration: none;
-    color: black;
-    margin-top: 10px;
-    margin-left: 10px;
-    font-size: 16px;
-    font-weight: 300;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  color: rgb(21, 21, 21);
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.button_fav_product {
+  text-align: right;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.icon_fav {
+  color: black;
+  font-weight: bold;
+}
+.icon_fav:hover {
+  color: gold;
+  transform: scale(1.4);
 }
