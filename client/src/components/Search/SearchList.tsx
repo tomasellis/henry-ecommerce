@@ -1,33 +1,45 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components'
 import { useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 
 const SearchList = () => {
     const busqueda = useSelector((state : any) => state.searchArticles);
+
+    const DeleteDuplicate = (arr) => {
+        const itemMap = arr.map(busqueda => {
+            return [busqueda.name, busqueda]
+        });
+        return [...new Map(itemMap).values()];
+    }
+    let searchFilter = DeleteDuplicate(busqueda)
+
+    useEffect (()=>{
+    }, [busqueda, searchFilter])
+
     return (
-        <List>
-            {
-                busqueda.length > 0 && busqueda.map((item:any, index:number) => {
-                    console.log(busqueda)
-                    return (
-                            <Link to = {`/clothing/details/${item.id}`}>        
-                            <div className='listItem' key={index}>
+       <List>
+           {
+               // eslint-disable-next-line array-callback-return
+               searchFilter.length > 0 && searchFilter.map((item:any, index:number) => {
+
+                   return (
+                       <Link to = {`/clothing/${item.id}`} key={index}>
+                            <div className='listItem' >
                                 <p>{item.name}</p>
                                 <img src={item.image_url} alt='img'/>
                             </div>
-                            </Link>
-                    )
-                })
-            
-            }
-        </List>
-    )
+                       </Link>
+                   )
+               })
+           }
+       </List>
+   )
 }
 
 export default SearchList;
 
-const List = styled.div` 
+const List = styled.div`
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 19px;
@@ -57,13 +69,13 @@ const List = styled.div`
             height: 70px;
         }
         img:hover{
-            transform: scale(1.1); 
+            transform: scale(1.1);
             border-radius: 50%;
         }
     }
     .listItem:hover{
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-        
+
     }
-    
+
 `

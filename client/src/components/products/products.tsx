@@ -7,16 +7,18 @@ import "./products.css";
 
 //import actions
 import { getArticles } from "../../actions/products/productActions";
+import { cleanProducts } from "../../actions";
 
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
 import Pagination from "./Pagination/Pagination";
+import Footer from "../Footer/Footer";
 
 export default function Products() {
   const dispatch = useDispatch();
   const articles = useSelector((state: any) => state.articles);
-  const [limit] = useState<number>(8);
+  const [limit] = useState<number>(12);
 
   type Params = {
     gender: string;
@@ -25,7 +27,7 @@ export default function Products() {
 
   const { gender } = useParams<Params>();
   const { page } = useParams<Params>();
-
+  console.log(typeof(page))
   useEffect(() => {
     dispatch(
       getArticles(
@@ -36,14 +38,19 @@ export default function Products() {
         undefined,
         undefined,
         page,
-        limit
+        limit,
+        undefined
       )
     );
+    return () => {
+      dispatch(cleanProducts())
+    }
   }, [dispatch, gender, page, limit]);
 
   return (
-    <div>
-      <h1 className="title_ropa_products">Ropa</h1>
+    <div className="page-container">
+      <div className="content-wrap">
+      <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div>
         {articles.products?.map((e, i) => {
@@ -63,6 +70,8 @@ export default function Products() {
         nextLength={articles.next.length}
         gender={gender}
       />
+      </div>
+      <Footer />
     </div>
   );
 }

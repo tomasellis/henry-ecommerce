@@ -14,8 +14,10 @@ export const getArticles =
     color: any,
     size: any,
     page: any,
-    limit: any
+    limit: any,
+    search:any
   ) =>
+
   async (dispatch: any) => {
     try {
       let res = await axios.get(
@@ -24,14 +26,15 @@ export const getArticles =
         }&less_than=${less_than || ""}&greater_than=${
           greater_than || ""
         }&color=${color || ""}&size=${size || ""}&_page=${page || ""}
-        &_limit=${limit || ""}`
+        &_limit=${limit || ""}&_search=${search || ""}`
       );
 
-      dispatch({
-        type: PRODUCTS_ACTIONS.BRING_CLOTHER,
-        payload: res.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+        dispatch({
+          type: PRODUCTS_ACTIONS.BRING_CLOTHER,
+          payload: res.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };

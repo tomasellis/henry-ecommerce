@@ -2,18 +2,17 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 import {useAuth0} from '@auth0/auth0-react';
+/* import { useEffect } from "react" */
 
 //import actions
-import { getProduct } from "../../../actions";
+/* import { getProduct } from "../../../actions"; */
 
 //import component
 import Profile from "../Profile";
 
-//import css
-import './Favorites.css'
-
-export default function Favorites(){
-
+export default function Favorites( ){
+    
+    /* const dispatch = useDispatch(); */
     let {user} = useAuth0();
     let favProducts = useSelector((state : any) => state.favoriteProducts);    
     

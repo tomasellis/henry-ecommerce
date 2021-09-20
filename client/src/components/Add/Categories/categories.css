@@ -3,6 +3,7 @@
 }
 
 .categories_collection_add  {
+    max-width: 160px;
     padding: 5px 24px;
     margin-right: 10px;
     border: none;

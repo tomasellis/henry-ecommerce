@@ -11,6 +11,7 @@ import PrevCart from "./components/Cart/PrevCart";
 import Favorites from './components/Perfil/Favorites/Favorites'
 import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
+import SearchedProducts from "./components/Search/SearchedProducts";
 
 function App() {
   return (
@@ -22,6 +23,13 @@ function App() {
       <Route exact path="/cart" component={PrevCart} />
       {/* <Route path="/profile" component={Profile} /> */}
       <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
+      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/search" component={SearchedProducts} />
+      <Route
+        exact
+        path="/clothing/details/:id"
+        component={DetailProductCards}
+      />
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />
       <Route exact path='/profile/favorites' component={Favorites} />
