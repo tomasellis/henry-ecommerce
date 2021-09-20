@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartStorage, cleanProductDetail } from "../../actions";
+import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
 import FormReview from './FormReview'
 
@@ -117,8 +117,7 @@ export const DetailsProductCard = ({
         dispatch(addToCartStorage(productDetail));
         alert("Product added to cart!");
       }
-    } else {
-      //si esta autenticado...
+    } else { //si esta autenticado...
 
       const { data } = await axios.post(
         `${BASE_URL}/findOrCreateUserInDatabase`,
@@ -135,7 +134,12 @@ export const DetailsProductCard = ({
         quantity: 1,
       });
 
-      if (!dataAddToCart.data.errors) alert("producto agregado al carrito");
+      if (!dataAddToCart.data.errors) {
+        dispatch(setProductsIdsInCart(id))
+        alert("producto agregado al carrito");
+      
+      }
+
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
       else alert(dataAddToCart.data.errors);
     }
@@ -149,7 +153,7 @@ export const DetailsProductCard = ({
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
-        id_option: chosenOptionSize[0].optionId,
+        id_option: chosenOptionSize[0]?.optionId,
       });
     }
     return setProductDetail({

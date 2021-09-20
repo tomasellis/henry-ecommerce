@@ -26,15 +26,7 @@ export default function LoggedIn() {
           }
         );
 
-        dispatch(setDataUser(dataUser.data.user_id, user.email))
-
-        let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.user_id}`)
-        
-        idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
-        dispatch(setProductsIdsInCart(idsInCart))
-        
-        // Check storage
-        // console.log(localStorage.cartStorage);
+        dispatch(setDataUser(dataUser.data.user_id, user.email, user.sub))
 
         if (localStorage.cartStorage) {
           const { data } = await axios.post(
@@ -56,6 +48,10 @@ export default function LoggedIn() {
               "no se agregaron los productos de localstorage a la db"
             );
           }
+          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.user_id}`)
+
+          idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
+          dispatch(setProductsIdsInCart(idsInCart))
         }
         setLoaded(true);
       }

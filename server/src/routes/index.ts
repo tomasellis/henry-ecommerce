@@ -19,6 +19,8 @@ import deleteUserCart from "./deleteUserCart";
 import addLocalStorageToCart from "./addLocalStorageToCart";
 import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
 import addReview from "./addReview";
+import sendMail from "./sendMail";
+import changePassword from './changePassword'
 
 
 const router = Router();
@@ -43,5 +45,7 @@ router.use("/deleteUserCart", deleteUserCart);
 router.use("/createNewCategories", createNewCategory);
 router.use("/findOrCreateUserInDatabase", findOrCreateUserInDatabase);
 router.use("/addReview", addReview);
+router.use("/sendMail", sendMail);
+router.use("/changePassword", changePassword);
 
 export default router;
