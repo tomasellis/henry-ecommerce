@@ -74,9 +74,9 @@ router.post(
     const preference: MercadopagoPreference = {
       items: items_body,
       back_urls: {
-        failure: `${BACKEND_URL}/mercadoPago/payment`,
-        pending: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address}`,
-        success: `${BACKEND_URL}/mercadoPago/payment`,
+        failure: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
+        pending: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
+        success: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
       },
       external_reference: external_reference_body,
       payment_methods: {
@@ -97,6 +97,10 @@ router.post(
 
 router.get("/payment", async (req, res) => {
   console.log("QUERY", req.query);
+  const { userEmail, userAddress } = req.query;
+
+  const userEmail_query = userEmail as string;
+  const userAddress_query = userAddress as string;
   const payment_id = req.query.payment_id;
   const payment_status = req.query.status as
     | "approved"
@@ -123,10 +127,10 @@ router.get("/payment", async (req, res) => {
       query: addNewOrderMutation(
         userId,
         payment_status,
-        "tom@gmail.com",
-        11.2423,
-        1211.421,
-        "addreso"
+        userEmail_query,
+        0,
+        0,
+        userAddress_query
       ),
     },
   });
