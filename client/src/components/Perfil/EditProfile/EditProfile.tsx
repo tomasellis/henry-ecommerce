@@ -171,7 +171,8 @@ export default function EditProfile() {
         birthday: info.date,
         identity_document_type: Number(info.dni)
       })
-    alert(responseAxios.data)
+    console.log('datos actualizados',responseAxios.data);
+    if(responseAxios.data.update_users) alert('Datos actualizados')
 
   }
 
@@ -186,7 +187,8 @@ export default function EditProfile() {
         locality: data.locality,
         phone_number: Number(data.phone)
       })
-    alert(responseAxios.data)
+    console.log('datos actualizados',responseAxios.data);
+    if(responseAxios.data.update_users) alert('Datos actualizados')
   }
 
   const handleUpdate = (e) => {

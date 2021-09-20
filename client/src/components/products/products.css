@@ -1,8 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-.title_ropa_products{
-    margin-top: 10px;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    font-size: 45px;
+.title_ropa_products {
+  margin-top: 10px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  font-size: 45px;
+}
+
+.ctn_product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
