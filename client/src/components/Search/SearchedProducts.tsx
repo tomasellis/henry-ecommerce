@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom'
 
-import { searchProducts } from "../../actions/searchArticles/searchArticles";
+import  { searchProducts } from "../../actions/searchArticles/searchArticles";
 
 import Card from "../products/cards/card";
 import Footer from "../Footer/Footer";
@@ -14,11 +14,11 @@ export default function SearchedProducts() {
   const { search } = useLocation()
   const value = queryString.parse(search)
   const articles = useSelector((state: any) => state.articles);
-  console.log(value)
+  const word : string= value.word.toString()
 
   useEffect(() => {
     dispatch(
-      searchProducts(value.word)
+      searchProducts(word)
   )
 }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
