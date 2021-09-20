@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
+import Profile from '../Profile';
 import './EditProfile.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +102,8 @@ export default function EditProfile() {
   };
 
   return (
-    <div>
+    <div className = 'divqencierratodo'>
+      <Profile />
       <div className='div-conteiner'>
                 <h3 className='titulo'>PROFILE</h3>
             <div className='conteiner-perfil'>
