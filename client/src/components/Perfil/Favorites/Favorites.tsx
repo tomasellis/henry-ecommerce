@@ -11,17 +11,15 @@ export default function Favorites( ){
     
     /* const dispatch = useDispatch(); */
     const favProducts = useSelector((state : any) => state.favoriteProducts);
-
-    console.log(favProducts);
     
 
     return(
         <> 
             <div className = 'div_fav_products'>
             {
-                favProducts?.map(e => {
+                favProducts?.map((e,index) => {
                     return(
-                        <div className = 'mama'>
+                        <div className = 'mama' key={index}>
 
                             <Card 
                             name = {e.name}

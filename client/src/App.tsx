@@ -12,13 +12,15 @@ import Favorites from './components/Perfil/Favorites/Favorites'
 import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
+import EditUsers from "./components/Users/EditUsers";
 
 function App() {
   return (
     <BrowserRouter>
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/created" component={Add} />
+      <Route exact path="/admin/createproduct" component={Add} />
+    <Route exact path="/admin/editusers" component={EditUsers} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />

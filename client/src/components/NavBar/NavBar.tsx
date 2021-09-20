@@ -4,6 +4,7 @@ import Search from "../Search/Search";
 import "./NavBar.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,11 +14,12 @@ import { Drawer } from "@material-ui/core";
 // import { Link as link } from "@material-ui/core";
 import CancelIcon from "@material-ui/icons/Cancel"
 import { IoPersonCircleSharp } from "react-icons/io5";
-import {BiShoppingBag} from "react-icons/bi";
+import { BiShoppingBag } from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
 
 export default function NavBar() {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const history = useHistory();
 
   const [state, setState] = useState({
     mobileView: false,
@@ -25,18 +27,18 @@ export default function NavBar() {
   });
 
   const { mobileView, drawerOpen } = state;
-  
+
   const handleDrawerOpen = () =>
     setState((prevState) => ({ ...prevState, drawerOpen: true }));
   const handleDrawerClose = () =>
     setState((prevState) => ({ ...prevState, drawerOpen: false }));
 
-  let id:number = 0;
+  let id: number = 0;
   const headersData = [
     {
-      label:(
-        <IconButton  onClick={handleDrawerClose}>
-          <CancelIcon fontSize="large" />        
+      label: (
+        <IconButton onClick={handleDrawerClose}>
+          <CancelIcon fontSize="large" />
         </IconButton>
       ),
       id: ++id
@@ -49,7 +51,7 @@ export default function NavBar() {
       label: (
         <Link to="/cart">
           <IconButton>
-            <BiShoppingBag style = {{textDecoration: "none", color : "#000"}} />
+            <BiShoppingBag style={{ textDecoration: "none", color: "#000" }} />
           </IconButton>
         </Link>
       ),
@@ -57,7 +59,7 @@ export default function NavBar() {
     },
     {
       label: (
-        <p style={{fontWeight: "bold", fontSize: "18px" }}>
+        <p style={{ fontWeight: "bold", fontSize: "18px" }}>
           {isAuthenticated ? (
             <Link
               to="/profile"
@@ -67,7 +69,7 @@ export default function NavBar() {
             </Link>
           ) : (
             <IconButton onClick={loginWithRedirect}>
-              <IoPersonCircleSharp style = {{fontSize: "23px", color: "#000"}}/>
+              <IoPersonCircleSharp style={{ fontSize: "23px", color: "#000" }} />
             </IconButton>
           )}
         </p>
@@ -90,7 +92,7 @@ export default function NavBar() {
     },
   ];
 
-  
+
 
   useEffect(() => {
     const setResponsiveness = () => {
@@ -128,7 +130,7 @@ export default function NavBar() {
           <div className={classes.bolsa}>
             <IconButton>
               <Link to="/cart">
-                <BiShoppingBag style = {{textDecoration: "none", color : "#000", marginBottom : "7px"}} />
+                <BiShoppingBag style={{ textDecoration: "none", color: "#000", marginBottom: "7px" }} />
               </Link>
             </IconButton>
           </div>
@@ -138,19 +140,26 @@ export default function NavBar() {
               {isAuthenticated ? (
                 <Link
                   to="/profile"
-                  style={{ textDecoration: "none", color: "#000", marginTop:'0' }}
+                  style={{ textDecoration: "none", color: "#000", marginTop: '0' }}
                 >
                   {user.name}
                 </Link>
               ) : (
-                
-                <button style={{ background:'transparent', border: 'none' }} onClick={loginWithRedirect}>
-                  <IoPersonCircleSharp style = {{marginTop : "15px", fontSize : "23px"}}/>
+
+                <button style={{ background: 'transparent', border: 'none' }} onClick={loginWithRedirect}>
+                  <IoPersonCircleSharp style={{ marginTop: "15px", fontSize: "23px" }} />
                 </button>
               )}
-                <Link to = '/created'>
-                Agregar
-                </Link>
+              <select
+                className=""
+                name=""
+                onChange={e => history.push(e.target.value)}
+              >
+                <option disabled>Admin</option>
+                <option value="/admin/createproduct">Create product</option>
+                <option value="/admin/editusers">Edit users</option>
+              </select>
+              
             </p>
           </div>
         </div>
@@ -159,7 +168,7 @@ export default function NavBar() {
   };
 
   const displayMobile = () => {
-    
+
     return (
       <Toolbar>
         <IconButton
@@ -186,17 +195,17 @@ export default function NavBar() {
         <div className={classes.searchMobile}>
           <Search />
 
-        <div className={classes.listMobile}>
+          <div className={classes.listMobile}>
 
-        </div>
+          </div>
         </div>
       </Toolbar>
     );
   };
 
   const getDrawerChoices = () => {
-    return headersData.map((ele) =>{
-      return (<div style={{display: "flex",alignItems:"center",justifyContent:"center",flexDirection:"column"}} key={ele.id}>{ele.label}</div>)
+    return headersData.map((ele) => {
+      return (<div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }} key={ele.id}>{ele.label}</div>)
     })
   };
 
@@ -256,13 +265,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center"
   },
-  listMobile:{
+  listMobile: {
     marginRight: '250px'
   },
   menu: {
     color: "#000",
   },
-  labelItem:{
+  labelItem: {
     display: 'flex'
   }
 }));
