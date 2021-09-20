@@ -15,6 +15,8 @@ import { Link as link } from "@material-ui/core";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
+import { FaSun } from "react-icons/fa";
+import { BsMoon } from "react-icons/bs";
 
 export default function NavBar() {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -117,7 +119,12 @@ export default function NavBar() {
         <div className={classes.titleCtn}>
           <TitleFilter mob={false} />
         </div>
-
+        <div>
+          <button className="switch" id="switch">
+            <span><FaSun/></span>
+            <span><BsMoon/></span>
+          </button>
+        </div>
         <div className={classes.div}>
           <div>
             <Search />
