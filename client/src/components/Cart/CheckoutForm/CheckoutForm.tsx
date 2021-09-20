@@ -89,11 +89,15 @@ const CheckoutForm = ({
             id: checkoutId,
           },
         });
-        setCheckoutForm({
-          ...checkoutForm,
-          mpButton: checkout,
-          mpButtonLoading: "loaded",
-        });
+        console.log("timetout start");
+        setTimeout(() => {
+          console.log("timeout fin");
+          setCheckoutForm({
+            ...checkoutForm,
+            mpButton: checkout,
+            mpButtonLoading: "loaded",
+          });
+        }, 2000);
       })();
     }
     // eslint-disable-next-line
@@ -241,7 +245,6 @@ const createCheckoutData = (
       };
     }),
   };
-  console.log("bout to send", data);
   return data;
 };
 
@@ -271,7 +274,6 @@ const displayMPButton = (
         return <span>Loading</span>;
 
       case "loaded":
-        console.log("mpButton", mpButton);
         return (
           <Button
             variant="contained"
