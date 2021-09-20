@@ -144,10 +144,6 @@ export default function EditProfile() {
     additionaldata: "",
   })
 
-  let datos = {
-    auth0_id: state.user.auth0_id,
-    newPassword: changePassword.repeatpassword
-  }
 
   if (isLoading) { return (<div>Loading...</div>) }
 
