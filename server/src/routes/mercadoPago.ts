@@ -28,16 +28,24 @@ type MercadopagoPreference = {
     excluded_payment_types: ExcludedType[];
     installments: number;
   };
-  payer: any;
+  payer: Payer;
 };
 
+type Payer = {
+  email: string;
+  address: {
+    street_name: string;
+    zip_code: string;
+    street_number: string;
+  };
+};
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:4000";
 const FRONTEND_URL = process.env.REQUESTS_URL || "http://localhost:3000";
 
 const MPACCESS_TOKEN =
   process.env.MPACCESS_TOKEN ||
   (() => {
-    console.log("No mpaccess token, half a pila");
+    console.log("No mpaccess token");
     return "fake";
   })();
 
@@ -53,12 +61,13 @@ router.post(
       payer,
       external_reference,
     } = req.body;
-    console.log("datahere", items);
+    console.log("datahere", req.body);
 
     const items_body: MercadopagoItems[] = items as MercadopagoItems[];
     const installments_body: number = installments as number;
     const excluded_payment_types_body: ExcludedType[] =
       excluded_payment_types as ExcludedType[];
+    const payer_body: Payer = payer as Payer;
 
     const external_reference_body = external_reference as string;
 
@@ -66,7 +75,7 @@ router.post(
       items: items_body,
       back_urls: {
         failure: `${BACKEND_URL}/mercadoPago/payment`,
-        pending: `${BACKEND_URL}/mercadoPago/payment`,
+        pending: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address}`,
         success: `${BACKEND_URL}/mercadoPago/payment`,
       },
       external_reference: external_reference_body,
@@ -74,7 +83,7 @@ router.post(
         excluded_payment_types: excluded_payment_types_body ?? [],
         installments: installments_body,
       },
-      payer,
+      payer: payer_body,
     };
 
     try {
@@ -87,13 +96,14 @@ router.post(
 );
 
 router.get("/payment", async (req, res) => {
-  console.log("QUERY", req.query, "BODY", req.body);
+  console.log("QUERY", req.query);
   const payment_id = req.query.payment_id;
-  const payment_status = req.query.status as string;
-  const preference_id = req.query.preference_id as string;
+  const payment_status = req.query.status as
+    | "approved"
+    | "rejected"
+    | "in_process";
+
   const userId = req.query.external_reference as string;
-  const merchant_order_id = req.query.merchant_order_id;
-  console.log("EXTERNAL REFERENCE ", userId, "STATUS", payment_status);
 
   // Delete user's cart data
   const deleteCartRes = await axios.post(`${BACKEND_URL}/deleteUserCart`, {
@@ -112,7 +122,7 @@ router.get("/payment", async (req, res) => {
       //FIX THIS REQUERIMENTS
       query: addNewOrderMutation(
         userId,
-        "idk",
+        payment_status,
         "tom@gmail.com",
         11.2423,
         1211.421,

@@ -70,7 +70,6 @@ const Cart = ({ user }: { user: User }) => {
     );
 
     const data = await getProductsInCart(dataUser.data.user_id);
-    console.log(data);
     if (data) {
       setProductsInCart({
         ...productsInCart,

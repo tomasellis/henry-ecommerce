@@ -57,7 +57,7 @@ const CheckoutForm = ({
 
   useEffect(
     () => {
-      if (checkoutForm.finalCheckbox) {
+      if (checkoutForm.finalCheckbox === true && active) {
         const data = createCheckoutData(
           productsToCheckout,
           6,
@@ -73,27 +73,29 @@ const CheckoutForm = ({
   );
 
   useEffect(() => {
-    (async () => {
-      setCheckoutForm({
-        ...checkoutForm,
-        mpButtonLoading: "loading",
-      });
-      const checkoutId = await createPreference(checkoutData.data);
-      const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
-        locale: "es-AR",
-      });
+    if (checkoutData.data) {
+      (async () => {
+        setCheckoutForm({
+          ...checkoutForm,
+          mpButtonLoading: "loading",
+        });
+        const checkoutId = await createPreference(checkoutData.data);
+        const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
+          locale: "es-AR",
+        });
 
-      const checkout = mp.checkout({
-        preference: {
-          id: checkoutId,
-        },
-      });
-      setCheckoutForm({
-        ...checkoutForm,
-        mpButton: checkout,
-        mpButtonLoading: "loaded",
-      });
-    })();
+        const checkout = mp.checkout({
+          preference: {
+            id: checkoutId,
+          },
+        });
+        setCheckoutForm({
+          ...checkoutForm,
+          mpButton: checkout,
+          mpButtonLoading: "loaded",
+        });
+      })();
+    }
     // eslint-disable-next-line
   }, [checkoutData.data]);
 
@@ -190,7 +192,8 @@ const CheckoutForm = ({
             <br></br>
             {displayMPButton(
               checkoutForm.mpButtonLoading,
-              checkoutForm.mpButton
+              checkoutForm.mpButton,
+              checkoutForm.finalCheckbox
             )}
           </div>
         </BouncyDiv>
@@ -221,6 +224,8 @@ const createCheckoutData = (
     payer: {
       email: email,
       address: {
+        street_number: 0,
+        zip_code: "",
         street_name: shippingAddress,
       },
     },
@@ -236,6 +241,7 @@ const createCheckoutData = (
       };
     }),
   };
+  console.log("bout to send", data);
   return data;
 };
 
@@ -256,31 +262,35 @@ const validateEmail = (email: string) => {
 
 const displayMPButton = (
   loadingButton: "loading" | "loaded" | "idle" | "error",
-  mpButton: any
+  mpButton: any,
+  finalCheck: boolean
 ) => {
-  switch (loadingButton) {
-    case "loading":
-      return <span>Loading</span>;
+  if (finalCheck === true) {
+    switch (loadingButton) {
+      case "loading":
+        return <span>Loading</span>;
 
-    case "loaded":
-      console.log("mpButton", mpButton);
-      return (
-        <Button
-          variant="contained"
-          onClick={async () => {
-            mpButton.open();
-          }}
-        >
-          Proceed to payment!
-        </Button>
-      );
-    case "error":
-      return <span>Error</span>;
-    case "idle":
-      return <span></span>;
-    default:
-      return <span></span>;
+      case "loaded":
+        console.log("mpButton", mpButton);
+        return (
+          <Button
+            variant="contained"
+            onClick={async () => {
+              mpButton.open();
+            }}
+          >
+            Proceed to payment!
+          </Button>
+        );
+      case "error":
+        return <span>Error</span>;
+      case "idle":
+        return <span></span>;
+      default:
+        return <span></span>;
+    }
   }
+  return <div></div>;
 };
 
 type CartProductData = {
@@ -313,6 +323,8 @@ type PreferenceData = {
     email: string;
     address: {
       street_name: string;
+      zip_code: string;
+      street_number: number;
     };
   };
   external_reference: string;
