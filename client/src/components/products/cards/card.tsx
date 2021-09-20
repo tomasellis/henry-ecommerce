@@ -1,53 +1,47 @@
+import { IconButton } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+//import actions
+import { favoriteProducts } from "../../../actions";
 
 //import css
 import './card.css'
+
+import StarIcon from '@material-ui/icons/Star';
 
 export default function Card({name,price,image,id}){
 
     const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
 
+    const dispatch = useDispatch();
+
+    const AddFavoriteProduct = (e) => {
+        e.preventDefault();
+        dispatch(favoriteProducts({
+            name,
+            price,
+            image,
+            id : id
+        }));        
+    }
+    
     return(
         <>
-        <div className = 'cards_container_products'>
-
             <div className = 'div_container_card_product'>
                 <div className = 'div_card_product'>
-                <Link to = {`/clothing/${id}`}>
-                    <img src={image.includes('http')? image : IMG }alt="" />
-                    <h3 className = 'card_name_product'>{name}</h3>
-                    <h5 className = 'card_desc_product'><b>{price}</b></h5>
-                </Link>
+                    <Link to = {`/clothing/${id}`}>
+                        <img className = 'img_product' src={image.includes('http')? image : IMG }alt="" />
+                        <h3 className = 'card_name_product'>{name}</h3>
+                        <h5 className = 'card_desc_product'>$ {price}</h5>
+                    </Link>
+                    <div className = 'button_fav_product' onClick = {AddFavoriteProduct}>
+                        <IconButton>
+                            <StarIcon className='icon_fav'/>
+                        </IconButton>
+                    </div>       
                 </div>
             </div>
-            {/* <div className = 'div_container_card_product'>
-                <div className = 'div_card_product'>
-                <Link to = '#'>
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_328-1501-0041-279_prod1?policy=product-medium" alt="" />
-                    <h3 className = 'card_name_product'>Short gastado clasico</h3>
-                    <h5 className = 'card_desc_product'><b>$45.2</b></h5>
-                </Link>
-                </div>
-            </div>
-            <div className = 'div_container_card_product'>
-                <div className = 'div_card_product'>
-                <Link to = '#'>
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_314-1000-0707-900_prod1?policy=product-medium" alt="" />
-                    <h3 className = 'card_name_product'>Canzolcillos cortos clasicos</h3>
-                    <h5 className = 'card_desc_product'><b>$45.2</b></h5>
-                </Link>
-                </div>
-            </div>
-            <div className = 'div_container_card_product'>
-                <div className = 'div_card_product'>
-                <Link to = '#'>
-                    <img src="https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-210_prod1?policy=product-medium" alt="" />
-                    <h3 className = 'card_name_product'>Camisa Oxford Elastizada de Corte Suelto</h3>
-                    <h5 className = 'card_desc_product'><b>$45.2</b></h5>
-                </Link>
-                </div>
-            </div>  */}
-        </div>
         </>
     )
 };

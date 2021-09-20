@@ -86,7 +86,7 @@ export default function Categories({ input, setInput, handleChange }) {
           })}
         </select>
         <ul>
-          {!input.categories ? null : input.categories?.map((el) => {
+          {!input.categories ? null : input.categories?.map(([el,index]) => {
             function NameInUpperCase(str) {
               return str.charAt(0).toUpperCase() + str.slice(1);
             }
@@ -95,6 +95,7 @@ export default function Categories({ input, setInput, handleChange }) {
               <div
                 className="div_li_category_select_add_product"
                 onClick={() => handleDeletle(el)}
+                key={index}
               >
                 <li>{name}</li>
                 <p>x</p>

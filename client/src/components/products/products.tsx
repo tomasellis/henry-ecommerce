@@ -52,7 +52,7 @@ export default function Products() {
       <div className="content-wrap">
       <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
-      <div>
+      <div className='ctn_product'>
         {articles.products?.map((e, i) => {
           return (
             <Card

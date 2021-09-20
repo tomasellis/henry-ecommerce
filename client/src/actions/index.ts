@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Dispatch } from "redux";
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
 export function getArticles() {}
@@ -41,6 +42,13 @@ export function postProduct(payload) {
   };
 }
 
+export function favoriteProducts(payload){
+  return{
+    type : 'ADD_FAVORITE_PRODUCT',
+    payload : payload
+  }
+}
+
 export function addToCartStorage(productDetail: Object) {
   return { type: "ADD_TO_CART", payload: productDetail };
 }
@@ -61,10 +69,24 @@ export function cleanProducts() {
   return { type: "CLEAN_PRODUCTS" };
 }
 
-export function setDataUser(user_id:string,user_email:string){
-  return {type: 'SET_DATA_USER', payload: {user_id, user_email} }
+export function setDataUser(user_id:string,user_email:string, auth0_id:string){
+  return {type: 'SET_DATA_USER', payload: {user_id, user_email,auth0_id} }
 }
 
 export function setProductsIdsInCart(idsInCart){
   return {type: 'SET_PRODUCTS_IDS_IN_CART', payload: idsInCart}
 }
+
+export function changePassword2(data){
+  return async (dispatch: Dispatch) => {
+    let user = {
+      auth0_id: data.auth0_id,
+      newPassword: data.newPassword
+    };
+    const newpass = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/changePassword`,
+      user
+    );
+    dispatch({ type: "CHANGE_PASSWORD", payload: newpass.data})
+  };
+};

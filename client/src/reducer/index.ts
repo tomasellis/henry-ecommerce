@@ -3,6 +3,7 @@ import { PRODUCTS_ACTIONS } from "../actions/products/productActions";
 const initialState = {
   product: [],
   options: [],
+  favoriteProducts : [],
   productsInCartByUser: [],
   articles: {
     products: [],
@@ -13,7 +14,7 @@ const initialState = {
     ? JSON.parse(localStorage.idsInCartStorage)
     : [],
   searchArticles: [],
-  user:{
+  user: {
     id: '',
     email: ''
   }
@@ -81,35 +82,49 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
+    case 'ADD_FAVORITE_PRODUCT' :
+      return {
+        ...state,
+        favoriteProducts : [...state.favoriteProducts, payload]
+      }
+
     case "CLEAN_PRODUCT_DETAIL":
       return {
         ...state,
         product: [],
       };
 
-      case "CLEAN_PRODUCTS":
-        return {
-          ...state,
-          articles: {
-            products: [],
-            next: [],
-          },
-        };
+    case "CLEAN_PRODUCTS":
+      return {
+        ...state,
+        articles: {
+          products: [],
+          next: [],
+        },
+      };
 
-      case 'SET_DATA_USER':
-        return {
-          ...state,
-          user: {
-            id: payload.user_id,
-            email: payload.user_email
-          }
+    case 'SET_DATA_USER':
+      return {
+        ...state,
+        user: {
+          id: payload.user_id,
+          email: payload.user_email,
+          auth0_id: payload.auth0_id
         }
+      }
 
-      case 'SET_PRODUCTS_IDS_IN_CART':
+    case 'SET_PRODUCTS_IDS_IN_CART':
+      if (Array.isArray(payload)) {
         return {
           ...state,
-          idsInCart:payload
+          idsInCart: payload
         }
+      } else {
+        return {
+          ...state,
+          idsInCart: [...state.idsInCart, payload]
+        }
+      }
 
     default:
       return state;
