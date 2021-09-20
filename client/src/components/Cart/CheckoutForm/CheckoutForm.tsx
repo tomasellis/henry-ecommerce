@@ -35,10 +35,19 @@ const CheckoutForm = ({
   auth0User: User;
   userId: string;
 }) => {
-  const [checkoutForm, setCheckoutForm] = useState({
+  type CheckoutForm = {
+    shippingAddress: string;
+    email: string;
+    mpButton: any;
+    mpButtonLoading: "idle" | "loading" | "loaded" | "error";
+    finalCheckbox: boolean;
+  };
+
+  const [checkoutForm, setCheckoutForm] = useState<CheckoutForm>({
     shippingAddress: "",
     email: "",
     mpButton: null,
+    mpButtonLoading: "idle",
     finalCheckbox: false,
   });
 
@@ -57,7 +66,6 @@ const CheckoutForm = ({
           checkoutForm.shippingAddress
         );
         setCheckoutData({ ...checkoutData, data });
-        console.log("checkoutingByCheckbox", data);
       }
     },
     // eslint-disable-next-line
@@ -65,8 +73,11 @@ const CheckoutForm = ({
   );
 
   useEffect(() => {
-    console.log("checkoutDatain");
     (async () => {
+      setCheckoutForm({
+        ...checkoutForm,
+        mpButtonLoading: "loading",
+      });
       const checkoutId = await createPreference(checkoutData.data);
       const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
         locale: "es-AR",
@@ -77,9 +88,11 @@ const CheckoutForm = ({
           id: checkoutId,
         },
       });
-      console.log("cambio mp", checkout);
-
-      setCheckoutForm({ ...checkoutForm, mpButton: checkout });
+      setCheckoutForm({
+        ...checkoutForm,
+        mpButton: checkout,
+        mpButtonLoading: "loaded",
+      });
     })();
     // eslint-disable-next-line
   }, [checkoutData.data]);
@@ -105,6 +118,7 @@ const CheckoutForm = ({
                     email: "",
                     mpButton: null,
                     finalCheckbox: false,
+                    mpButtonLoading: "idle",
                   });
                   setActive(false);
                 }}
@@ -120,6 +134,8 @@ const CheckoutForm = ({
                 onChange={(e) => {
                   setCheckoutForm({
                     ...checkoutForm,
+                    mpButton: null,
+                    mpButtonLoading: "idle",
                     finalCheckbox: false,
                     shippingAddress: e.target.value,
                   });
@@ -137,8 +153,9 @@ const CheckoutForm = ({
                 onChange={(e) => {
                   setCheckoutForm({
                     ...checkoutForm,
+                    mpButton: null,
+                    mpButtonLoading: "idle",
                     finalCheckbox: false,
-
                     email: e.target.value,
                   });
                 }}
@@ -147,9 +164,21 @@ const CheckoutForm = ({
             <FormControlLabel
               control={
                 <Checkbox
+                  disabled={
+                    validateEmail(checkoutForm.email) !== true ||
+                    checkoutForm.shippingAddress === ""
+                  }
                   checked={checkoutForm.finalCheckbox}
                   onChange={(e) => {
-                    setCheckoutForm({
+                    if (e.target.checked === false) {
+                      return setCheckoutForm({
+                        ...checkoutForm,
+                        mpButton: null,
+                        mpButtonLoading: "idle",
+                        finalCheckbox: e.target.checked,
+                      });
+                    }
+                    return setCheckoutForm({
                       ...checkoutForm,
                       finalCheckbox: e.target.checked,
                     });
@@ -159,18 +188,9 @@ const CheckoutForm = ({
               label="Address and email are correct"
             />
             <br></br>
-            {checkoutForm.mpButton && checkoutForm.finalCheckbox ? (
-              <Button
-                variant="contained"
-                disabled={!checkoutForm.email || !checkoutForm.shippingAddress}
-                onClick={async () => {
-                  checkoutForm.mpButton.open();
-                }}
-              >
-                Proceed to payment!
-              </Button>
-            ) : (
-              <span></span>
+            {displayMPButton(
+              checkoutForm.mpButtonLoading,
+              checkoutForm.mpButton
             )}
           </div>
         </BouncyDiv>
@@ -225,7 +245,6 @@ const createPreference = async (data: PreferenceData) => {
     data
   );
   if (res) {
-    console.log("MeliP res", res.data);
     return res.data.response.id;
   }
 };
@@ -233,6 +252,35 @@ const createPreference = async (data: PreferenceData) => {
 const validateEmail = (email: string) => {
   let re = /\S+@\S+\.\S+/;
   return re.test(email);
+};
+
+const displayMPButton = (
+  loadingButton: "loading" | "loaded" | "idle" | "error",
+  mpButton: any
+) => {
+  switch (loadingButton) {
+    case "loading":
+      return <span>Loading</span>;
+
+    case "loaded":
+      console.log("mpButton", mpButton);
+      return (
+        <Button
+          variant="contained"
+          onClick={async () => {
+            mpButton.open();
+          }}
+        >
+          Proceed to payment!
+        </Button>
+      );
+    case "error":
+      return <span>Error</span>;
+    case "idle":
+      return <span></span>;
+    default:
+      return <span></span>;
+  }
 };
 
 type CartProductData = {
