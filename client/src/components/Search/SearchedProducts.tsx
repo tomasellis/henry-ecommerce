@@ -27,7 +27,7 @@ export default function SearchedProducts() {
       <div className="content-wrap">
         <h1 className="title_ropa_products">Cloth</h1>
          <div>
-           {articles.products?.map((e, i) => {
+           {articles.products.length>0 ? articles.products?.map((e, i) => {
              return (
              <Card
                key={e.id}
@@ -37,7 +37,7 @@ export default function SearchedProducts() {
                price={e.price}
              />
              );
-          })}
+          }) : <div>You searched for "{word}". Your search has no matches. Please, try another keyword.</div>}
        </div>
     </div>
     <Footer />
