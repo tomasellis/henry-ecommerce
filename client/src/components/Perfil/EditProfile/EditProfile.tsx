@@ -284,7 +284,7 @@ export default function EditProfile() {
         <h3 className='titulo'>PROFILE</h3>
         <div className='conteiner-perfil'>
           <h5>- Data</h5>
-          {state.user.auth0_id.slice(0, 5) === 'auth0' && <h5>- Change password</h5>}
+          {state.user.auth0_id?.slice(0, 5) === 'auth0' && <h5>- Change password</h5>}
         </div>
         <div className="conteiner-datos">
           <form
@@ -358,7 +358,7 @@ export default function EditProfile() {
               Update
             </button>
           </form>
-          {state.user.auth0_id.slice(0, 5) === 'auth0' && <form
+          {state.user.auth0_id?.slice(0, 5) === 'auth0' && <form
             className={classes.root2}
             noValidate autoComplete="off"
             onSubmit={(e) => handleChangePassword(e)}>
