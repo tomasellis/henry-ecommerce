@@ -102,13 +102,13 @@ const CartLocalStorage = () => {
                 alignContent: "center",
               }}
             >
-              <span>Your cart is empty!</span>
+              <span>Your guest cart is empty!</span>
             </div>
           )}
         </div>
       );
     default:
-      return <div>Loading...</div>;
+      return <div>Loading guest cart...</div>;
   }
 };
 

@@ -1,16 +1,32 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import CartProductBox from "./CartProductBox";
+import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import { User } from "@auth0/auth0-spa-js";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import "./styles.css";
-import { Button, Checkbox, Switch, TextField } from "@material-ui/core";
-import { useHistory } from "react-router";
 
-const MercadoPago = window[`MercadoPago`];
+import { bounceInUp, bounceOutUp } from "react-animations";
+import styled, { keyframes } from "styled-components";
+import { Button } from "@material-ui/core";
+import CartList from "./CartList";
 
-const { REACT_APP_BASE_BACKEND_URL, REACT_APP_MP_PUBLIC_KEY } = process.env;
+/* BOUNCE OUT ANIMATION*/
+
+const bounceInUpAnimation = keyframes`${bounceInUp}`;
+
+const InBouncingDiv = styled.div`
+  position: absolute;
+  animation: 1s ${bounceInUpAnimation};
+`;
+
+const bounceOutUpAnimation = keyframes`${bounceOutUp}`;
+
+const OutBouncingDiv = styled.div`
+  position: absolute;
+  animation: 1s ${bounceOutUpAnimation};
+`;
+
+const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -34,37 +50,6 @@ type CartProductData = {
   inCartId: string;
 };
 
-type CheckoutItem = {
-  id: string;
-  title: string;
-  unit_price: number;
-  quantity: number;
-  description: string;
-} | null;
-
-type CheckoutData = {
-  items: CheckoutItem[];
-  id: string;
-  installments: number;
-  payer: {
-    email: string;
-  };
-};
-
-type CheckoutButton = {
-  active: boolean;
-  button: any;
-};
-type ToCheckout = {
-  checkoutData: CheckoutData;
-};
-
-type ShippingForm = {
-  shippingAddress: string;
-  formComplete: boolean;
-  checkbox: boolean;
-};
-
 const Cart = ({ user }: { user: User }) => {
   const [productsInCart, setProductsInCart] = useState<ProductsInCart>({
     loading: "loading",
@@ -72,44 +57,7 @@ const Cart = ({ user }: { user: User }) => {
     user_id: "",
   });
 
-  const history = useHistory();
-
-  const [toCheckout, setToCheckout] = useState<ToCheckout>({
-    checkoutData: {
-      payer: {
-        email: "",
-      },
-      id: "",
-      installments: 0,
-      items: null,
-    },
-  });
-
-  const [checkoutButton, setCheckoutButton] = useState<CheckoutButton>({
-    active: false,
-    button: null,
-  });
-
-  const [checkSlider, setCheckSlider] = useState(
-    "Check when ready for payment"
-  );
-
-  const [shippingForm, setShippingForm] = useState<ShippingForm>({
-    shippingAddress: "",
-    checkbox: false,
-    formComplete: false,
-  });
-
-  const handleChange = (event) => {
-    console.log("eves", event);
-    event.target.disabled = true;
-    setCheckSlider("Check when ready for payment ...");
-    setTimeout(() => {
-      event.target.disabled = false;
-      setCheckSlider("Check when ready for payment");
-    }, 1000);
-    setCheckoutButton({ ...checkoutButton, active: event.target.checked });
-  };
+  const [checkoutActive, setCheckoutActive] = useState(false);
 
   const updateData = async () => {
     var dataUser = await axios.post(
@@ -120,6 +68,7 @@ const Cart = ({ user }: { user: User }) => {
         name: user.name,
       }
     );
+
     const data = await getProductsInCart(dataUser.data.user_id);
     if (data) {
       setProductsInCart({
@@ -136,50 +85,15 @@ const Cart = ({ user }: { user: User }) => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    setToCheckout({
-      ...toCheckout,
-      checkoutData: createCheckoutData(productsInCart.products, 6, "", user),
-    });
-
-    // eslint-disable-next-line
-  }, [productsInCart]);
+  const ref = useRef(null);
 
   useEffect(() => {
-    console.log(toCheckout.checkoutData.items, "array");
-    if (
-      toCheckout.checkoutData.items !== null &&
-      toCheckout.checkoutData.items.length > 0 &&
-      checkoutButton.active === true
-    ) {
-      (async () => {
-        const checkoutId = await createPreference(toCheckout.checkoutData);
-        const mp = new MercadoPago(`${REACT_APP_MP_PUBLIC_KEY}`, {
-          locale: "es-AR",
-        });
-
-        const checkout = mp.checkout({
-          preference: {
-            id: checkoutId,
-          },
-        });
-        setCheckoutButton({ ...checkoutButton, button: checkout });
-      })();
+    if (checkoutActive === true) {
+      setTimeout(() => {
+        ref.current.hidden = true;
+      }, 900);
     }
-    // eslint-disable-next-line
-  }, [toCheckout.checkoutData, checkoutButton.active]);
-
-  // To check shipping form
-  useEffect(() => {
-    if (shippingForm.shippingAddress.length > 0) {
-      setShippingForm({ ...shippingForm, formComplete: true });
-    } else {
-      setShippingForm({ ...shippingForm, formComplete: false });
-    }
-    // eslint-disable-next-line
-  }, [shippingForm.shippingAddress]);
-
-  const refToCheckbox = useRef(null);
+  }, [checkoutActive]);
 
   switch (productsInCart.loading) {
     case "error":
@@ -201,124 +115,78 @@ const Cart = ({ user }: { user: User }) => {
 
     case "loaded":
       return (
-        <div>
-          <div className="cartDisplay" id={"cartListDisplay"}>
-            {productsInCart.products[0] ? (
-              <div className="cartProductBox cartLabels">
-                <div></div>
-                <div>Name</div>
-                <div>Available</div>
-                <div></div>
-                <div>Quantity</div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>Price</div>
-              </div>
-            ) : (
-              ""
-            )}
-            {productsInCart.products[0] ? (
-              productsInCart.products.map((product, index) => (
-                <CartProductBox
-                  user={productsInCart.user_id}
-                  user_id={productsInCart.user_id}
-                  key={index}
-                  product={product}
-                  index={index}
-                  productsInCart={productsInCart.products}
-                  updateData={updateData}
-                  active={!checkoutButton.active}
-                ></CartProductBox>
-              ))
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  fontSize: "25px",
-                  paddingTop: "30px",
-                  justifyContent: "center",
-                  alignContent: "center",
-                }}
-              >
-                <span>Your cart is empty!</span>
-              </div>
-            )}
-          </div>
-          {productsInCart.products[0] ? (
-            <div id="checkoutForm" className="checkoutForm">
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={checkoutButton.active}
-                    onChange={handleChange}
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label={`${checkSlider}`}
+        <div className="cartDisplay" id={"cartListDisplay"}>
+          {productsInCart.products[0] && checkoutActive === false ? (
+            <InBouncingDiv
+              style={{
+                display: "flex",
+                width: "100%",
+                paddingTop: "10px",
+                flexFlow: "column nowrap",
+              }}
+            >
+              <CartList
+                products={productsInCart.products}
+                userId={productsInCart.user_id}
+                updateData={updateData}
               />
-              <form hidden={!checkoutButton.active}>
-                <div className="shippingForm">
-                  <TextField
-                    id="standard-disabled"
-                    label="Shipping Address"
-                    defaultValue="Address for shipping"
-                    value={shippingForm.shippingAddress}
-                    onChange={(e) => {
-                      refToCheckbox.current.value = false;
-                      setShippingForm({
-                        ...shippingForm,
-                        checkbox: false,
-                        shippingAddress: e.target.value,
-                      });
-                    }}
-                  />
-                  <br></br>
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        ref={refToCheckbox}
-                        value={shippingForm.checkbox}
-                        onChange={(e) =>
-                          setShippingForm({
-                            ...shippingForm,
-                            checkbox: e.target.checked,
-                          })
-                        }
-                      ></Checkbox>
-                    }
-                    label={`I confirm the information provided is correct`}
-                  />
-                </div>
-                <br></br>
+              <div className="goToCheckoutButton">
                 <Button
                   variant="contained"
-                  hidden={!shippingForm.formComplete || !shippingForm.checkbox}
-                  onClick={async () => {
-                    const list = document.getElementById("cartListDisplay");
-                    list.className = "fade-out";
-                    setTimeout(() => {
-                      list.hidden = true;
-                    }, 2000);
-                    await axios.post(
-                      `${REACT_APP_BASE_BACKEND_URL}/deleteUserCart`,
-                      { userId: `${productsInCart.user_id}` }
-                    );
-                    checkoutButton.button.open();
-                    const checkoutForm =
-                      document.getElementById("checkoutForm");
-                    checkoutForm.hidden = true;
-                    history.push("/");
+                  color="primary"
+                  size="large"
+                  onClick={(e) => {
+                    setCheckoutActive(!checkoutActive);
                   }}
                 >
-                  Go to Payment!
+                  Go to checkout
                 </Button>
-              </form>
+              </div>
+            </InBouncingDiv>
+          ) : (
+            <OutBouncingDiv
+              ref={ref}
+              style={{
+                display: "flex",
+                width: "100%",
+                paddingTop: "10px",
+                flexFlow: "column nowrap",
+              }}
+            >
+              <CartList
+                products={productsInCart.products}
+                userId={productsInCart.user_id}
+                updateData={updateData}
+              />
+            </OutBouncingDiv>
+          )}
+          {productsInCart.products[0] ? (
+            <div></div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                fontSize: "25px",
+                paddingTop: "30px",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <span>Your cart is empty!</span>
+            </div>
+          )}
+          {productsInCart.products[0] ? (
+            <div>
+              <CheckoutForm
+                active={checkoutActive}
+                setActive={setCheckoutActive}
+                productsToCheckout={productsInCart.products}
+                auth0User={user}
+                userId={productsInCart.user_id}
+              ></CheckoutForm>
             </div>
           ) : (
-            ""
+            <div></div>
           )}
         </div>
       );
@@ -337,40 +205,5 @@ const getProductsInCart = async (userId: string) => {
     return data;
   } catch (err) {
     console.error(err);
-  }
-};
-
-const createCheckoutData = (
-  products: CartProductData[],
-  installments: number,
-  id: string,
-  user: any
-): CheckoutData => {
-  const data: CheckoutData = {
-    id: `${id}`,
-    installments: installments,
-    payer: {
-      email: user.email,
-    },
-    items: products.map((item) => {
-      return {
-        id: "fashion",
-        description: "",
-        quantity: item.productOption.optionQuantity,
-        title: item.baseName,
-        unit_price: item.basePrice,
-      };
-    }),
-  };
-  return data;
-};
-
-const createPreference = async (data) => {
-  const res = await axios.post(
-    `${REACT_APP_BASE_BACKEND_URL}/mercadopago/create_preference`,
-    data
-  );
-  if (res) {
-    return res.data.response.id;
   }
 };

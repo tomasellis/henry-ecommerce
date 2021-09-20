@@ -1,11 +1,11 @@
 // import axios from "axios";
 import { Response, Request, Router, NextFunction } from "express";
-import nodemailer from 'nodemailer'
-import {messageOrderPaid} from '../templatesEmail/messageOrderPaid'
+import nodemailer from "nodemailer";
+import { messageOrderPaid } from "../templatesEmail/messageOrderPaid";
 import { messageOrderShipped } from "../templatesEmail/messageOrderShipped";
 require("dotenv").config();
 
-const {PASSWORD_EMAIL_NODEMAILER} = process.env
+const { PASSWORD_EMAIL_NODEMAILER } = process.env;
 const router = Router();
 
 // interface Review {
@@ -16,69 +16,60 @@ const router = Router();
 //   user_email:string
 // }
 
-
-
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { user_email, user_name, type_message, order} = request.body;
+    const { user_email, user_name, type_message, order } = request.body;
 
-    if (
-      user_email && user_name && type_message && order
-    ) {
+    if (user_email && user_name && type_message && order) {
+      //   const review:Review = {
+      //     id_product_general,
+      //     user_id,
+      //     stars,
+      //     comment,
+      //     user_email
+      // }
+      let message = "",
+        subject = "";
+      switch (type_message) {
+        case "ORDER_PAID":
+          message = messageOrderPaid(user_name, order);
+          subject = "Your order has been approved";
+          break;
 
-    //   const review:Review = {
-    //     id_product_general,
-    //     user_id,
-    //     stars,
-    //     comment,
-    //     user_email
-    // }
-    let message = '', subject=''
-    switch (type_message) {
-      case 'ORDER_PAID':
-        message = messageOrderPaid(user_name,order)
-        subject = 'Your order has been approved'
-        break
-      
-      case 'ORDER_SHIPPED':
-        message = messageOrderShipped(user_name,order)
-        subject = 'Your order has been shipped'
-        break
-    }
-
-    
+        case "ORDER_SHIPPED":
+          message = messageOrderShipped(user_name, order);
+          subject = "Your order has been shipped";
+          break;
+      }
 
       try {
-        let transporter = nodemailer.createTransport(
-          {
-            host: "smtp.mail.yahoo.com",
-            port: 465,
-            secure: false, // upgrade later with STARTTLS
-            service:'yahoo',
-            auth: {
-              user: "henry.pg@yahoo.com",
-              pass: PASSWORD_EMAIL_NODEMAILER,
-            },
-          })
+        let transporter = nodemailer.createTransport({
+          host: "smtp.mail.yahoo.com",
+          port: 465,
+          secure: false, // upgrade later with STARTTLS
+          service: "yahoo",
+          auth: {
+            user: "henry.pg@yahoo.com",
+            pass: PASSWORD_EMAIL_NODEMAILER,
+          },
+        });
 
-          let email = await transporter.sendMail({
-            from: '"henry ecommerce" <henry.pg@yahoo.com>', // sender address
-            to: user_email, // list of receivers
-            subject: subject,
-            // text: "Hello world?", // plain text body
-            html: message
-          });
+        let email = await transporter.sendMail({
+          from: '"henry ecommerce" <henry.pg@yahoo.com>', // sender address
+          to: user_email, // list of receivers
+          subject: subject,
+          // text: "Hello world?", // plain text body
+          html: message,
+        });
 
-          response.json(email);
-          
+        response.json(email);
       } catch (err) {
         next(err);
       }
     } else {
       response.json({
-        error:
-          `Missing user_email OR user_name OR type_message OR order`
+        error: `Missing user_email OR user_name OR type_message OR order`,
       });
     }
   }
