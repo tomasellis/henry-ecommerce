@@ -10,6 +10,7 @@ import { bounceInUp } from "react-animations";
 import styled, { keyframes } from "styled-components";
 import "./styles.css";
 import { User } from "@auth0/auth0-spa-js";
+import LocationSelector from "./MapSelection/LocationSelector";
 
 /* BOUNCE ANIMATION*/
 
@@ -166,6 +167,9 @@ const CheckoutForm = ({
                   });
                 }}
               />
+            </div>
+            <div>
+              <LocationSelector />
             </div>
             <FormControlLabel
               control={
