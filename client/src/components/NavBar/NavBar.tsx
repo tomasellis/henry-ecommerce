@@ -142,7 +142,7 @@ export default function NavBar() {
                   to="/profile"
                   style={{ textDecoration: "none", color: "#000", marginTop: '0' }}
                 >
-                  {user.name}
+                  {user.name.split(' ')[0] + ' ' /*solo el primer nombre */} 
                 </Link>
               ) : (
 
