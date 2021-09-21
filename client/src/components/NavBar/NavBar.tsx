@@ -159,6 +159,7 @@ export default function NavBar() {
                 <option value='/admin' disabled>Admin</option>
                 <option value="/admin/createproduct">Create product</option>
                 <option value="/admin/editusers">Edit users</option>
+                <option value="/admin/editorders">Edit orders</option>
               </select>
               
             </p>

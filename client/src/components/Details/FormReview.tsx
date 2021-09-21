@@ -109,15 +109,15 @@ export const FormReview = ({
             Rating
           </label>
           <div className={errors.stars? 'has-error stars':"stars"}>
-            <input id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio5">★</label>
-            <input id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio4">★</label>
-            <input id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio3">★</label>
-            <input id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio2">★</label>
-            <input id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio1">★</label>
           </div>
           <p className="has-error">{errors.stars}</p>
