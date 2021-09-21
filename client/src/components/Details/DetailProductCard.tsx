@@ -145,9 +145,13 @@ export const DetailsProductCard = ({
 
   function onChange(e) {
     if (e.target.name === "size") {
-      const chosenOptionSize = optionsByColor[0].options.filter(
+      const chosenOptionColor = optionsByColor.filter(
+        (option) => option.color === productDetail.color
+      )
+      const chosenOptionSize = chosenOptionColor[0].options.filter(
         (option) => option.size === e.target.value
       );
+      console.log(chosenOptionSize)
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
@@ -155,11 +159,17 @@ export const DetailsProductCard = ({
       });
     }
     else if (e.target.name === "color") {
-      console.log('hola')
-      console.log(productDetail['size'])
+      const chosenOptionColor = optionsByColor.filter(
+        (option) => option.color === e.target.value
+      )
+      const chosenOptionSize = chosenOptionColor[0].options.filter(
+        (option) => option.size === productDetail.size
+      );
+      console.log(chosenOptionSize[0]?.optionId)
       return setProductDetail({
         ...productDetail,
         color: e.target.value,
+        id_option: chosenOptionSize[0]?.optionId,
       });
     }
     return setProductDetail({
