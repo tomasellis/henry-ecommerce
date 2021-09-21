@@ -12,6 +12,7 @@ import { changePassword2 } from '../../../actions';
 import './EditProfile.css';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAlert } from 'react-alert'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,6 +101,7 @@ interface RootState {
 }
 
 export default function EditProfile() {
+  const alertReact = useAlert()
   const { user, isAuthenticated, isLoading } = useAuth0()
   const classes = useStyles();
   const theme = useTheme();
@@ -172,7 +174,7 @@ export default function EditProfile() {
         identity_document_type: Number(info.dni)
       })
     console.log('datos actualizados',responseAxios.data);
-    if(responseAxios.data.update_users) alert('Datos actualizados')
+    if(responseAxios.data.update_users) alertReact.success('Datos actualizados')
 
   }
 
@@ -188,7 +190,7 @@ export default function EditProfile() {
         phone_number: Number(data.phone)
       })
     console.log('datos actualizados',responseAxios.data);
-    if(responseAxios.data.update_users) alert('Datos actualizados')
+    if(responseAxios.data.update_users) alertReact.success('Datos actualizados')
   }
 
   const handleUpdate = (e) => {

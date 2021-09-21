@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from 'react-alert'
 
 //import action
 import { postCategory } from "../../../actions";
@@ -8,6 +9,7 @@ import { postCategory } from "../../../actions";
 import "./categories.css";
 
 export default function Categories({ input, setInput, handleChange }) {
+  const alertReact = useAlert()
   const [category, setCategory] = useState({
     categories: [],
   });
@@ -44,14 +46,14 @@ export default function Categories({ input, setInput, handleChange }) {
     if (!repeat) {
       e.preventDefault();
       dispatch(postCategory(category));
-      alert("Category created successfully.");
+      alertReact.success("Category created successfully.");
       setInput({
         ...input,
         categories : [...input.categories , selectNewCategory]
       })      
     } else {
       e.preventDefault();
-      alert("That category already exists.");
+      alertReact.error("That category already exists.");
     }
     setCategory({
       categories: [],

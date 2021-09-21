@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAlert } from 'react-alert'
 
 //import component
 import Categories from './Categories/categories';
@@ -18,6 +19,7 @@ declare global {
 }
 
 export const validate = (input) => {
+    
     let err = {
         name: '',
         size: '',
@@ -35,7 +37,7 @@ export const validate = (input) => {
 };
 
 export default function Add() {
-
+    const alertReact = useAlert()
     const [err, setErr] = useState({
         name: '',
         size: '',
@@ -90,10 +92,10 @@ export default function Add() {
                 price: '',
                 options: [{ image_url: '#', color: '', size: '', stock: '' }]
             });
-            alert('Product created successfully');
+            alertReact.success('Product created successfully');
         } else {
             e.preventDefault();
-            alert('There are empty fields');
+            alertReact.success('There are empty fields');
         }
     };
 

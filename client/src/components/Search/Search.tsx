@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import { useAlert } from 'react-alert'
 import { useParams } from "react-router";
 import { searchArticles } from '../../actions/searchArticles/searchArticles';
 import { getArticles } from "../../actions/products/productActions";
@@ -14,6 +15,7 @@ import { getCombinedModifierFlags } from 'typescript';
 import SearchList from "./SearchList";
 
 export default function Search(): JSX.Element {
+  const alertReact = useAlert()
   const dispatch = useDispatch();
   const [search, setSearch]  = useState<string>('');
   // const busqueda = useSelector((state : any) => state.searchArticles);
@@ -43,7 +45,7 @@ export default function Search(): JSX.Element {
       // },1000)
 
     }else{
-      alert('Please, write something...')
+      alertReact.error('Please, write something...')
     }
   }
 

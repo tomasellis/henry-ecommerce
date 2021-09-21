@@ -3,6 +3,7 @@ import "./DetailProductCard.css";
 // import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
+import { useAlert } from 'react-alert'
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +36,7 @@ export const DetailsProductCard = ({
   price,
   product_options,
 }) => {
+  const alertReact = useAlert()
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
 
@@ -109,10 +111,10 @@ export const DetailsProductCard = ({
       const existProductInCartRedux = state.cart.some((product) => {
         return product.id_option === productDetail.id_option;
       });
-      if (existProductInCartRedux) alert("Product already in cart!");
+      if (existProductInCartRedux) alertReact.error("Product already in cart!");
       else {
         dispatch(addToCartStorage(productDetail));
-        alert("Product added to cart!");
+        alertReact.success("Product added to cart!");
       }
     } else { //si esta autenticado...
 
@@ -133,12 +135,12 @@ export const DetailsProductCard = ({
 
       if (!dataAddToCart.data.errors) {
         dispatch(setProductsIdsInCart(id))
-        alert("producto agregado al carrito");
-
+        alertReact.success("producto agregado al carrito");
+      
       }
 
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
-      else alert(dataAddToCart.data.errors);
+      else alertReact.error(dataAddToCart.data.errors);
     }
   }
 
@@ -151,14 +153,6 @@ export const DetailsProductCard = ({
         ...productDetail,
         [e.target.name]: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
-      });
-    }
-    else if (e.target.name === "color") {
-      console.log('hola')
-      console.log(productDetail['size'])
-      return setProductDetail({
-        ...productDetail,
-        color: e.target.value,
       });
     }
     return setProductDetail({
@@ -197,7 +191,7 @@ export const DetailsProductCard = ({
 
 const productDetailDisplay = (
   price,
-  optionsByColor,
+  opciones,
   onChange,
   addToCart,
   productDetail
@@ -211,8 +205,8 @@ const productDetailDisplay = (
     </div>
     <form>
       <div className="div_color_product_details">
-        {optionsByColor.length &&
-          optionsByColor.map((opcion) => {
+        {opciones.length &&
+          opciones.map((opcion) => {
             return (
               <label>
                 {opcion.color}
@@ -231,8 +225,8 @@ const productDetailDisplay = (
           })}
       </div>
       <div className="div_size_product_details">
-        {optionsByColor.length &&
-          optionsByColor
+        {opciones.length &&
+          opciones
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
@@ -255,13 +249,13 @@ const productDetailDisplay = (
     </form>
     <div className="div_stock_product_details">
       <span>Stock:</span>{" "}
-      {optionsByColor.length &&
-        optionsByColor
-          .filter((obj) => obj.color === productDetail["color"])[0]
-        ["options"].filter((obj) => obj.size === productDetail["size"])[0] ? optionsByColor
+      {opciones.length &&
+        opciones
           .filter((obj) => obj.color === productDetail["color"])[0]
         ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-        "stock"] : '-'}{" "} u.
+        "stock"
+        ]}{" "}
+      u.
     </div>
     <div className="container__button-buy">
       <button
