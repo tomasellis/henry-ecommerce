@@ -13,51 +13,49 @@ export default function EditOrders() {
     maxOrders: 1
   })
   const [updated, setUpdated] = useState(0)
-  const statues=['approved','sended']
+  const statues = ['approved', 'shipped']
 
 
-  const changeStatus = async (id, status, email) => {
-    let axiosResponseBlock, HasuraResponseBlock
+  const changeStatus = async (id, status, email, name) => {
+    let axiosResponseBlock, HasuraResponseBlock, type_message
+
 
     switch (status.toLowerCase()) {
       case 'approved':
-      //cambiar estado
-      //enviar mail
-      break
+        //cambiar estado
+        type_message = 'ORDER_SHIPPED'
+        break
 
-      case 'sended':
-      //cambiar estado
-      //enviar mail
-      break
+      case 'shipped':
+        //cambiar estado
+        type_message = 'ORDER_DELIVERED'
+        break
 
       //case 'received':
       //cambiar estado
       //enviar mail
       //break
-      
-    }
-    if (status.toLowerCase() === 'ok') {
-      [axiosResponseBlock, HasuraResponseBlock] = await Promise.all([
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/blockUser?id=${id}&blocking=${true}`),
-        axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getOrders`,
-          {
-            auth0_id: id,
-            status: 'blocked'
-          })
-      ])
 
-    } else {
-      [axiosResponseBlock, HasuraResponseBlock] = await Promise.all([
-        axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/blockUser?id=${id}&blocking=${false}`),
-        axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/setUserBlock`,
-          {
-            auth0_id: id,
-            status: 'Ok'
-          })
-      ])
+      default: return;
     }
+
+    [axiosResponseBlock, HasuraResponseBlock] = await Promise.all([
+      axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/sendMail`,{
+        // const { user_email, user_name, type_message, order } = request.body;
+        user_email:email,
+        user_name:name,
+        type_message: type_message,
+        order:id
+      }),
+      axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getOrders`,
+        {
+          auth0_id: id,
+          status: 'blocked'
+        })
+    ])
+
     setUpdated(updated + 1)
-    alertReact.success('Updated user')
+    alertReact.success('Updated order')
     console.log(axiosResponseBlock.data, HasuraResponseBlock.data);
   }
 
@@ -108,10 +106,10 @@ export default function EditOrders() {
             <td>{order.id}</td>
             <td>{order.email}</td>
             <td>{order.address}</td>
-            <td>{order.updated_at.slice(0,10)}</td>
+            <td>{order.updated_at.slice(0, 10)}</td>
             <td>{order.status}</td>
             <td>
-              {statues.includes(order.status.toLowerCase())? <button onClick={e => changeStatus(order.id, order.status, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "sended"' : 'change to "received"'}</button>: <button disabled>No action</button>}
+              {statues.includes(order.status.toLowerCase()) ? <button onClick={e => changeStatus(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
             </td>
           </tr>)}</tbody>
         </table> : null}
