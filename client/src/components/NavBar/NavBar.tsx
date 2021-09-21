@@ -142,7 +142,7 @@ export default function NavBar() {
                   to="/profile"
                   style={{ textDecoration: "none", color: "#000", marginTop: '0' }}
                 >
-                  {user.name}
+                  {user.name.split(' ')[0] + ' ' /*solo el primer nombre */} 
                 </Link>
               ) : (
 
@@ -153,9 +153,10 @@ export default function NavBar() {
               <select
                 className=""
                 name=""
+                value='/admin'
                 onChange={e => history.push(e.target.value)}
               >
-                <option disabled>Admin</option>
+                <option value='/admin' disabled>Admin</option>
                 <option value="/admin/createproduct">Create product</option>
                 <option value="/admin/editusers">Edit users</option>
               </select>
