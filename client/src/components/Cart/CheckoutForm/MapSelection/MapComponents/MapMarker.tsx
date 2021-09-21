@@ -29,9 +29,7 @@ const Marker = ({
   longitude: number;
 }) => (
   <Wrapper alt={text} onClick={onClick}>
-    <span>
-      Lat {latitude} Long {longitude}
-    </span>
+    <span></span>
   </Wrapper>
 );
 

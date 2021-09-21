@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
 .navbar {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: white;
-  background-color: blueviolet;;
+  background-color: blueviolet;
   padding-inline: 2%;
   display: flex;
   justify-content: space-between;
@@ -12,8 +11,6 @@
   background-position-x: center;
   flex-wrap: wrap;
 }
-
-
 
 .row {
   display: -ms-flexbox;
@@ -29,11 +26,11 @@
 }
 
 .list {
-margin:0;
-padding: 0;
+  margin: 0;
+  padding: 0;
   list-style: none;
   display: flex;
-      flex-flow: row;
+  flex-flow: row;
   align-items: baseline;
   height: 100%;
 }
