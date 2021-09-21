@@ -92,3 +92,7 @@ export function changePassword2(data){
     dispatch({ type: "CHANGE_PASSWORD", payload: newpass.data})
   };
 };
+
+export function changeBodyColor(theme){
+  return { type: 'CHANGE_COLOR', payload: theme}
+}

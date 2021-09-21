@@ -17,7 +17,8 @@ const initialState = {
   user: {
     id: '',
     email: ''
-  }
+  },
+  theme: ''
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -125,6 +126,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           idsInCart: [...state.idsInCart, payload]
         }
       }
+      case 'CHANGE_COLOR':
+        return{
+          ...state,
+          theme: payload
+        }
 
     default:
       return state;

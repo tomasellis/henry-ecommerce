@@ -15,10 +15,17 @@ import { Link as link } from "@material-ui/core";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import {BiShoppingBag} from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
-import { FaSun } from "react-icons/fa";
-import { BsMoon } from "react-icons/bs";
+import Switch from "@material-ui/core/Switch";
 
-export default function NavBar() {
+/* /* export const theme = createTheme({
+  palette: {
+    type: isDark? "dark": "light"
+  },
+}); */
+
+/* const [isDark, setIsDark] = useState(false); */ 
+
+export default function NavBar({isDark,setIsDark}) {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   // return (
   //   <div className="navbar">
@@ -38,6 +45,7 @@ export default function NavBar() {
   //     </nav>
   //   </div>
   // )
+  
 
   const headersData = [
     {
@@ -91,7 +99,15 @@ export default function NavBar() {
     drawerOpen: false,
   });
 
+  const handleTheme = () => {
+    setIsDark(!isDark)
+  }
+ /*  const [isDark2, setIsDark2] = useState(false); */
   const { mobileView, drawerOpen } = state;
+
+/*   useEffect(() => {
+    setIsDark(isDark2)
+  },[isDark2]) */
 
   useEffect(() => {
     const setResponsiveness = () => {
@@ -120,11 +136,8 @@ export default function NavBar() {
           <TitleFilter mob={false} />
         </div>
         <div>
-          <button className="switch" id="switch">
-            <span><FaSun/></span>
-            <span><BsMoon/></span>
-          </button>
-        </div>
+        <Switch />
+        </div> 
         <div className={classes.div}>
           <div>
             <Search />

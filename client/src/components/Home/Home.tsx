@@ -10,13 +10,14 @@ import tshirt from "../../t-shirt.png";
 import parka from "../../parka.png";
 import tshirt2 from "../../t-shirt2.png";
 import CategorySlide from "../categorySlide/categorySlide";
-
+import Switch from "@material-ui/core/Switch";
 const Home = (props) => {
   const [ref, slider] = useKeenSlider<HTMLDivElement>({ loop: true });
 
   return (
     <>
     <div className="page-container">
+      <Switch/>
       <div className="content-wrap">
        <div className="navigation-wrapper">
         <div ref={ref} className="keen-slider">
