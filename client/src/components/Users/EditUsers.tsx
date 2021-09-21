@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useAlert } from 'react-alert'
+import './EditUsers.css'
 
 export default function EditUsers() {
   const alertReact = useAlert()
@@ -76,6 +77,7 @@ export default function EditUsers() {
 
   return (
     <React.Fragment>
+      <div className='editUser'>
       <div> users </div>
       <button onClick={e => setPages({
         ...pages,
@@ -116,6 +118,7 @@ export default function EditUsers() {
           </td>
         </tr>)}</tbody>
       </table> : null}
+      </div>
     </React.Fragment>
   )
 }
