@@ -13,6 +13,7 @@ import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
+import EditOrders from "./components/Orders/EditOrders";
 
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
       <Route exact path="/admin/createproduct" component={Add} />
-    <Route exact path="/admin/editusers" component={EditUsers} />
+      <Route exact path="/admin/editusers" component={EditUsers} />
+      <Route exact path="/admin/editorders" component={EditOrders} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />
-      <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
+      <Route exact path="/clothing/details/:id" component={DetailProductCards} />
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/search" component={SearchedProducts} />
       <Route
@@ -35,7 +37,7 @@ function App() {
       <Route exact path="/clothing/:gender/:page" component={Products} />
       <Route exact path="/clothing/:id" component={DetailProductCards} />
       <Route exact path='/profile/favorites' component={Favorites} />
-      <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
+      <Route exact path="/clothing/details/:id" component={DetailProductCards} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
     </BrowserRouter>
   );
