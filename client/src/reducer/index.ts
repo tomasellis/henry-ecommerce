@@ -17,7 +17,8 @@ const initialState = {
   user: {
     id: '',
     email: ''
-  }
+  },
+  storeHistory: []
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -124,6 +125,12 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           idsInCart: [...state.idsInCart, payload]
         }
+      }
+      
+    case "SET_STORE_HISTORY":
+      return {
+        ...state,
+        storeHistory: [...state.storeHistory, payload]
       }
 
     default:
