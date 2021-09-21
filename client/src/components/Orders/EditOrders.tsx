@@ -17,17 +17,17 @@ export default function EditOrders() {
 
 
   const changeStatus = async (id, status, email, name) => {
-    let axiosResponseBlock, HasuraResponseBlock, type_message
+    let axiosResponseBlock, HasuraResponseBlock, type_message, nextStatus
 
 
     switch (status.toLowerCase()) {
       case 'approved':
-        //cambiar estado
+        nextStatus = 'shipped'
         type_message = 'ORDER_SHIPPED'
         break
 
       case 'shipped':
-        //cambiar estado
+        nextStatus = 'delivered'
         type_message = 'ORDER_DELIVERED'
         break
 
@@ -47,10 +47,10 @@ export default function EditOrders() {
         type_message: type_message,
         order:id
       }),
-      axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getOrders`,
+      axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_order`,
         {
-          auth0_id: id,
-          status: 'blocked'
+          order_id: id,
+          status: nextStatus
         })
     ])
 
