@@ -2,6 +2,8 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useAlert } from 'react-alert'
 import '../Users/EditUsers.css'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 export default function EditOrders() {
   const alertReact = useAlert()
@@ -16,9 +18,26 @@ export default function EditOrders() {
   const statues = ['approved', 'shipped']
 
 
-  const changeStatus = async (id, status, email, name) => {
-    let axiosResponseBlock, HasuraResponseBlock, type_message, nextStatus
+  const submit = (id, status, email, name) => {
+    confirmAlert({
+      title: "Confirm to change order's status",
+      // message: 'this action no can reverted',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => changeStatus(id, status, email, name)
+        },
+        {
+          label: 'No',
+          onClick: () => alertReact.show('aborted action')
+        }
+      ]
+    });
+  };
 
+  const changeStatus = async (id, status, email, name) => {
+    
+    let axiosResponseBlock, HasuraResponseBlock, type_message, nextStatus
 
     switch (status.toLowerCase()) {
       case 'approved':
@@ -109,7 +128,7 @@ export default function EditOrders() {
             <td>{order.updated_at.slice(0, 10)}</td>
             <td>{order.status}</td>
             <td>
-              {statues.includes(order.status.toLowerCase()) ? <button onClick={e => changeStatus(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
+              {statues.includes(order.status.toLowerCase()) ? <button onClick={e => submit(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
             </td>
           </tr>)}</tbody>
         </table> : null}
