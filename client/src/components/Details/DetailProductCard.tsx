@@ -1,9 +1,9 @@
-// import React from "react";
 import "./DetailProductCard.css";
 // import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
@@ -37,6 +37,7 @@ export const DetailsProductCard = ({
 }) => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
+  console.log(id)
 
   type OptionsByColor = {
     color: string;
@@ -241,7 +242,7 @@ const productDetailDisplay = (
                 <input
                   type="radio"
                   name="size"
-                  
+
                   checked={productDetail["size"] === option.size}
                   value={option.size}
                   onChange={(e) => {
@@ -270,6 +271,9 @@ const productDetailDisplay = (
       >
         Agregar al carrito
       </button>
+      <Link to={`/modifyProduct/${productDetail.id}`}>
+      <button>Modify</button>
+      </Link>
     </div>
   </div>
 );

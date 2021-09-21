@@ -13,6 +13,7 @@ import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
+import ModifyProduct from "./components/Details/ModifyProduct/ModifyProduct";
 
 function App() {
   return (
@@ -20,13 +21,14 @@ function App() {
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
       <Route exact path="/admin/createproduct" component={Add} />
-    <Route exact path="/admin/editusers" component={EditUsers} />
+      <Route exact path="/admin/editusers" component={EditUsers} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/search" component={SearchedProducts} />
+      <Route exact path="/modifyProduct/:id" component={ModifyProduct} />
       <Route
         exact
         path="/clothing/details/:id"

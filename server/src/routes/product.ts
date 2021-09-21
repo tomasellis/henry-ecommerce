@@ -13,6 +13,7 @@ router.get(
       name
       image_url
       price
+      id
       product_options(where: {id: {}, product_id: {_eq: "${id}"}}) {
         color
         size
