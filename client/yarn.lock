@@ -1531,7 +1531,7 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^4.0.0"
 
-"@material-ui/core@^4.12.3":
+"@material-ui/core@^4.12.3", "@material-ui/core@^4.5.2":
   "integrity" "sha512-sdpgI/PL56QVsEJldwEe4FFaFTLUqN+rd7sSZiRCdx2E/C7z5yK0y/khAWVBH24tXwto7I1hCzNWfJGZIYJKnw=="
   "resolved" "https://registry.npmjs.org/@material-ui/core/-/core-4.12.3.tgz"
   "version" "4.12.3"
@@ -2102,6 +2102,13 @@
   "integrity" "sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ=="
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.5.tgz"
   "version" "1.5.5"
+
+"@types/react-alert@^5.2.1":
+  "integrity" "sha512-sJBDIBupmbPFLHutwrKwBW2SY+LQJTcVpp6CxxsEYIt2YmLgW7+U1AZzfcFK+f/6sIB38vSrtMOneY3auJ0LYA=="
+  "resolved" "https://registry.npmjs.org/@types/react-alert/-/react-alert-5.2.1.tgz"
+  "version" "5.2.1"
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-animations@^1.0.0":
   "integrity" "sha512-ItPuRqOf7UML26hc0kaALEtlzeXtbflqI2VtPxsJh/DcqDZFbPIVNi2apSs+1WuhRfmU6YqhZPXmpxns7zPZKg=="
@@ -9750,6 +9757,27 @@
     "iconv-lite" "0.4.24"
     "unpipe" "1.0.0"
 
+"react-alert-template-basic@^1.0.2":
+  "integrity" "sha512-nJSIknM5xN/GzKdKkb5/X9zdiLxSqctww3mEouyeR891nUGP8guqFpCGD8vCjFYSZtq8z3tGcAKBG1XjtLHFHQ=="
+  "resolved" "https://registry.npmjs.org/react-alert-template-basic/-/react-alert-template-basic-1.0.2.tgz"
+  "version" "1.0.2"
+
+"react-alert-template-mui@^1.0.7":
+  "integrity" "sha512-78g5Uv6MdVaBvuYa+olfiZPghp9AMF+sFWNA1NGQxfy7w+Opg5sePJh9yp9dUhX6dmFFkh/EcxcNEalhgMGNpw=="
+  "resolved" "https://registry.npmjs.org/react-alert-template-mui/-/react-alert-template-mui-1.0.7.tgz"
+  "version" "1.0.7"
+  dependencies:
+    "@material-ui/core" "^4.5.2"
+    "react" "^16.11.0"
+
+"react-alert@^7.0.3":
+  "integrity" "sha512-cZ2ZhxytECTxljDfBKpQmwWbfJQFzFf2Qf03L/IB5shbEXtWhDD2JjiW60rwmKT1oZoU+GEnUQw5MFM5+f0B6A=="
+  "resolved" "https://registry.npmjs.org/react-alert/-/react-alert-7.0.3.tgz"
+  "version" "7.0.3"
+  dependencies:
+    "prop-types" "^15.7.2"
+    "react-transition-group" "^4.4.1"
+
 "react-animations@^1.0.0":
   "integrity" "sha512-ePPpVgdKnNEXm+LP1ww5s3n0JzebBw9QdRfxRqogzeg1PDIn6kf0pmvgeTeVZQXXpGmHImkIeTiaQR1O6xjntA=="
   "resolved" "https://registry.npmjs.org/react-animations/-/react-animations-1.0.0.tgz"
@@ -9806,7 +9834,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@^17.0.2":
+"react-dom@^16.8.1 || ^17", "react-dom@^17.0.2":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -9967,7 +9995,7 @@
   optionalDependencies:
     "fsevents" "^2.1.3"
 
-"react-transition-group@^4.4.0", "react-transition-group@^4.4.2":
+"react-transition-group@^4.4.0", "react-transition-group@^4.4.1", "react-transition-group@^4.4.2":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
   "version" "4.4.2"
@@ -9977,7 +10005,16 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^17.0.2":
+"react@^16.11.0":
+  "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
+  "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
+  "version" "16.14.0"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "prop-types" "^15.6.2"
+
+"react@^16.2.0 || ^17", "react@^16.8.1 || ^17", "react@^17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
