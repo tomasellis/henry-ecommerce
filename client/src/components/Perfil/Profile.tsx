@@ -28,7 +28,7 @@ export default function Profile() {
                       <h1 className = 'edit_profile_h1_profile'>Edit Profile</h1>
                       <hr className = 'hr_profile' />
                     </Link>
-                    <Link to = '/profile/shopping-history' style={{textDecoration:"none"}}>
+                    <Link to = {`/profile/${History}`} style={{textDecoration:"none"}}>
                         <h1 className = 'history_h1_profile'>Shopping History</h1>
                     </Link>
                     <hr  className = 'hr_profile' />

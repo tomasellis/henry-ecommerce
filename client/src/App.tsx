@@ -13,6 +13,7 @@ import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
+import History from "./components/Perfil/History/History";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route exact path='/profile/favorites' component={Favorites} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/profile/editprofile" component={EditProfile} />
+      <Route exact path='/profile/shopping-history' component={History} />
     </BrowserRouter>
   );
 }

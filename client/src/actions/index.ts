@@ -90,3 +90,12 @@ export function changePassword2(data){
     dispatch({ type: "CHANGE_PASSWORD", payload: newpass.data})
   };
 };
+
+export function setUserOrder(){
+  return async (dispatch: Dispatch) => {
+    const user = await axios(
+      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders`
+    );
+    dispatch({ type: 'SET_STORE_HISTORY', payload: user.data})
+  }
+}
