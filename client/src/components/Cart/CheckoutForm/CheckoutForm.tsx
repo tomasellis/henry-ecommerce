@@ -136,7 +136,19 @@ const CheckoutForm = ({
     case true:
       return (
         <BouncyDiv>
-          <div id="checkoutForm" className="checkoutForm">
+          <LocationSelector
+            style={{
+              position: "relative",
+              width: "100%",
+              marginTop: "10px",
+            }}
+            setReturnLocation={setReturnLocation}
+            active={mapActive}
+            setActive={setMapActive}
+            mapWidth={"50vw"}
+            mapHeight={"300px"}
+          />
+          <div id="checkoutForm" className="checkoutForm" hidden={mapActive}>
             <div className="shippingForm" hidden={mapActive}>
               <Button
                 style={{
@@ -250,13 +262,6 @@ const CheckoutForm = ({
                 }}
               />
             </div>
-            <LocationSelector
-              setReturnLocation={setReturnLocation}
-              active={mapActive}
-              setActive={setMapActive}
-              mapWidth={"50vw"}
-              mapHeight={"50vh"}
-            />
             <FormControlLabel
               hidden={mapActive}
               control={

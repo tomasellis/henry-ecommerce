@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -12,6 +12,9 @@ import { changePassword2 } from "../../../actions";
 import "./EditProfile.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import LocationSelector from "../../Cart/CheckoutForm/MapSelection/LocationSelector";
+import { Button } from "@material-ui/core";
+import { PublicTwoTone } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,6 +112,20 @@ export default function EditProfile() {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
 
+  type ReturnLocation = {
+    returnLatitude: number;
+    returnLongitude: number;
+    returnFullAddress: string;
+  };
+
+  const [returnLocation, setReturnLocation] = useState<ReturnLocation>({
+    returnLatitude: 0,
+    returnLongitude: 0,
+    returnFullAddress: "",
+  });
+
+  const [mapActive, setMapActive] = useState<boolean>(false);
+
   const [info, setInfo] = useState({
     name: "",
     lastname: "",
@@ -144,6 +161,12 @@ export default function EditProfile() {
     phone: "",
     additionaldata: "",
   });
+
+  // If using map widget, set data to widget data
+  useEffect(() => {
+    setData({ ...data, delivery: returnLocation.returnFullAddress });
+    // eslint-disable-next-line
+  }, [returnLocation]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -416,20 +439,44 @@ export default function EditProfile() {
           </div>
           <hr></hr>
           <div className="conteiner-perfil">
-            <h5>- Delivery address</h5>
+            <h5>- Delivery Info</h5>
           </div>
           <div>
+            <LocationSelector
+              style={{
+                width: "100%",
+                height: "400px",
+                position: "relative",
+              }}
+              setReturnLocation={setReturnLocation}
+              active={mapActive}
+              setActive={setMapActive}
+              mapWidth={"500px"}
+              mapHeight={"250px"}
+            />
             <form
               className="adicional-data"
               onSubmit={(e) => handleAdditionalData(e)}
             >
               <TextField
                 value={data.delivery}
-                label="Delivery"
+                label="Delivery Address"
                 color="secondary"
                 name="delivery"
                 onChange={(e) => handleChangeData(e)}
+                InputProps={{
+                  endAdornment: (
+                    <Button
+                      onClick={() => {
+                        setMapActive(!mapActive);
+                      }}
+                    >
+                      <PublicTwoTone />
+                    </Button>
+                  ),
+                }}
               />
+
               <TextField
                 value={data.number}
                 label="N°"

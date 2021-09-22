@@ -20,7 +20,6 @@ type AutocompleteProps = {
   mapState: MapState;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   setMapState: (value: React.SetStateAction<MapState>) => void;
-  addPlace: (place, mapState, setMapState, mapApi) => void;
 };
 
 type MapState = {
@@ -50,9 +49,7 @@ const Autocomplete = (props: AutocompleteProps) => {
 
   let inputRef = useRef(null);
 
-  useEffect(() => {
-    console.log("InputRef", inputRef);
-  }, [inputRef]);
+  useEffect(() => {}, [inputRef]);
   useEffect(() => {
     const Autocomplete = new props.mapApi.places.Autocomplete(
       inputRef.current,
@@ -73,7 +70,6 @@ const Autocomplete = (props: AutocompleteProps) => {
     if (autocomplete) {
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-        console.log("Placerino", place, "location", place.geometry);
         if (place.geometry !== undefined) {
           props.setMapState({
             ...props.mapState,
@@ -86,7 +82,6 @@ const Autocomplete = (props: AutocompleteProps) => {
             address: place.formatted_address,
             zoom: 18,
           });
-
           setSearchInput(place.formatted_address);
 
           if (!place.geometry || !place.geometry.location) {

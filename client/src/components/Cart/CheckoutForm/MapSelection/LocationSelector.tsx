@@ -33,7 +33,9 @@ const LocationSelector = ({
   setActive,
   mapWidth,
   mapHeight,
+  style,
 }: {
+  style?: any;
   mapWidth: string;
   mapHeight: string;
   active: boolean;
@@ -128,7 +130,7 @@ const LocationSelector = ({
 
     case true:
       return (
-        <div className="popUpBox">
+        <div className="popUpBox" style={style}>
           <div className="map" style={{ width: mapWidth, height: mapHeight }}>
             {mapState.mapApiLoaded && (
               <Autocomplete
@@ -136,7 +138,6 @@ const LocationSelector = ({
                 setMapState={setMapState}
                 map={mapState.mapInstance}
                 mapApi={mapState.mapApi}
-                addPlace={addPlace}
                 clearSearchBox={false}
                 setActive={setActive}
               />
@@ -181,38 +182,3 @@ const LocationSelector = ({
 export default LocationSelector;
 
 /* ----------------- HELPERS ------------------------- */
-
-const addPlace = (place, mapState, setMapState, mapApi) => {
-  setMapState({
-    ...mapState,
-    places: [place],
-    latitude: place.geometry.location.lat(),
-    longitude: place.geometry.location.lng(),
-  });
-  generateAddress(mapApi, mapState, setMapState);
-};
-
-const generateAddress = (mapApi, mapState, setMapState) => {
-  const geocoder = new mapApi.Geocoder();
-
-  geocoder.geocode(
-    { location: { lat: mapState.latitude, lng: mapState.longitude } },
-    (results, status) => {
-      console.log("geocoder results", results);
-      console.log("geocoder statis", status);
-      if (status === "OK") {
-        if (results[0]) {
-          setMapState({
-            ...mapState,
-            zoom: 12,
-            address: results[0].formatted_address,
-          });
-        } else {
-          window.alert("No results found");
-        }
-      } else {
-        window.alert("Geocoder failed due to: " + status);
-      }
-    }
-  );
-};

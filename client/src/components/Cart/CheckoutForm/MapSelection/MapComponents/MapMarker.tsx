@@ -27,10 +27,6 @@ const Marker = ({
   onClick: () => void;
   latitude: number;
   longitude: number;
-}) => (
-  <Wrapper alt={text} onClick={onClick}>
-    <span></span>
-  </Wrapper>
-);
+}) => <Wrapper alt={text} onClick={onClick}></Wrapper>;
 
 export default Marker;
