@@ -9,10 +9,12 @@ export default function History() {
     const { user } = useAuth0()
     const stateHistory = useSelector((state: any) => state.stateHistory)
     const dispatch = useDispatch()
-    const email = user.email
+    const userId = user.auth0_id
     useEffect(() => {
-        dispatch(setUserOrder(email))
+        dispatch(setUserOrder(userId))
     },[])
+
+    
     return(
         <div>
             {
