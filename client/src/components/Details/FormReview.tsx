@@ -2,10 +2,14 @@ import "./DetailProductCard.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useAlert } from 'react-alert'
 import './FormReview.css'
+import {BiMessageAdd} from "react-icons/bi";
+import {MdRateReview} from "react-icons/md";
+import { IconButton } from "@material-ui/core";
+import { useAlert } from 'react-alert'
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
+
 
 interface Review {
   id_product_general:string,
@@ -100,7 +104,9 @@ export const FormReview = ({
 
   return (
     <React.Fragment>
-      <div className="boxFormReview" style={{ textAlign: 'center' }}>Add review</div>
+      <div className="boxFormReview" style={{ textAlign: 'center' }}>
+        <h4> Add Review <MdRateReview/> </h4>
+      </div>
 
       <form className='form-review' onSubmit={handleSubmit}>
 
@@ -109,39 +115,40 @@ export const FormReview = ({
             Rating
           </label>
           <div className={errors.stars? 'has-error stars':"stars"}>
-            <input className= 'radio_stars' id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
+            <input id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio5">★</label>
-            <input className= 'radio_stars' id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
+            <input id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio4">★</label>
-            <input className= 'radio_stars' id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
+            <input id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio3">★</label>
-            <input className= 'radio_stars' id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
+            <input id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio2">★</label>
-            <input className= 'radio_stars' id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
+            <input id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio1">★</label>
           </div>
+        </div>
           <p className="has-error">{errors.stars}</p>
+
+        <div className="input-comment">
+          
+
+          <textarea 
+            placeholder='Your comment' 
+            onChange={handleChange} 
+            name="comment" 
+            className={errors.comment? 'has-error form-control' : 'form-control'} 
+            required 
+            maxLength={200}
+          />
         </div>
+        <p className="has-error">{errors.comment}</p>
+        
 
-        <div className="form-group">
-          <label htmlFor="comment" className="control-label">
-            Comment
-          </label>
-          <div className="">
-            <input autoComplete="off" onChange={handleChange} name="comment" type="text" className={errors.comment? 'has-error form-control' : 'form-control'} required />
-            <p className="has-error">{errors.comment}</p>
-          </div>
-        </div>
-
-
-        <div>
-          <button
-            type="submit"
-            className="button-addreview"
-            style={{ marginTop: "20px" }}
-          >
-            Add review
-          </button>
+        <div className='btn-review'>
+          <IconButton type='submit'>
+            <BiMessageAdd size={40} color={'#000'}/>
+          </IconButton>
+          
         </div>
       </form>
     </React.Fragment>
