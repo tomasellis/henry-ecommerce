@@ -60,6 +60,8 @@ router.post(
       excluded_payment_types,
       payer,
       external_reference,
+      latitude,
+      longitude,
     } = req.body;
     console.log("datahere", req.body);
 
@@ -68,15 +70,19 @@ router.post(
     const excluded_payment_types_body: ExcludedType[] =
       excluded_payment_types as ExcludedType[];
     const payer_body: Payer = payer as Payer;
+    const latitude_body: number = latitude as number;
+    const longitude_body: number = longitude as number;
 
     const external_reference_body = external_reference as string;
+
+    const backURL = `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}&latitude=${latitude_body}&longitude=${longitude_body}`;
 
     const preference: MercadopagoPreference = {
       items: items_body,
       back_urls: {
-        failure: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
-        pending: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
-        success: `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}`,
+        failure: backURL,
+        pending: backURL,
+        success: backURL,
       },
       external_reference: external_reference_body,
       payment_methods: {
@@ -97,17 +103,23 @@ router.post(
 
 router.get("/payment", async (req, res) => {
   console.log("QUERY", req.query);
-  const { userEmail, userAddress } = req.query;
-
+  const { userEmail, userAddress, latitude, longitude } = req.query;
+  console.log("ACAAAA =>>>>>>>>", req.query.status);
   const userEmail_query = userEmail as string;
   const userAddress_query = userAddress as string;
   const payment_id = req.query.payment_id;
+  const latitude_query = parseInt(latitude as string);
+  const longitude_query = parseInt(longitude as string);
   const payment_status = req.query.status as
     | "approved"
     | "rejected"
     | "in_process";
 
   const userId = req.query.external_reference as string;
+
+  if (payment_status === "rejected") {
+    return res.redirect(`${FRONTEND_URL}/cart`);
+  }
 
   // Delete user's cart data
   const deleteCartRes = await axios.post(`${BACKEND_URL}/deleteUserCart`, {
@@ -128,18 +140,18 @@ router.get("/payment", async (req, res) => {
         userId,
         payment_status,
         userEmail_query,
-        0,
-        0,
+        latitude_query,
+        longitude_query,
         userAddress_query
       ),
     },
   });
-  console.log("NEW ORDER", createNewOrder.data.data.insert_orders_one.id);
 
+  // Set orderId
   const orderId = createNewOrder.data.data.insert_orders_one.id as string;
 
   // Set new bought products for user
-  const createOrderProductsResponse = await axios({
+  await axios({
     url: "https://henry-pg-api.herokuapp.com/v1/graphql",
     method: "POST",
     data: {
@@ -148,8 +160,6 @@ router.get("/payment", async (req, res) => {
       ),
     },
   });
-  console.log("createOrderProducts", createOrderProductsResponse.data);
-  console.log("createNewOrder dateiro", createNewOrder.data);
 
   return res.redirect(`${FRONTEND_URL}`);
 });

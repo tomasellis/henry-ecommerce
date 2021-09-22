@@ -27,7 +27,6 @@ export default function Products() {
 
   const { gender } = useParams<Params>();
   const { page } = useParams<Params>();
-  console.log(typeof(page))
   useEffect(() => {
     dispatch(
       getArticles(
