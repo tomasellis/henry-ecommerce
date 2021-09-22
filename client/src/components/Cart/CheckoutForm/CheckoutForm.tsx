@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { PublicTwoTone } from "@material-ui/icons";
 import {
   Button,
   Checkbox,
@@ -10,6 +11,7 @@ import { bounceInUp } from "react-animations";
 import styled, { keyframes } from "styled-components";
 import "./styles.css";
 import { User } from "@auth0/auth0-spa-js";
+import LocationSelector from "./MapSelection/LocationSelector";
 
 /* BOUNCE ANIMATION*/
 
@@ -38,6 +40,7 @@ const CheckoutForm = ({
   type CheckoutForm = {
     shippingAddress: string;
     email: string;
+    streetNumber: number | "";
     mpButton: any;
     mpButtonLoading: "idle" | "loading" | "loaded" | "error";
     finalCheckbox: boolean;
@@ -46,6 +49,7 @@ const CheckoutForm = ({
   const [checkoutForm, setCheckoutForm] = useState<CheckoutForm>({
     shippingAddress: "",
     email: "",
+    streetNumber: "",
     mpButton: null,
     mpButtonLoading: "idle",
     finalCheckbox: false,
@@ -55,6 +59,28 @@ const CheckoutForm = ({
     data: null,
   });
 
+  type ReturnLocation = {
+    returnLatitude: number;
+    returnLongitude: number;
+    returnFullAddress: string;
+  };
+
+  const [returnLocation, setReturnLocation] = useState<ReturnLocation>({
+    returnFullAddress: "",
+    returnLatitude: 0,
+    returnLongitude: 0,
+  });
+
+  const [mapActive, setMapActive] = useState(false);
+
+  useEffect(() => {
+    setCheckoutForm({
+      ...checkoutForm,
+      shippingAddress: returnLocation.returnFullAddress,
+    });
+    // eslint-disable-next-line
+  }, [returnLocation]);
+
   useEffect(
     () => {
       if (checkoutForm.finalCheckbox === true && active) {
@@ -63,7 +89,10 @@ const CheckoutForm = ({
           6,
           userId,
           checkoutForm.email,
-          checkoutForm.shippingAddress
+          checkoutForm.shippingAddress,
+          checkoutForm.streetNumber as number,
+          returnLocation.returnLatitude,
+          returnLocation.returnLongitude
         );
         setCheckoutData({ ...checkoutData, data });
       }
@@ -89,22 +118,38 @@ const CheckoutForm = ({
             id: checkoutId,
           },
         });
-        setCheckoutForm({
-          ...checkoutForm,
-          mpButton: checkout,
-          mpButtonLoading: "loaded",
-        });
+        setTimeout(() => {
+          setCheckoutForm({
+            ...checkoutForm,
+            mpButton: checkout,
+            mpButtonLoading: "loaded",
+          });
+        }, 2000);
       })();
     }
     // eslint-disable-next-line
   }, [checkoutData.data]);
 
+  const locationInputRef = useRef(null);
+
   switch (active) {
     case true:
       return (
         <BouncyDiv>
-          <div id="checkoutForm" className="checkoutForm">
-            <div className="shippingForm">
+          <LocationSelector
+            style={{
+              position: "relative",
+              width: "100%",
+              marginTop: "10px",
+            }}
+            setReturnLocation={setReturnLocation}
+            active={mapActive}
+            setActive={setMapActive}
+            mapWidth={"50vw"}
+            mapHeight={"300px"}
+          />
+          <div id="checkoutForm" className="checkoutForm" hidden={mapActive}>
+            <div className="shippingForm" hidden={mapActive}>
               <Button
                 style={{
                   marginBottom: "15px",
@@ -121,6 +166,7 @@ const CheckoutForm = ({
                     mpButton: null,
                     finalCheckbox: false,
                     mpButtonLoading: "idle",
+                    streetNumber: "",
                   });
                   setActive(false);
                 }}
@@ -129,10 +175,30 @@ const CheckoutForm = ({
               </Button>
               <TextField
                 id="standard-disabled"
+                ref={locationInputRef}
+                error={checkoutForm.shippingAddress === "" ? true : false}
+                helperText={"Click the icon to find your street a address!"}
+                disabled={true}
                 label="Shipping Address"
-                error={checkoutForm.shippingAddress !== "" ? false : true}
-                helperText={"Input the address for shipping"}
                 value={checkoutForm.shippingAddress}
+                InputProps={{
+                  endAdornment: (
+                    <Button
+                      onClick={() => {
+                        setCheckoutForm({
+                          ...checkoutForm,
+                          mpButton: null,
+                          mpButtonLoading: "idle",
+                          finalCheckbox: false,
+                          shippingAddress: "",
+                        });
+                        setMapActive(true);
+                      }}
+                    >
+                      <PublicTwoTone />
+                    </Button>
+                  ),
+                }}
                 onChange={(e) => {
                   setCheckoutForm({
                     ...checkoutForm,
@@ -143,7 +209,40 @@ const CheckoutForm = ({
                   });
                 }}
               />
-              <br></br>
+              <br />
+              <TextField
+                error={
+                  checkoutForm.streetNumber > 0 &&
+                  checkoutForm.streetNumber !== ""
+                    ? false
+                    : true
+                }
+                type="number"
+                helperText={"Input your street number"}
+                id="standard-disabled-32"
+                label="Street number"
+                value={checkoutForm.streetNumber}
+                onChange={(e) => {
+                  if (
+                    checkoutForm.mpButton ||
+                    checkoutForm.mpButtonLoading !== "idle" ||
+                    checkoutForm.finalCheckbox
+                  ) {
+                    return setCheckoutForm({
+                      ...checkoutForm,
+                      mpButton: null,
+                      mpButtonLoading: "idle",
+                      finalCheckbox: false,
+                      streetNumber: parseInt(e.target.value),
+                    });
+                  }
+                  setCheckoutForm({
+                    ...checkoutForm,
+                    streetNumber: parseInt(e.target.value),
+                  });
+                }}
+              />
+              <br />
               <TextField
                 error={
                   validateEmail(checkoutForm.email) === true ? false : true
@@ -164,11 +263,13 @@ const CheckoutForm = ({
               />
             </div>
             <FormControlLabel
+              hidden={mapActive}
               control={
                 <Checkbox
                   disabled={
                     validateEmail(checkoutForm.email) !== true ||
-                    checkoutForm.shippingAddress === ""
+                    checkoutForm.shippingAddress === "" ||
+                    checkoutForm.streetNumber <= 0
                   }
                   checked={checkoutForm.finalCheckbox}
                   onChange={(e) => {
@@ -187,7 +288,7 @@ const CheckoutForm = ({
                   }}
                 />
               }
-              label="Address and email are correct"
+              label="Click here to confirm that the information provided is correct"
             />
             <br></br>
             {displayMPButton(
@@ -216,7 +317,10 @@ const createCheckoutData = (
   installments: number,
   userId: string,
   email: string,
-  shippingAddress: string
+  shippingAddress: string,
+  streetNumber: number,
+  latitude: number,
+  longitude: number
 ): PreferenceData => {
   const data: PreferenceData = {
     id: ``,
@@ -224,7 +328,7 @@ const createCheckoutData = (
     payer: {
       email: email,
       address: {
-        street_number: 0,
+        street_number: streetNumber,
         zip_code: "",
         street_name: shippingAddress,
       },
@@ -240,8 +344,9 @@ const createCheckoutData = (
         unit_price: item.basePrice,
       };
     }),
+    latitude,
+    longitude,
   };
-  console.log("bout to send", data);
   return data;
 };
 
@@ -271,7 +376,6 @@ const displayMPButton = (
         return <span>Loading</span>;
 
       case "loaded":
-        console.log("mpButton", mpButton);
         return (
           <Button
             variant="contained"
@@ -331,4 +435,6 @@ type PreferenceData = {
   id: string;
   installments: number;
   items: CheckoutItem[];
+  latitude: number;
+  longitude: number;
 };
