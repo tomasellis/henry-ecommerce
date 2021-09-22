@@ -281,9 +281,6 @@ const productDetailDisplay = (
       >
         Agregar al carrito
       </button>
-      <Link to={`/modifyProduct/${productDetail.id}`}>
-      <button>Modify</button>
-      </Link>
     </div>
   </div>
 );
