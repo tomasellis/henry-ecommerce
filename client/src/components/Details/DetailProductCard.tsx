@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
 import FormReview from './FormReview'
+import Zoom from 'react-img-zoom'
 
 type Product = {
   id_option: string;
@@ -166,11 +167,11 @@ export const DetailsProductCard = ({
       <div className="mainDetailCard">
         <div className="mainDetailCard__container">
           <div className="container__img">
-            <img
-              src={image_url}
-              width="100%"
-              alt=""
-              className="container__card-img"
+            <Zoom
+              img={image_url}
+              zoomScale={2}
+              height={360}
+              width={360}
             />
           </div>
           {product &&
@@ -208,8 +209,9 @@ const productDetailDisplay = (
         {opciones.length &&
           opciones.map((opcion) => {
             return (
-              <label>
-                {opcion.color}
+              <label 
+                 style={{background: `${opcion.color}` }}>
+                   <span style={{marginLeft: '10px',color: `${opcion.color === 'black' ? 'white' : 'black'}`}}>{opcion.color}</span>
                 <input
                   type="radio"
                   name="color"
@@ -220,6 +222,7 @@ const productDetailDisplay = (
                     onChange(e);
                   }}
                 />
+                
               </label>
             );
           })}
@@ -231,7 +234,8 @@ const productDetailDisplay = (
           ["options"].map((option) => {
             return (
               <label key={option.size}>
-                {option.size}
+                <span style={{marginRight: '8px'}}>
+                {option.size}</span>
                 <input
                   type="radio"
                   name="size"
