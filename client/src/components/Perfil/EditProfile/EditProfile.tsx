@@ -7,11 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
-<<<<<<< HEAD
 import Profile from '../Profile';
-=======
 import Swal from 'sweetalert2'
->>>>>>> 1c8c38482d4a09f61d5cf28019f1e43c6f073a05
 import './EditProfile.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -217,12 +214,9 @@ export default function EditProfile() {
   }; */
 
   return (
-<<<<<<< HEAD
+
     <div className = 'divqencierratodo'>
       <Profile />
-=======
-    isAuthenticated && <div>
->>>>>>> 1c8c38482d4a09f61d5cf28019f1e43c6f073a05
       <div className='div-conteiner'>
                 <h3 className='titulo'>PROFILE</h3>
             <div className='conteiner-perfil'>

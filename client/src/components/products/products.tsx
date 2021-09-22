@@ -18,6 +18,8 @@ import Footer from "../Footer/Footer";
 export default function Products() {
   const dispatch = useDispatch();
   const articles = useSelector((state: any) => state.articles);
+  const user_fav = useSelector((state : any) => state.user);
+  
   const [limit] = useState<number>(12);
 
   type Params = {
@@ -54,8 +56,11 @@ export default function Products() {
       <Filter />
       <div>
         {articles.products?.map((e, i) => {
+          console.log(e);
+          
           return (
             <Card
+              product_id={e.id}
               key={e.id}
               id={e.id}
               image={e.image_url}

@@ -37,6 +37,7 @@ export default function SearchedProducts() {
       {articles.products?.map((e, i) => {
         return (
           <Card
+            product_id={e.id}
             key={e.id}
             id={e.id}
             image={e.image_url}
