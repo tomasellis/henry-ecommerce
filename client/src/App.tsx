@@ -22,17 +22,17 @@ import { useDispatch, useSelector } from "react-redux";
 function App() {
   const state = useSelector((state: RootState) => state);
 
-type User = {
-  id: string;
-  email: string;
-  auth0_id: string;
-};
+  type User = {
+    id: string;
+    email: string;
+    auth0_id: string;
+  };
 
-interface RootState {
-  user: User;
-}
+  interface RootState {
+    user: User;
+  }
 
-const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
   const dispatch = useDispatch()
 
@@ -76,7 +76,7 @@ const { user, isAuthenticated } = useAuth0();
           idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
           dispatch(setProductsIdsInCart(idsInCart))
         }
-       
+
       }
     })();
     // eslint-disable-next-line

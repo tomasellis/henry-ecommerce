@@ -16,8 +16,21 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { BiShoppingBag } from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
+import { useSelector } from "react-redux";
+
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role:string;
+};
+
+interface RootState {
+  user: User;
+}
 
 export default function NavBar() {
+  const stateRedux = useSelector((state: RootState) => state);
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const history = useHistory();
 
@@ -162,7 +175,7 @@ export default function NavBar() {
                   />
                 </button>
               )}
-              <select
+              {stateRedux.user?.role?.toLowerCase() === 'admin' ? <select
                 className=""
                 name=""
                 value="/admin"
@@ -174,7 +187,7 @@ export default function NavBar() {
                 <option value="/admin/createproduct">Create product</option>
                 <option value="/admin/editusers">Edit users</option>
                 <option value="/admin/editorders">Edit orders</option>
-              </select>
+              </select> : null}
             </p>
           </div>
         </div>
