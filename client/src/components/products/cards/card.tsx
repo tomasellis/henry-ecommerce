@@ -12,7 +12,7 @@ export default function Card({name,price,image,id,product_id}){
 
     const[fav,  setFav] = useState({
         status: false,
-        id : id
+        id : []
     })    
     const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
 
@@ -22,6 +22,7 @@ export default function Card({name,price,image,id,product_id}){
 
     const dispatch = useDispatch();
     const user = useSelector((state : any) => state.user)
+    const favIcon = useSelector((state : any) => state.favoriteProducts.id)
 
     const AddFavoriteProduct = (e) => {
         e.preventDefault();
@@ -34,6 +35,9 @@ export default function Card({name,price,image,id,product_id}){
         product_id : product_id
         })); 
     }
+    console.log('favIcon',favIcon);
+
+    
     
     return(
         <>
@@ -49,7 +53,7 @@ export default function Card({name,price,image,id,product_id}){
                 <button
                 className = 'button_fav_product'
                 onClick = {AddFavoriteProduct}
-                ><img className = 'img_fav_product' src={fav.status === false ? IMG_FAV_1 : IMG_FAV_2}/></button>
+                ><img className = 'img_fav_product' src={null ? IMG_FAV_1 : IMG_FAV_2}/></button>
                 
                 </div>
             </div>
