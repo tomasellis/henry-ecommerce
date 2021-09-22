@@ -51,5 +51,16 @@ const getUserOrdersQuery = (userId: string) => `query GetUserOrders {
       address
       created_at
       updated_at
+        orders_products{
+          id
+          unit_price
+          quantity
+          products_option{
+            product{ 
+            image_url
+            name
+            }
+          }
+        }
     }
   }`;

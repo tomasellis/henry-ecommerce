@@ -95,9 +95,9 @@ export function setUserOrder(userId){
   return async (dispatch: Dispatch) => {
     
     const product = await axios.get(
-      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders?user_id=${userId}`
+      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders?userId=${userId}`
     );
-    console.log(product)
+    console.log(product.data)
     dispatch({ type: 'SET_STORE_HISTORY', payload: product.data})
   }
 }
