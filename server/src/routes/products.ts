@@ -23,7 +23,7 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
       method: "POST",
       data: { query:
         `query {
-          products(where: {${gender},${price},${_search}, product_categories: {${category_name}}, product_options: {${color}, ${size}} }, ${pages[i]}, ${_limit}) {
+          products(where: {${gender},${price},${_search}, product_categories: {${category_name}}, product_options: {${color}, ${size},stock: {_gt: 0}} }, ${pages[i]}, ${_limit}) {
             name
             image_url
             gender

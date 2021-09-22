@@ -87,9 +87,6 @@ function App() {
     <BrowserRouter>
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <PrivateRoute path="/admin/createproduct" component={Add} />
-      <PrivateRoute path="/admin/editusers" component={EditUsers} />
-      <PrivateRoute path="/admin/editorders" component={EditOrders} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />
@@ -106,6 +103,9 @@ function App() {
       <Route exact path='/profile/favorites' component={Favorites} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
+      <PrivateRoute exact path="/admin/createproduct" component={Add} />
+      <PrivateRoute exact path="/admin/editusers" component={EditUsers} />
+      <PrivateRoute exact path="/admin/editorders" component={EditOrders} />
     </BrowserRouter>
   );
 }
