@@ -49,7 +49,7 @@ const { user, isAuthenticated } = useAuth0();
           }
         );
 
-        dispatch(setDataUser(dataUser.data.user_id, user.email, user.sub))
+        dispatch(setDataUser(dataUser.data))
 
         if (localStorage.cartStorage) {
           const { data } = await axios.post(
