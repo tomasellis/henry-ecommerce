@@ -128,7 +128,7 @@ export const DetailsProductCard = ({
       );
 
       const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
-        user_id: data.user_id,
+        user_id: data.id,
         product_option_id: productDetail.id_option,
         quantity: 1,
       });
