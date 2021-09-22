@@ -2,6 +2,7 @@ import "./DetailProductCard.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useAlert } from 'react-alert'
 import './FormReview.css'
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
@@ -34,7 +35,7 @@ export const FormReview = ({
 }: {
   product_id: string
 }) => {
-
+  const alertReact = useAlert()
   const state = useSelector((state: RootState) => state);
   const [review, setReview] = useState({
     stars: null,
@@ -79,10 +80,10 @@ export const FormReview = ({
       user_email:state.user.email
   }
   
-    if (errors.comment || errors.stars) return alert('check required fields')
+    if (errors.comment || errors.stars) return alertReact.error('check required fields')
     const {data} = await axios.post(`${REACT_APP_BASE_BACKEND_URL}/addReview`, body)
-    if(data.insert_reviews_one) return alert('review added')
-    alert(data)
+    if(data.insert_reviews_one) return alertReact.success('review added')
+    alertReact.success(data)
   }
 
 
@@ -108,15 +109,15 @@ export const FormReview = ({
             Rating
           </label>
           <div className={errors.stars? 'has-error stars':"stars"}>
-            <input id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio5" type="radio" name="stars" value="5" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio5">★</label>
-            <input id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio4" type="radio" name="stars" value="4" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio4">★</label>
-            <input id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio3" type="radio" name="stars" value="3" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio3">★</label>
-            <input id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio2" type="radio" name="stars" value="2" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio2">★</label>
-            <input id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
+            <input className= 'radio_stars' id="radio1" type="radio" name="stars" value="1" onChange={handleChange} />
             <label id='estrellas' htmlFor="radio1">★</label>
           </div>
           <p className="has-error">{errors.stars}</p>

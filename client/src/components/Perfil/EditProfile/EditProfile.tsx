@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LocationSelector from "../../Cart/CheckoutForm/MapSelection/LocationSelector";
 import { Button } from "@material-ui/core";
 import { PublicTwoTone } from "@material-ui/icons";
+import { useAlert } from "react-alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,6 +106,7 @@ interface RootState {
 }
 
 export default function EditProfile() {
+  const alertReact = useAlert();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const classes = useStyles();
   const theme = useTheme();
@@ -205,7 +207,8 @@ export default function EditProfile() {
       }
     );
     console.log("datos actualizados", responseAxios.data);
-    if (responseAxios.data.update_users) alert("Datos actualizados");
+    if (responseAxios.data.update_users)
+      alertReact.success("Datos actualizados");
   };
 
   const updateAditionalData = async () => {
@@ -222,7 +225,8 @@ export default function EditProfile() {
       }
     );
     console.log("datos actualizados", responseAxios.data);
-    if (responseAxios.data.update_users) alert("Datos actualizados");
+    if (responseAxios.data.update_users)
+      alertReact.success("Datos actualizados");
   };
 
   const handleUpdate = (e) => {

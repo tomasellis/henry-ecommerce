@@ -3,18 +3,12 @@ import { Response, Request, Router, NextFunction } from "express";
 import nodemailer from "nodemailer";
 import { messageOrderPaid } from "../templatesEmail/messageOrderPaid";
 import { messageOrderShipped } from "../templatesEmail/messageOrderShipped";
+import { messageOrderDelivered } from "../templatesEmail/messageOrderDelivered";
 require("dotenv").config();
 
 const { PASSWORD_EMAIL_NODEMAILER } = process.env;
 const router = Router();
 
-// interface Review {
-//   user_id: string,
-//   id_product_general: string,const nodemailer = require("nodemailer");
-//   stars: number,
-//   comment:string,
-//   user_email:string
-// }
 
 router.post(
   "/",
@@ -22,13 +16,7 @@ router.post(
     const { user_email, user_name, type_message, order } = request.body;
 
     if (user_email && user_name && type_message && order) {
-      //   const review:Review = {
-      //     id_product_general,
-      //     user_id,
-      //     stars,
-      //     comment,
-      //     user_email
-      // }
+
       let message = "",
         subject = "";
       switch (type_message) {
@@ -40,6 +28,11 @@ router.post(
         case "ORDER_SHIPPED":
           message = messageOrderShipped(user_name, order);
           subject = "Your order has been shipped";
+          break;
+
+        case "ORDER_DELIVERED":
+          message = messageOrderDelivered(user_name, order);
+          subject = "Your order has been delivered";
           break;
       }
 
