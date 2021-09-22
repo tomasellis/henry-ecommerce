@@ -31,7 +31,7 @@ interface RootState {
 
 export default function NavBar() {
   const stateRedux = useSelector((state: RootState) => state);
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, /*loginWithRedirect,*/ loginWithPopup } = useAuth0();
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -81,7 +81,7 @@ export default function NavBar() {
               {user.name}
             </Link>
           ) : (
-            <IconButton onClick={loginWithRedirect}>
+            <IconButton onClick={loginWithPopup}>
               <IoPersonCircleSharp
                 style={{ fontSize: "23px", color: "#000" }}
               />
@@ -168,7 +168,7 @@ export default function NavBar() {
               ) : (
                 <button
                   style={{ background: "transparent", border: "none" }}
-                  onClick={loginWithRedirect}
+                  onClick={loginWithPopup}
                 >
                   <IoPersonCircleSharp
                     style={{ marginTop: "15px", fontSize: "23px" }}

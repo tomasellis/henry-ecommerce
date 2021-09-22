@@ -18,6 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse } from "axios";
 import { setDataUser, setProductsIdsInCart } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const state = useSelector((state: RootState) => state);
@@ -86,9 +87,9 @@ function App() {
     <BrowserRouter>
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/admin/createproduct" component={Add} />
-      <Route exact path="/admin/editusers" component={EditUsers} />
-      <Route exact path="/admin/editorders" component={EditOrders} />
+      <PrivateRoute path="/admin/createproduct" component={Add} />
+      <PrivateRoute path="/admin/editusers" component={EditUsers} />
+      <PrivateRoute path="/admin/editorders" component={EditOrders} />
       <Route exact path="/loggedIn" component={LoggedIn} />
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />
