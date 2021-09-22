@@ -3,7 +3,6 @@ import "./DetailProductCard.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
