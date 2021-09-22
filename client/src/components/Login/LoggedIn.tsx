@@ -33,7 +33,7 @@ export default function LoggedIn() {
             `${BASE_URL}/addLocalStorageToCart`,
             {
               cart: JSON.parse(localStorage.cartStorage),
-              user_id: dataUser.data.user_id,
+              user_id: dataUser.data.id,
             }
           );
           if (data.insert_carts_products) {
@@ -48,7 +48,7 @@ export default function LoggedIn() {
               "no se agregaron los productos de localstorage a la db"
             );
           }
-          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.user_id}`)
+          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.id}`)
 
           idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
           dispatch(setProductsIdsInCart(idsInCart))
