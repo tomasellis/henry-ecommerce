@@ -70,9 +70,8 @@ export default function Categories({ input, setInput, handleChange }) {
           onChange={(e) => handleChange(e)}
         >
           <option>Gender</option>
-          <option value="women">Woman</option>
+          <option value="women">Women</option>
           <option value="men">Men</option>
-          <option value="kids">Kids</option>
         </select>
         <select
           className="categories_collection_add"

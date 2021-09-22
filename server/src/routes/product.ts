@@ -20,7 +20,11 @@ router.get(
         stock
         id
       }
-    }
+      product_categories(where: {id: {}, product_id: {_eq: "${id}"}}) {
+      id
+      category_name
+      }
+     }
   }`;
     try {
       const { data } = await axios({
