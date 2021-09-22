@@ -38,7 +38,7 @@ export default function LoggedIn() {
           );
           if (data.insert_carts_products) {
             console.log(
-              "se agregaron los productos de localstorage a la db (averiguar por que sale 2 veces el cartel. no afecta el funcionamiento...)"
+              "se agregaron los productos de localstorage a la db"
             );
             localStorage.cartStorage = [];
             localStorage.idsInCartStorage = [];
