@@ -62,6 +62,7 @@ router.post(
       external_reference,
       latitude,
       longitude,
+      additionalInfo,
     } = req.body;
     console.log("datahere", req.body);
 
@@ -72,10 +73,11 @@ router.post(
     const payer_body: Payer = payer as Payer;
     const latitude_body: number = latitude as number;
     const longitude_body: number = longitude as number;
+    const additionalInfo_body: string = additionalInfo as string;
 
     const external_reference_body = external_reference as string;
 
-    const backURL = `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}&streetNumber=${payer_body.address.street_number}&latitude=${latitude_body}&longitude=${longitude_body}`;
+    const backURL = `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}&latitude=${latitude_body}&longitude=${longitude_body}&additionalInfo=${additionalInfo_body}`;
 
     const preference: MercadopagoPreference = {
       items: items_body,
@@ -102,10 +104,10 @@ router.post(
 );
 
 router.get("/payment", async (req, res) => {
-  console.log("QUERY", req.query);
-  const { userEmail, userAddress, latitude, longitude, streetNumber } =
+  const { userEmail, userAddress, latitude, longitude, additionalInfo } =
     req.query;
-  console.log("ACAAAA =>>>>>>>>", req.query.latitude, req.query.longitude);
+
+  const additionalInfo_query = additionalInfo as string;
   const userEmail_query = userEmail as string;
   const userAddress_query = userAddress as string;
   const latitude_query = parseFloat(latitude as string);
@@ -114,7 +116,6 @@ router.get("/payment", async (req, res) => {
     | "approved"
     | "rejected"
     | "in_process";
-  const streetNumber_query = parseInt(streetNumber as string);
   const userId = req.query.external_reference as string;
 
   // If payment is rejected
@@ -183,7 +184,7 @@ router.get("/payment", async (req, res) => {
         latitude_query,
         longitude_query,
         userAddress_query,
-        streetNumber_query
+        additionalInfo_query
       ),
     },
   });
@@ -233,7 +234,7 @@ const addNewOrderMutation = (
   latitude: number,
   longitude: number,
   address: string,
-  streetNumber: number
+  additionalInfo: string
 ) => `mutation AddNewOrder {
   insert_orders_one(object: {
       user_id: "${userId}", 
@@ -241,8 +242,8 @@ const addNewOrderMutation = (
       email: "${email}", 
       latitude: ${latitude}, 
       longitude: ${longitude}, 
-      address: "${address}"
-      street_number: ${streetNumber}
+      address: "${address}",
+      additional_information: "${additionalInfo}"      
     }) {
     id
     user_id
@@ -250,8 +251,8 @@ const addNewOrderMutation = (
     status
     latitude
     longitude
-    street_number
     address
+    additional_information
     status
     created_at
     updated_at
