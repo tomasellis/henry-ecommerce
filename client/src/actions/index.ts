@@ -91,11 +91,15 @@ export function changePassword2(data){
   };
 };
 
-export function setUserOrder(){
+export function setUserOrder(data){
   return async (dispatch: Dispatch) => {
-    const user = await axios(
-      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders`
+    let userOrder = {
+      userId: data.userId
+    }
+    const product = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders`,
+      userOrder
     );
-    dispatch({ type: 'SET_STORE_HISTORY', payload: user.data})
+    dispatch({ type: 'SET_STORE_HISTORY', payload: product.data})
   }
 }
