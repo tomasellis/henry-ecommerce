@@ -102,6 +102,15 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         }
         
       }  
+    case 'DELETE_FAVORITES' :
+      console.log('soydeleteeeeeee',payload);
+      const filter = state.favoriteProducts.products.filter(e => e.id !== payload.id) 
+      
+    return{
+      ...state,
+      ...state.favoriteProducts,
+      products : filter
+    }
 
     case "CLEAN_PRODUCT_DETAIL":
       return {

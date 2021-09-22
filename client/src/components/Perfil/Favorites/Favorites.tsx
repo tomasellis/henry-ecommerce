@@ -15,7 +15,7 @@ import './Favorites.css'
 import Profile from "../Profile";
 import CardFAv from "./cardFav";
 
-export default function Favorites( ){
+export default function Favorites(){
     
     /* const dispatch = useDispatch(); */
     const user_id = useSelector((state : any) => state.user)
@@ -23,11 +23,9 @@ export default function Favorites( ){
     useEffect(() => {
         dispatch(getFavorites(user_id.id))
     }, [])
-    let favProductsId = useSelector((state : any) => state.favoriteProducts.id);    
-    console.log(favProductsId);
-     
-    
-    
+    let favProductsId = useSelector((state : any) => state.favoriteProducts.id); 
+
+            
 
      return(
         <>

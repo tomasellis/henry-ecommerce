@@ -46,7 +46,7 @@ const deleteToFavourites = (
 ) => `mutation {
     delete_favourites_by_pk(id:"${favorite_id}"){
       id
-      product_option_id
+      product_id
       created_at
       user_id
     }

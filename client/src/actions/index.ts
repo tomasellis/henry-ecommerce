@@ -19,52 +19,60 @@ export function getFavProduct(id: any) {
     let json = await axios(
       `${REACT_APP_BASE_BACKEND_URL}/product?id=${id}`,
       {}
-      );
-      console.log('jsonnnnn',json.data.products);
-      
+      );      
     return dispatch({ type: "GET_FAVORITES", payload: json.data.products[0] });
   };
 }
+
 
 export function postCategory(payload) {
   return async function (dispatch) {
     const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/createNewCategories`,
       payload
-    );    
-    return json;
-  };
-}
-
+      );    
+      return json;
+    };
+  }
+  
 export function getOptions() {
   return async function (dispatch : any) {
     let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});        
     return dispatch({ type: "GET_OPTIONS", payload: json.data });
   };
 }
-
+  
 export function postProduct(payload) {
   return async function (dispatch) {
     const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/createProduct`,
       payload
-    );
+      );
     return json;
   };
 }
-
+    
 export function addFavorite(payload) {
   return async function (dispatch) {
-    const json = await axios.post(
+      const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/addToFavorites`,
       payload
     );
-    console.log('soyjson',json.config.data, payload);
-    
-    return json.config.data;
+          
+  return json.config.data;
   };
 }
-
+      
+export function deleteFavProduct(payload) {
+  return async function (dispatch) {
+    let json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/deleteFavorites`,
+      payload
+      );
+    return json.config.data
+  };
+}
+      
 export function getFavorites(id) {
   return async function (dispatch) {
     let json = await axios(

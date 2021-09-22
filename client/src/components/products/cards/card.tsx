@@ -34,11 +34,6 @@ export default function Card({name,price,image,id,product_id}){
         product_id : product_id
         })); 
     }
-
-    console.log({user_id : user.id,
-        product_id : id});
-    
-        
     
     return(
         <>
