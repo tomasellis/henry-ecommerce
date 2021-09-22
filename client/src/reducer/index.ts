@@ -104,13 +104,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case 'SET_DATA_USER':
+      let reviews = payload.reviews.map(review => review.id_product_general)
+      let orders = payload.orders.map(order => order.orders_products)
       return {
         ...state,
-        user: {
-          id: payload.user_id,
-          email: payload.user_email,
-          auth0_id: payload.auth0_id
-        }
+        user: {...payload, reviews:reviews, orders:orders}
       }
 
     case 'SET_PRODUCTS_IDS_IN_CART':
