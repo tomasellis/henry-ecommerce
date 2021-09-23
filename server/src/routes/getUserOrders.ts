@@ -40,27 +40,28 @@ router.get(
 export default router;
 // Get user info
 
-const getUserOrdersQuery = (userId: string) => `query GetUserOrders {
-    orders(where:{user_id:{_eq:"${userId}"}}){
+const getUserOrdersQuery = (userId: string) => `query getUserOrders{
+  orders(where:{user_id:{_eq:"${userId}"}}){
+    id
+    status
+    user_id
+    email
+    latitude
+    longitude
+    address
+    created_at
+    updated_at
+    orders_products{
       id
-      status
-      user_id
-      email
-      latitude
-      longitude
-      address
-      created_at
-      updated_at
-        orders_products{
-          id
-          unit_price
-          quantity
-          products_option{
-            product{ 
-            image_url
-            name
-            }
-          }
+      unit_price
+      quantity
+      products_option{
+        product{ 
+        image_url
+        name
         }
+      product_id
+      }
     }
-  }`;
+  }
+}`

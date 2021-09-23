@@ -19,15 +19,17 @@ export default function History() {
     return(
         <div className="div_cards">
             {  
-                state.storeHistory[0]?.orders?.map((e) => {
+                state.storeHistory.orders?.map((e) => {
                         return(
                             <div key={e.id}>
                                 <CardHistory
-                                id = {e.orders_products[0].id}
+                                id = {e.id}
                                 image_url = {e.orders_products[0].products_option.product.image_url} 
                                 name = {e.orders_products[0].products_option.product.name}
                                 unit_price = {e.orders_products[0].unit_price}
                                 quantity = {e.orders_products[0].quantity}
+                                date = {e.created_at}
+                                id_product_general = {e.orders_products[0].products_option.product_id}
                                 />
                             </div>
                             )

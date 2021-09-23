@@ -1,10 +1,12 @@
 import "./DetailProductCard.css";
+import React from 'react'
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { useDispatch } from "react-redux";
-import { cleanProductDetail } from "../../actions";
+import { useSelector } from "react-redux";
 import styled from "styled-components"
 import StarIcon from '@material-ui/icons/Star';
+import FormReview from "./FormReview";
+
 interface Review {
   stars: number,
   comment: string,
@@ -12,19 +14,33 @@ interface Review {
   user_name: string,
 }
 
-type Reviews ={
+type Reviews = {
   reviews: Review[]
+}
+
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role:string;
+  productsReceived:string[],
+  reviews:string[]
+};
+
+interface RootState {
+  idsInCart: string;
+  user: User;
+  updatedReviews:boolean;
 }
 
 export const DetailProductReview = ({
   product_id
-}: { 
-  product_id: string 
+}: {
+  product_id: string
 }) => {
-
-  const dispatch = useDispatch();
-  // const state = useSelector((state: RootState) => state);
+  const state = useSelector((state: RootState) => state);
   const [reviews, setReviews] = useState([])
+
 
 
   const getReviews = async () => {
@@ -36,43 +52,46 @@ export const DetailProductReview = ({
   useEffect(() => {
     getReviews()
     return () => {
-      dispatch(cleanProductDetail());
+     
     };
     // eslint-disable-next-line
-  }, []);
+  }, [state.user.reviews]);
 
-  
+
 
 
 
   return (
-    <BoxReview>
-      {reviews.map((review: Review) => {
-        let stars = []
-        const starPush = () => {
-          for(let i = 0; i < review.stars; i++) {
-            stars.push(<StarIcon style={{ color: 'gold'}}/>)
+    <React.Fragment>
+      <FormReview product_id={product_id} />
+      <BoxReview>
+        {reviews.map((review: Review) => {
+          let stars = []
+          const starPush = () => {
+            for (let i = 0; i < review.stars; i++) {
+              stars.push(<StarIcon style={{ color: 'gold' }} />)
+            }
           }
-        }
-        starPush()
+          starPush()
 
-        let userName = review.user_email.slice(0,4)
-        
-        return (
-          <div key={review.user_email} className='post-comment'>
-            <div className="header">
-              <h6>{userName}...@mail.com</h6>
-              <h6>{stars}</h6>
-            </div>
-            <div className='comment'>
-              <p>{review.comment}</p>
-              <hr/>
-            </div>
-          </div>
-        )
-      })}
+          let userName = review.user_email.slice(0, 4)
 
-    </BoxReview>
+          return (
+            <div key={review.user_email} className='post-comment'>
+              <div className="header">
+                <h6>{userName}...@mail.com</h6>
+                <h6>{stars}</h6>
+              </div>
+              <div className='comment'>
+                <p>{review.comment}</p>
+                <hr />
+              </div>
+            </div>
+          )
+        })}
+
+      </BoxReview>
+    </React.Fragment>
   );
 };
 

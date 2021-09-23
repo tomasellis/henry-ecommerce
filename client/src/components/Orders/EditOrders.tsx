@@ -36,8 +36,8 @@ export default function EditOrders() {
   };
 
   const changeStatus = async (id, status, email, name) => {
-    
-    let axiosResponseBlock, HasuraResponseBlock, type_message, nextStatus
+
+    let HasuraResponseBlock, type_message, nextStatus
 
     switch (status.toLowerCase()) {
       case 'approved':
@@ -58,24 +58,24 @@ export default function EditOrders() {
       default: return;
     }
 
-    [axiosResponseBlock, HasuraResponseBlock] = await Promise.all([
-      axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/sendMail`,{
-        // const { user_email, user_name, type_message, order } = request.body;
-        user_email:email,
-        user_name:name,
-        type_message: type_message,
-        order:id
-      }),
-      axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_order`,
-        {
-          order_id: id,
-          status: nextStatus
-        })
-    ])
+    axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/sendMail`, {
+      // const { user_email, user_name, type_message, order } = request.body;
+      user_email: email,
+      user_name: name,
+      type_message: type_message,
+      order: id
+    }).then(response => console.log('mail enviado:',response.data))
+
+    HasuraResponseBlock = await axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_order`,
+      {
+        order_id: id,
+        status: nextStatus
+      })
+
 
     setUpdated(updated + 1)
     alertReact.success('Updated order')
-    console.log(axiosResponseBlock.data, HasuraResponseBlock.data);
+    console.log(HasuraResponseBlock.data);
   }
 
 
