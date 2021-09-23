@@ -36,8 +36,13 @@ router.post(
                       product_option_id
                       quantity
                       unit_price
+                      product_id
                     }
                     status
+                  }
+                  favourites {
+                    product_id
+                    url_image
                   }
                 }
               }`,
@@ -72,8 +77,13 @@ router.post(
                       product_option_id
                       quantity
                       unit_price
+                      product_id
                     }
                     status
+                  }
+                  favourites {
+                    product_id
+                    url_image
                   }
                 }
               }`,
