@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: "30ch",
     },
+    marginLeft:"1rem",
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap: "3em",
+    gridTemplateRows:"1fr 1fr",
+    gap:"3em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
@@ -176,25 +178,18 @@ export default function EditProfile() {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
-    if (changePassword.currentpassword === "") {
-      Swal.fire({ title: "Write e password", confirmButtonColor: "#9ea03b" });
+    if(changePassword.newpassword === ""){
+      Swal.fire({title: "Write a new password", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if (changePassword.newpassword === "") {
-      Swal.fire({
-        title: "Write e new password",
-        confirmButtonColor: "#9ea03b",
-      });
+    if(changePassword.repeatpassword !== changePassword.newpassword){
+      Swal.fire({title: "Passwords do not match", confirmButtonColor: '#9ea03b'})
       return;
     }
-    if (changePassword.repeatpassword !== changePassword.newpassword) {
-      Swal.fire({
-        title: "Passwords do not match",
-        confirmButtonColor: "#9ea03b",
-      });
-      return;
+    else{
+      alert("Password changed successfully")
     }
-  };
+  }
   const updateProfile = async () => {
     const responseAxios = await axios.post(
       `${process.env.REACT_APP_BASE_REST_API_HASURA}/update_user`,
@@ -257,7 +252,10 @@ export default function EditProfile() {
       Swal.fire({ title: "Enter a valid ID", confirmButtonColor: "#9ea03b" });
       return;
     }
-    updateProfile();
+    else {
+      alert("Dates updates")
+      updateProfile();
+    }
   };
 
   const handleAdditionalData = (e) => {
@@ -292,7 +290,10 @@ export default function EditProfile() {
       Swal.fire({ title: "Write a phone", confirmButtonColor: "#9ea03b" });
       return;
     }
-    updateAditionalData();
+    else {
+      alert("Dates updates")
+      updateAditionalData();
+    }
   };
 
   const inputChange = (e) => {
@@ -332,20 +333,15 @@ export default function EditProfile() {
     isAuthenticated && (
       <div>
         <div className="div-conteiner">
-          <h3 className="titulo">PROFILE</h3>
-          <div className="conteiner-perfil">
-            <h5>- Data</h5>
-            {state.user.auth0_id?.slice(0, 5) === "auth0" && (
-              <h5>- Change password</h5>
-            )}
-          </div>
+          <h3 style={{margin:"5px"}}>PROFILE</h3>
           <div className="conteiner-datos">
             <form
-              className={classes.root}
               noValidate
               autoComplete="off"
               onSubmit={(e) => handleUpdate(e)}
             >
+              <h5>- Data</h5>
+              <div className={classes.root}>
               <TextField
                 value={info.name}
                 label="Name"
@@ -406,14 +402,16 @@ export default function EditProfile() {
               <button type="submit" style={{ width: "50%" }} className="btn">
                 Update
               </button>
+              </div>
             </form>
             {state.user.auth0_id?.slice(0, 5) === "auth0" && (
               <form
-                className={classes.root2}
                 noValidate
                 autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}
               >
+                <h5>- Change password</h5>
+                <div className={classes.root2}>
                 <TextField
                   label="New Password"
                   name="newpassword"
@@ -438,6 +436,7 @@ export default function EditProfile() {
                 >
                   Update
                 </button>
+                </div>
               </form>
             )}
           </div>

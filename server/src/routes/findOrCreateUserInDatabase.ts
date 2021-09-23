@@ -66,6 +66,13 @@ router.post(
                   reviews {
                     id_product_general
                   }
+                  orders {
+                    orders_products {
+                      product_option_id
+                      quantity
+                      unit_price
+                    }
+                  }
                 }
               }`,
         },
