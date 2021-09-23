@@ -392,18 +392,19 @@ export default function Filter() {
         </div>
       </div>
       <div className='pagination'>
+      
       <button onClick={e => setPages({
           ...pages,
           currentPage: pages.currentPage - 1,
           prevPage: pages.prevPage - 1,
           nextPage: pages.nextPage - 1
-        })} disabled={pages.prevPage < 0} >Prev</button>
+        })} disabled={pages.prevPage < 0} >&laquo; Prev</button>
         <button onClick={e => setPages({
           ...pages,
           currentPage: pages.currentPage + 1,
           prevPage: pages.prevPage + 1,
           nextPage: pages.nextPage + 1
-        })} disabled={pages.nextPage > Math.ceil(state.maxProducts / productsxPage) - 1} >Next</button>
+        })} disabled={pages.nextPage > Math.ceil(state.maxProducts / productsxPage) - 1} >Next &raquo;</button>
         </div>
     </>
   );
