@@ -72,6 +72,10 @@ export function deleteFavProduct(payload) {
     return json.config.data
   };
 }
+
+export function deleteFilterFav(payload) {  
+  return { type: "DELETE_FAVORITES", payload };
+}
       
 export function getFavorites(id) {
   return async function (dispatch) {

@@ -7,7 +7,7 @@ import "./products.css";
 
 //import actions
 import { getArticles } from "../../actions/products/productActions";
-import { cleanProducts } from "../../actions";
+import { cleanProducts, getFavorites } from "../../actions";
 
 //import components
 import Filter from "./filter/filter";
@@ -26,6 +26,14 @@ export default function Products() {
     gender: string;
     page: string;
   };
+
+  useEffect(() => {
+    dispatch(getFavorites(user_fav.id))
+  }, [])
+  const favIcon = useSelector((state : any) => state.favoriteProducts.id);
+  console.log('soyfavicon',favIcon);
+
+
 
   const { gender } = useParams<Params>();
   const { page } = useParams<Params>();
@@ -55,9 +63,11 @@ export default function Products() {
       <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div>
-        {articles.products?.map((e, i) => {
-          console.log(e);
-          
+        {articles.products?.map((e) => {
+          let cond = false;
+          favIcon[0]?.users_by_pk?.favourites?.map(i => {
+            if(e.id=== i.product_id) cond = true;            
+          })          
           return (
             <Card
               product_id={e.id}
@@ -66,6 +76,7 @@ export default function Products() {
               image={e.image_url}
               name={e.name}
               price={e.price}
+              cond={cond}
             />
           );
         })}
