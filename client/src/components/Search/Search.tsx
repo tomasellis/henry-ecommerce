@@ -2,11 +2,8 @@
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { useAlert } from 'react-alert'
-import { useParams } from "react-router";
 import { searchArticles } from '../../actions/searchArticles/searchArticles';
-import { getArticles } from "../../actions/products/productActions";
-import { MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+
 
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
@@ -18,18 +15,15 @@ export default function Search(): JSX.Element {
   const alertReact = useAlert()
   const dispatch = useDispatch();
   const [search, setSearch]  = useState<string>('');
-  // const busqueda = useSelector((state : any) => state.searchArticles);
 
- //useEffect(() => {
-
-
-
- //},[search,dispatch])
+  useEffect(() => {
+    if(search === '' || search === ' ') dispatch(searchArticles('undefined'))
+    else dispatch(searchArticles(search));
+  },[dispatch,search])
 
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    dispatch(searchArticles(search));
   };
 
 
@@ -39,10 +33,6 @@ export default function Search(): JSX.Element {
       window.location.replace(`http://localhost:3000/search?name=${search}`);//Cambiar URL.
       setSearch('')
       console.log(`funciona ${search.toLowerCase()}`)
-
-      // setTimeout(() => {
-      //   dispatch(searchArticles(search))
-      // },1000)
 
     }else{
       alertReact.error('Please, write something...')
@@ -74,7 +64,6 @@ export default function Search(): JSX.Element {
           </IconButton>
         </div>
     </InputCtn>
-    <SearchList/>
     </>
   )
 }
