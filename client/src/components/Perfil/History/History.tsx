@@ -2,17 +2,18 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { setUserOrder } from '../../../actions';
 import CardHistory from './CardHistory';
-import "./CardHistory.css"
 
+import "./CardHistory.css"
 
 
 export default function History() {
     const state = useSelector((state: any) => state)
     const dispatch = useDispatch()
+    const userId = state.user.id
     
     useEffect(() => {
-        const userId = state.user.id
         dispatch(setUserOrder(userId))
+        //eslint-disable-next-line
     },[])
     
     return(
