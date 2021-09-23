@@ -8,11 +8,15 @@ import TextField from '@material-ui/core/TextField';
 //import css
 import "./filter.css";
 import { getArticles } from "../../../actions/products/productActions";
-import { cleanProducts } from '../../../actions';
+import {  getOptions } from '../../../actions';
 
 export default function Filter() {
   const state = useSelector((state: RootState) => state);
-  const options = useSelector((state: any) => state.options);
+
+  useEffect(()=> {
+    dispatch(getOptions())
+  }, [])
+  const options = useSelector((state: any) => state.options);  
 
   interface RootState {
     maxProducts: number;
@@ -36,6 +40,7 @@ export default function Filter() {
       [e.target.name]: e.target.id
     })
   };
+  
 
   const [pages, setPages] = useState({
     currentPage: 0,
@@ -159,6 +164,7 @@ export default function Filter() {
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
+          {console.log('soydatafilter',dataFilter)}
       {!dataFilter.category.length ||
       <div className = 'div_quitar_filter'>
         <button onClick={() => removeFilter("category")}>
@@ -195,7 +201,7 @@ export default function Filter() {
               id="dropdownMenuButton1"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-            >
+              >
               CATEGORIES
             </button>
             <ul
@@ -203,17 +209,19 @@ export default function Filter() {
               className="dropdown-menu"
               aria-labelledby="dropdownMenuButton1"
               
-            >
-              {options.categories?.map((e) => {
+              >
+              {options.categories?.map((e) => {                
                   function NameInUpperCase(str) {
                     return str.charAt(0).toUpperCase() + str.slice(1);
                   }
                   const name = NameInUpperCase(e.name);
                   return (
+
                   <li>
-                    <button className="dropdown-item" value={e.name}>
+                    <button className="dropdown-item" id={e.name} name = 'category'>
                         {name}
-                    </button>;
+                    </button>
+                    <hr className="hr_filter_product" />
                   </li>
                   )
                 })}
