@@ -96,9 +96,15 @@ function App() {
       <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path='/profile/favorites' component={Favorites} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
-      <PrivateRoute exact path="/admin/createproduct" component={Add} />
-      <PrivateRoute exact path="/admin/editusers" component={EditUsers} />
-      <PrivateRoute exact path="/admin/editorders" component={EditOrders} />
+      <Route exact path="/admin/createproduct">
+        <PrivateRoute component={Add} />
+      </Route>
+      <Route exact path="/admin/editusers">
+        <PrivateRoute component={EditUsers} />
+      </Route>
+      <Route exact path="/admin/editorders">  
+        <PrivateRoute component={EditOrders} />
+      </Route>
     </BrowserRouter>
   );
 }
