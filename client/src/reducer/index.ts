@@ -1,14 +1,13 @@
 import { PRODUCTS_ACTIONS } from "../actions/products/productActions";
 
 const initialState = {
+  products: [],
+  maxProducts: 0,
   product: [],
   options: [],
-  favoriteProducts : [],
+  favoriteProducts: [],
   productsInCartByUser: [],
-  articles: {
-    products: [],
-    next: [],
-  },
+
   cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
   idsInCart: localStorage.idsInCartStorage
     ? JSON.parse(localStorage.idsInCartStorage)
@@ -25,10 +24,8 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case PRODUCTS_ACTIONS.BRING_CLOTHER:
       return {
         ...state,
-        articles: {
-          products: payload.data.products,
-          next: payload.next.products,
-        },
+        products: payload.data.products,
+        maxProducts:payload.data.products_aggregate.aggregate.count
       };
     case "GET_PRODUCT_INFO":
       return {
@@ -82,10 +79,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
-    case 'ADD_FAVORITE_PRODUCT' :
+    case 'ADD_FAVORITE_PRODUCT':
       return {
         ...state,
-        favoriteProducts : [...state.favoriteProducts, payload]
+        favoriteProducts: [...state.favoriteProducts, payload]
       }
 
     case "CLEAN_PRODUCT_DETAIL":
@@ -97,18 +94,17 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case "CLEAN_PRODUCTS":
       return {
         ...state,
-        articles: {
-          products: [],
-          next: [],
-        },
-      };
+        products: payload,
+        maxProducts:0
+        }
+    
 
     case 'SET_DATA_USER':
       let reviews = payload.reviews.map(review => review.id_product_general)
       let orders = payload.orders.map(order => order.orders_products)
       return {
         ...state,
-        user: {...payload, reviews:reviews, orders:orders}
+        user: { ...payload, reviews: reviews, orders: orders }
       }
 
     case 'SET_PRODUCTS_IDS_IN_CART':

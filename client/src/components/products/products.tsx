@@ -1,50 +1,27 @@
-import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 //import css
 import "./products.css";
 
 //import actions
-import { getArticles } from "../../actions/products/productActions";
 import { cleanProducts } from "../../actions";
 
 //import components
 import Filter from "./filter/filter";
 import Card from "./cards/card";
-import Pagination from "./Pagination/Pagination";
 import Footer from "../Footer/Footer";
 
 export default function Products() {
   const dispatch = useDispatch();
-  const articles = useSelector((state: any) => state.articles);
-  const [limit] = useState<number>(12);
+  const state = useSelector((state: any) => state);
 
-  type Params = {
-    gender: string;
-    page: string;
-  };
 
-  const { gender } = useParams<Params>();
-  const { page } = useParams<Params>();
   useEffect(() => {
-    dispatch(
-      getArticles(
-        gender,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        page,
-        limit,
-        undefined
-      )
-    );
     return () => {
       dispatch(cleanProducts())
     }
-  }, [dispatch, gender, page, limit]);
+  }, [dispatch]);
 
   return (
     <div className="page-container">
@@ -52,7 +29,7 @@ export default function Products() {
       <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div className='ctn_product'>
-        {articles.products?.map((e, i) => {
+        {state.products?.map((e, i) => {
           return (
             <Card
               key={e.id}
@@ -64,11 +41,6 @@ export default function Products() {
           );
         })}
       </div>
-      <Pagination
-        currentPage={page}
-        nextLength={articles.next.length}
-        gender={gender}
-      />
       </div>
       <Footer />
     </div>

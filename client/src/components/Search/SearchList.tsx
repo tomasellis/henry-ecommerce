@@ -24,7 +24,7 @@ const SearchList = () => {
                searchFilter.length > 0 && searchFilter.map((item:any, index:number) => {
 
                    return (
-                       <Link to = {`/clothing/${item.id}`} key={index}>
+                       <Link to = {`/clothing/details/${item.id}`} key={index}>
                             <div className='listItem' >
                                 <p>{item.name}</p>
                                 <img src={item.image_url} alt='img'/>
