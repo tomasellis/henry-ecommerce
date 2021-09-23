@@ -66,7 +66,7 @@ export function cleanProductDetail() {
 }
 
 export function cleanProducts() {
-  return { type: "CLEAN_PRODUCTS" };
+  return { type: "CLEAN_PRODUCTS", payload:[]};
 }
 
 export function setDataUser(dataUser){
