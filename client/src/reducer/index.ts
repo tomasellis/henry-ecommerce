@@ -18,7 +18,8 @@ const initialState = {
     email: '',
     productsReceived: [],
     reviews: []
-  }
+  },
+  storeHistory: []
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -137,10 +138,17 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           idsInCart: [...state.idsInCart, payload]
         }
       }
+      
     case 'UPDATED_REVIEWS':
       return {
         ...state,
         user: { ...state.user, reviews: [...state.user.reviews, payload] }
+      }
+
+    case "SET_STORE_HISTORY":
+      return {
+        ...state,
+        storeHistory: [...state.storeHistory, payload]
       }
 
     default:

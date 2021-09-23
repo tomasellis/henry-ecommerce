@@ -13,6 +13,7 @@ import EditProfile from "./components/Perfil/EditProfile/EditProfile";
 import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
+import History from "./components/Perfil/History/History";
 import EditOrders from "./components/Orders/EditOrders";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse } from "axios";
@@ -96,6 +97,7 @@ function App() {
       <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path='/profile/favorites' component={Favorites} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
+      <Route exact path='/profile/shopping-history' component={History} />
       <Route exact path="/admin/createproduct">
         <PrivateRoute component={Add} />
       </Route>
