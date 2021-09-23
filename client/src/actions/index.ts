@@ -66,11 +66,11 @@ export function cleanProductDetail() {
 }
 
 export function cleanProducts() {
-  return { type: "CLEAN_PRODUCTS" };
+  return { type: "CLEAN_PRODUCTS", payload:[]};
 }
 
-export function setDataUser(user_id:string,user_email:string, auth0_id:string){
-  return {type: 'SET_DATA_USER', payload: {user_id, user_email,auth0_id} }
+export function setDataUser(dataUser){
+  return {type: 'SET_DATA_USER', payload: dataUser }
 }
 
 export function setProductsIdsInCart(idsInCart){

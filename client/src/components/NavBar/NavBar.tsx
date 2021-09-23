@@ -16,9 +16,22 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { BiShoppingBag } from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
+import { useSelector } from "react-redux";
+
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role:string;
+};
+
+interface RootState {
+  user: User;
+}
 
 export default function NavBar() {
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const stateRedux = useSelector((state: RootState) => state);
+  const { user, isAuthenticated, /*loginWithRedirect,*/ loginWithPopup } = useAuth0();
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -68,7 +81,7 @@ export default function NavBar() {
               {user.name}
             </Link>
           ) : (
-            <IconButton onClick={loginWithRedirect}>
+            <IconButton onClick={loginWithPopup}>
               <IoPersonCircleSharp
                 style={{ fontSize: "23px", color: "#000" }}
               />
@@ -155,14 +168,14 @@ export default function NavBar() {
               ) : (
                 <button
                   style={{ background: "transparent", border: "none" }}
-                  onClick={loginWithRedirect}
+                  onClick={loginWithPopup}
                 >
                   <IoPersonCircleSharp
                     style={{ marginTop: "15px", fontSize: "23px" }}
                   />
                 </button>
               )}
-              <select
+              {stateRedux.user?.role?.toLowerCase() === 'admin' ? <select
                 className=""
                 name=""
                 value="/admin"
@@ -174,7 +187,7 @@ export default function NavBar() {
                 <option value="/admin/createproduct">Create product</option>
                 <option value="/admin/editusers">Edit users</option>
                 <option value="/admin/editorders">Edit orders</option>
-              </select>
+              </select> : null}
             </p>
           </div>
         </div>

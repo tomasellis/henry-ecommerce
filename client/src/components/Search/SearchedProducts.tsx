@@ -12,7 +12,7 @@ export default function SearchedProducts() {
   const dispatch = useDispatch();
   const { search } = useLocation()
   const value = queryString.parse(search)
-  const articles = useSelector((state: any) => state.articles);
+  const articles = useSelector((state: any) => state.products);
 
   useEffect(() => {
     dispatch(

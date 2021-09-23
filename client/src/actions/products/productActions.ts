@@ -15,21 +15,17 @@ export const getArticles =
     size: any,
     page: any,
     limit: any,
-    search:any
+    search: any
   ) =>
 
-  async (dispatch: any) => {
-    try {
-      let res = await axios.get(
-        `${URL}/products?gender=${gender || ""}&category_name=${
-          category_name || ""
-        }&less_than=${less_than || ""}&greater_than=${
-          greater_than || ""
-        }&color=${color || ""}&size=${size || ""}&_page=${page || ""}
-        &_limit=${limit || ""}&_search=${search || ""}`
-      );
-
-
+    async (dispatch: any) => {
+      try {
+        let res = await axios.get(
+          `${URL}/products?gender=${gender || ""}&category_name=${category_name || ""
+          }&less_than=${less_than || ""}&greater_than=${greater_than || ""
+          }&color=${color || ""}&size=${size || ""}&_page=${page || ""
+          }&_limit=${limit || ""}&_search=${search || ""}`
+        );
         dispatch({
           type: PRODUCTS_ACTIONS.BRING_CLOTHER,
           payload: res.data,

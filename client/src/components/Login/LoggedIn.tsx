@@ -26,19 +26,19 @@ export default function LoggedIn() {
           }
         );
 
-        dispatch(setDataUser(dataUser.data.user_id, user.email, user.sub))
+        dispatch(setDataUser(dataUser.data))
 
         if (localStorage.cartStorage) {
           const { data } = await axios.post(
             `${BASE_URL}/addLocalStorageToCart`,
             {
               cart: JSON.parse(localStorage.cartStorage),
-              user_id: dataUser.data.user_id,
+              user_id: dataUser.data.id,
             }
           );
           if (data.insert_carts_products) {
             console.log(
-              "se agregaron los productos de localstorage a la db (averiguar por que sale 2 veces el cartel. no afecta el funcionamiento...)"
+              "se agregaron los productos de localstorage a la db"
             );
             localStorage.cartStorage = [];
             localStorage.idsInCartStorage = [];
@@ -48,7 +48,7 @@ export default function LoggedIn() {
               "no se agregaron los productos de localstorage a la db"
             );
           }
-          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.user_id}`)
+          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.id}`)
 
           idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
           dispatch(setProductsIdsInCart(idsInCart))
