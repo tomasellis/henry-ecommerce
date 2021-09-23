@@ -44,11 +44,17 @@ export default router;
 const getFavorites = (
   user_id: string,
 ) => `query TraerFavorites {
-    users_by_pk(id: "${user_id}") {
-      favourites(order_by: {created_at: asc}) {
-        product_id
-        id
+  users_by_pk(id: "${user_id}") {
+    favourites(order_by: {created_at: asc}) {
+      product {
+        name
+        price
+        gender
+        image_url
       }
+      product_id
+      id
     }
   }
+}
   `;

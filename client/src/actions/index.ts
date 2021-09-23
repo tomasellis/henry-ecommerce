@@ -83,7 +83,7 @@ export function getFavorites(id) {
       `${REACT_APP_BASE_BACKEND_URL}/getFavorites?user_id=${id}`,
       {}
     );
-    return dispatch({ type: "GET_FAVORITES_ID", payload: json.data });
+    return dispatch({ type: "GET_FAVORITES", payload: json.data });
   };
 }
 

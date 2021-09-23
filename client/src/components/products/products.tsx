@@ -30,8 +30,8 @@ export default function Products() {
   useEffect(() => {
     dispatch(getFavorites(user_fav.id))
   }, [])
-  const favIcon = useSelector((state : any) => state.favoriteProducts.id);
-  console.log('soyfavicon',favIcon);
+  const favIcon = useSelector((state : any) => state.favoriteProducts);
+  console.log('ssssssssssssoooo',favIcon?.products?.users_by_pk?.favourites);
 
 
 
@@ -65,7 +65,7 @@ export default function Products() {
       <div>
         {articles.products?.map((e) => {
           let cond = false;
-          favIcon[0]?.users_by_pk?.favourites?.map(i => {
+          favIcon?.products?.users_by_pk?.favourites?.map(i => {
             if(e.id=== i.product_id) cond = true;            
           })          
           return (

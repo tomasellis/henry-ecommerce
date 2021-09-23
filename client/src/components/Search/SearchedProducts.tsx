@@ -19,7 +19,7 @@ export default function SearchedProducts() {
   useEffect(() => {
     dispatch(getFavorites(user_fav.id))
   }, [])
-  const favIcon = useSelector((state : any) => state.favoriteProducts.id);
+  const favIcon = useSelector((state : any) => state.favoriteProducts);
 
   useEffect(() => {
     dispatch(
@@ -35,15 +35,15 @@ export default function SearchedProducts() {
       value.name
     )
   )
-}, []);// eslint-disable-line react-hooks/exhaustive-deps
-
+}, []);
+  
   return (
     <div>
     <h1 className="title_ropa_products">Cloth</h1>
     <div>
       {articles.products?.map((e, i) => {
          let cond = false;
-         favIcon[0]?.users_by_pk?.favourites?.map(e => {
+         favIcon?.products?.users_by_pk?.favourites?.map(e => {
            if(e.product_id === e.id) cond = true;
          }) 
         return (
