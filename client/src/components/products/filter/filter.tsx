@@ -217,7 +217,7 @@ export default function Filter() {
                   </li>
                   )
                 })}
-              
+              </ul>
               {/* <li>
                 <button className="dropdown-item" id="tshirts" name="category">
                   T-SHIRT
@@ -247,7 +247,6 @@ export default function Filter() {
                   FOOTWEAR
                 </button>
               </li> */}
-            </ul>
           </div>
           <div className="dropdown">
             <button
