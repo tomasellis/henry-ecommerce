@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: "30ch",
     },
+    marginLeft:"1rem",
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap: "3em",
+    gridTemplateRows:"1fr 1fr",
+    gap:"3em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
