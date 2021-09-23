@@ -7,21 +7,16 @@ import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
-export default function Row(props) {
-  const { row, options } = props;
+export default function RowRead (props) {
+  const { product, handleEditClick }= props;
   const [open, setOpen] = React.useState(false);
-
-  console.log(options)
-
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -35,13 +30,16 @@ export default function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {product.name}
         </TableCell>
-        <TableCell align="right">{row.gender}</TableCell>
-        <TableCell align="right">${row.price}</TableCell>
-        <TableCell align="right">{row.image_url}</TableCell>
+        <TableCell align="right">{product.gender}</TableCell>
+        <TableCell align="right">${product.price}</TableCell>
+        <TableCell align="right">{product.image_url}</TableCell>
         <TableCell align="right">
-           <button>Edit</button>
+           <button
+             onClick={(event) => handleEditClick(event, product)}
+             >Edit
+           </button>
            <button>Delete</button>
         </TableCell>
       </TableRow>
@@ -63,7 +61,7 @@ export default function Row(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {row.product_options.map((option) => (
+              {product.product_options.map((option) => (
                   <TableRow key={option.id}>
                     <TableCell component="th" scope="row">
                       {option.color}
@@ -87,7 +85,7 @@ export default function Row(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {row.product_categories.map((option) => (
+              {product.product_categories.map((option) => (
                   <TableRow key={option.id}>
                     <TableCell component="th" scope="row">
                       {option.category_name}

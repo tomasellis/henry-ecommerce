@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 //import actions
 import { getArticles } from "../../actions/products/productActions";
 import { getOptions } from "../../actions";
 //import components
-import Row from "./ModifyProductsReadable";
+import RowRead from "./ModifyProductsReadable";
+import RowEdit from "./ModifyProductsEdit";
 
 
 export default function ModifyProducts() {
@@ -48,12 +43,12 @@ export default function ModifyProducts() {
   const products = useSelector((state: any) => state.articles);
   const options = useSelector((state: any) => state.options);
 
-  const handleEditClick = (event, product) => {
+  function handleEditClick (event, product) {
     event.preventDefault();
     setEditProductId(product.id);
   };
-
-  const handleCancelClick = () => {
+  console.log(options)
+  function handleCancelClick () {
    setEditProductId(null);
  };
 
@@ -72,7 +67,21 @@ export default function ModifyProducts() {
         </TableHead>
         <TableBody>
         {products.products.map((product) => (
-            <Row key={product.name} row={product} options={options} />
+          <Fragment>
+          {editProductId===product.id ?
+            <RowEdit
+               key={product.id}
+               product={product}
+               options={options}
+               handleCancelClick={handleCancelClick}
+            />
+           :
+           <RowRead
+           key={product.id}
+           product={product}
+           handleEditClick={handleEditClick} />
+          }
+          </Fragment>
           ))}
         </TableBody>
       </Table>
