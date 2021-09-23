@@ -12,10 +12,15 @@ import { cleanProducts } from '../../../actions';
 
 export default function Filter() {
   const state = useSelector((state: RootState) => state);
+  const options = useSelector((state: any) => state.options);
 
   interface RootState {
     maxProducts: number;
   }
+
+  const [category, setCategory] = useState({
+    categories: [],
+  });
 
   type Params = {
     gender: string;
@@ -191,14 +196,29 @@ export default function Filter() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              CLOTHER
+              CATEGORIES
             </button>
             <ul
               onClick={(e) => setDataHandler(e)}
               className="dropdown-menu"
               aria-labelledby="dropdownMenuButton1"
+              
             >
-              <li>
+              {options.categories?.map((e) => {
+                  function NameInUpperCase(str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                  }
+                  const name = NameInUpperCase(e.name);
+                  return (
+                  <li>
+                    <button className="dropdown-item" value={e.name}>
+                        {name}
+                    </button>;
+                  </li>
+                  )
+                })}
+              
+              {/* <li>
                 <button className="dropdown-item" id="tshirts" name="category">
                   T-SHIRT
                 </button>
@@ -226,7 +246,7 @@ export default function Filter() {
                 <button className="dropdown-item" id="footwear" name="category">
                   FOOTWEAR
                 </button>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="dropdown">
