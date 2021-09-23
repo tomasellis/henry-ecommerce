@@ -17,7 +17,7 @@ export default function Search(): JSX.Element {
   const [search, setSearch]  = useState<string>('');
 
   useEffect(() => {
-    if(search === '' || search === ' ') dispatch(searchArticles('undefined'))
+    if(search === '' || search === ' ') dispatch(searchArticles(undefined))
     else dispatch(searchArticles(search));
   },[dispatch,search])
 

@@ -17,7 +17,7 @@ const SearchList = () => {
     let searchFilter = DeleteDuplicate(busqueda)
     
     function hacerClick(){
-        dispatch(searchArticles('undefined'))
+        dispatch(searchArticles(undefined))
     }
     
     return (
