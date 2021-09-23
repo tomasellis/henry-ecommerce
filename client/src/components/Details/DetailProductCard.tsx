@@ -1,15 +1,12 @@
-// import React from "react";
 import "./DetailProductCard.css";
-// import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import { useAlert } from 'react-alert'
 import axios from "axios";
-// import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
-import FormReview from './FormReview'
+
 
 type Product = {
   id_option: string;
@@ -23,9 +20,19 @@ type Product = {
   quantity;
 };
 
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role:string;
+  productsReceived:string[];
+  reviews:string[]
+};
+
 interface RootState {
   cart: Array<Product>;
   idsInCart: string;
+  user: User;
 }
 
 export const DetailsProductCard = ({
@@ -39,6 +46,7 @@ export const DetailsProductCard = ({
   const alertReact = useAlert()
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
+  
 
   type OptionsByColor = {
     color: string;
@@ -50,6 +58,8 @@ export const DetailsProductCard = ({
     stock: number;
     optionId: string;
   };
+
+
 
   function createOptions(
     array: { color: string; size: string; stock: number; id: string }[]
@@ -183,7 +193,7 @@ export const DetailsProductCard = ({
             )}
         </div>
       </div>
-      {isAuthenticated && state.idsInCart.includes(id) && <FormReview product_id={id}/>}
+      
       <DetailProductReview product_id={id} />
     </React.Fragment>
   );

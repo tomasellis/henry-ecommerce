@@ -269,7 +269,8 @@ const fromCartToOrderStringArray = (
       order_id: "${orderId}",
       product_option_id: "${product.products_option.id}",
       quantity: ${product.quantityBought},
-      unit_price: ${product.products_option.productDetail.price}
+      unit_price: ${product.products_option.productDetail.price},
+      product_id: "${product.products_option.product_id}"
     }`;
     return properString;
   });

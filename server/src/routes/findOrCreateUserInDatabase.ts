@@ -36,7 +36,13 @@ router.post(
                       product_option_id
                       quantity
                       unit_price
+                      product_id
                     }
+                    status
+                  }
+                  favourites {
+                    product_id
+                    url_image
                   }
                 }
               }`,
@@ -44,7 +50,7 @@ router.post(
       });
       console.log("findorcreateresponse", data);
       if (data.data.users.length)
-        return response.send( data.data.users[0]);
+        return response.send(data.data.users[0]);
       ({ data } = await axios({
         url: "https://henry-pg-api.herokuapp.com/v1/graphql",
         method: "POST",
@@ -71,7 +77,13 @@ router.post(
                       product_option_id
                       quantity
                       unit_price
+                      product_id
                     }
+                    status
+                  }
+                  favourites {
+                    product_id
+                    url_image
                   }
                 }
               }`,
