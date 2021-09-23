@@ -1,11 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components'
 import { useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { searchArticles } from "../../actions/searchArticles/searchArticles";
 
 const SearchList = () => {
     const busqueda = useSelector((state : any) => state.searchArticles);
-
+    const dispatch = useDispatch();
     const DeleteDuplicate = (arr) => {
         const itemMap = arr.map(busqueda => {
             return [busqueda.name, busqueda]
@@ -13,9 +15,11 @@ const SearchList = () => {
         return [...new Map(itemMap).values()];
     }
     let searchFilter = DeleteDuplicate(busqueda)
+    
 
-    useEffect (()=>{
-    }, [busqueda, searchFilter])
+    const ClickItem = () => {
+        dispatch(searchArticles(undefined))
+    }
 
     return (
        <List>
@@ -25,7 +29,7 @@ const SearchList = () => {
 
                    return (
                        <Link to = {`/clothing/details/${item.id}`} key={index}>
-                            <div className='listItem' >
+                            <div className='listItem' onClick={ClickItem}>
                                 <p>{item.name}</p>
                                 <img src={item.image_url} alt='img'/>
                             </div>
