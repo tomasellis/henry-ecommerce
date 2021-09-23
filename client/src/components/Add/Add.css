@@ -1,127 +1,145 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-
-.div_add_product{
-    display: inline-flex;
-    font-family: 'Poppins', sans-serif;
+.div_add_product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: "Poppins", sans-serif;
+  margin-top: 20px;
 }
 
-.title_add_product{
-    margin-left: 5px;
-    margin-bottom: 10px;
+.title_add_product {
+  margin-bottom: 10px;
 }
 
-.image_add_product{
-    margin-left: 80px;
-    margin-top: 65px;
+.image_add_product {
+  height: 400px;
+  width: 400px;
+  margin: 20px;
 }
 
-.div_form_add_product{
-    margin-left: 150px;
-    margin-top: 25px;
+.image_add_product img {
+  width: 100%;
+  height: 100%;
 }
 
-.p_add_product{
-    color: black;
-    margin-bottom: 0px;
-    font-size: 15px;
+.div_form_add_product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.p_add_product {
+  color: black;
+  font-size: 15px;
+  margin-top: 2px;
 }
 
 .div_name_add_product {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.div_category_add_product{
-    max-width: 400px;
-    margin-bottom: 10px;
+.div_category_add_product {
+  max-width: 400px;
+  margin-bottom: 10px;
 }
 
-.div_category_add_product input{
-    margin-top: 20px;
-    text-align: center;
-    width: 250px;
+.div_category_add_product input {
+  margin-top: 20px;
+  text-align: center;
+  width: 250px;
 }
 
-.div_category_add_product .select_category_add_product{
-    padding: 5px 28px;
-    margin-right: 20px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.555);
-    color: white;
+.div_category_add_product .select_category_add_product {
+  padding: 5px 28px;
+  margin-right: 20px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.555);
+  color: white;
 }
 
-.div_category_add_product button{
-    border-radius: 2px;
-    margin-left: 10px;
-    background-color: rgba(0, 0, 0, 0.555);
-    color: white;
-    border: none;
-    padding: 3px 17px;
+.div_category_add_product button {
+  border-radius: 2px;
+  margin-left: 10px;
+  background-color: rgba(0, 0, 0, 0.555);
+  color: white;
+  border: none;
+  padding: 3px 17px;
 }
 
-.div_size_add_product{
-    display: inline-flex;
-    margin-bottom: 10px;
+.div_size_add_product {
+  display: inline-flex;
+  margin-bottom: 10px;
 }
 
-.div_size_add_product p{
-    margin-bottom: 7px;
+.div_size_add_product p {
+  margin-bottom: 7px;
 }
 
-.div_size_add_product button{
-    background-color: white;
-    color: black;
-    margin-right: 20px;
-    padding: 7px 12px;
-    border: rgba(0, 0, 0, 0.548) 1px solid;
-}   
+.div_size_add_product button {
+  background-color: white;
+  color: black;
+  margin-right: 20px;
+  padding: 7px 12px;
+  border: rgba(0, 0, 0, 0.548) 1px solid;
+}
 
 .div_size_add_product .select {
-    border: rgba(0, 47, 255, 0.548) 3px solid;
+  border: rgba(0, 47, 255, 0.548) 3px solid;
 }
 
-.div_colors_add_product{
-    display: inline-block;
-    margin-bottom: 10px;
+.div_colors_add_product {
+  display: inline-block;
+  margin-bottom: 7px;
 }
 
-.div_colors_add_product button{
-    width: 30px;
-    height: 30px;
-    margin-right: 13px;
+.div_colors_add_product button {
+  width: 30px;
+  height: 30px;
+  margin-right: 13px;
 }
 
 .color_select {
-    border: rgba(0, 47, 255, 0.747) 3px solid;    
-    border-radius: 100px;
+  border: rgba(0, 47, 255, 0.747) 3px solid;
+  border-radius: 100px;
 }
 
-.div_image_add_product{
-    margin-bottom: 15px;
+.div_image_add_product {
+  margin-bottom: 15px;
 }
 
-.div_button_add_product button{
-    border-radius: 2px;
-    padding: 5px 147px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.555);
-    color: white;
-    margin-bottom: 20px;
+.div_button_add_product button {
+  border-radius: 2px;
+  padding: 5px 147px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.555);
+  color: white;
+  margin-bottom: 20px;
 }
 
-.div_input_stock_adn_price{
-    display: block ruby;
-    margin-bottom: 20px;
+.div_input_stock_adn_price {
+  display: block ruby;
+  margin-bottom: 20px;
 }
 
-.div_input_stock_adn_price input{
-    text-align: center;
-    margin-right: 40px;
-    width: 100px;
+.div_input_stock_adn_price input {
+  text-align: center;
+  margin-right: 40px;
+  width: 100px;
 }
 
-.err_add_product{
-    font-size: 13px;
-    margin-top: 2px;
-    color: red;
+.err_add_product {
+  font-size: 13px;
+  margin-top: 2px;
+  color: red;
+}
+
+.cloudinary-button {
+  margin-left: 100px;
+  outline: 0px;
+  border: 1px solid #000;
+  background-color: rgba(0, 0, 0, 0.445);
 }
