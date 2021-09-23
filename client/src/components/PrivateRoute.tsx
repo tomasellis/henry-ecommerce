@@ -18,14 +18,7 @@ const PrivateRoute = (props) => {
 
   return state.user?.role?.toLowerCase() === 'admin' ? (
     <Route {...props} />
-  ) : !state.user.id.length ? (
-    <React.Fragment>
-      <div style={{ textAlign: "center" }}>
-        <div>admin private path</div>
-        <button onClick={loginWithPopup}>Loguearse</button>
-      </div>
-    </React.Fragment>
-  ) : <Redirect to='/' />
+    ): <Redirect to='/' />
 };
 
 export default PrivateRoute
