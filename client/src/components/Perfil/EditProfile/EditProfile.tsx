@@ -408,8 +408,8 @@ export default function EditProfile() {
                 autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}
               >
-                <div className={classes.root2}>
                 <h5>- Change password</h5>
+                <div className={classes.root2}>
                 <TextField
                   label="New Password"
                   name="newpassword"
