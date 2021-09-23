@@ -37,6 +37,7 @@ router.post(
                       quantity
                       unit_price
                     }
+                    status
                   }
                 }
               }`,
@@ -44,7 +45,7 @@ router.post(
       });
       console.log("findorcreateresponse", data);
       if (data.data.users.length)
-        return response.send( data.data.users[0]);
+        return response.send(data.data.users[0]);
       ({ data } = await axios({
         url: "https://henry-pg-api.herokuapp.com/v1/graphql",
         method: "POST",
