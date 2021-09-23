@@ -98,9 +98,6 @@ function App() {
       <Route exact path='/profile/favorites' component={Favorites} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
       <Route exact path='/profile/shopping-history' component={History} />
-      <PrivateRoute exact path="/admin/createproduct" component={Add} />
-      <PrivateRoute exact path="/admin/editusers" component={EditUsers} />
-      <PrivateRoute exact path="/admin/editorders" component={EditOrders} />
       <Route exact path="/admin/createproduct">
         <PrivateRoute component={Add} />
       </Route>

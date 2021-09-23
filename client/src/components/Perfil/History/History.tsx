@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { setUserOrder } from '../../../actions';
@@ -10,11 +9,11 @@ import "./CardHistory.css"
 export default function History() {
     const state = useSelector((state: any) => state)
     const dispatch = useDispatch()
-    const userId = state.user.id
+    
     useEffect(() => {
+        const userId = state.user.id
         dispatch(setUserOrder(userId))
     },[])
-    console.log(state.storeHistory,"eeeeeee")
     
     return(
         <div className="div_cards">
