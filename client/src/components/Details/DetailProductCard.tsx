@@ -1,14 +1,12 @@
-// import React from "react";
 import "./DetailProductCard.css";
-// import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
+import { useAlert } from 'react-alert'
 import axios from "axios";
-// import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
-import FormReview from './FormReview'
+
 
 type Product = {
   id_option: string;
@@ -22,9 +20,19 @@ type Product = {
   quantity;
 };
 
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role:string;
+  productsReceived:string[];
+  reviews:string[]
+};
+
 interface RootState {
   cart: Array<Product>;
   idsInCart: string;
+  user: User;
 }
 
 export const DetailsProductCard = ({
@@ -35,8 +43,10 @@ export const DetailsProductCard = ({
   price,
   product_options,
 }) => {
+  const alertReact = useAlert()
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
+  
 
   type OptionsByColor = {
     color: string;
@@ -48,6 +58,8 @@ export const DetailsProductCard = ({
     stock: number;
     optionId: string;
   };
+
+
 
   function createOptions(
     array: { color: string; size: string; stock: number; id: string }[]
@@ -93,9 +105,6 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
-  console.log(productDetail);
-
-
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -112,10 +121,10 @@ export const DetailsProductCard = ({
       const existProductInCartRedux = state.cart.some((product) => {
         return product.id_option === productDetail.id_option;
       });
-      if (existProductInCartRedux) alert("Product already in cart!");
+      if (existProductInCartRedux) alertReact.error("Product already in cart!");
       else {
         dispatch(addToCartStorage(productDetail));
-        alert("Product added to cart!");
+        alertReact.success("Product added to cart!");
       }
     } else { //si esta autenticado...
 
@@ -129,19 +138,19 @@ export const DetailsProductCard = ({
       );
 
       const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
-        user_id: data.user_id,
+        user_id: data.id,
         product_option_id: productDetail.id_option,
         quantity: 1,
       });
 
       if (!dataAddToCart.data.errors) {
         dispatch(setProductsIdsInCart(id))
-        alert("producto agregado al carrito");
+        alertReact.success("producto agregado al carrito");
       
       }
 
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
-      else alert(dataAddToCart.data.errors);
+      else alertReact.error(dataAddToCart.data.errors);
     }
   }
 
@@ -184,7 +193,7 @@ export const DetailsProductCard = ({
             )}
         </div>
       </div>
-      {isAuthenticated && state.idsInCart.includes(id) && <FormReview product_id={id}/>}
+      
       <DetailProductReview product_id={id} />
     </React.Fragment>
   );
@@ -231,12 +240,12 @@ const productDetailDisplay = (
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
-              <label>
+              <label key={option.size}>
                 {option.size}
                 <input
                   type="radio"
                   name="size"
-                  key={option.size}
+                  
                   checked={productDetail["size"] === option.size}
                   value={option.size}
                   onChange={(e) => {

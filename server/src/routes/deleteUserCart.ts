@@ -38,10 +38,23 @@ router.post(
 export default router;
 
 const deleteUserCartMutation = (userId: string) => `mutation DeleteUserCart{
-    delete_carts_products(where: {user_id:{_eq:"${userId}"}}){
-      affected_rows
-      returning{
-        user_id
+  delete_carts_products(where: {user_id:{_eq:"${userId}"}}){
+    affected_rows
+    returning{
+      userId: user_id
+      quantityBought: quantity
+      products_option{
+        id
+        size
+        color
+        stock
+        product_id
+        image_url
+        productDetail: product{
+          name
+          price
+        }
       }
     }
-  }`;
+  }
+}`;

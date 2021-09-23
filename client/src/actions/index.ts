@@ -43,8 +43,6 @@ export function postProduct(payload) {
 }
 
 export function favoriteProducts(payload){
-  console.log(payload);
-  
   return{
     type : 'ADD_FAVORITE_PRODUCT',
     payload : payload
@@ -68,11 +66,11 @@ export function cleanProductDetail() {
 }
 
 export function cleanProducts() {
-  return { type: "CLEAN_PRODUCTS" };
+  return { type: "CLEAN_PRODUCTS", payload:[]};
 }
 
-export function setDataUser(user_id:string,user_email:string, auth0_id:string){
-  return {type: 'SET_DATA_USER', payload: {user_id, user_email,auth0_id} }
+export function setDataUser(dataUser){
+  return {type: 'SET_DATA_USER', payload: dataUser }
 }
 
 export function setProductsIdsInCart(idsInCart){
@@ -92,3 +90,14 @@ export function changePassword2(data){
     dispatch({ type: "CHANGE_PASSWORD", payload: newpass.data})
   };
 };
+
+export function setUserOrder(userId){
+  return async (dispatch: Dispatch) => {
+    
+    const product = await axios.get(
+      `${REACT_APP_BASE_BACKEND_URL}/getUserOrders?userId=${userId}`
+    );
+    console.log(product.data)
+    dispatch({ type: 'SET_STORE_HISTORY', payload: product.data})
+  }
+}

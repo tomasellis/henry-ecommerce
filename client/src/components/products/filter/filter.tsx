@@ -1,22 +1,37 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 //import css
 import "./filter.css";
 import { getArticles } from "../../../actions/products/productActions";
+import {  getOptions } from '../../../actions';
 
 export default function Filter() {
+  const state = useSelector((state: RootState) => state);
+
+  useEffect(()=> {
+    dispatch(getOptions())
+  }, [])
+  const options = useSelector((state: any) => state.options);  
+
+  interface RootState {
+    maxProducts: number;
+  }
+
+  const [category, setCategory] = useState({
+    categories: [],
+  });
+
   type Params = {
     gender: string;
     page: string
   };
   const { gender } = useParams<Params>();
-  const {page} = useParams<Params>();
+  // const {page} = useParams<Params>();
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
@@ -25,7 +40,14 @@ export default function Filter() {
       [e.target.name]: e.target.id
     })
   };
+  
 
+  const [pages, setPages] = useState({
+    currentPage: 0,
+    prevPage: -1,
+    nextPage: 1,
+  })
+  const productsxPage = 8
   const [dataFilter, setDataFilter] = useState({
     gender: gender,
     category: [],
@@ -44,12 +66,33 @@ export default function Filter() {
         dataFilter.greater_than,
         dataFilter.color,
         dataFilter.size,
-        0,
-        12,
+        productsxPage * 0,
+        productsxPage,
         undefined
       )
     )
-  }, [dataFilter])
+    setPages({
+      currentPage: 0,
+      prevPage: -1,
+      nextPage: 1,
+    })
+  }, [dataFilter,gender])
+
+  useEffect(() => {
+    dispatch(
+      getArticles(
+        gender,
+        dataFilter.category,
+        dataFilter.less_than,
+        dataFilter.greater_than,
+        dataFilter.color,
+        dataFilter.size,
+        productsxPage * pages.currentPage,
+        productsxPage,
+        undefined
+      )
+    )
+  }, [pages.currentPage])
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,14 +112,6 @@ export default function Filter() {
   );
 
   const classes = useStyles();
-
-/*   const handleChange = (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  } */
 
   const inputHandler = (e) => {
     if (e.target.name !== "less_than" || e.target.name !== "greater_than") {
@@ -129,6 +164,7 @@ export default function Filter() {
               <p className="icon_menu_product">☰</p>
             </div>
           </label>
+          {console.log('soydatafilter',dataFilter)}
       {!dataFilter.category.length ||
       <div className = 'div_quitar_filter'>
         <button onClick={() => removeFilter("category")}>
@@ -165,44 +201,31 @@ export default function Filter() {
               id="dropdownMenuButton1"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-            >
-              CLOTHER
+              >
+              CATEGORIES
             </button>
             <ul
               onClick={(e) => setDataHandler(e)}
               className="dropdown-menu"
               aria-labelledby="dropdownMenuButton1"
-            >
-              <li>
-                <button className="dropdown-item" id="tshirts" name="category">
-                  T-SHIRT
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="pants" name="category">
-                  PANTS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="jackets" name="category">
-                  JACKETS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="diver" name="category">
-                  DIVERS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="footwear" name="category">
-                  FOOTWEAR
-                </button>
-              </li>
-            </ul>
+              
+              >
+              {options.categories?.map((e) => {                
+                  function NameInUpperCase(str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                  }
+                  const name = NameInUpperCase(e.name);
+                  return (
+
+                  <li>
+                    <button className="dropdown-item" id={e.name} name = 'category'>
+                        {name}
+                    </button>
+                    <hr className="hr_filter_product" />
+                  </li>
+                  )
+                })}
+              </ul>
           </div>
           <div className="dropdown">
             <button
@@ -366,6 +389,21 @@ export default function Filter() {
           </div>
         </div>
       </div>
+      <div className='pagination'>
+      
+      <button onClick={e => setPages({
+          ...pages,
+          currentPage: pages.currentPage - 1,
+          prevPage: pages.prevPage - 1,
+          nextPage: pages.nextPage - 1
+        })} disabled={pages.prevPage < 0} >&laquo; Prev</button>
+        <button onClick={e => setPages({
+          ...pages,
+          currentPage: pages.currentPage + 1,
+          prevPage: pages.prevPage + 1,
+          nextPage: pages.nextPage + 1
+        })} disabled={pages.nextPage > Math.ceil(state.maxProducts / productsxPage) - 1} >Next &raquo;</button>
+        </div>
     </>
   );
 }

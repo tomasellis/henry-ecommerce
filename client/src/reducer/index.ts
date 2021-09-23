@@ -1,14 +1,13 @@
 import { PRODUCTS_ACTIONS } from "../actions/products/productActions";
 
 const initialState = {
+  products: [],
+  maxProducts: 0,
   product: [],
   options: [],
-  favoriteProducts : [],
+  favoriteProducts: [],
   productsInCartByUser: [],
-  articles: {
-    products: [],
-    next: [],
-  },
+
   cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
   idsInCart: localStorage.idsInCartStorage
     ? JSON.parse(localStorage.idsInCartStorage)
@@ -16,8 +15,11 @@ const initialState = {
   searchArticles: [],
   user: {
     id: '',
-    email: ''
-  }
+    email: '',
+    productsReceived: [],
+    reviews: []
+  },
+  storeHistory: []
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -25,10 +27,8 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case PRODUCTS_ACTIONS.BRING_CLOTHER:
       return {
         ...state,
-        articles: {
-          products: payload.data.products,
-          next: payload.next.products,
-        },
+        products: payload.data.products,
+        maxProducts: payload.data.products_aggregate.aggregate.count
       };
     case "GET_PRODUCT_INFO":
       return {
@@ -82,10 +82,10 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
-    case 'ADD_FAVORITE_PRODUCT' :
+    case 'ADD_FAVORITE_PRODUCT':
       return {
         ...state,
-        favoriteProducts : [...state.favoriteProducts, payload]
+        favoriteProducts: [...state.favoriteProducts, payload]
       }
 
     case "CLEAN_PRODUCT_DETAIL":
@@ -97,20 +97,33 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case "CLEAN_PRODUCTS":
       return {
         ...state,
-        articles: {
-          products: [],
-          next: [],
-        },
-      };
+        products: payload,
+        maxProducts: 0
+      }
 
     case 'SET_DATA_USER':
+      let ordersReceived = [], ordersShipped = [], ordersApproved = [], productsReceived = []
+      let reviews = payload.reviews.map(review => review.id_product_general)
+      let orders = payload.orders.map(order => {
+        switch (order.status.toLowerCase()) {
+          case 'approved':
+            ordersApproved.push(order.orders_products)
+            break;
+          case 'shipped':
+            ordersShipped.push(order.orders_products)
+            break;
+          case 'delivered':
+            ordersReceived.push(order.orders_products)
+            order.orders_products.map(product => {
+              return productsReceived.push(product.product_id)
+            })
+            break;
+        }
+        return order.orders_products
+      })
       return {
         ...state,
-        user: {
-          id: payload.user_id,
-          email: payload.user_email,
-          auth0_id: payload.auth0_id
-        }
+        user: { ...payload, orders: orders, reviews: reviews, ordersReceived, ordersShipped, ordersApproved, productsReceived }
       }
 
     case 'SET_PRODUCTS_IDS_IN_CART':
@@ -124,6 +137,18 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           idsInCart: [...state.idsInCart, payload]
         }
+      }
+      
+    case 'UPDATED_REVIEWS':
+      return {
+        ...state,
+        user: { ...state.user, reviews: [...state.user.reviews, payload] }
+      }
+
+    case "SET_STORE_HISTORY":
+      return {
+        ...state,
+        storeHistory: payload
       }
 
     default:

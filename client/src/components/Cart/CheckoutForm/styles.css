@@ -1,0 +1,18 @@
+.checkoutForm {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+.shippingForm {
+  margin-top: 50px;
+  background-color: white;
+  display: flex;
+  flex-flow: column nowrap;
+  border: 2px solid rgb(128, 128, 128);
+  padding: 20px;
+  border-radius: 5px;
+  width: 50%;
+}

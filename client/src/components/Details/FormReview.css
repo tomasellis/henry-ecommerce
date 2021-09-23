@@ -1,113 +1,104 @@
-
-
 .form-review {
   display: flex;
   justify-items: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  border: solid;
-  margin-inline: 10%;
-  }
-  
-  .form-group {
-    margin-bottom: 0.4%;
-  }
+  width: 400px;
+  margin: 20px auto;
+  /* background-image: linear-gradient(
+    to right,
+    #fafafa 0%,
+    #eeeeee,
+    #dddddd,
+    #cccccc,
+    #cccccc
+  ); */
+}
 
-  
-  
-  form label {
-    font-size: 16px;
-  }
-  
-  input[type="radio"] {
-    display: none;
-  }
-  
-  label {
-  
-      display: inline-block;
-      margin-bottom: 0.5rem;
-  
-    color: black;
-  }
-  
-  #estrellas{
-   font-size: 150%;
-  }
-  
-  .stars { 
-    direction: rtl; 
-    unicode-bidi: bidi-override; 
-  }
- 
-  
-  #estrellas:hover,
-  #estrellas:hover ~ #estrellas {
-    color: orange;
-    cursor: pointer;
-  }
-  
-  input[type="radio"]:checked ~ #estrellas {
-    color: orange;
-  }
-  
-  input[type="radio"]{
-    box-sizing: border-box;
-    padding: 0;
-    margin-left: 3px;
-    margin-right: 12px;
-  }
-  
-  
-  .radio-inline,
-  .checkbox-inline {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: bolder;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  
-  
-  .button-addreview{
-    /* background-color: transparent; */
-    color: black;
-    border: double;
-    font-size: larger;
-  }
- 
+.boxFormReview {
+  margin-top: 30px;
+}
 
-  
-  
-  input[type="checkbox"] {
-    display: none;
-  }
-  
-  .control-label{
-    margin-inline: 50%;
-  }
+.boxFormReview h4 {
+  display: inline;
+}
+.form-group input[type="radio"] {
+  display: none;
+}
 
-  .form-control {
-      display: block;
-      width: 100%;
-      height: calc(1.5em + 0.75rem + 2px);
-      padding: 0.375rem 0.75rem;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #495057;
-      background-color: #fff;
-      background-clip: padding-box;
-      border: 1px solid #ced4da;
-      border-radius: 0.25rem;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
+.form-group label {
+  color: #000;
+}
 
-  .has-error
-   {
-     color: red;
-    border-color: red;
-    border-width: thick;
-  }
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#estrellas {
+  font-size: 190%;
+}
+
+.stars {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  margin-left: 80px;
+}
+
+#estrellas:hover,
+#estrellas:hover ~ #estrellas {
+  color: gold;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked ~ #estrellas {
+  color: gold;
+}
+
+.button-addreview {
+  /* background-color: transparent; */
+  color: black;
+  border: double;
+  font-size: larger;
+}
+
+.form-control input {
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+}
+
+.input-comment textarea {
+  resize: none;
+  width: 380px;
+  height: 120px;
+  border-color: #cccccc;
+  outline: 0px;
+}
+.input-comment textarea::focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.input-comment input {
+  margin-bottom: 5px;
+  border-radius: 50px;
+}
+
+.has-error {
+  color: red;
+  border-color: red;
+  font-weight: 700;
+}
+
+.control-label {
+  font-weight: 700;
+}
+
+.btn-review {
+  display: flex;
+  position: relative;
+  left: 150px;
+  text-align: right;
+}

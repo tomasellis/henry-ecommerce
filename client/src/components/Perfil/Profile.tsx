@@ -1,5 +1,6 @@
 import {useAuth0} from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 //import css
 import './Profile.css'
@@ -11,8 +12,8 @@ import EditProfile from './EditProfile/EditProfile'; */
 
 export default function Profile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
-  console.log(user);
-  
+  let usera = useSelector((state : any) => state.user);
+  console.log('soyuser',usera);  
   if(isLoading) return <div>Loading...</div>  
 
   

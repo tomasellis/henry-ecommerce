@@ -12,12 +12,12 @@ export default function CategorySlide() {
   return (
     <div className="div_categorySlide">
       <div className="img_one_categorySlide">
-        <Link to="/clothing/women/0">
+        <Link to="/clothing/women">
           <img className="img_categorySlide" src={Mujeres} alt="" width="80%" />
         </Link>
       </div>
       <div className="img_two_categorySlide">
-        <Link to="/clothing/men/0">
+        <Link to="/clothing/men">
           <img className="img_categorySlide" src={Hombres} alt="" width="80%" />
         </Link>
       </div>
