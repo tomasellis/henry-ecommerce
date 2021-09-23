@@ -31,9 +31,9 @@
   color: black;
 }
 
-.img_product {
+.div_card_product img {
   width: 330px;
-  height: 370px;
+  height: 300px;
   padding: 10px;
 }
 
