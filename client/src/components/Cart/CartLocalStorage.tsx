@@ -55,17 +55,13 @@ const CartLocalStorage = () => {
   });
 
   useEffect(() => {
-    setProductsInCart({
-      loading: "loaded",
-      products: state.cart,
-    });
-
-    return () => {
+    if (state.cart) {
       setProductsInCart({
-        loading: "loading",
-        products: [],
+        loading: "loaded",
+        products: state.cart,
       });
-    };
+    }
+
     // eslint-disable-next-line
   }, [state.cart]);
 
