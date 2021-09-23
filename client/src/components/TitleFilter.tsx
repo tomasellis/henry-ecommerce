@@ -7,10 +7,10 @@ const TitleFilter = ({mob}) => {
     if(mob){
         return (
             <TitleMob>
-                <Link to = '/clothing/women/0'>
+                <Link to = '/clothing/women'>
                     <p>WOMEN</p>
                 </Link>
-                <Link to = '/clothing/men/0'>
+                <Link to = '/clothing/men'>
                     <p>MEN</p>
                 </Link>
             </TitleMob>
@@ -20,10 +20,10 @@ const TitleFilter = ({mob}) => {
     return (
         <TitleCtn>
             <div>
-                 <Link to = '/clothing/women/0'>
+                 <Link to = '/clothing/women'>
                     <p>WOMEN</p>
                 </Link>
-                <Link to = '/clothing/men/0'>
+                <Link to = '/clothing/men'>
                     <p>MEN</p>
                 </Link>
             </div>

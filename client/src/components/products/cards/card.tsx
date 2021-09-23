@@ -30,7 +30,7 @@ export default function Card({name,price,image,id}){
         <>
             <div className = 'div_container_card_product'>
                 <div className = 'div_card_product'>
-                    <Link to = {`/clothing/${id}`}>
+                    <Link to = {`/clothing/details/${id}`}>
                         <img className = 'img_product' src={image.includes('http')? image : IMG }alt="" />
                         <h3 className = 'card_name_product'>{name}</h3>
                         <h5 className = 'card_desc_product'>$ {price}</h5>

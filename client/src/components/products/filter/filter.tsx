@@ -1,22 +1,28 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 //import css
 import "./filter.css";
 import { getArticles } from "../../../actions/products/productActions";
+import { cleanProducts } from '../../../actions';
 
 export default function Filter() {
+  const state = useSelector((state: RootState) => state);
+
+  interface RootState {
+    maxProducts: number;
+  }
+
   type Params = {
     gender: string;
     page: string
   };
   const { gender } = useParams<Params>();
-  const {page} = useParams<Params>();
+  // const {page} = useParams<Params>();
   const dispatch = useDispatch();
 
   const setDataHandler = (e) => {
@@ -26,6 +32,12 @@ export default function Filter() {
     })
   };
 
+  const [pages, setPages] = useState({
+    currentPage: 0,
+    prevPage: -1,
+    nextPage: 1,
+  })
+  const productsxPage = 8
   const [dataFilter, setDataFilter] = useState({
     gender: gender,
     category: [],
@@ -44,12 +56,33 @@ export default function Filter() {
         dataFilter.greater_than,
         dataFilter.color,
         dataFilter.size,
-        0,
-        12,
+        productsxPage * 0,
+        productsxPage,
         undefined
       )
     )
-  }, [dataFilter])
+    setPages({
+      currentPage: 0,
+      prevPage: -1,
+      nextPage: 1,
+    })
+  }, [dataFilter,gender])
+
+  useEffect(() => {
+    dispatch(
+      getArticles(
+        gender,
+        dataFilter.category,
+        dataFilter.less_than,
+        dataFilter.greater_than,
+        dataFilter.color,
+        dataFilter.size,
+        productsxPage * pages.currentPage,
+        productsxPage,
+        undefined
+      )
+    )
+  }, [pages.currentPage])
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,14 +102,6 @@ export default function Filter() {
   );
 
   const classes = useStyles();
-
-/*   const handleChange = (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  } */
 
   const inputHandler = (e) => {
     if (e.target.name !== "less_than" || e.target.name !== "greater_than") {
@@ -366,6 +391,20 @@ export default function Filter() {
           </div>
         </div>
       </div>
+      <div className='pagination'>
+      <button onClick={e => setPages({
+          ...pages,
+          currentPage: pages.currentPage - 1,
+          prevPage: pages.prevPage - 1,
+          nextPage: pages.nextPage - 1
+        })} disabled={pages.prevPage < 0} >Prev</button>
+        <button onClick={e => setPages({
+          ...pages,
+          currentPage: pages.currentPage + 1,
+          prevPage: pages.prevPage + 1,
+          nextPage: pages.nextPage + 1
+        })} disabled={pages.nextPage > Math.ceil(state.maxProducts / productsxPage) - 1} >Next</button>
+        </div>
     </>
   );
 }

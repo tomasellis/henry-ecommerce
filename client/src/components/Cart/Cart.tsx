@@ -69,13 +69,13 @@ const Cart = ({ user }: { user: User }) => {
       }
     );
 
-    const data = await getProductsInCart(dataUser.data.user_id);
+    const data = await getProductsInCart(dataUser.data.id);
     if (data) {
       setProductsInCart({
         ...productsInCart,
         products: data,
         loading: "loaded",
-        user_id: dataUser.data.user_id,
+        user_id: dataUser.data.id,
       });
     }
   };

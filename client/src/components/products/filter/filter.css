@@ -240,3 +240,30 @@
 .div_quitar_filter p{
     margin-left: 25px;
 }
+
+.pagination {
+    display: inline-block;
+    margin-left:40%;
+    padding:40px;
+  }
+  
+  .disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+  }
+  
+  .pagination a:hover {
+    background-color: #ddd;
+  }
+  
+  .pagination a {
+    color: black;
+    float: left;
+    font-size: 25px;
+    cursor:pointer;
+    margin:1px;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+  
