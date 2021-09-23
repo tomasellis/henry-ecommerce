@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom"; */
 import "./CardHistory.css"
 
 
 export default function CardHistory({id,name,unit_price,quantity,image_url}) {
-    const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium';
+    /* const IMG = 'https://img.hollisterco.com/is/image/anf/KIC_325-1470-0615-320_prod1?policy=product-medium'; */
 
     return (
         <>
