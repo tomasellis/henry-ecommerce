@@ -18,6 +18,11 @@ import createNewCategory from "./createNewCategory";
 import deleteUserCart from "./deleteUserCart";
 import addLocalStorageToCart from "./addLocalStorageToCart";
 import findOrCreateUserInDatabase from "./findOrCreateUserInDatabase";
+import addReview from "./addReview";
+import getUserOrders from "./getUserOrders";
+import sendMail from "./sendMail";
+import changePassword from "./changePassword";
+
 const router = Router();
 
 router.use("/products", products);
@@ -39,5 +44,9 @@ router.use("/addLocalStorageToCart", addLocalStorageToCart);
 router.use("/deleteUserCart", deleteUserCart);
 router.use("/createNewCategories", createNewCategory);
 router.use("/findOrCreateUserInDatabase", findOrCreateUserInDatabase);
+router.use("/addReview", addReview);
+router.use("/getUserOrders", getUserOrders);
+router.use("/sendMail", sendMail);
+router.use("/changePassword", changePassword);
 
 export default router;

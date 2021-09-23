@@ -1,74 +1,81 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { searchArticles } from '../actions/searchArticles/searchArticles';  
+import { useAlert } from 'react-alert'
+import { useParams } from "react-router";
+import { searchArticles } from '../../actions/searchArticles/searchArticles';
+import { getArticles } from "../../actions/products/productActions";
+import { MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
 import { IconButton } from '@material-ui/core';
 import { getCombinedModifierFlags } from 'typescript';
-
+import SearchList from "./SearchList";
 
 export default function Search(): JSX.Element {
+  const alertReact = useAlert()
   const dispatch = useDispatch();
   const [search, setSearch]  = useState<string>('');
   // const busqueda = useSelector((state : any) => state.searchArticles);
-  
-  // useEffect(() => {
 
-    
-    
-  // },[busqueda,dispatch])
-  
-  
+ //useEffect(() => {
+
+
+
+ //},[search,dispatch])
+
+
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    dispatch(searchArticles(search))
-    
-  }
-  
-  
-  
+    dispatch(searchArticles(search));
+  };
+
+
   const handleSubmit = (e : React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if(search !== ''){
-      
+      window.location.replace(`http://localhost:3000/search?name=${search}`);//Cambiar URL.
+      setSearch('')
       console.log(`funciona ${search.toLowerCase()}`)
 
       // setTimeout(() => {
       //   dispatch(searchArticles(search))
       // },1000)
-    
+
     }else{
-      alert('Ingrese algo por favor...')
-    }    
+      alertReact.error('Please, write something...')
+    }
   }
 
 
   return (
-    
+    <>
     <InputCtn onSubmit={e => handleSubmit(e)}>
-      
+
         <input
           id='search-bar'
           type="text"
           name="name"
           autoComplete="off"
-          placeholder='Buscar...'
+          placeholder='Search...'
           className='input'
           value={search}
           onChange = {e => handleChange(e)}
         >
-       
+
         </input>
         <div onClick={e => handleSubmit(e)}>
+
           <IconButton>
             {/* <SearchIcon className='icon' /> */}
             <SearchIcon className='icon' />
           </IconButton>
         </div>
     </InputCtn>
-  
+    <SearchList/>
+    </>
   )
 }
 
@@ -91,9 +98,8 @@ const InputCtn = styled.form`
     text-align: center;
     color: black;
   }
-  
+
   .icon{
     color: rgba(0, 0, 0, 0.788);
   }
-`
-
+`;

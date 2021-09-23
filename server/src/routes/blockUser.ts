@@ -23,7 +23,7 @@ const management = new ManagementClient({
 //   }
 //  }
 
-router.get("/", async (req: Request, response: Response, next: NextFunction) => {
+router.post("/", async (req: Request, response: Response, next: NextFunction) => {
 
   const { id, blocking } = req.query
 

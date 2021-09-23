@@ -24,9 +24,8 @@ export default function OptionsAdd({
       <p className="p_add_product">Size</p>
       {options.size?.map((e) => {
         return (
-          <div className="div_size_add_product">
+          <div className="div_size_add_product" key={e.name}>
             <button
-              key={e.name}
               className={input.options[0].size === e.name ? "select" : null}
               name="size"
               value={e.name}

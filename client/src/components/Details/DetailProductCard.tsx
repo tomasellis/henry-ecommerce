@@ -2,11 +2,14 @@
 import "./DetailProductCard.css";
 // import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAlert } from 'react-alert'
 import axios from "axios";
 // import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartStorage, cleanProductDetail } from "../../actions";
+import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
+import DetailProductReview from "./DetailProductReview";
+import FormReview from './FormReview'
 
 type Product = {
   id_option: string;
@@ -33,6 +36,7 @@ export const DetailsProductCard = ({
   price,
   product_options,
 }) => {
+  const alertReact = useAlert()
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
 
@@ -91,9 +95,6 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
-  console.log(productDetail);
-  
-
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -110,13 +111,12 @@ export const DetailsProductCard = ({
       const existProductInCartRedux = state.cart.some((product) => {
         return product.id_option === productDetail.id_option;
       });
-      if (existProductInCartRedux) alert("Product already in cart!");
+      if (existProductInCartRedux) alertReact.error("Product already in cart!");
       else {
         dispatch(addToCartStorage(productDetail));
-        alert("Product added to cart!");
+        alertReact.success("Product added to cart!");
       }
-    } else {
-      //si esta autenticado...
+    } else { //si esta autenticado...
 
       const { data } = await axios.post(
         `${BASE_URL}/findOrCreateUserInDatabase`,
@@ -128,14 +128,19 @@ export const DetailsProductCard = ({
       );
 
       const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
-        user_id: data.user_id,
+        user_id: data.id,
         product_option_id: productDetail.id_option,
         quantity: 1,
       });
 
-      if (!dataAddToCart.data.errors) alert("producto agregado al carrito");
+      if (!dataAddToCart.data.errors) {
+        dispatch(setProductsIdsInCart(id))
+        alertReact.success("producto agregado al carrito");
+      
+      }
+
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
-      else alert(dataAddToCart.data.errors);
+      else alertReact.error(dataAddToCart.data.errors);
     }
   }
 
@@ -147,7 +152,7 @@ export const DetailsProductCard = ({
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
-        id_option: chosenOptionSize[0].optionId,
+        id_option: chosenOptionSize[0]?.optionId,
       });
     }
     return setProductDetail({
@@ -157,26 +162,30 @@ export const DetailsProductCard = ({
   }
 
   return (
-    <div className="mainDetailCard">
-      <div className="mainDetailCard__container">
-        <div className="container__img">
-          <img
-            src={image_url}
-            width="100%"
-            alt=""
-            className="container__card-img"
-          />
+    <React.Fragment>
+      <div className="mainDetailCard">
+        <div className="mainDetailCard__container">
+          <div className="container__img">
+            <img
+              src={image_url}
+              width="100%"
+              alt=""
+              className="container__card-img"
+            />
+          </div>
+          {product &&
+            productDetailDisplay(
+              price,
+              optionsByColor,
+              onChange,
+              addToCart,
+              productDetail
+            )}
         </div>
-        {product &&
-          productDetailDisplay(
-            price,
-            optionsByColor,
-            onChange,
-            addToCart,
-            productDetail
-          )}
       </div>
-    </div>
+      {isAuthenticated && state.idsInCart.includes(id) && <FormReview product_id={id}/>}
+      <DetailProductReview product_id={id} />
+    </React.Fragment>
   );
 };
 
@@ -219,23 +228,23 @@ const productDetailDisplay = (
         {opciones.length &&
           opciones
             .filter((obj) => obj.color === productDetail["color"])[0]
-            ["options"].map((option) => {
-              return (
-                <label>
-                  {option.size}
-                  <input
-                    type="radio"
-                    name="size"
-                    key={option.size}
-                    checked={productDetail["size"] === option.size}
-                    value={option.size}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
-                  />
-                </label>
-              );
-            })}
+          ["options"].map((option) => {
+            return (
+              <label key={option.size}>
+                {option.size}
+                <input
+                  type="radio"
+                  name="size"
+                  
+                  checked={productDetail["size"] === option.size}
+                  value={option.size}
+                  onChange={(e) => {
+                    onChange(e);
+                  }}
+                />
+              </label>
+            );
+          })}
       </div>
     </form>
     <div className="div_stock_product_details">
@@ -243,8 +252,8 @@ const productDetailDisplay = (
       {opciones.length &&
         opciones
           .filter((obj) => obj.color === productDetail["color"])[0]
-          ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-          "stock"
+        ["options"].filter((obj) => obj.size === productDetail["size"])[0][
+        "stock"
         ]}{" "}
       u.
     </div>

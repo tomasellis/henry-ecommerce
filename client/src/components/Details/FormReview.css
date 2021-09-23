@@ -1,0 +1,104 @@
+.form-review {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 400px;
+  margin: 20px auto;
+  /* background-image: linear-gradient(
+    to right,
+    #fafafa 0%,
+    #eeeeee,
+    #dddddd,
+    #cccccc,
+    #cccccc
+  ); */
+}
+
+.boxFormReview {
+  margin-top: 30px;
+}
+
+.boxFormReview h4 {
+  display: inline;
+}
+.form-group input[type="radio"] {
+  display: none;
+}
+
+.form-group label {
+  color: #000;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#estrellas {
+  font-size: 190%;
+}
+
+.stars {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  margin-left: 80px;
+}
+
+#estrellas:hover,
+#estrellas:hover ~ #estrellas {
+  color: gold;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked ~ #estrellas {
+  color: gold;
+}
+
+.button-addreview {
+  /* background-color: transparent; */
+  color: black;
+  border: double;
+  font-size: larger;
+}
+
+.form-control input {
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+}
+
+.input-comment textarea {
+  resize: none;
+  width: 380px;
+  height: 120px;
+  border-color: #cccccc;
+  outline: 0px;
+}
+.input-comment textarea::focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.input-comment input {
+  margin-bottom: 5px;
+  border-radius: 50px;
+}
+
+.has-error {
+  color: red;
+  border-color: red;
+  font-weight: 700;
+}
+
+.control-label {
+  font-weight: 700;
+}
+
+.btn-review {
+  display: flex;
+  position: relative;
+  left: 150px;
+  text-align: right;
+}

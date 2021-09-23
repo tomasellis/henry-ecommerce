@@ -1,4 +1,6 @@
-
+:root{
+  min-width: fit-content;
+}
 
 .App-logo {
   height: 40vmin;
