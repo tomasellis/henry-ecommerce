@@ -226,35 +226,6 @@ export default function Filter() {
                   )
                 })}
               </ul>
-              {/* <li>
-                <button className="dropdown-item" id="tshirts" name="category">
-                  T-SHIRT
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="pants" name="category">
-                  PANTS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="jackets" name="category">
-                  JACKETS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="diver" name="category">
-                  DIVERS
-                </button>
-              </li>
-              <hr className="hr_filter_product" />
-              <li>
-                <button className="dropdown-item" id="footwear" name="category">
-                  FOOTWEAR
-                </button>
-              </li> */}
           </div>
           <div className="dropdown">
             <button
