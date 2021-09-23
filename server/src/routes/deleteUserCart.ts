@@ -43,14 +43,17 @@ const deleteUserCartMutation = (userId: string) => `mutation DeleteUserCart{
     returning{
       userId: user_id
       quantityBought: quantity
-      productOptionDetail: products_option{
+      products_option{
         id
+        size
+        color
+        stock
+        product_id
+        image_url
         productDetail: product{
           name
           price
         }
-        size
-        color
       }
     }
   }

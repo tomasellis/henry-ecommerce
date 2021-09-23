@@ -62,6 +62,7 @@ router.post(
       external_reference,
       latitude,
       longitude,
+      additionalInfo,
     } = req.body;
     console.log("datahere", req.body);
 
@@ -72,10 +73,11 @@ router.post(
     const payer_body: Payer = payer as Payer;
     const latitude_body: number = latitude as number;
     const longitude_body: number = longitude as number;
+    const additionalInfo_body: string = additionalInfo as string;
 
     const external_reference_body = external_reference as string;
 
-    const backURL = `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}&latitude=${latitude_body}&longitude=${longitude_body}`;
+    const backURL = `${BACKEND_URL}/mercadoPago/payment?userEmail=${payer_body.email}&userAddress=${payer_body.address.street_name}&latitude=${latitude_body}&longitude=${longitude_body}&additionalInfo=${additionalInfo_body}`;
 
     const preference: MercadopagoPreference = {
       items: items_body,
@@ -102,21 +104,21 @@ router.post(
 );
 
 router.get("/payment", async (req, res) => {
-  console.log("QUERY", req.query);
-  const { userEmail, userAddress, latitude, longitude } = req.query;
-  console.log("ACAAAA =>>>>>>>>", req.query.status);
+  const { userEmail, userAddress, latitude, longitude, additionalInfo } =
+    req.query;
+
+  const additionalInfo_query = additionalInfo as string;
   const userEmail_query = userEmail as string;
   const userAddress_query = userAddress as string;
-  const payment_id = req.query.payment_id;
-  const latitude_query = parseInt(latitude as string);
-  const longitude_query = parseInt(longitude as string);
+  const latitude_query = parseFloat(latitude as string);
+  const longitude_query = parseFloat(longitude as string);
   const payment_status = req.query.status as
     | "approved"
     | "rejected"
     | "in_process";
-
   const userId = req.query.external_reference as string;
 
+  // If payment is rejected
   if (payment_status === "rejected") {
     return res.redirect(`${FRONTEND_URL}/cart`);
   }
@@ -130,22 +132,64 @@ router.get("/payment", async (req, res) => {
   const productsRemovedFromCart = deleteCartRes.data.data.delete_carts_products
     .returning as ReturningRemovedFromCart[];
 
+  console.log(
+    "QUANTITY",
+    productsRemovedFromCart[0].quantityBought,
+    "STOCK",
+    productsRemovedFromCart[0].products_option.stock,
+    "NAME",
+    productsRemovedFromCart[0].products_option.productDetail.name
+  );
+
+  // Update stock in db
+  const updateStock = await axios({
+    url: "https://henry-pg-api.herokuapp.com/v1/graphql",
+    method: "POST",
+    data: {
+      query: updateStockOfProductOptionMutation(
+        createUpdatedStocksArray(
+          productsRemovedFromCart.map((product) => {
+            const finalQuantity =
+              product.products_option.stock - product.quantityBought;
+            console.log("FINAL QUANTITY", finalQuantity);
+            let obj = {
+              id: product.products_option.id,
+              stock: finalQuantity,
+              color: product.products_option.color,
+              size: product.products_option.size,
+              product_id: product.products_option.product_id,
+              image_url: product.products_option.image_url,
+            };
+            return obj;
+          })
+        )
+      ),
+    },
+  });
+
+  console.log(
+    "UPDATED SOTKC",
+    updateStock.data.data.insert_products_options.returning
+  );
+
   // Set new order for user
   const createNewOrder = await axios({
     url: "https://henry-pg-api.herokuapp.com/v1/graphql",
     method: "POST",
     data: {
-      //FIX THIS REQUERIMENTS
       query: addNewOrderMutation(
         userId,
         payment_status,
         userEmail_query,
         latitude_query,
         longitude_query,
-        userAddress_query
+        userAddress_query,
+        additionalInfo_query
       ),
     },
   });
+
+  console.log("ORDERNEW", createNewOrder.data);
 
   // Set orderId
   const orderId = createNewOrder.data.data.insert_orders_one.id as string;
@@ -169,14 +213,17 @@ export default router;
 type ReturningRemovedFromCart = {
   userId: string;
   quantityBought: number;
-  productOptionDetail: {
+  products_option: {
     id: string;
+    size: string;
+    color: string;
+    stock: number;
+    product_id: string;
+    image_url: string;
     productDetail: {
       name: string;
       price: number;
     };
-    size: string;
-    color: string;
   };
 };
 
@@ -186,7 +233,8 @@ const addNewOrderMutation = (
   email: string,
   latitude: number,
   longitude: number,
-  address: string
+  address: string,
+  additionalInfo: string
 ) => `mutation AddNewOrder {
   insert_orders_one(object: {
       user_id: "${userId}", 
@@ -194,7 +242,9 @@ const addNewOrderMutation = (
       email: "${email}", 
       latitude: ${latitude}, 
       longitude: ${longitude}, 
-      address: "${address}"}) {
+      address: "${address}",
+      additional_information: "${additionalInfo}"      
+    }) {
     id
     user_id
     email
@@ -202,6 +252,7 @@ const addNewOrderMutation = (
     latitude
     longitude
     address
+    additional_information
     status
     created_at
     updated_at
@@ -216,9 +267,9 @@ const fromCartToOrderStringArray = (
     let properString = `{
       user_id: "${product.userId}",
       order_id: "${orderId}",
-      product_option_id: "${product.productOptionDetail.id}",
+      product_option_id: "${product.products_option.id}",
       quantity: ${product.quantityBought},
-      unit_price: ${product.productOptionDetail.productDetail.price}
+      unit_price: ${product.products_option.productDetail.price}
     }`;
     return properString;
   });
@@ -240,3 +291,39 @@ const addOrderProductsMutation = (
   }
 }
 `;
+
+const createUpdatedStocksArray = (
+  productOptions: {
+    id: string;
+    stock: number;
+    color: string;
+    size: string;
+    product_id: string;
+    image_url: string;
+  }[]
+) => {
+  const array = productOptions.map(
+    (option) =>
+      `{id: "${option.id}" stock: ${option.stock} color: ${option.color} size: ${option.size} product_id: "${option.product_id}" image_url: "${option.image_url}"}`
+  );
+  return array;
+};
+
+const updateStockOfProductOptionMutation = (
+  productOptions: string[]
+) => `mutation UpdateStockOfProductOption {
+	insert_products_options(objects: [${productOptions}],
+  on_conflict: {
+        constraint: opcion_producto_pkey,
+        update_columns: [stock]
+      }){
+    affected_rows
+    returning{
+      id
+      stock
+      product{
+        name
+      }
+    }
+  }
+}`;

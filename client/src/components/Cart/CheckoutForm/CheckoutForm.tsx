@@ -5,6 +5,7 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
+  TextareaAutosize,
 } from "@material-ui/core";
 import axios from "axios";
 import { bounceInUp } from "react-animations";
@@ -40,8 +41,8 @@ const CheckoutForm = ({
   type CheckoutForm = {
     shippingAddress: string;
     email: string;
-    streetNumber: number | "";
     mpButton: any;
+    additionalInfo?: string;
     mpButtonLoading: "idle" | "loading" | "loaded" | "error";
     finalCheckbox: boolean;
   };
@@ -49,7 +50,6 @@ const CheckoutForm = ({
   const [checkoutForm, setCheckoutForm] = useState<CheckoutForm>({
     shippingAddress: "",
     email: "",
-    streetNumber: "",
     mpButton: null,
     mpButtonLoading: "idle",
     finalCheckbox: false,
@@ -90,9 +90,9 @@ const CheckoutForm = ({
           userId,
           checkoutForm.email,
           checkoutForm.shippingAddress,
-          checkoutForm.streetNumber as number,
           returnLocation.returnLatitude,
-          returnLocation.returnLongitude
+          returnLocation.returnLongitude,
+          checkoutForm.additionalInfo
         );
         setCheckoutData({ ...checkoutData, data });
       }
@@ -166,7 +166,6 @@ const CheckoutForm = ({
                     mpButton: null,
                     finalCheckbox: false,
                     mpButtonLoading: "idle",
-                    streetNumber: "",
                   });
                   setActive(false);
                 }}
@@ -179,7 +178,7 @@ const CheckoutForm = ({
                 error={checkoutForm.shippingAddress === "" ? true : false}
                 helperText={"Click the icon to find your street a address!"}
                 disabled={true}
-                label="Shipping Address"
+                label="Full Shipping Address"
                 value={checkoutForm.shippingAddress}
                 InputProps={{
                   endAdornment: (
@@ -210,37 +209,20 @@ const CheckoutForm = ({
                 }}
               />
               <br />
-              <TextField
-                error={
-                  checkoutForm.streetNumber > 0 &&
-                  checkoutForm.streetNumber !== ""
-                    ? false
-                    : true
-                }
-                type="number"
-                helperText={"Input your street number"}
-                id="standard-disabled-32"
-                label="Street number"
-                value={checkoutForm.streetNumber}
-                onChange={(e) => {
-                  if (
-                    checkoutForm.mpButton ||
-                    checkoutForm.mpButtonLoading !== "idle" ||
-                    checkoutForm.finalCheckbox
-                  ) {
-                    return setCheckoutForm({
-                      ...checkoutForm,
-                      mpButton: null,
-                      mpButtonLoading: "idle",
-                      finalCheckbox: false,
-                      streetNumber: parseInt(e.target.value),
-                    });
-                  }
+              <TextareaAutosize
+                aria-label="empty textarea"
+                placeholder="Additional information to help us properly deliver your products.&#10;Ex: A house with red windows."
+                style={{ width: "100%", minHeight: "10%" }}
+                value={checkoutForm.additionalInfo}
+                onChange={(e) =>
                   setCheckoutForm({
                     ...checkoutForm,
-                    streetNumber: parseInt(e.target.value),
-                  });
-                }}
+                    mpButton: null,
+                    mpButtonLoading: "idle",
+                    finalCheckbox: false,
+                    additionalInfo: e.target.value,
+                  })
+                }
               />
               <br />
               <TextField
@@ -268,8 +250,7 @@ const CheckoutForm = ({
                 <Checkbox
                   disabled={
                     validateEmail(checkoutForm.email) !== true ||
-                    checkoutForm.shippingAddress === "" ||
-                    checkoutForm.streetNumber <= 0
+                    checkoutForm.shippingAddress === ""
                   }
                   checked={checkoutForm.finalCheckbox}
                   onChange={(e) => {
@@ -318,9 +299,9 @@ const createCheckoutData = (
   userId: string,
   email: string,
   shippingAddress: string,
-  streetNumber: number,
   latitude: number,
-  longitude: number
+  longitude: number,
+  additionalInfo: string
 ): PreferenceData => {
   const data: PreferenceData = {
     id: ``,
@@ -328,11 +309,12 @@ const createCheckoutData = (
     payer: {
       email: email,
       address: {
-        street_number: streetNumber,
         zip_code: "",
         street_name: shippingAddress,
+        street_number: 0,
       },
     },
+    additionalInfo,
     external_reference: userId,
     items: products.map((item) => {
       return {
@@ -437,4 +419,5 @@ type PreferenceData = {
   items: CheckoutItem[];
   latitude: number;
   longitude: number;
+  additionalInfo: string;
 };
