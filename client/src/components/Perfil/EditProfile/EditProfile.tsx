@@ -331,20 +331,15 @@ export default function EditProfile() {
     isAuthenticated && (
       <div>
         <div className="div-conteiner">
-          <h3 className="titulo">PROFILE</h3>
-          <div className="conteiner-perfil">
-            <h5>- Data</h5>
-            {state.user.auth0_id?.slice(0, 5) === "auth0" && (
-              <h5>- Change password</h5>
-            )}
-          </div>
+          
           <div className="conteiner-datos">
             <form
-              className={classes.root}
               noValidate
               autoComplete="off"
               onSubmit={(e) => handleUpdate(e)}
             >
+              <h5>- Data</h5>
+              <div className={classes.root}>
               <TextField
                 value={info.name}
                 label="Name"
@@ -405,14 +400,16 @@ export default function EditProfile() {
               <button type="submit" style={{ width: "50%" }} className="btn">
                 Update
               </button>
+              </div>
             </form>
             {state.user.auth0_id?.slice(0, 5) === "auth0" && (
               <form
-                className={classes.root2}
                 noValidate
                 autoComplete="off"
                 onSubmit={(e) => handleChangePassword(e)}
               >
+                <div className={classes.root2}>
+                <h5>- Change password</h5>
                 <TextField
                   label="New Password"
                   name="newpassword"
@@ -437,6 +434,7 @@ export default function EditProfile() {
                 >
                   Update
                 </button>
+                </div>
               </form>
             )}
           </div>
