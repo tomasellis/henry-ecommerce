@@ -148,7 +148,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
     case "SET_STORE_HISTORY":
       return {
         ...state,
-        storeHistory: [...state.storeHistory, payload]
+        storeHistory: payload
       }
 
     default:
