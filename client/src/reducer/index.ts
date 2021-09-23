@@ -16,7 +16,8 @@ const initialState = {
   user: {
     id: '',
     email: '',
-    productsReceived:[]
+    productsReceived: [],
+    reviews: []
   }
 };
 
@@ -98,54 +99,6 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         products: payload,
         maxProducts: 0
       }
-    /*
-    orders_products": [
-        {
-          "product_option_id": "4cdb68ce-7d52-48c1-9742-c98612512f25",
-          "quantity": 1,
-          "unit_price": 2200,
-          "product_id": "6a01061d-bedc-424f-a614-8131f02d40bf"
-        },
-        {
-          "product_option_id": "f9509c9b-8b49-40f0-8f5c-399f52aac226",
-          "quantity": 1,
-          "unit_price": 1600,
-          "product_id": "96fc4357-5384-4062-9213-016ec3353684"
-        },
-        {
-          "product_option_id": "6f29811c-72dd-48ec-aaad-f74c37998fba",
-          "quantity": 1,
-          "unit_price": 200,
-          "product_id": "12882669-5ecf-4c1c-97f4-fcf82ea707f3"
-        },
-        {
-          "product_option_id": "71f73def-7b05-43ee-8832-a4f449ff0254",
-          "quantity": 1,
-          "unit_price": 54.95,
-          "product_id": "75443730-b717-4182-a6e8-cf983b677986"
-        },
-        {
-          "product_option_id": "d723a0ab-0c0e-4386-96ab-ab6b02918762",
-          "quantity": 1,
-          "unit_price": 34,
-          "product_id": "18e68d1d-e877-4eee-80f6-b55bd217e127"
-        }
-      ],
-      "status": "approved"
-    },
-    {
-      "orders_products": [
-        {
-          "product_option_id": "4cdb68ce-7d52-48c1-9742-c98612512f25",
-          "quantity": 2,
-          "unit_price": 2200,
-          "product_id": "6a01061d-bedc-424f-a614-8131f02d40bf"
-        }
-      ],
-      "status": "approved"
-    }
-  ],
-     */
 
     case 'SET_DATA_USER':
       let ordersReceived = [], ordersShipped = [], ordersApproved = [], productsReceived = []
@@ -169,7 +122,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       })
       return {
         ...state,
-        user: { ...payload, orders:orders,reviews:reviews, ordersReceived,ordersShipped,ordersApproved,productsReceived }
+        user: { ...payload, orders: orders, reviews: reviews, ordersReceived, ordersShipped, ordersApproved, productsReceived }
       }
 
     case 'SET_PRODUCTS_IDS_IN_CART':
@@ -183,6 +136,11 @@ export const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           idsInCart: [...state.idsInCart, payload]
         }
+      }
+    case 'UPDATED_REVIEWS':
+      return {
+        ...state,
+        user: { ...state.user, reviews: [...state.user.reviews, payload] }
       }
 
     default:
