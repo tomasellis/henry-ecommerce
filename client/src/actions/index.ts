@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
@@ -141,11 +141,12 @@ export function changePassword2(data) {
 }
 
 export function setUserOrder(userId) {
+  console.log("USER ID", userId);
   return async (dispatch: Dispatch) => {
     const product = await axios.get(
       `${REACT_APP_BASE_BACKEND_URL}/getUserOrders?userId=${userId}`
     );
-    console.log(product.data);
+
     dispatch({ type: "SET_STORE_HISTORY", payload: product.data });
   };
 }
