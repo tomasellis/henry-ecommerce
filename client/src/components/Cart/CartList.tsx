@@ -53,7 +53,6 @@ const CartList = ({
     <div
       style={{
         width: "100%",
-        backgroundColor: "red",
       }}
     >
       <TableContainer component={Paper} style={{ minWidth: "100%" }}>

@@ -86,7 +86,7 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
   return (
     <div
       style={{
-        width: "100vw%",
+        width: "100%",
       }}
     >
       <TableContainer component={Paper} style={{ minWidth: "100%" }}>

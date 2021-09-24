@@ -24,21 +24,32 @@ export const DetailProductCards = () => {
 
   return product.length || product.products?.length ? (
     <>
-    <div className="page-container">
-      <div className="content-wrap">
-      <DetailsProductCard
-        id={id}
-        name={product?.products[0]?.name}
-        product={product}
-        image_url={product.products[0].image_url}
-        price={product?.products[0]?.price}
-        product_options={product?.products[0]?.product_options}
-      />
+      <div className="page-container">
+        <div className="content-wrap">
+          <DetailsProductCard
+            id={id}
+            name={product?.products[0]?.name}
+            product={product}
+            image_url={product.products[0].image_url}
+            price={product?.products[0]?.price}
+            product_options={product?.products[0]?.product_options}
+          />
+        </div>
+        <Footer />
       </div>
-       <Footer />
-    </div>
     </>
   ) : (
-    <div>Loading detail</div>
+    <div
+      style={{
+        display: "flex",
+        fontSize: "25px",
+        paddingTop: "30px",
+        justifyContent: "center",
+        alignContent: "center",
+        height: "60vh",
+      }}
+    >
+      <span>Loading product detail...</span>
+    </div>
   );
 };
