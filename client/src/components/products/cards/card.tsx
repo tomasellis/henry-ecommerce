@@ -55,7 +55,7 @@ export default function Card({name,price,image,id,product_id,cond}){
                     </Link>
                     <div className = 'button_fav_product' onClick = {AddFavoriteProduct}>
                         <IconButton>
-                            <StarIcon className='icon_fav'/>
+                            <StarIcon className={fav.status === false ? 'icon_fav' : 'icon_fav_select'}/>
                         </IconButton>
                     </div>       
                 

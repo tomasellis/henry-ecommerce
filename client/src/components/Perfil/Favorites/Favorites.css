@@ -36,6 +36,11 @@
     margin-left: 270px;
 }
 
+.icon_fav_in{
+    position: absolute;
+    color: gold;
+}
+
 .card_name_product_fav {
     font-family: 'Poppins', sans-serif;
     text-align: left;

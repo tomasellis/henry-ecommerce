@@ -332,7 +332,8 @@ export default function EditProfile() {
 
   return (
     isAuthenticated && (
-      <div>
+      <div className = 'divqencierratodo'>
+            <Profile />
         <div className="div-conteiner">
           <h3 style={{margin:"5px"}}>PROFILE</h3>
           <div className="conteiner-datos">

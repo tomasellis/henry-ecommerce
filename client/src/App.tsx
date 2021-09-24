@@ -90,13 +90,12 @@ function App() {
       <Route exact path="/" component={Home} />
       {/* <Route exact path="/loggedIn" component={LoggedIn} /> */}
       <Route exact path="/cart" component={PrevCart} />
-      <Route path="/profile" component={Profile} />
+      <Route exact path="/profile/editprofile" component={EditProfile} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards} />
       {/* <Route path="/profile" component={Profile} /> */}
       <Route exact path="/search" component={SearchedProducts} />
       <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path='/profile/favorites' component={Favorites} />
-      <Route exact path="/profile/editprofile" component={EditProfile} />
       <Route exact path='/profile/shopping-history' component={History} />
       <Route exact path="/admin/createproduct">
         <PrivateRoute component={Add} />

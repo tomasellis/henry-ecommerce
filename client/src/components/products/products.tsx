@@ -36,7 +36,7 @@ export default function Products() {
   return (
     <div className="page-container">
       <div className="content-wrap">
-      <h1 className="title_ropa_products">Cloth</h1>
+      <h1 className="title_ropa_products">Clothes</h1>
       <Filter />
       <div className='ctn_product'>
         {state.products?.map((e) => {
