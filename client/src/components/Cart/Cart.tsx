@@ -5,7 +5,7 @@ import { User } from "@auth0/auth0-spa-js";
 import { Button } from "@material-ui/core";
 import CartList from "./CartList";
 import "./styles.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 /* BOUNCE OUT ANIMATION*/
 
