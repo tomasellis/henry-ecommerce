@@ -80,6 +80,7 @@ const Cart = ({ user }: { user: User }) => {
   switch (productsInCart.loading) {
     case "error":
       return <div>An error has ocurred</div>;
+
     case "loading":
       return (
         <div
