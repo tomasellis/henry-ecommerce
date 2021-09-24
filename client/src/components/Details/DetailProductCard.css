@@ -7,6 +7,10 @@
     width: 550px;
 }
 
+input[type="radio"] {
+    display: block !important;
+}
+
 .mainDetailCard__container{
     display: inline-flex;
     font-family: 'Poppins', sans-serif;

@@ -36,7 +36,7 @@ export default function Search(): JSX.Element {
   const handleSubmit = (e : React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if(search !== ''){
-      window.location.replace(`http://localhost:3000/search?name=${search}`);//Cambiar URL.
+      window.location.replace(`http://localhost:3000/search?word=${search}`);//Cambiar URL.
       setSearch('')
       console.log(`funciona ${search.toLowerCase()}`)
 
