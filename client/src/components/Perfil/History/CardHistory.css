@@ -36,8 +36,7 @@
 
   .div_cards{
     display: flex;
-    /* cambio end por flex-end por warnings */
-    justify-content:flex-end;
+    justify-content:center;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
