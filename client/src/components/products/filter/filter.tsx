@@ -332,11 +332,11 @@ export default function Filter() {
             >
               <div className = 'div_container_colors_filter_products'>
 
-              {options.colors?.map((e) => {                
+              {options.colors?.map((e) => {
                 function NameInUpperCase(str) {
                   return str.charAt(0).toUpperCase() + str.slice(1);
                 }
-                const name = NameInUpperCase(e.name);            
+                const name = NameInUpperCase(e.name);
                 return (
                   <li>
                     <button className="color_filter" id={e.name} name = 'color' style = {{backgroundColor : e.name, border : 'none'}}>

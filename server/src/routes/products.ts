@@ -28,6 +28,7 @@ router.get("/", async (req: Request, response: Response, next: NextFunction) => 
               id
               color
               size
+              stock
             }
             product_categories {
               id

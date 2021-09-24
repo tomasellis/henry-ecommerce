@@ -35,6 +35,76 @@ export function postCategory(payload) {
   };
 }
 
+export function removeProduct (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/removeProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function removeOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/removeOptionFromProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataOption`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateCategory (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataCategory`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateDataProduct (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function addNewOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/addOptionToProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function addNewCategory (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/addCategoryToProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
 export function getOptions() {
   return async function (dispatch: any) {
     let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});
@@ -148,4 +218,4 @@ export function setUserOrder(userId) {
     console.log(product.data);
     dispatch({ type: "SET_STORE_HISTORY", payload: product.data });
   };
-}
+};
