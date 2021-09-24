@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
-import { getArticles } from "../../actions/products/productActions";
 import { getFavorites } from "../../actions";
 import  { searchProducts } from "../../actions/searchArticles/searchArticles";
 
@@ -25,7 +24,6 @@ export default function SearchedProducts() {
     )
     dispatch(getFavorites(user_fav.id))
     // eslint-disable-next-line
-
   }, []);
 
   const word : string = value.word.toString()
