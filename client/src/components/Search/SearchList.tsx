@@ -51,7 +51,7 @@ const List = styled.div`
     flex-direction: column;
     position: absolute;
     background: rgb(255, 255, 255);
-    max-width: 245px;
+    width: 245px;
     color: rgb(0,0,0);
     border-radius: 5px;
     z-index: 99999;

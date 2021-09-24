@@ -20,16 +20,16 @@ export default function Search(): JSX.Element {
   const [search, setSearch]  = useState<string>('');
   // const busqueda = useSelector((state : any) => state.searchArticles);
 
- //useEffect(() => {
+ useEffect(() => {
+  
+  if(search === '' || search === ' ') dispatch(searchArticles(undefined))
+  else dispatch(searchArticles(search));
 
-
-
- //},[search,dispatch])
+ },[search,dispatch])
 
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    dispatch(searchArticles(search));
   };
 
 
@@ -74,7 +74,7 @@ export default function Search(): JSX.Element {
           </IconButton>
         </div>
     </InputCtn>
-    <SearchList/>
+
     </>
   )
 }

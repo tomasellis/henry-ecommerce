@@ -17,6 +17,7 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 import { BiShoppingBag } from "react-icons/bi";
 import TitleFilter from "../TitleFilter";
 import { useSelector } from "react-redux";
+import SearchList from "../Search/SearchList";
 
 type User = {
   id: string;
@@ -153,6 +154,7 @@ export default function NavBar() {
         <div className={classes.div}>
           <div>
             <Search />
+            <SearchList/>
           </div>
 
           <div className={classes.bolsa}>
@@ -226,7 +228,9 @@ export default function NavBar() {
         <div className={classes.searchMobile}>
           <Search />
 
-          <div className={classes.listMobile}></div>
+          <div className={classes.listMobile}>
+          <SearchList/>
+          </div>
         </div>
       </Toolbar>
     );
