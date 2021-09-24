@@ -336,7 +336,6 @@ export default function RowEdit (props) {
                     </TableCell>
                     <TableCell align="right">
                       <button onClick={() => handleUpdateCategory()}>Update</button>
-                      <button>Delete</button>
                     </TableCell>
                   </TableRow>
                 ))}
