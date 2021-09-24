@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserOrder } from "../../../actions";
-import CardHistory from "./CardHistory";
 import Profile from "../Profile";
 import DropDownHistory from "./DropDownHistory";
 import "./CardHistory.css";
@@ -85,6 +84,18 @@ export default function History() {
       </div>
     );
   } else {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          fontSize: "25px",
+          paddingTop: "30px",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        <span>Loading your history...</span>
+      </div>
+    );
   }
 }

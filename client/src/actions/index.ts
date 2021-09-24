@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { Dispatch } from "redux";
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
