@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { searchArticles } from '../../actions/searchArticles/searchArticles';
 import { getArticles } from "../../actions/products/productActions";
 import { MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
@@ -25,6 +25,7 @@ export default function Search(): JSX.Element {
 
 
  //},[search,dispatch])
+ const history = useHistory();
 
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +37,7 @@ export default function Search(): JSX.Element {
   const handleSubmit = (e : React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if(search !== ''){
-      window.location.replace(`http://localhost:3000/search?word=${search}`);//Cambiar URL.
+      history.push(`/search?word=${search}`)
       setSearch('')
       console.log(`funciona ${search.toLowerCase()}`)
 
