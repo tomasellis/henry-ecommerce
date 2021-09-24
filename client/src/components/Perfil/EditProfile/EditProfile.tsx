@@ -16,6 +16,7 @@ import LocationSelector from "../../Cart/CheckoutForm/MapSelection/LocationSelec
 import { Button } from "@material-ui/core";
 import { PublicTwoTone } from "@material-ui/icons";
 import { useAlert } from "react-alert";
+import Profile from '../Profile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -331,7 +332,8 @@ export default function EditProfile() {
 
   return (
     isAuthenticated && (
-      <div>
+      <div className = 'divqencierratodo'>
+            <Profile />
         <div className="div-conteiner">
           <h3 style={{margin:"5px"}}>PROFILE</h3>
           <div className="conteiner-datos">

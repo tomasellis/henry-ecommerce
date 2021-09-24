@@ -88,11 +88,13 @@ export default function Categories({ input, setInput, handleChange }) {
           })}
         </select>
         <ul>
-          {!input.categories ? null : input.categories?.map(([el,index]) => {
+          {!input.categories ? null : input.categories?.map((el,index) => {
             function NameInUpperCase(str) {
               return str.charAt(0).toUpperCase() + str.slice(1);
             }
             const name = NameInUpperCase(el);
+            console.log('soyname', name);
+            
             return (
               <div
                 className="div_li_category_select_add_product"

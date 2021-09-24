@@ -6,17 +6,21 @@
     font-family: 'Poppins', sans-serif;
     width: 250px;
     height: 430px;
-    position: fixed;
 }
 
 .div_fav_products{
-    max-width: 70%;
-    margin-left: 400px;
+    max-width: 100%;
+    width: 100%;
     display: block;
+    margin-left: 80px;
+}
+
+.divqencierratodo{
+    display: inline-flex;
 }
 
 .div_fav_products img{
-    width: 200px;
+    width: 100%;
 }
 
 .div_profile{

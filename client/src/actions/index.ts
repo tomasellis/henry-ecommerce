@@ -15,6 +15,16 @@ export function getProduct(id: any) {
   };
 }
 
+export function getFavProduct(id: any) {
+  return async function (dispatch: any) {
+    let json = await axios(
+      `${REACT_APP_BASE_BACKEND_URL}/product?id=${id}`,
+      {}
+    );
+    return dispatch({ type: "GET_FAVORITES", payload: json.data.products[0] });
+  };
+}
+
 export function postCategory(payload) {
   return async function (dispatch) {
     const json = await axios.post(
@@ -42,10 +52,45 @@ export function postProduct(payload) {
   };
 }
 
+export function addFavorite(payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/addToFavorites`,
+      payload
+    );
+
+    return json.config.data;
+  };
+}
+
+export function deleteFavProduct(payload) {
+  return async function (dispatch) {
+    let json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/deleteFavorites`,
+      payload
+    );
+    return json.config.data;
+  };
+}
+
 export function favoriteProducts(payload) {
   return {
     type: "ADD_FAVORITE_PRODUCT",
     payload: payload,
+  };
+}
+
+export function deleteFilterFav(payload) {
+  return { type: "DELETE_FAVORITES", payload };
+}
+
+export function getFavorites(id) {
+  return async function (dispatch) {
+    let json = await axios(
+      `${REACT_APP_BASE_BACKEND_URL}/getFavorites?user_id=${id}`,
+      {}
+    );
+    return dispatch({ type: "GET_FAVORITES", payload: json.data });
   };
 }
 
