@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   TextField,
   TextareaAutosize,
+  CircularProgress,
 } from "@material-ui/core";
 import axios from "axios";
 import { bounceInUp } from "react-animations";
@@ -157,7 +158,7 @@ const CheckoutForm = ({
                   width: "fit-content",
                 }}
                 variant="contained"
-                color="primary"
+                color="secondary"
                 size="small"
                 onClick={(e) => {
                   setCheckoutForm({
@@ -177,7 +178,7 @@ const CheckoutForm = ({
                 ref={locationInputRef}
                 error={checkoutForm.shippingAddress === "" ? true : false}
                 helperText={"Click the icon to find your street a address!"}
-                disabled={true}
+                disabled={false}
                 label="Full Shipping Address"
                 value={checkoutForm.shippingAddress}
                 InputProps={{
@@ -355,17 +356,23 @@ const displayMPButton = (
   if (finalCheck === true) {
     switch (loadingButton) {
       case "loading":
-        return <span>Loading</span>;
+        return (
+          <span>
+            <CircularProgress />
+          </span>
+        );
 
       case "loaded":
         return (
           <Button
+            color="primary"
             variant="contained"
+            size="large"
             onClick={async () => {
               mpButton.open();
             }}
           >
-            Proceed to payment!
+            Proceed to payment
           </Button>
         );
       case "error":
