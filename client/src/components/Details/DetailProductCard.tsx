@@ -8,12 +8,10 @@ import {
   addToCartStorage,
   cleanProductDetail,
   setProductsIdsInCart,
-  getFavorites,
+  
 } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
-import { IconButton } from "@material-ui/core";
 
-import StarIcon from "@material-ui/icons/Star";
 
 type Product = {
   id_option: string;
