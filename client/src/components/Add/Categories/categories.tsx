@@ -71,7 +71,6 @@ export default function Categories({ input, setInput, handleChange }) {
           <option>Gender</option>
           <option value="women">Woman</option>
           <option value="men">Men</option>
-          <option value="kids">Kids</option>
         </select>
         <select
           className="categories_collection_add"

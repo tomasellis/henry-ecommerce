@@ -129,6 +129,19 @@ export default function NavBar() {
             alt="Algo bonito"
           />
         </Link>
+        {stateRedux.user?.role?.toLowerCase() === 'admin' ? <select
+          className=""
+          name=""
+          value="/admin"
+          onChange={(e) => history.push(e.target.value)}
+        >
+          <option value="/admin" disabled>
+            Admin
+          </option>
+          <option value="/admin/createproduct">Create product</option>
+          <option value="/admin/editusers">Edit users</option>
+          <option value="/admin/editorders">Edit orders</option>
+        </select> : null}
 
         <div className={classes.titleCtn}>
           <TitleFilter mob={false} />
@@ -161,6 +174,7 @@ export default function NavBar() {
                   style={{
                     textDecoration: "none",
                     color: "#000",
+                    marginTop : '15px'
                   }}
                 >
                   {user.name.split(" ")[0] + " " /*solo el primer nombre */}
@@ -175,19 +189,6 @@ export default function NavBar() {
                   />
                 </button>
               )}
-              {stateRedux.user?.role?.toLowerCase() === 'admin' ? <select
-                className=""
-                name=""
-                value="/admin"
-                onChange={(e) => history.push(e.target.value)}
-              >
-                <option value="/admin" disabled>
-                  Admin
-                </option>
-                <option value="/admin/createproduct">Create product</option>
-                <option value="/admin/editusers">Edit users</option>
-                <option value="/admin/editorders">Edit orders</option>
-              </select> : null}
             </p>
           </div>
         </div>

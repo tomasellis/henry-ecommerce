@@ -75,7 +75,7 @@ export const FormReview = ({
       errors.stars = 'Rating is required';
     }
     if (!review.comment) {
-      errors.comment = 'Comment id required';
+      errors.comment = 'Comment is required';
     }
     return errors;
   };
