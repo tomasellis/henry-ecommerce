@@ -18,7 +18,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 //Import actions:
 import {removeOption,
   updateOption,
-  updateCategory, addNewOption, addNewCategory, updateDataProduct} from "../../actions/index"
+  updateCategory,
+  addNewOption, addNewCategory, updateDataProduct} from "../../actions/index"
 
 export default function RowEdit (props) {
 
