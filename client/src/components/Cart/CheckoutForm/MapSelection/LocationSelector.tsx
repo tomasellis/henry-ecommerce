@@ -67,11 +67,6 @@ const LocationSelector = ({
   }, [active]);
 
   useEffect(() => {
-    setCurrentLocation();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     if (mapState.center) {
       setReturnLocation({
         returnFullAddress: mapState.address,
@@ -81,20 +76,6 @@ const LocationSelector = ({
     }
     // eslint-disable-next-line
   }, [mapState.center]);
-
-  // Get browsers current location
-  const setCurrentLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setMapState({
-          ...mapState,
-          center: [position.coords.latitude, position.coords.longitude],
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
-    }
-  };
 
   const onChangeMap = async (e) => {
     if (onMapChangeLoading === "loaded") {

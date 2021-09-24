@@ -8,17 +8,19 @@ import NavBar from "./components/NavBar/NavBar";
 import { DetailProductCards } from "./components/Details/DetailProductCards";
 import Add from "./components/Add/Add";
 import PrevCart from "./components/Cart/PrevCart";
-import Favorites from './components/Perfil/Favorites/Favorites'
+import Favorites from "./components/Perfil/Favorites/Favorites";
 import EditProfile from "./components/Perfil/EditProfile/EditProfile";
-import Profile from "./components/Perfil/Profile";
+// import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
+import History from "./components/Perfil/History/History";
 import EditOrders from "./components/Orders/EditOrders";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosResponse } from "axios";
-import { setDataUser, setProductsIdsInCart } from "./actions";
+import { cartIsLoading, setDataUser, setProductsIdsInCart } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
+import ModifyProducts from "./components/ModifyProducts/ModifyProducts";
 
 function App() {
   const state = useSelector((state: RootState) => state);
@@ -35,7 +37,7 @@ function App() {
 
   const { user, isAuthenticated } = useAuth0();
   const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -50,9 +52,9 @@ function App() {
           }
         );
 
-        dispatch(setDataUser(dataUser.data))
-
+        dispatch(setDataUser(dataUser.data));
         if (localStorage.cartStorage) {
+          dispatch(cartIsLoading(true));
           const { data } = await axios.post(
             `${BASE_URL}/addLocalStorageToCart`,
             {
@@ -61,23 +63,26 @@ function App() {
             }
           );
           if (data.insert_carts_products) {
-            console.log(
-              "se agregaron los productos de localstorage a la db"
-            );
+            console.log("se agregaron los productos de localstorage a la db");
             localStorage.cartStorage = [];
             localStorage.idsInCartStorage = [];
           } else {
             console.log("errDataLoggedIn", data);
+
             console.log(
               "no se agregaron los productos de localstorage a la db"
             );
           }
-          let idsInCart: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.id}`)
+          let idsInCart: AxiosResponse<any> = await axios.get(
+            `${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.id}`
+          );
 
-          idsInCart = idsInCart.data.carts_products.map(product => product.products_option.product_id)
-          dispatch(setProductsIdsInCart(idsInCart))
+          idsInCart = idsInCart.data.carts_products.map(
+            (product) => product.products_option.product_id
+          );
+          dispatch(setProductsIdsInCart(idsInCart));
+          dispatch(cartIsLoading(false));
         }
-
       }
     })();
     // eslint-disable-next-line
@@ -85,26 +90,33 @@ function App() {
 
   return (
     <BrowserRouter>
+
+
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      {/* <Route exact path="/loggedIn" component={LoggedIn} /> */}
       <Route exact path="/cart" component={PrevCart} />
-      <Route path="/profile" component={Profile} />
-      <Route exact path="/clothing/details/:id" component={DetailProductCards} />
-      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/profile/editprofile" component={EditProfile} />
+      <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/search" component={SearchedProducts} />
       <Route exact path="/clothing/:gender" component={Products} />
-      <Route exact path='/profile/favorites' component={Favorites} />
-      <Route exact path="/profile/editprofile" component={EditProfile} />
+      <Route exact path="/profile/favorites" component={Favorites} />
+      <Route exact path="/profile/shopping-history" component={History} />
+
+
       <Route exact path="/admin/createproduct">
         <PrivateRoute component={Add} />
       </Route>
       <Route exact path="/admin/editusers">
         <PrivateRoute component={EditUsers} />
       </Route>
-      <Route exact path="/admin/editorders">  
+      <Route exact path="/admin/editorders">
         <PrivateRoute component={EditOrders} />
       </Route>
+      <Route exact path="/admin/modifyproducts">
+        <PrivateRoute component={ModifyProducts} />
+      </Route>
+
+
     </BrowserRouter>
   );
 }

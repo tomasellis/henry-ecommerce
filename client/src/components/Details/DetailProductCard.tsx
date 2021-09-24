@@ -1,15 +1,17 @@
-// import React from "react";
 import "./DetailProductCard.css";
-// import { useCookies } from 'react-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
-import { useAlert } from 'react-alert'
+import { useAlert } from "react-alert";
 import axios from "axios";
-// import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
+import {
+  addToCartStorage,
+  cleanProductDetail,
+  setProductsIdsInCart,
+  
+} from "../../actions";
 import DetailProductReview from "./DetailProductReview";
-import FormReview from './FormReview'
+
 
 type Product = {
   id_option: string;
@@ -23,9 +25,19 @@ type Product = {
   quantity;
 };
 
+type User = {
+  id: string;
+  email: string;
+  auth0_id: string;
+  role: string;
+  productsReceived: string[];
+  reviews: string[];
+};
+
 interface RootState {
   cart: Array<Product>;
   idsInCart: string;
+  user: User;
 }
 
 export const DetailsProductCard = ({
@@ -36,9 +48,10 @@ export const DetailsProductCard = ({
   price,
   product_options,
 }) => {
-  const alertReact = useAlert()
+  const alertReact = useAlert();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
+  console.log(id)
 
   type OptionsByColor = {
     color: string;
@@ -95,6 +108,9 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
+
+
+
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -116,7 +132,8 @@ export const DetailsProductCard = ({
         dispatch(addToCartStorage(productDetail));
         alertReact.success("Product added to cart!");
       }
-    } else { //si esta autenticado...
+    } else {
+      //si esta autenticado...
 
       const { data } = await axios.post(
         `${BASE_URL}/findOrCreateUserInDatabase`,
@@ -134,9 +151,8 @@ export const DetailsProductCard = ({
       });
 
       if (!dataAddToCart.data.errors) {
-        dispatch(setProductsIdsInCart(id))
-        alertReact.success("producto agregado al carrito");
-      
+        dispatch(setProductsIdsInCart(id));
+        alertReact.success("Product added to cart!");
       }
 
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
@@ -146,12 +162,30 @@ export const DetailsProductCard = ({
 
   function onChange(e) {
     if (e.target.name === "size") {
-      const chosenOptionSize = optionsByColor[0].options.filter(
+      const chosenOptionColor = optionsByColor.filter(
+        (option) => option.color === productDetail.color
+      )
+      const chosenOptionSize = chosenOptionColor[0].options.filter(
         (option) => option.size === e.target.value
       );
+      console.log(chosenOptionSize)
       return setProductDetail({
         ...productDetail,
         [e.target.name]: e.target.value,
+        id_option: chosenOptionSize[0]?.optionId,
+      });
+    }
+    else if (e.target.name === "color") {
+      const chosenOptionColor = optionsByColor.filter(
+        (option) => option.color === e.target.value
+      )
+      const chosenOptionSize = chosenOptionColor[0].options.filter(
+        (option) => option.size === productDetail.size
+      );
+      console.log(chosenOptionSize[0]?.optionId)
+      return setProductDetail({
+        ...productDetail,
+        color: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
       });
     }
@@ -160,7 +194,6 @@ export const DetailsProductCard = ({
       [e.target.name]: e.target.value,
     });
   }
-
   return (
     <React.Fragment>
       <div className="mainDetailCard">
@@ -183,7 +216,7 @@ export const DetailsProductCard = ({
             )}
         </div>
       </div>
-      {isAuthenticated && state.idsInCart.includes(id) && <FormReview product_id={id}/>}
+
       <DetailProductReview product_id={id} />
     </React.Fragment>
   );
@@ -191,7 +224,7 @@ export const DetailsProductCard = ({
 
 const productDetailDisplay = (
   price,
-  opciones,
+  optionsByColor,
   onChange,
   addToCart,
   productDetail
@@ -199,18 +232,22 @@ const productDetailDisplay = (
   <div className="container__card-content">
     <div className="div_name_product_details">
       <h1>{productDetail["name"]}</h1>
+      <div className="icon_fav_details">
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>
     </div>
     <form>
       <div className="div_color_product_details">
-        {opciones.length &&
-          opciones.map((opcion) => {
+        {optionsByColor.length &&
+          optionsByColor.map((opcion) => {
             return (
-              <label>
-                {opcion.color}
+              <div
+                className="color_filter_detail"
+                style={{ backgroundColor: opcion.color, border: "none" }}
+              >
                 <input
+                  className="input_color_details"
                   type="radio"
                   name="color"
                   key={opcion.color}
@@ -220,50 +257,53 @@ const productDetailDisplay = (
                     onChange(e);
                   }}
                 />
-              </label>
+              </div>
             );
           })}
       </div>
       <div className="div_size_product_details">
-        {opciones.length &&
-          opciones
+        {optionsByColor.length &&
+          optionsByColor
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
-              <label key={option.size}>
-                {option.size}
-                <input
-                  type="radio"
-                  name="size"
-                  
-                  checked={productDetail["size"] === option.size}
-                  value={option.size}
-                  onChange={(e) => {
-                    onChange(e);
-                  }}
-                />
-              </label>
+              <div className="div_size_product_details">
+                <div key={option.size}>
+                  {option.size}
+                  <input
+                    className="input_size_product_details"
+                    type="radio"
+                    name="size"
+                    checked={productDetail["size"] === option.size}
+                    value={option.size}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                  />
+                </div>
+              </div>
             );
           })}
       </div>
     </form>
     <div className="div_stock_product_details">
       <span>Stock:</span>{" "}
-      {opciones.length &&
-        opciones
+      {optionsByColor.length &&
+        optionsByColor
+          .filter((obj) => obj.color === productDetail["color"])[0]
+        ["options"].filter((obj) => obj.size === productDetail["size"])[0] ? optionsByColor
           .filter((obj) => obj.color === productDetail["color"])[0]
         ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-        "stock"
-        ]}{" "}
-      u.
+        "stock"] : '-'}{" "} u.
     </div>
     <div className="container__button-buy">
       <button
         onClick={(e) => addToCart()}
-        className={productDetail["stock"] <= 0 ? "disabled" : ""}
+        className={productDetail["stock"] <= 0 || productDetail.id_option === undefined ? "disabled" : ""}
       >
         Agregar al carrito
       </button>
+    </div>
     </div>
   </div>
 );

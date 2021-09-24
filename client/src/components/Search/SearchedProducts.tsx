@@ -1,51 +1,59 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import queryString from 'query-string'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
-import { getArticles } from "../../actions/products/productActions";
+import { getFavorites } from "../../actions";
+import  { searchProducts } from "../../actions/searchArticles/searchArticles";
 
 import Card from "../products/cards/card";
+import Footer from "../Footer/Footer";
 
 export default function SearchedProducts() {
 
   const dispatch = useDispatch();
   const { search } = useLocation()
   const value = queryString.parse(search)
-  const articles = useSelector((state: any) => state.products);
+  const state = useSelector((state: any) => state);
+  const user_fav =  state.user
+  const favIcon =  state.favoriteProducts
 
   useEffect(() => {
     dispatch(
-      getArticles(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      30,
-      value.name
+      searchProducts(word)
     )
-  )
-}, []);// eslint-disable-line react-hooks/exhaustive-deps
+    dispatch(getFavorites(user_fav.id))
+    // eslint-disable-next-line
+  }, []);
+
+  const word : string = value.word.toString()
 
   return (
-    <div>
+<div className="page-container">
+  <div className="content-wrap">
     <h1 className="title_ropa_products">Cloth</h1>
     <div>
-      {articles.products?.map((e, i) => {
+      {state.products.length>0 ? state.products?.map((e, i) => {
+         let cond = false;
+         favIcon?.products?.users_by_pk?.favourites?.map(e => {
+           if(e.product_id === e.id) cond = true;
+           return true
+         })
         return (
           <Card
+            product_id={e.id}
             key={e.id}
             id={e.id}
             image={e.image_url}
             name={e.name}
             price={e.price}
+            cond={cond}
           />
         );
-      })}
-    </div>
+      }):  <div>{`You searched for ${word}. Your search has no matches. Please, try another keyword.`}</div>}
+      </div>
+      </div>
+      <Footer />
     </div>
   );
 }

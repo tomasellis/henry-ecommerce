@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 
 const PrevCart = () => {
   const { user, isAuthenticated } = useAuth0();
-  const [auth, setAuth] = useState(false)
+  const [auth, setAuth] = useState(false);
 
   useEffect(() => {
-    setAuth(!auth)
-    return () => {  
-    } // eslint-disable-next-line
-  }, [isAuthenticated])
+    setAuth(!auth);
+    return () => {};
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
 
   return isAuthenticated ? <Cart user={user} /> : <CartLocalStorage />;
 };

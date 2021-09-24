@@ -10,16 +10,22 @@ router.get(
     let query = `query MyQuery {
     products(where: {id: {_eq: "${id}"}}) {
       gender
+      id
       name
       image_url
       price
+      id
       product_options(where: {id: {}, product_id: {_eq: "${id}"}}) {
         color
         size
         stock
         id
       }
-    }
+      product_categories(where: {id: {}, product_id: {_eq: "${id}"}}) {
+      id
+      category_name
+      }
+     }
   }`;
     try {
       const { data } = await axios({

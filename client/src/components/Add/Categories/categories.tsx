@@ -18,10 +18,12 @@ export default function Categories({ input, setInput, handleChange }) {
   const options = useSelector((state: any) => state.options);
 
   const handleSelect = (e) => {
+    if( e.target.value !== "Categories") {
     setInput({
       ...input,
       categories: [...input.categories, e.target.value],
     });
+  }
   };
 
   let selectNewCategory = category.categories[0]?.name;
@@ -29,17 +31,18 @@ export default function Categories({ input, setInput, handleChange }) {
   const handleCategoryChange = (e) => {
     setCategory({
       categories: [{ name: e.target.value }],
-    });
+    })
   };
 
-  const handleDeletle = (el) => {
+  function handleDelete (el) {
+    console.log(input.categories.filter(e => e.charAt(0).toUpperCase() +e.slice(1) !== el))
     setInput({
       ...input,
-      categories: input.categories.filter((e) => e !== el),
+      categories: input.categories.filter(e => e.charAt(0).toUpperCase() +e.slice(1) !== el)
     });
   };
 
-  const handleButton = (e) => {    
+  const handleButton = (e) => {
     const repeat = options.categories?.find(
       (e) => e.name.toUpperCase() === category.categories[0]?.name.toUpperCase()
     );
@@ -50,7 +53,7 @@ export default function Categories({ input, setInput, handleChange }) {
       setInput({
         ...input,
         categories : [...input.categories , selectNewCategory]
-      })      
+      })
     } else {
       e.preventDefault();
       alertReact.error("That category already exists.");
@@ -59,7 +62,7 @@ export default function Categories({ input, setInput, handleChange }) {
       categories: [],
     });
   };
-  
+
   return (
     <>
       <div className="div_categories_add">
@@ -69,35 +72,37 @@ export default function Categories({ input, setInput, handleChange }) {
           onChange={(e) => handleChange(e)}
         >
           <option>Gender</option>
-          <option value="women">Woman</option>
+          <option value="women">Women</option>
           <option value="men">Men</option>
-          <option value="kids">Kids</option>
         </select>
         <select
           className="categories_collection_add"
           name="collection"
           onChange={(e) => handleSelect(e)}
         >
-          <option> Categories</option>
+          <option value="Categories"> Categories</option>
           {options.categories?.map((e) => {
             function NameInUpperCase(str) {
               return str.charAt(0).toUpperCase() + str.slice(1);
             }
+            console.log(e.name)
             const name = NameInUpperCase(e.name);
-            return <option value={e.name}>{name}</option>;
+            return <option value={name}>{name}</option>;
           })}
         </select>
         <ul>
-          {!input.categories ? null : input.categories?.map(([el,index]) => {
+          {!input.categories ? null : input.categories?.map((el) => {
             function NameInUpperCase(str) {
               return str.charAt(0).toUpperCase() + str.slice(1);
             }
             const name = NameInUpperCase(el);
+            console.log('soyname', name);
+
             return (
               <div
                 className="div_li_category_select_add_product"
-                onClick={() => handleDeletle(el)}
-                key={index}
+                onClick={() => handleDelete(name)}
+                key={name}
               >
                 <li>{name}</li>
                 <p>x</p>

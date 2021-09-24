@@ -1,22 +1,27 @@
 import { PRODUCTS_ACTIONS } from "../actions/products/productActions";
-
 const initialState = {
   products: [],
   maxProducts: 0,
   product: [],
   options: [],
-  favoriteProducts: [],
+  favoriteProducts: {
+    id: [],
+    products: [],
+  },
   productsInCartByUser: [],
-
+  loadingCart: false,
   cart: localStorage.cartStorage ? JSON.parse(localStorage.cartStorage) : [],
   idsInCart: localStorage.idsInCartStorage
     ? JSON.parse(localStorage.idsInCartStorage)
     : [],
   searchArticles: [],
   user: {
-    id: '',
-    email: ''
-  }
+    id: "",
+    email: "",
+    productsReceived: [],
+    reviews: [],
+  },
+  storeHistory: [],
 };
 
 export const rootReducer = (state = initialState, { type, payload }) => {
@@ -25,7 +30,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         products: payload.data.products,
-        maxProducts:payload.data.products_aggregate.aggregate.count
+        maxProducts: payload.data.products_aggregate.aggregate.count,
       };
     case "GET_PRODUCT_INFO":
       return {
@@ -64,14 +69,21 @@ export const rootReducer = (state = initialState, { type, payload }) => {
 
     case "UPDATE_QUANTITY":
       // eslint-disable-next-line
-      state.cart.some((product) => {
-        if (product.id_option === payload.id_option) {
-          product.quantity = payload.quantity;
-          return true;
-        }
-      });
       localStorage.cartStorage = JSON.stringify(state.cart);
-      return state;
+      return {
+        ...state,
+        cart: state.cart.map((product, i) =>
+          product.id_option === payload.id_option
+            ? { ...product, quantity: payload.quantity }
+            : product
+        ),
+      };
+
+    case "CART_IS_LOADING":
+      return {
+        ...state,
+        loadingCart: payload,
+      };
 
     case "SEARCH_ARTICLES":
       return {
@@ -79,11 +91,32 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
-    case 'ADD_FAVORITE_PRODUCT':
+
+      case "SEARCH_PRODUCTS":
+        return {
+          ...state,
+          products: payload
+        };
+
+      case "GET_FAVORITES":
       return {
         ...state,
-        favoriteProducts: [...state.favoriteProducts, payload]
-      }
+        favoriteProducts: {
+          products: payload,
+        },
+      };
+
+    case "DELETE_FAVORITES":
+      console.log("soydeleteeeeeee", payload);
+      const filter = state.favoriteProducts.products.filter(
+        (e) => e.id !== payload.id
+      );
+
+      return {
+        ...state,
+        ...state.favoriteProducts,
+        products: filter,
+      };
 
     case "CLEAN_PRODUCT_DETAIL":
       return {
@@ -95,30 +128,69 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         products: payload,
-        maxProducts:0
-        }
-    
+        maxProducts: 0,
+      };
 
-    case 'SET_DATA_USER':
-      let reviews = payload.reviews.map(review => review.id_product_general)
-      let orders = payload.orders.map(order => order.orders_products)
+    case "SET_DATA_USER":
+      let ordersReceived = [],
+        ordersShipped = [],
+        ordersApproved = [],
+        productsReceived = [];
+      let reviews = payload.reviews.map((review) => review.id_product_general);
+      let orders = payload.orders.map((order) => {
+        switch (order.status.toLowerCase()) {
+          case "approved":
+            ordersApproved.push(order.orders_products);
+            break;
+          case "shipped":
+            ordersShipped.push(order.orders_products);
+            break;
+          case "delivered":
+            ordersReceived.push(order.orders_products);
+            order.orders_products.map((product) => {
+              return productsReceived.push(product.product_id);
+            });
+            break;
+        }
+        return order.orders_products;
+      });
       return {
         ...state,
-        user: { ...payload, reviews: reviews, orders: orders }
-      }
+        user: {
+          ...payload,
+          orders: orders,
+          reviews: reviews,
+          ordersReceived,
+          ordersShipped,
+          ordersApproved,
+          productsReceived,
+        },
+      };
 
-    case 'SET_PRODUCTS_IDS_IN_CART':
+    case "SET_PRODUCTS_IDS_IN_CART":
       if (Array.isArray(payload)) {
         return {
           ...state,
-          idsInCart: payload
-        }
+          idsInCart: payload,
+        };
       } else {
         return {
           ...state,
-          idsInCart: [...state.idsInCart, payload]
-        }
+          idsInCart: [...state.idsInCart, payload],
+        };
       }
+
+    case "UPDATED_REVIEWS":
+      return {
+        ...state,
+        user: { ...state.user, reviews: [...state.user.reviews, payload] },
+      };
+
+    case "SET_STORE_HISTORY":
+      return {
+        ...state,
+        storeHistory: payload,
+      };
 
     default:
       return state;
