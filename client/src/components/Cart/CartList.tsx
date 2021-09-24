@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -9,7 +8,8 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
-import AddOrSubstractInput from "./AddOrSubstractInput";
+import { DeleteForever } from "@material-ui/icons";
+import StockInput from "./StockInput";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
@@ -74,13 +74,22 @@ const CartList = ({
                 <TableCell align="left">
                   <img src={row.image} alt={row.name} height="30px" />
                 </TableCell>
-                <TableCell scope="row" align="left">
+                <TableCell
+                  scope="row"
+                  align="left"
+                  style={{ fontSize: "1.1rem" }}
+                >
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.stock}</TableCell>
-                <TableCell align="center" width="100px">
-                  <AddOrSubstractInput
-                    itemQuantity={row.product.productOption.optionQuantity}
+                <TableCell align="right" style={{ fontSize: "1.1rem" }}>
+                  {row.stock}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  width="100px"
+                  style={{ fontSize: "1.1rem" }}
+                >
+                  <StockInput
                     product={row.product}
                     userId={userId}
                     active={true}
@@ -88,31 +97,36 @@ const CartList = ({
                   />
                 </TableCell>
 
-                <TableCell align="right">
+                <TableCell align="right" style={{ fontSize: "1.1rem" }}>
                   $ {(row.price * row.quantity).toFixed(2)}
                 </TableCell>
-                <TableCell align="right">
-                  <Button
+                <TableCell align="center">
+                  <button
+                    style={{
+                      backgroundColor: "red",
+                      border: "none",
+                      borderRadius: "5px",
+                      width: "40px",
+                      height: "40px",
+                    }}
                     onClick={async () => {
                       await handleDeleteOnClick(row.product);
                       updateData();
                     }}
-                    variant="outlined"
-                    style={{ backgroundColor: "red" }}
                   >
-                    X
-                  </Button>
+                    <DeleteForever />
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
             <TableRow>
               <TableCell align="right"></TableCell>
-              <TableCell align="left">
+              <TableCell align="left" style={{ fontSize: "1.1rem" }}>
                 <b>TOTAL</b>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="center"></TableCell>
-              <TableCell align="right">
+              <TableCell align="right" style={{ fontSize: "1.1rem" }}>
                 <b>$ {getTotal(products)}</b>
               </TableCell>
               <TableCell align="right"></TableCell>
@@ -155,10 +169,10 @@ const handleDeleteOnClick = async (product: CartProductData) => {
   }
 };
 
-const getTotal = (products: CartProductData[]): number => {
+const getTotal = (products: CartProductData[]): string => {
   let sum = 0;
   for (let i = 0; i < products.length; i++) {
     sum += products[i].basePrice * products[i].productOption.optionQuantity;
   }
-  return sum;
+  return sum.toFixed(2);
 };
