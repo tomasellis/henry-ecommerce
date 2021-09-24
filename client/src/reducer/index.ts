@@ -4,9 +4,9 @@ const initialState = {
   maxProducts: 0,
   product: [],
   options: [],
-  favoriteProducts : {
-    id : [],
-    products : []
+  favoriteProducts: {
+    id: [],
+    products: [],
   },
   productsInCartByUser: [],
   loadingCart: false,
@@ -91,31 +91,25 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
-<<<<<<< HEAD
-    case "ADD_FAVORITE_PRODUCT":
+    case "GET_FAVORITES":
       return {
         ...state,
-        favoriteProducts: [...state.favoriteProducts, payload],
+        favoriteProducts: {
+          products: payload,
+        },
       };
-=======
-    case 'GET_FAVORITES' :
+
+    case "DELETE_FAVORITES":
+      console.log("soydeleteeeeeee", payload);
+      const filter = state.favoriteProducts.products.filter(
+        (e) => e.id !== payload.id
+      );
+
       return {
         ...state,
-        favoriteProducts : {
-          products : payload
-        }
-      }
->>>>>>> dev
-
-    case 'DELETE_FAVORITES' :
-      console.log('soydeleteeeeeee',payload);
-      const filter = state.favoriteProducts.products.filter(e => e.id !== payload.id) 
-      
-    return{
-      ...state,
-      ...state.favoriteProducts,
-      products : filter
-    }
+        ...state.favoriteProducts,
+        products: filter,
+      };
 
     case "CLEAN_PRODUCT_DETAIL":
       return {
