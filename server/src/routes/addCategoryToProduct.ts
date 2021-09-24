@@ -6,18 +6,16 @@ require("dotenv").config();
 router.post(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    const { product_id, category } = request.body;
+    const newCategory = request.body;
 
-    const product_id_query: string = (product_id as string) ?? "";
-    const category_query: string = (category as string) ?? "";
+    console.log(newCategory);
 
-    if (product_id_query !== "" && category_query !== "") {
-      try {
+    try {
         const { data } = await axios({
           url: "https://henry-pg-api.herokuapp.com/v1/graphql",
           method: "POST",
           data: {
-            query: addCategoryToProduct(product_id_query, category_query),
+            query: addCategoryToProduct(newCategory),
           },
         });
         console.log(data);
@@ -36,26 +34,18 @@ router.post(
         return response.send(res);
       } catch (err) {
         next(err);
-      }
-    } else {
-      response.send(
-        `Missing: {${product_id_query !== "" ? "" : "product_id"} ${
-          category !== "" ? "" : "category"
-        }}`
-      );
-    }
+      };
   }
 );
 
 export default router;
 
 const addCategoryToProduct = (
-  product_id: string,
-  category: string
+  newCategory:any
 ) => `mutation {
     insert_products_categories_one(object:{
-      category_name: ${category}
-      product_id: "${product_id}"}){
+      category_name: ${newCategory.name}
+      product_id: "${newCategory.product_id}"}){
       id
       category_name
     }

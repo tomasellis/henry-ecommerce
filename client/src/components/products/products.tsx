@@ -18,6 +18,14 @@ export default function Products() {
   const user_fav = useSelector((state: any) => state.user);
   const favIcon = state.favoriteProducts;
 
+/*  type Params = {
+    gender: string;
+    page: string;
+  };
+
+  const { gender } = useParams<Params>();
+  const { page } = useParams<Params>();*/
+
   useEffect(() => {
     return () => {
       dispatch(cleanProducts());
@@ -28,7 +36,7 @@ export default function Products() {
   useEffect(() => {
     dispatch(getFavorites(user_fav.id));
     // eslint-disable-next-line
-  }, []);
+  }, [dispatch])
 
   return (
     <div className="page-container">

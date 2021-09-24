@@ -20,6 +20,7 @@ import axios, { AxiosResponse } from "axios";
 import { cartIsLoading, setDataUser, setProductsIdsInCart } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
+import ModifyProducts from "./components/ModifyProducts/ModifyProducts";
 
 function App() {
   const state = useSelector((state: RootState) => state);
@@ -89,21 +90,19 @@ function App() {
 
   return (
     <BrowserRouter>
+
+
       <Route path="/" component={NavBar} />
       <Route exact path="/" component={Home} />
-      {/* <Route exact path="/loggedIn" component={LoggedIn} /> */}
       <Route exact path="/cart" component={PrevCart} />
       <Route exact path="/profile/editprofile" component={EditProfile} />
-      <Route
-        exact
-        path="/clothing/details/:id"
-        component={DetailProductCards}
-      />
-      {/* <Route path="/profile" component={Profile} /> */}
+      <Route exact path="/clothing/details/:id" component={DetailProductCards}/>
       <Route exact path="/search" component={SearchedProducts} />
       <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path="/profile/favorites" component={Favorites} />
       <Route exact path="/profile/shopping-history" component={History} />
+
+
       <Route exact path="/admin/createproduct">
         <PrivateRoute component={Add} />
       </Route>
@@ -113,6 +112,11 @@ function App() {
       <Route exact path="/admin/editorders">
         <PrivateRoute component={EditOrders} />
       </Route>
+      <Route exact path="/admin/modifyproducts">
+        <PrivateRoute component={ModifyProducts} />
+      </Route>
+
+
     </BrowserRouter>
   );
 }
