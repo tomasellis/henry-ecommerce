@@ -92,7 +92,7 @@ function App() {
       <Route exact path="/cart" component={PrevCart} />
       <Route path="/profile" component={Profile} />
       <Route exact path="/clothing/details/:id" component={DetailProductCards} />
-      <Route exact path="/profile" component={Profile} />
+      {/* <Route path="/profile" component={Profile} /> */}
       <Route exact path="/search" component={SearchedProducts} />
       <Route exact path="/clothing/:gender" component={Products} />
       <Route exact path='/profile/favorites' component={Favorites} />

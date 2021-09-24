@@ -12,8 +12,8 @@ import EditProfile from './EditProfile/EditProfile'; */
 
 export default function Profile() {
   const {user, isAuthenticated, isLoading} = useAuth0()
-  let usera = useSelector((state : any) => state.user);
-  console.log('soyuser',usera);  
+  // let usera = useSelector((state : any) => state.user);
+  
   if(isLoading) return <div>Loading...</div>  
 
   

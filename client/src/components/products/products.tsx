@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import "./products.css";
 
 //import actions
-import { cleanProducts } from "../../actions";
+import { getArticles } from "../../actions/products/productActions";
+import { cleanProducts, getFavorites } from "../../actions";
 
 //import components
 import Filter from "./filter/filter";
@@ -15,13 +16,22 @@ import Footer from "../Footer/Footer";
 export default function Products() {
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state);
+  const user_fav = useSelector((state : any) => state.user);
+  const favIcon =  state.favoriteProducts
 
-
+  
+  console.log('ssssssssssssoooo',favIcon?.products?.users_by_pk?.favourites);
+  
+  
   useEffect(() => {
     return () => {
       dispatch(cleanProducts())
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getFavorites(user_fav.id))
+  }, [])
 
   return (
     <div className="page-container">
@@ -29,14 +39,20 @@ export default function Products() {
       <h1 className="title_ropa_products">Cloth</h1>
       <Filter />
       <div className='ctn_product'>
-        {state.products?.map((e, i) => {
+        {state.products?.map((e) => {
+          let cond = false;
+          favIcon?.products?.users_by_pk?.favourites?.map(i => {
+            if(e.id=== i.product_id) cond = true;            
+          })          
           return (
             <Card
+              product_id={e.id}
               key={e.id}
               id={e.id}
               image={e.image_url}
               name={e.name}
               price={e.price}
+              cond={cond}
             />
           );
         })}
