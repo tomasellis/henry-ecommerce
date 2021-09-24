@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -9,10 +8,13 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+
 import { useDispatch, useSelector } from "react-redux";
 import { removeToCartStorage } from "../../actions";
+
 import "./styles.css";
-import AddOrSubstractLocalStorageInput from "./AddOrSubstractInputLocalStorage";
+import StockInputLocal from "./StockInputLocal";
+import { DeleteForever } from "@material-ui/icons";
 
 type CartProductBoxProps = {
   products: CartProductData[];
@@ -40,7 +42,7 @@ interface RootState {
 }
 
 const CartListLocalStorage = (props: CartProductBoxProps) => {
-  const state = useSelector((state: RootState) => state);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -55,9 +57,9 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
   };
 
   useEffect(() => {
-    localStorage.cartStorage = JSON.stringify(state.cart);
-    console.log("se actualizo el carrito");
-  }, [state.cart]);
+    localStorage.cartStorage = JSON.stringify(cart);
+    // eslint-disable-next-line
+  }, [cart]);
 
   const createData = (
     image: string,
@@ -84,8 +86,7 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
   return (
     <div
       style={{
-        width: "100%",
-        backgroundColor: "red",
+        width: "100vw%",
       }}
     >
       <TableContainer component={Paper} style={{ minWidth: "100%" }}>
@@ -95,7 +96,7 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
               <TableCell align="right"></TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="right">Stock</TableCell>
-              <TableCell align="center">Quantity</TableCell>
+              <TableCell align="right">Quantity</TableCell>
               <TableCell align="right">Price</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
@@ -106,41 +107,60 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
                 <TableCell align="left">
                   <img src={row.image} alt={row.name} height="30px" />
                 </TableCell>
-                <TableCell scope="row" align="left">
+                <TableCell
+                  scope="row"
+                  align="left"
+                  style={{ fontSize: "1.1rem" }}
+                >
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.stock}</TableCell>
-                <TableCell align="center" width="100px">
-                  <AddOrSubstractLocalStorageInput
-                    itemQuantity={row.product.quantity}
-                    product={row.product}
+                <TableCell align="right" style={{ fontSize: "1.1rem" }}>
+                  {row.stock}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  width="110px"
+                  style={{ fontSize: "1.1rem" }}
+                >
+                  <StockInputLocal
+                    currentQuantity={row.quantity}
+                    optionId={row.product.id_option}
+                    stock={row.stock}
                   />
                 </TableCell>
-
-                <TableCell align="right">
+                <TableCell
+                  align="right"
+                  width="200px"
+                  style={{ fontSize: "1.1rem" }}
+                >
                   $ {(row.price * row.quantity).toFixed(2)}
                 </TableCell>
-                <TableCell align="right">
-                  <Button
+                <TableCell align="center">
+                  <button
+                    style={{
+                      backgroundColor: "red",
+                      border: "none",
+                      borderRadius: "5px",
+                      width: "40px",
+                      height: "40px",
+                    }}
                     onClick={() => {
                       handleDeleteOnClick(row.product);
                     }}
-                    variant="outlined"
-                    style={{ backgroundColor: "red" }}
                   >
-                    X
-                  </Button>
+                    <DeleteForever />
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
             <TableRow>
               <TableCell align="right"></TableCell>
-              <TableCell align="left">
+              <TableCell align="left" style={{ fontSize: "1.1rem" }}>
                 <b>TOTAL</b>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="center"></TableCell>
-              <TableCell align="right">
+              <TableCell align="right" style={{ fontSize: "1.1rem" }}>
                 <b>$ {getTotal(props.products)}</b>
               </TableCell>
               <TableCell align="right"></TableCell>
@@ -154,10 +174,10 @@ const CartListLocalStorage = (props: CartProductBoxProps) => {
 
 export default CartListLocalStorage;
 
-const getTotal = (products: CartProductData[]): number => {
+const getTotal = (products: CartProductData[]): string => {
   let sum = 0;
   for (let i = 0; i < products.length; i++) {
     sum += products[i].price * products[i].quantity;
   }
-  return sum;
+  return sum.toFixed(2);
 };

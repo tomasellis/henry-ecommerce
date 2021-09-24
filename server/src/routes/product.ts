@@ -10,6 +10,7 @@ router.get(
     let query = `query MyQuery {
     products(where: {id: {_eq: "${id}"}}) {
       gender
+      id
       name
       image_url
       price

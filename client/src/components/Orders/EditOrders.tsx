@@ -8,6 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 export default function EditOrders() {
   const alertReact = useAlert()
   const [orders, setOrders] = useState([])
+  const [status,setStatus] = useState('')
   const [pages, setPages] = useState({
     currentPage: 0,
     prevPage: -1,
@@ -64,7 +65,7 @@ export default function EditOrders() {
       user_name: name,
       type_message: type_message,
       order: id
-    }).then(response => console.log('mail enviado:',response.data))
+    }).then(response => console.log('mail enviado:', response.data))
 
     HasuraResponseBlock = await axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/update_order`,
       {
@@ -78,60 +79,80 @@ export default function EditOrders() {
     console.log(HasuraResponseBlock.data);
   }
 
-
+  
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/orders?mostrar=${5}&saltearse=${pages.currentPage * 5}`)
+    if(!status.length){
+      axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/orders?mostrar=${5}&saltearse=${pages.currentPage * 5}`)
       .then(({ data }) => {
         setOrders(data.orders)
         setPages({ ...pages, maxOrders: data.orders_aggregate.aggregate.count })
       })
+    } else {
+      axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/getOrdersByStatus?mostrar=${5}&saltearse=${pages.currentPage * 5}&status=${status}`)
+      .then(({ data }) => {
+        setOrders(data.orders)
+        setPages({ ...pages, maxOrders: data.orders_aggregate.aggregate.count })
+      })
+    }
     return () => {
       // cleanup
     }
     // eslint-disable-next-line
-  }, [pages.currentPage, updated])
+  }, [pages.currentPage, updated,status])
 
   return (
     <React.Fragment>
       <div className='editUser'>
         <div> Orders </div>
-        <button onClick={e => setPages({
-          ...pages,
-          currentPage: pages.currentPage - 1,
-          prevPage: pages.prevPage - 1,
-          nextPage: pages.nextPage - 1
-        })} disabled={pages.prevPage < 0} >Prev</button>
-        <button onClick={e => setPages({
-          ...pages,
-          currentPage: pages.currentPage + 1,
-          prevPage: pages.prevPage + 1,
-          nextPage: pages.nextPage + 1
-        })} disabled={pages.nextPage > Math.ceil(pages.maxOrders / 5) - 1} >Next</button>
+        <select
+            className=""
+            name=""
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="">All status</option>
+            <option value="approved">Approved</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        {orders.length ? <>
+          <table>
+            <thead>
+              <tr>
+                <th>order id</th>
+                <th>user email</th>
+                <th>address</th>
+                <th>updated at</th>
+                <th>status</th>
+                <th>change status</th>
+              </tr>
 
+            </thead>
+            <tbody>{orders.map((order) => <tr key={order.id}>
+              <td>{order.id}</td>
+              <td>{order.email}</td>
+              <td>{order.address}</td>
+              <td>{order.updated_at.slice(0, 10)}</td>
+              <td>{order.status}</td>
+              <td>
+                {statues.includes(order.status.toLowerCase()) ? <button onClick={e => submit(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
+              </td>
+            </tr>)}</tbody>
+          </table>
+          <button onClick={e => setPages({
+            ...pages,
+            currentPage: pages.currentPage - 1,
+            prevPage: pages.prevPage - 1,
+            nextPage: pages.nextPage - 1
+          })} disabled={pages.prevPage < 0} >Prev</button>
+          <button onClick={e => setPages({
+            ...pages,
+            currentPage: pages.currentPage + 1,
+            prevPage: pages.prevPage + 1,
+            nextPage: pages.nextPage + 1
+          })} disabled={pages.nextPage > Math.ceil(pages.maxOrders / 5) - 1} >Next</button>
 
-        {orders.length ? <table>
-          <thead>
-            <tr>
-              <th>order id</th>
-              <th>user email</th>
-              <th>address</th>
-              <th>updated at</th>
-              <th>status</th>
-              <th>change status</th>
-            </tr>
-
-          </thead>
-          <tbody>{orders.map((order) => <tr key={order.id}>
-            <td>{order.id}</td>
-            <td>{order.email}</td>
-            <td>{order.address}</td>
-            <td>{order.updated_at.slice(0, 10)}</td>
-            <td>{order.status}</td>
-            <td>
-              {statues.includes(order.status.toLowerCase()) ? <button onClick={e => submit(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
-            </td>
-          </tr>)}</tbody>
-        </table> : null}
+        </>
+          : null}
       </div>
     </React.Fragment>
   )

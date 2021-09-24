@@ -20,6 +20,14 @@
     text-align: center;
     transition: all 0.25s;
   }
+
+  .div_container_card_product_history{
+    display: flex;
+    justify-content: center;
+    width: 21.5rem;
+    height: 32rem;
+    margin-left: 19%;
+  }
   
   .div_card_product:hover {
     transform: translateY(-15px);
@@ -27,15 +35,21 @@
     text-decoration: none;
     color: black;
   }
+
+  .card_name_product_history{
+    font-size: 1rem;
+    text-decoration: none;
+    color: black;
+  }
   
-  .img_product {
+  .img_product_history {
+    object-fit: cover;
     width: 20rem;
-    height: 40rem;
+    height: 90rem;
     padding: 5%;
   }
 
   .div_cards{
-    display: flex;
     justify-content:center;
     align-items: center;
     flex-direction: row;
@@ -44,9 +58,10 @@
 
 
   .titulito {
+    text-decoration: none;
+    font-size: 15px;
     font-family: "Roboto", sans-serif;
     text-align: center;
     color: rgb(21, 21, 21);
     margin: 5%;
-    font-weight: bold;
   }
