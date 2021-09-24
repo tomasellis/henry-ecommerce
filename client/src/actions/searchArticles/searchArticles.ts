@@ -13,3 +13,15 @@ export const searchArticles = (
       console.log(error);
     }
 }
+
+export const searchProducts = (
+    word:string
+    ) => async (dispatch:any) => {
+    try{
+      let res = await axios.get(`${URL}/search?word=${word}
+        `)
+      dispatch({type: "SEARCH_PRODUCTS", payload: res.data.products});
+    }catch(error){
+      console.log(error);
+    }
+}

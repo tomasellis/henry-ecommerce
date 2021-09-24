@@ -9,7 +9,7 @@ import OptionsAdd from './Options/Options';
 //import action
 import { postProduct } from '../../actions';
 
-//import css 
+//import css
 import './Add.css';
 
 declare global {
@@ -27,7 +27,7 @@ export const validate = (input) => {
         price: '',
         stock: '',
     };
-    const error = 'This field can not be blank';
+    const error = 'This field cannot be blank';
     if (!input.name) err.name = error;
     if (!input.options[0].size) err.size = error;
     if (!input.options[0].color) err.color = error;

@@ -91,7 +91,14 @@ export const rootReducer = (state = initialState, { type, payload }) => {
         searchArticles: payload.fuzzy_search,
       };
 
-    case "GET_FAVORITES":
+
+      case "SEARCH_PRODUCTS":
+        return {
+          ...state,
+          products: payload
+        };
+
+      case "GET_FAVORITES":
       return {
         ...state,
         favoriteProducts: {
