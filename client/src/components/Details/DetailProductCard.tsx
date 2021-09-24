@@ -11,6 +11,7 @@ import {
   
 } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
+import Zoom from 'react-img-zoom'
 
 
 type Product = {
@@ -180,11 +181,12 @@ export const DetailsProductCard = ({
       <div className="mainDetailCard">
         <div className="mainDetailCard__container">
           <div className="container__img">
-            <img
-              src={image_url}
-              width="100%"
-              alt=""
-              className="container__card-img"
+          <Zoom
+              img={image_url}
+              zoomScale={2}
+              height={360}
+              width={360}
+              transitionTime={0.5}
             />
           </div>
           {product &&
