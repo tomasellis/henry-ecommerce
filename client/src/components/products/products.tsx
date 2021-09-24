@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import "./products.css";
 
 //import actions
-import { getArticles } from "../../actions/products/productActions";
 import { cleanProducts, getFavorites } from "../../actions";
 
 //import components
@@ -27,10 +26,12 @@ export default function Products() {
     return () => {
       dispatch(cleanProducts())
     }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getFavorites(user_fav.id))
+    // eslint-disable-next-line
   }, [])
 
   return (
@@ -42,7 +43,8 @@ export default function Products() {
         {state.products?.map((e) => {
           let cond = false;
           favIcon?.products?.users_by_pk?.favourites?.map(i => {
-            if(e.id=== i.product_id) cond = true;            
+            if(e.id=== i.product_id) cond = true; 
+            return true           
           })          
           return (
             <Card

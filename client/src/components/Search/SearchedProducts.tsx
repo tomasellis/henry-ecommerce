@@ -19,6 +19,7 @@ export default function SearchedProducts() {
 
   useEffect(() => {
     dispatch(getFavorites(user_fav.id))
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function SearchedProducts() {
       value.name
     )
   )
+  // eslint-disable-next-line
 }, []);
   
   return (
@@ -45,6 +47,7 @@ export default function SearchedProducts() {
          let cond = false;
          favIcon?.products?.users_by_pk?.favourites?.map(e => {
            if(e.product_id === e.id) cond = true;
+           return true
          }) 
         return (
           <Card

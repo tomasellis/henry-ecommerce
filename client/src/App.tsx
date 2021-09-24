@@ -10,7 +10,7 @@ import Add from "./components/Add/Add";
 import PrevCart from "./components/Cart/PrevCart";
 import Favorites from './components/Perfil/Favorites/Favorites'
 import EditProfile from "./components/Perfil/EditProfile/EditProfile";
-import Profile from "./components/Perfil/Profile";
+// import Profile from "./components/Perfil/Profile";
 import SearchedProducts from "./components/Search/SearchedProducts";
 import EditUsers from "./components/Users/EditUsers";
 import History from "./components/Perfil/History/History";
