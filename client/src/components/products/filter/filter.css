@@ -112,6 +112,10 @@
 .hr_filter_product {
   margin: 10px;
 }
+.div_container_colors_filter_products{
+  display: inline-flex;
+  margin-left: 20px;
+}
 .dropdown-menu.show {
   width: 298px;
   border: 0.001rem solid rgba(0, 0, 0, 0.11);

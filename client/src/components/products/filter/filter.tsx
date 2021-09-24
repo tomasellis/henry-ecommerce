@@ -331,13 +331,29 @@ export default function Filter() {
               className="dropdown-menu "
               aria-labelledby="dropdownMenuButton1"
             >
-              <div className="div_colors_filter_product">
+              <div className = 'div_container_colors_filter_products'>
+
+              {options.colors?.map((e) => {                
+                function NameInUpperCase(str) {
+                  return str.charAt(0).toUpperCase() + str.slice(1);
+                }
+                const name = NameInUpperCase(e.name);            
+                return (
+                  <li>
+                    <button className="color_filter" id={e.name} name = 'color' style = {{backgroundColor : e.name, border : 'none'}}>
+                    </button>
+                  </li>
+                  )
+                })}
+                </div>
+                <hr className="hr_filter_product" />
+              {/* <div className="div_colors_filter_product">
                 <li>
-                  <button
-                    className="color_filter color_one_filter"
-                    id="withe"
-                    name="color"
-                  >
+                <button
+                className="color_filter color_one_filter"
+                id="withe"
+                name="color"
+                >
                     {" "}
                   </button>
                 </li>
@@ -384,7 +400,7 @@ export default function Filter() {
                   ></button>
                 </li>
               </div>
-              <hr className="hr_filter_product" />
+              <hr className="hr_filter_product" /> */}
             </ul>
           </div>
         </div>
