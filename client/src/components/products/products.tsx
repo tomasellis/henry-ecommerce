@@ -11,16 +11,13 @@ import { cleanProducts, getFavorites } from "../../actions";
 import Filter from "./filter/filter";
 import Card from "./cards/card";
 import Footer from "../Footer/Footer";
+import { DetailProductCards } from "../Details/DetailProductCards";
 
 export default function Products() {
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state);
   const user_fav = useSelector((state : any) => state.user);
-  const favIcon =  state.favoriteProducts
-
-  
-  console.log('ssssssssssssoooo',favIcon?.products?.users_by_pk?.favourites);
-  
+  const favIcon =  state.favoriteProducts  
   
   useEffect(() => {
     return () => {
@@ -45,7 +42,7 @@ export default function Products() {
           favIcon?.products?.users_by_pk?.favourites?.map(i => {
             if(e.id=== i.product_id) cond = true; 
             return true           
-          })          
+          }) 
           return (
             <Card
               product_id={e.id}

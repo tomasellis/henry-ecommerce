@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useAlert } from 'react-alert'
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
+import { addToCartStorage, cleanProductDetail, setProductsIdsInCart, getFavorites } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
+import { IconButton } from "@material-ui/core";
 
+import StarIcon from '@material-ui/icons/Star';
 
 type Product = {
   id_option: string;
@@ -60,7 +62,6 @@ export const DetailsProductCard = ({
   };
 
 
-
   function createOptions(
     array: { color: string; size: string; stock: number; id: string }[]
   ): OptionsByColor[] {
@@ -104,7 +105,16 @@ export const DetailsProductCard = ({
     size: optionsByColor[0].options[0].size,
     quantity: 1,
   });
-
+  
+  const stateUno = useSelector((state: any) => state);
+  const user_fav = useSelector((state : any) => state.user);
+  const favIcon =  stateUno.favoriteProducts;
+  console.log('sotfavicon',favIcon);
+   
+  
+  useEffect(()=> {
+    dispatch(getFavorites(user_fav.id))
+  }, []);
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -171,6 +181,7 @@ export const DetailsProductCard = ({
     });
   }
 
+  
   return (
     <React.Fragment>
       <div className="mainDetailCard">
@@ -181,7 +192,7 @@ export const DetailsProductCard = ({
               width="100%"
               alt=""
               className="container__card-img"
-            />
+              />
           </div>
           {product &&
             productDetailDisplay(
@@ -190,7 +201,7 @@ export const DetailsProductCard = ({
               onChange,
               addToCart,
               productDetail
-            )}
+              )}
         </div>
       </div>
       
@@ -205,10 +216,16 @@ const productDetailDisplay = (
   onChange,
   addToCart,
   productDetail
-) => (
-  <div className="container__card-content">
+  ) => (
+    
+    <div className="container__card-content">
     <div className="div_name_product_details">
       <h1>{productDetail["name"]}</h1>
+      <div className = 'icon_fav_details'>
+      <IconButton >
+        <StarIcon className={null ? 'icon_fav' : 'icon_fav_select'}/>
+      </IconButton> 
+      </div>
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>
@@ -273,9 +290,10 @@ const productDetailDisplay = (
       <button
         onClick={(e) => addToCart()}
         className={productDetail["stock"] <= 0 ? "disabled" : ""}
-      >
+        >
         Agregar al carrito
       </button>
-    </div>
+      
+        </div>
   </div>
 );

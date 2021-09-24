@@ -13,9 +13,16 @@
 }
 
 .div_name_product_details h1{
+    display: inline-flex;
     font-size: 60px;
     margin-top: 130px;
     margin-left: 100px;
+}
+
+.icon_fav_details{
+    display: inline-flex;
+    padding: 30px;
+    margin-left: 10px;
 }
 
 .disabled {
@@ -84,4 +91,8 @@
   width: 20px;
   border-radius: 100%;
   cursor:none;
+}
+
+.div_buttons_details{
+    display: inline-flex;
 }
