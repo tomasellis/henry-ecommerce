@@ -159,7 +159,7 @@ export default function NavBar() {
                 <option value="/admin/createproduct">Create product</option>
                 <option value="/admin/editusers">Edit users</option>
               </select>
-              
+
             </p>
           </div>
         </div>

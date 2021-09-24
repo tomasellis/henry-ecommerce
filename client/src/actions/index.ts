@@ -20,14 +20,84 @@ export function postCategory(payload) {
     const json = await axios.post(
       `${REACT_APP_BASE_BACKEND_URL}/createNewCategories`,
       payload
-    );    
+    );
+    return json;
+  };
+}
+
+export function removeProduct (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/removeProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function removeOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/removeOptionFromProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataOption`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateCategory (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataCategory`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function updateDataProduct (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/updateDataProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function addNewOption (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/addOptionToProduct`,
+      payload
+    );
+    return json;
+  };
+}
+
+export function addNewCategory (payload) {
+  return async function (dispatch) {
+    const json = await axios.post(
+      `${REACT_APP_BASE_BACKEND_URL}/addCategoryToProduct`,
+      payload
+    );
     return json;
   };
 }
 
 export function getOptions() {
   return async function (dispatch : any) {
-    let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});        
+    let json = await axios.get(`${REACT_APP_BASE_BACKEND_URL}/options`, {});
     return dispatch({ type: "GET_OPTIONS", payload: json.data });
   };
 }

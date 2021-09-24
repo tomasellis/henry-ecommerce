@@ -47,7 +47,7 @@ export default function ModifyProducts() {
     event.preventDefault();
     setEditProductId(product.id);
   };
-  console.log(options)
+
   function handleCancelClick () {
    setEditProductId(null);
  };

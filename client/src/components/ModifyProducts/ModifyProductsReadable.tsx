@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -12,11 +12,21 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+//import Actions
+import {removeProduct} from "../../actions/index"
 
 export default function RowRead (props) {
   const { product, handleEditClick }= props;
   const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    if(id!==''){
+      dispatch(removeProduct({id}));
+    }
+  }
+
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -40,7 +50,7 @@ export default function RowRead (props) {
              onClick={(event) => handleEditClick(event, product)}
              >Edit
            </button>
-           <button>Delete</button>
+           <button onClick={() => handleDelete(product.id)}>Delete</button>
         </TableCell>
       </TableRow>
       <TableRow>
