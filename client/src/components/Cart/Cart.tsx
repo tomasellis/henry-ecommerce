@@ -2,29 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import { User } from "@auth0/auth0-spa-js";
-
-import "./styles.css";
-
-import { bounceInUp, bounceOutUp } from "react-animations";
-import styled, { keyframes } from "styled-components";
 import { Button } from "@material-ui/core";
 import CartList from "./CartList";
+import "./styles.css";
 
 /* BOUNCE OUT ANIMATION*/
-
-const bounceInUpAnimation = keyframes`${bounceInUp}`;
-
-const InBouncingDiv = styled.div`
-  position: absolute;
-  animation: 1s ${bounceInUpAnimation};
-`;
-
-const bounceOutUpAnimation = keyframes`${bounceOutUp}`;
-
-const OutBouncingDiv = styled.div`
-  position: absolute;
-  animation: 1s ${bounceOutUpAnimation};
-`;
 
 const { REACT_APP_BASE_BACKEND_URL } = process.env;
 
@@ -117,14 +99,7 @@ const Cart = ({ user }: { user: User }) => {
       return (
         <div className="cartDisplay" id={"cartListDisplay"}>
           {productsInCart.products[0] && checkoutActive === false ? (
-            <InBouncingDiv
-              style={{
-                display: "flex",
-                width: "100%",
-                paddingTop: "10px",
-                flexFlow: "column nowrap",
-              }}
-            >
+            <div style={{ width: "100%" }}>
               <CartList
                 products={productsInCart.products}
                 userId={productsInCart.user_id}
@@ -142,23 +117,9 @@ const Cart = ({ user }: { user: User }) => {
                   Go to checkout
                 </Button>
               </div>
-            </InBouncingDiv>
+            </div>
           ) : (
-            <OutBouncingDiv
-              ref={ref}
-              style={{
-                display: "flex",
-                width: "100%",
-                paddingTop: "10px",
-                flexFlow: "column nowrap",
-              }}
-            >
-              <CartList
-                products={productsInCart.products}
-                userId={productsInCart.user_id}
-                updateData={updateData}
-              />
-            </OutBouncingDiv>
+            <div></div>
           )}
           {productsInCart.products[0] ? (
             <div></div>

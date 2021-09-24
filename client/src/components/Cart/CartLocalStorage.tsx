@@ -1,26 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { bounceInUp, bounceOutUp } from "react-animations";
-import styled, { keyframes } from "styled-components";
 import { Button } from "@material-ui/core";
 import CartListLocalStorage from "./CartListLocalStorage";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./styles.css";
 /* BOUNCE OUT ANIMATION*/
-
-const bounceInUpAnimation = keyframes`${bounceInUp}`;
-
-const InBouncingDiv = styled.div`
-  position: absolute;
-  animation: 1s ${bounceInUpAnimation};
-`;
-
-const bounceOutUpAnimation = keyframes`${bounceOutUp}`;
-
-const OutBouncingDiv = styled.div`
-  position: absolute;
-  animation: 1s ${bounceOutUpAnimation};
-`;
 
 type ProductsInCart = {
   loading: "loaded" | "loading" | "error";
@@ -42,10 +26,10 @@ type CartProductData = {
 
 interface RootState {
   cart: Array<CartProductData>;
+  loadingCart: boolean;
 }
 
 const CartLocalStorage = () => {
-  const ref = useRef(null);
   const { loginWithPopup } = useAuth0();
   const state = useSelector((state: RootState) => state);
 
@@ -61,7 +45,6 @@ const CartLocalStorage = () => {
         products: state.cart,
       });
     }
-
     // eslint-disable-next-line
   }, [state.cart]);
 
@@ -101,17 +84,11 @@ const CartLocalStorage = () => {
       return (
         <div className="cartDisplay" id={"cartListDisplay"}>
           {productsInCart.products[0] ? (
-            <InBouncingDiv
-              style={{
-                display: "flex",
-                width: "100%",
-                paddingTop: "10px",
-                flexFlow: "column nowrap",
-              }}
-            >
+            <div style={{ paddingTop: "10px" }}>
               <CartListLocalStorage products={productsInCart.products} />
               <div className="goToCheckoutButton">
                 <Button
+                  disabled={state.loadingCart}
                   variant="contained"
                   color="primary"
                   size="large"
@@ -120,19 +97,9 @@ const CartLocalStorage = () => {
                   Go to checkout
                 </Button>
               </div>
-            </InBouncingDiv>
+            </div>
           ) : (
-            <OutBouncingDiv
-              ref={ref}
-              style={{
-                display: "flex",
-                width: "100%",
-                paddingTop: "10px",
-                flexFlow: "column nowrap",
-              }}
-            >
-              <CartListLocalStorage products={productsInCart.products} />
-            </OutBouncingDiv>
+            <div></div>
           )}
           {productsInCart.products[0] ? (
             <div></div>
