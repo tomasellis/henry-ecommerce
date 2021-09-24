@@ -22,7 +22,7 @@ type User = {
   id: string;
   email: string;
   auth0_id: string;
-  role:string;
+  role: string;
 };
 
 interface RootState {
@@ -31,7 +31,8 @@ interface RootState {
 
 export default function NavBar() {
   const stateRedux = useSelector((state: RootState) => state);
-  const { user, isAuthenticated, /*loginWithRedirect,*/ loginWithPopup } = useAuth0();
+  const { user, isAuthenticated, /*loginWithRedirect,*/ loginWithPopup } =
+    useAuth0();
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -75,7 +76,7 @@ export default function NavBar() {
         <p style={{ fontWeight: "bold", fontSize: "18px" }}>
           {isAuthenticated ? (
             <Link
-              to="/profile"
+              to="/profile/editprofile"
               style={{ textDecoration: "none", color: "#000", marginTop: "0" }}
             >
               {user.name}
@@ -129,19 +130,21 @@ export default function NavBar() {
             alt="Algo bonito"
           />
         </Link>
-        {stateRedux.user?.role?.toLowerCase() === 'admin' ? <select
-          className=""
-          name=""
-          value="/admin"
-          onChange={(e) => history.push(e.target.value)}
-        >
-          <option value="/admin" disabled>
-            Admin
-          </option>
-          <option value="/admin/createproduct">Create product</option>
-          <option value="/admin/editusers">Edit users</option>
-          <option value="/admin/editorders">Edit orders</option>
-        </select> : null}
+        {stateRedux.user?.role?.toLowerCase() === "admin" ? (
+          <select
+            className=""
+            name=""
+            value="/admin"
+            onChange={(e) => history.push(e.target.value)}
+          >
+            <option value="/admin" disabled>
+              Admin
+            </option>
+            <option value="/admin/createproduct">Create product</option>
+            <option value="/admin/editusers">Edit users</option>
+            <option value="/admin/editorders">Edit orders</option>
+          </select>
+        ) : null}
 
         <div className={classes.titleCtn}>
           <TitleFilter mob={false} />
@@ -174,7 +177,7 @@ export default function NavBar() {
                   style={{
                     textDecoration: "none",
                     color: "#000",
-                    marginTop : '15px'
+                    marginTop: "15px",
                   }}
                 >
                   {user.name.split(" ")[0] + " " /*solo el primer nombre */}

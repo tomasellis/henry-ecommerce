@@ -5,6 +5,7 @@ import { User } from "@auth0/auth0-spa-js";
 import { Button } from "@material-ui/core";
 import CartList from "./CartList";
 import "./styles.css";
+import { useSelector } from "react-redux";
 
 /* BOUNCE OUT ANIMATION*/
 
@@ -38,6 +39,10 @@ const Cart = ({ user }: { user: User }) => {
     products: [],
     user_id: "",
   });
+
+  const loadingCart = useSelector<{ loadingCart }>(
+    (state) => state.loadingCart
+  );
 
   const [checkoutActive, setCheckoutActive] = useState(false);
 
@@ -97,61 +102,78 @@ const Cart = ({ user }: { user: User }) => {
       );
 
     case "loaded":
-      return (
-        <div className="cartDisplay" id={"cartListDisplay"}>
-          {productsInCart.products[0] && checkoutActive === false ? (
-            <div style={{ width: "100%" }}>
-              <CartList
-                products={productsInCart.products}
-                userId={productsInCart.user_id}
-                updateData={updateData}
-              />
-              <div className="goToCheckoutButton">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={(e) => {
-                    setCheckoutActive(!checkoutActive);
-                  }}
-                >
-                  Go to checkout
-                </Button>
+      if (loadingCart === true) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              fontSize: "25px",
+              paddingTop: "30px",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <span>Loading your cart!</span>
+          </div>
+        );
+      } else {
+        return (
+          <div className="cartDisplay" id={"cartListDisplay"}>
+            {productsInCart.products[0] && checkoutActive === false ? (
+              <div style={{ width: "100%" }}>
+                <CartList
+                  products={productsInCart.products}
+                  userId={productsInCart.user_id}
+                  updateData={updateData}
+                />
+                <div className="goToCheckoutButton">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={(e) => {
+                      setCheckoutActive(!checkoutActive);
+                    }}
+                  >
+                    Go to checkout
+                  </Button>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {productsInCart.products[0] ? (
-            <div></div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                fontSize: "25px",
-                paddingTop: "30px",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <span>Your cart is empty!</span>
-            </div>
-          )}
-          {productsInCart.products[0] ? (
-            <div>
-              <CheckoutForm
-                active={checkoutActive}
-                setActive={setCheckoutActive}
-                productsToCheckout={productsInCart.products}
-                auth0User={user}
-                userId={productsInCart.user_id}
-              ></CheckoutForm>
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-      );
+            ) : (
+              <div></div>
+            )}
+            {productsInCart.products[0] ? (
+              <div></div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: "25px",
+                  paddingTop: "30px",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <span>Your cart is empty!</span>
+              </div>
+            )}
+            {productsInCart.products[0] ? (
+              <div>
+                <CheckoutForm
+                  active={checkoutActive}
+                  setActive={setCheckoutActive}
+                  productsToCheckout={productsInCart.products}
+                  auth0User={user}
+                  userId={productsInCart.user_id}
+                ></CheckoutForm>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        );
+      }
+
     default:
       return <div>Loading ;)</div>;
   }
