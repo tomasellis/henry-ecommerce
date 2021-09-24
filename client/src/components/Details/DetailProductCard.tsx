@@ -220,12 +220,12 @@ const productDetailDisplay = (
     
     <div className="container__card-content">
     <div className="div_name_product_details">
-      <h1>{productDetail["name"]}</h1>
       <div className = 'icon_fav_details'>
       <IconButton >
         <StarIcon className={null ? 'icon_fav' : 'icon_fav_select'}/>
       </IconButton> 
       </div>
+      <h1>{productDetail["name"]}</h1>
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>

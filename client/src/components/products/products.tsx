@@ -29,7 +29,7 @@ export default function Products() {
   useEffect(() => {
     dispatch(getFavorites(user_fav.id))
     // eslint-disable-next-line
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="page-container">

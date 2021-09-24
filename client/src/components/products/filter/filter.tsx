@@ -294,25 +294,22 @@ export default function Filter() {
               aria-labelledby="dropdownMenuButton1"
             >
               <div className="div_size_filter_product">
-                <li>
-                  <button id="X" name="size">X</button>
-                </li>
-                <li>
-                  <button id="S" name="size">S</button>
-                </li>
-                <li>
-                  <button id="M" name="size">M</button>
-                </li>
-                <li>
-                  <button id="L" name="size">L</button>
-                </li>
-                <li>
-                  <button id="XS" name="size">XS</button>
-                </li>
-                <li>
-                  <button id="XL" name="size">XL</button>
-                </li>
-              </div>
+              {options.size?.map((e) => {                
+                  function NameInUpperCase(str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1);
+                  }
+                  const name = NameInUpperCase(e.name);
+                  return (
+
+                  <li>
+                    <button  id={e.name} name = 'size'>
+                        {name}
+                    </button>
+                    
+                  </li>
+                  )
+                })}
+                </div>
               <hr className="hr_filter_product" />
             </ul>
           </div>
@@ -347,60 +344,6 @@ export default function Filter() {
                 })}
                 </div>
                 <hr className="hr_filter_product" />
-              {/* <div className="div_colors_filter_product">
-                <li>
-                <button
-                className="color_filter color_one_filter"
-                id="withe"
-                name="color"
-                >
-                    {" "}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_two_filter"
-                    id="black"
-                    name="color"
-                  ></button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_three_filter"
-                    id="grey"
-                    name="color"
-                  ></button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_four_filter"
-                    id="green"
-                    name="color"
-                  ></button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_five_filter"
-                    id="yellow"
-                    name="color"
-                  ></button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_six_filter"
-                    id="pink"
-                    name="color"
-                  ></button>
-                </li>
-                <li>
-                  <button
-                    className="color_filter color_seven_filter"
-                    id="sienna"
-                    name="color"
-                  ></button>
-                </li>
-              </div>
-              <hr className="hr_filter_product" /> */}
             </ul>
           </div>
         </div>
