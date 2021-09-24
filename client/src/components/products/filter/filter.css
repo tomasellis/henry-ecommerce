@@ -27,6 +27,10 @@
   visibility: visible;
 }
 
+.btn:hover {
+  color: white;
+}
+
 .title_filter_product {
   color: black;
   font-family: "Poppins", sans-serif;

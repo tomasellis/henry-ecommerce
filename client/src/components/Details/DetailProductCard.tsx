@@ -218,9 +218,9 @@ const productDetailDisplay = (
         {opciones.length &&
           opciones.map((opcion) => {
             return (
-              <label>
-                {opcion.color}
+              <div className = 'color_filter_detail' style = {{backgroundColor : opcion.color, border : 'none'}}>
                 <input
+                className = 'input_color_details'
                   type="radio"
                   name="color"
                   key={opcion.color}
@@ -230,32 +230,34 @@ const productDetailDisplay = (
                     onChange(e);
                   }}
                 />
-              </label>
+              </div>
             );
           })}
       </div>
-      <div className="div_size_product_details">
+      <div className = 'div_size_product_details_one'>
         {opciones.length &&
           opciones
             .filter((obj) => obj.color === productDetail["color"])[0]
           ["options"].map((option) => {
             return (
-              <label key={option.size}>
+              <div className="div_size_product_details">
+              <div key={option.size}>
                 {option.size}
                 <input
+                  className = 'input_size_product_details'
                   type="radio"
                   name="size"
-                  
                   checked={productDetail["size"] === option.size}
                   value={option.size}
                   onChange={(e) => {
                     onChange(e);
                   }}
-                />
-              </label>
+                  />
+            </div>
+      </div>
             );
           })}
-      </div>
+          </div>
     </form>
     <div className="div_stock_product_details">
       <span>Stock:</span>{" "}
