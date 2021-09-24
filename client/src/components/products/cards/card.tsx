@@ -40,6 +40,12 @@ export default function Card({name,price,image,id,product_id,cond}){
         product_id : product_id
         })); 
     };
+
+    const stringUno = name.toLowerCase();
+    function NameInUpperCase(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+    const nameUpper = NameInUpperCase(stringUno);
     
     return(
         <>
@@ -47,13 +53,14 @@ export default function Card({name,price,image,id,product_id,cond}){
                 <div className = 'div_card_product'>
                     <Link to = {`/clothing/details/${id}`}>
                         <img className = 'img_product' src={image.includes('http')? image : IMG }alt="" />
-                        <h3 className = 'card_name_product'>{name}</h3>
+                        <h3 className = 'card_name_product'>{nameUpper}</h3>
                         <h5 className = 'card_desc_product'>$ {price}</h5>
                     </Link>
                     <div className = 'button_fav_product' onClick = {AddFavoriteProduct}>
-                        <IconButton>
+                        {!user.id ? null : 
+                            <IconButton>
                             <StarIcon className={fav.status === false ? 'icon_fav' : 'icon_fav_select'}/>
-                        </IconButton>
+                        </IconButton>}
                     </div>       
                 
                 {/* {

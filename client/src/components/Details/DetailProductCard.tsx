@@ -1,12 +1,19 @@
 import "./DetailProductCard.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
-import { useAlert } from 'react-alert'
+import { useAlert } from "react-alert";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartStorage, cleanProductDetail, setProductsIdsInCart } from "../../actions";
+import {
+  addToCartStorage,
+  cleanProductDetail,
+  setProductsIdsInCart,
+  getFavorites,
+} from "../../actions";
 import DetailProductReview from "./DetailProductReview";
+import { IconButton } from "@material-ui/core";
 
+import StarIcon from "@material-ui/icons/Star";
 
 type Product = {
   id_option: string;
@@ -24,9 +31,9 @@ type User = {
   id: string;
   email: string;
   auth0_id: string;
-  role:string;
-  productsReceived:string[];
-  reviews:string[]
+  role: string;
+  productsReceived: string[];
+  reviews: string[];
 };
 
 interface RootState {
@@ -43,10 +50,9 @@ export const DetailsProductCard = ({
   price,
   product_options,
 }) => {
-  const alertReact = useAlert()
+  const alertReact = useAlert();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  
 
   type OptionsByColor = {
     color: string;
@@ -58,8 +64,6 @@ export const DetailsProductCard = ({
     stock: number;
     optionId: string;
   };
-
-
 
   function createOptions(
     array: { color: string; size: string; stock: number; id: string }[]
@@ -105,6 +109,15 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
+  const stateUno = useSelector((state: any) => state);
+  const user_fav = useSelector((state: any) => state.user);
+  const favIcon = stateUno.favoriteProducts;
+  console.log("sotfavicon", favIcon);
+
+  useEffect(() => {
+    dispatch(getFavorites(user_fav.id));
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -126,7 +139,8 @@ export const DetailsProductCard = ({
         dispatch(addToCartStorage(productDetail));
         alertReact.success("Product added to cart!");
       }
-    } else { //si esta autenticado...
+    } else {
+      //si esta autenticado...
 
       const { data } = await axios.post(
         `${BASE_URL}/findOrCreateUserInDatabase`,
@@ -144,9 +158,8 @@ export const DetailsProductCard = ({
       });
 
       if (!dataAddToCart.data.errors) {
-        dispatch(setProductsIdsInCart(id))
+        dispatch(setProductsIdsInCart(id));
         alertReact.success("producto agregado al carrito");
-      
       }
 
       //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
@@ -193,7 +206,7 @@ export const DetailsProductCard = ({
             )}
         </div>
       </div>
-      
+
       <DetailProductReview product_id={id} />
     </React.Fragment>
   );
@@ -209,6 +222,11 @@ const productDetailDisplay = (
   <div className="container__card-content">
     <div className="div_name_product_details">
       <h1>{productDetail["name"]}</h1>
+      <div className="icon_fav_details">
+        <IconButton>
+          <StarIcon className={null ? "icon_fav" : "icon_fav_select"} />
+        </IconButton>
+      </div>
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>
@@ -218,9 +236,12 @@ const productDetailDisplay = (
         {opciones.length &&
           opciones.map((opcion) => {
             return (
-              <label>
-                {opcion.color}
+              <div
+                className="color_filter_detail"
+                style={{ backgroundColor: opcion.color, border: "none" }}
+              >
                 <input
+                  className="input_color_details"
                   type="radio"
                   name="color"
                   key={opcion.color}
@@ -230,31 +251,33 @@ const productDetailDisplay = (
                     onChange(e);
                   }}
                 />
-              </label>
+              </div>
             );
           })}
       </div>
-      <div className="div_size_product_details">
+      <div className="div_size_product_details_one">
         {opciones.length &&
           opciones
             .filter((obj) => obj.color === productDetail["color"])[0]
-          ["options"].map((option) => {
-            return (
-              <label key={option.size}>
-                {option.size}
-                <input
-                  type="radio"
-                  name="size"
-                  
-                  checked={productDetail["size"] === option.size}
-                  value={option.size}
-                  onChange={(e) => {
-                    onChange(e);
-                  }}
-                />
-              </label>
-            );
-          })}
+            ["options"].map((option) => {
+              return (
+                <div className="div_size_product_details">
+                  <div key={option.size}>
+                    {option.size}
+                    <input
+                      className="input_size_product_details"
+                      type="radio"
+                      name="size"
+                      checked={productDetail["size"] === option.size}
+                      value={option.size}
+                      onChange={(e) => {
+                        onChange(e);
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
       </div>
     </form>
     <div className="div_stock_product_details">
@@ -262,8 +285,8 @@ const productDetailDisplay = (
       {opciones.length &&
         opciones
           .filter((obj) => obj.color === productDetail["color"])[0]
-        ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-        "stock"
+          ["options"].filter((obj) => obj.size === productDetail["size"])[0][
+          "stock"
         ]}{" "}
       u.
     </div>
