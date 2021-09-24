@@ -8,12 +8,10 @@ import {
   addToCartStorage,
   cleanProductDetail,
   setProductsIdsInCart,
-  getFavorites,
+  
 } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
-import { IconButton } from "@material-ui/core";
 
-import StarIcon from "@material-ui/icons/Star";
 
 type Product = {
   id_option: string;
@@ -109,15 +107,9 @@ export const DetailsProductCard = ({
     quantity: 1,
   });
 
-  const stateUno = useSelector((state: any) => state);
-  const user_fav = useSelector((state: any) => state.user);
-  const favIcon = stateUno.favoriteProducts;
-  console.log("sotfavicon", favIcon);
 
-  useEffect(() => {
-    dispatch(getFavorites(user_fav.id));
-    // eslint-disable-next-line
-  }, []);
+
+
   useEffect(() => {
     return () => {
       dispatch(cleanProductDetail());
@@ -183,7 +175,6 @@ export const DetailsProductCard = ({
       [e.target.name]: e.target.value,
     });
   }
-
   return (
     <React.Fragment>
       <div className="mainDetailCard">
@@ -223,10 +214,6 @@ const productDetailDisplay = (
     <div className="div_name_product_details">
       <h1>{productDetail["name"]}</h1>
       <div className="icon_fav_details">
-        <IconButton>
-          <StarIcon className={null ? "icon_fav" : "icon_fav_select"} />
-        </IconButton>
-      </div>
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>
@@ -297,6 +284,7 @@ const productDetailDisplay = (
       >
         Agregar al carrito
       </button>
+    </div>
     </div>
   </div>
 );

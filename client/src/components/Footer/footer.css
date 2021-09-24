@@ -1,6 +1,6 @@
-.footer{
+.footer {
   color: white;
-  background-color: #2F4F4F;
+  background-color: #000;
   padding-top: 3em;
   position: relative;
   bottom: 0;
@@ -8,6 +8,33 @@
   margin-top: 3em;
 }
 
+.footer a {
+  text-decoration: none;
+  color: white;
+  margin-left: 5px;
+}
+
+.footer a:hover {
+  color: dodgerblue;
+}
+
 .container {
   font-size: 1em;
+}
+
+.ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconGIT {
+  margin-bottom: 5px;
+}
+
+.bottom {
+  text-align: center;
+}
+
+.name {
+  text-align: center;
 }

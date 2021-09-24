@@ -22,14 +22,18 @@ export default function Search(): JSX.Element {
 
  //useEffect(() => {
 
-
+  useEffect(() => {
+  
+    if(search === '' || search === ' ') dispatch(searchArticles(undefined))
+    else dispatch(searchArticles(search));
+  
+   },[search,dispatch])
 
  //},[search,dispatch])
 
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    dispatch(searchArticles(search));
   };
 
 
