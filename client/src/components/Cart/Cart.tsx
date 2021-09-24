@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import { User } from "@auth0/auth0-spa-js";
 import { Button } from "@material-ui/core";
@@ -71,16 +71,6 @@ const Cart = ({ user }: { user: User }) => {
     (async () => await updateData())();
     // eslint-disable-next-line
   }, []);
-
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (checkoutActive === true) {
-      setTimeout(() => {
-        ref.current.hidden = true;
-      }, 900);
-    }
-  }, [checkoutActive]);
 
   switch (productsInCart.loading) {
     case "error":
