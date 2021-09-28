@@ -30,6 +30,7 @@ router.post(
                   status
                   birthday
                   floor
+                  additional_data
                   identity_document_type
                   number_apartament
                   phone_number
@@ -79,6 +80,7 @@ router.post(
                   status
                   birthday
                   floor
+                  additional_data
                   identity_document_type
                   number_apartament
                   phone_number
