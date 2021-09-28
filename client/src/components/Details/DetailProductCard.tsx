@@ -292,6 +292,11 @@ const productDetailDisplay = (
         ["options"].filter((obj) => obj.size === productDetail["size"])[0][
       "stock"] : '-'}{" "} u.
     </div>
+    <div className="input_stock">
+      <input style={{ width: "10%", marginTop: "3%" }} type="number" min="1" max={productDetail.stock} name="quantity" id="quantity" value={productDetail.quantity} onChange={(e) => {
+        onChange(e);
+      }} />
+    </div>
     <div className="container__button-buy">
       <button
         onClick={(e) => addToCart()}
