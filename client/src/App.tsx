@@ -51,7 +51,6 @@ function App() {
             name: user.name,
           }
         );
-
         dispatch(setDataUser(dataUser.data));
         if (localStorage.cartStorage) {
           dispatch(cartIsLoading(true));
@@ -73,16 +72,15 @@ function App() {
               "no se agregaron los productos de localstorage a la db"
             );
           }
+        }
           let idsInCart: AxiosResponse<any> = await axios.get(
             `${process.env.REACT_APP_BASE_REST_API_HASURA}/getProductsIdsInCart/${dataUser.data.id}`
           );
-
           idsInCart = idsInCart.data.carts_products.map(
-            (product) => product.products_option.product_id
+            (product) => product.products_option.id
           );
           dispatch(setProductsIdsInCart(idsInCart));
           dispatch(cartIsLoading(false));
-        }
       }
     })();
     // eslint-disable-next-line

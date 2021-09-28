@@ -51,7 +51,7 @@ export const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cart: [...state.cart, payload],
-        idsInCart: [...state.idsInCart, payload.id],
+        idsInCart: [...state.idsInCart, payload.id_option],
       };
 
     case "REMOVE_FROM_CART":

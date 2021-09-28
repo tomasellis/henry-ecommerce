@@ -51,12 +51,22 @@ export default function EditUsers() {
           auth0_id: id,
           role: 'Admin'
         })
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/setRoleUser`,
+        {
+          auth0_id: id,
+          role: 'Admin'
+        }).then(response => console.log("user seteado como admin", response.data))
     } else {
       HasuraResponseRole = await axios.post(`${process.env.REACT_APP_BASE_REST_API_HASURA}/setUserAdmin`,
         {
           auth0_id: id,
           role: 'User'
         })
+        axios.post(`${process.env.REACT_APP_BASE_BACKEND_URL}/setRoleUser`,
+        {
+          auth0_id: id,
+          role: 'User'
+        }).then(response => console.log("user seteado como User", response.data))
     }
     setUpdated(updated + 1)
     alertReact.success('Updated user')
