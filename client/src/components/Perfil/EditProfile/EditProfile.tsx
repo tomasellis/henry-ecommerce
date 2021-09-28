@@ -102,6 +102,22 @@ type User = {
   id: string;
   email: string;
   auth0_id: string;
+  name:string;
+  last_name:string;
+  birthday:string;
+  identity_document_type:number;
+  postal_code:number;
+  locality:string;
+  address_number:string;
+  username:string;
+  sex:string;
+  address:string;
+  floor:string;
+  city:string;
+  phone_number:number;
+  number_apartament:string;
+  addditional_data:string;
+
 };
 
 interface RootState {
@@ -132,11 +148,11 @@ export default function EditProfile() {
   const [mapActive, setMapActive] = useState<boolean>(false);
 
   const [info, setInfo] = useState({
-    name: "",
-    lastname: "",
-    sex: "",
-    date: "",
-    dni: "",
+    name: state.user.name || "",
+    lastname: state.user.last_name || "",
+    sex: state.user.sex || "",
+    date: state.user.birthday || "",
+    dni: state.user.identity_document_type || "",
   });
 
   const [changePassword, setChangePassword] = useState({
@@ -150,21 +166,21 @@ export default function EditProfile() {
     number: string;
     floor: string;
     apartament: string;
-    postalcode: string;
+    postalcode: number;
     city: string;
     locality: string;
-    phone: string;
+    phone: number;
     additionaldata: string;
   }>({
-    delivery: "",
-    number: "",
-    floor: "",
-    apartament: "",
-    postalcode: "",
-    city: "",
-    locality: "",
-    phone: "",
-    additionaldata: "",
+    delivery: state.user.address || "",
+    number: state.user.address_number || "",
+    floor: state.user.floor || "",
+    apartament: state.user.number_apartament||"",
+    postalcode: state.user.postal_code || undefined,
+    city: state.user.city || "",
+    locality: state.user.locality || "",
+    phone: state.user.phone_number || undefined,
+    additionaldata: state.user.addditional_data || "",
   });
 
   // If using map widget, set data to widget data
@@ -200,6 +216,7 @@ export default function EditProfile() {
         last_name: info.lastname,
         birthday: info.date,
         identity_document_type: Number(info.dni),
+        sex:info.sex
       }
     );
     console.log("datos actualizados", responseAxios.data);
@@ -373,8 +390,8 @@ export default function EditProfile() {
                   <MenuItem disabled value="">
                     <em>Select an option</em>
                   </MenuItem>
-                  <MenuItem value={20}>Male</MenuItem>
-                  <MenuItem value={30}>Female</MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
                 </Select>
               </div>
               <TextField
