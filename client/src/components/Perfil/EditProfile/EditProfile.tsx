@@ -275,7 +275,6 @@ export default function EditProfile() {
       return;
     }
     else {
-      alert("Dates updates")
       updateProfile();
     }
   };
@@ -313,7 +312,6 @@ export default function EditProfile() {
       return;
     }
     else {
-      alert("Dates updates")
       updateAditionalData();
     }
   };
