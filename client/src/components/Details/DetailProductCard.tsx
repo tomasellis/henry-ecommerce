@@ -8,7 +8,7 @@ import {
   addToCartStorage,
   cleanProductDetail,
   setProductsIdsInCart,
-  
+
 } from "../../actions";
 import DetailProductReview from "./DetailProductReview";
 
@@ -173,6 +173,7 @@ export const DetailsProductCard = ({
         ...productDetail,
         [e.target.name]: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
+        stock:chosenOptionSize[0]?.stock
       });
     }
     else if (e.target.name === "color") {
@@ -182,11 +183,12 @@ export const DetailsProductCard = ({
       const chosenOptionSize = chosenOptionColor[0].options.filter(
         (option) => option.size === productDetail.size
       );
-      console.log(chosenOptionSize[0]?.optionId)
+      console.log(chosenOptionSize)
       return setProductDetail({
         ...productDetail,
         color: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
+        stock:chosenOptionSize[0]?.stock
       });
     }
     return setProductDetail({
@@ -201,7 +203,6 @@ export const DetailsProductCard = ({
           <div className="container__img">
             <img
               src={image_url}
-              width="100%"
               alt=""
               className="container__card-img"
             />
@@ -232,58 +233,68 @@ const productDetailDisplay = (
   <div className="container__card-content">
     <div className="div_name_product_details">
       <h1>{productDetail["name"]}</h1>
-      <div className="icon_fav_details">
+    </div>
+    <div className="icon_fav_details">
     </div>
     <div className="div_price_product_details">
       <span className="price_product_details"> ${price}</span>
     </div>
     <form>
-      <div className="div_color_product_details">
-        {optionsByColor.length &&
-          optionsByColor.map((opcion) => {
-            return (
-              <div
-                className="color_filter_detail"
-                style={{ backgroundColor: opcion.color, border: "none" }}
-              >
-                <input
-                  className="input_color_details"
-                  type="radio"
-                  name="color"
+      <div className="div_form_select_options">
+        <div className="div_color_product_details">
+          {optionsByColor.length &&
+            optionsByColor.map((opcion) => {
+              return (
+                <label
                   key={opcion.color}
-                  checked={productDetail["color"] === opcion.color}
-                  value={opcion.color}
-                  onChange={(e) => {
-                    onChange(e);
-                  }}
-                />
-              </div>
-            );
-          })}
-      </div>
-      <div className="div_size_product_details">
-        {optionsByColor.length &&
-          optionsByColor
-            .filter((obj) => obj.color === productDetail["color"])[0]
-          ["options"].map((option) => {
-            return (
-              <div className="div_size_product_details">
-                <div key={option.size}>
+                  className="color_filter_detail"
+                  style={productDetail["color"] === opcion.color ? { backgroundColor: opcion.color, outlineStyle: "double" } : { backgroundColor: opcion.color, border:"none" } }
+                  htmlFor={opcion.color}
+                >
+                  <input
+                    className="input_color_details"
+                    id={opcion.color}
+                    type="radio"
+                    name="color"
+                    checked={productDetail["color"] === opcion.color}
+                    value={opcion.color}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                  />
+                </label>
+              );
+            })}
+        </div>
+        <div className="div_size_product_details">
+          {optionsByColor.length &&
+            optionsByColor
+              .filter((obj) => obj.color === productDetail["color"])[0]
+            ["options"].map((option) => {
+              return (
+
+                <label
+                  key={option.size}
+                  style={productDetail["size"] === option.size ? {outlineStyle: "double"} : null }
+                  className="div_size_individual_select"
+                  htmlFor={option.size}
+                >
                   {option.size}
                   <input
-                    className="input_size_product_details"
                     type="radio"
                     name="size"
+                    id={option.size}
                     checked={productDetail["size"] === option.size}
                     value={option.size}
                     onChange={(e) => {
                       onChange(e);
                     }}
                   />
-                </div>
-              </div>
-            );
-          })}
+                </label>
+
+              );
+            })}
+        </div>
       </div>
     </form>
     <div className="div_stock_product_details">
@@ -294,16 +305,16 @@ const productDetailDisplay = (
         ["options"].filter((obj) => obj.size === productDetail["size"])[0] ? optionsByColor
           .filter((obj) => obj.color === productDetail["color"])[0]
         ["options"].filter((obj) => obj.size === productDetail["size"])[0][
-        "stock"] : '-'}{" "} u.
+      "stock"] : '-'}{" "} u.
     </div>
     <div className="container__button-buy">
       <button
         onClick={(e) => addToCart()}
         className={productDetail["stock"] <= 0 || productDetail.id_option === undefined ? "disabled" : ""}
       >
-        Agregar al carrito
+        Add to cart
       </button>
     </div>
-    </div>
+
   </div>
 );

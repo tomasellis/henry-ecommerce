@@ -22,15 +22,15 @@ type User = {
   id: string;
   email: string;
   auth0_id: string;
-  role:string;
-  productsReceived:string[],
-  reviews:string[]
+  role: string;
+  productsReceived: string[],
+  reviews: string[]
 };
 
 interface RootState {
   idsInCart: string;
   user: User;
-  updatedReviews:boolean;
+  updatedReviews: boolean;
 }
 
 export const DetailProductReview = ({
@@ -52,7 +52,7 @@ export const DetailProductReview = ({
   useEffect(() => {
     getReviews()
     return () => {
-     
+
     };
     // eslint-disable-next-line
   }, [state.user.reviews]);
@@ -69,7 +69,7 @@ export const DetailProductReview = ({
           let stars = []
           const starPush = () => {
             for (let i = 0; i < review.stars; i++) {
-              stars.push(<StarIcon style={{ color: 'gold' }} />)
+              stars.push(<StarIcon key={i} style={{ color: 'gold' }} />)
             }
           }
           starPush()
