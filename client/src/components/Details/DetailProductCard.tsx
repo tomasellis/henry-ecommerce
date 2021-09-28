@@ -118,45 +118,30 @@ export const DetailsProductCard = ({
     // eslint-disable-next-line
   }, [product]);
 
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const BASE_URL = process.env.REACT_APP_BASE_BACKEND_URL;
 
   async function addToCart() {
-    //el id del producto
     if (!isAuthenticated) {
-      const existProductInCartRedux = state.cart.some((product) => {
-        return product.id_option === productDetail.id_option;
-      });
-      if (existProductInCartRedux) alertReact.error("Product already in cart!");
+      if (state.idsInCart.includes(productDetail.id_option)) alertReact.error("Product already in cart!");
       else {
         dispatch(addToCartStorage(productDetail));
         alertReact.success("Product added to cart!");
       }
-    } else {
-      //si esta autenticado...
-
-      const { data } = await axios.post(
-        `${BASE_URL}/findOrCreateUserInDatabase`,
-        {
-          auth0_id: user.sub,
-          email: user.email,
-          name: user.name,
+    } else { //si esta autenticado...
+      if (state.idsInCart.includes(productDetail.id_option)) alertReact.error("Product already in cart!");
+      else {
+        const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
+          user_id: state.user.id,
+          product_option_id: productDetail.id_option,
+          quantity: productDetail.quantity,
+        });
+        if (!dataAddToCart.data.errors) {
+          dispatch(setProductsIdsInCart(productDetail.id_option));
+          alertReact.success("Product added to cart!");
         }
-      );
-
-      const dataAddToCart = await axios.post(`${BASE_URL}/addToCart`, {
-        user_id: data.id,
-        product_option_id: productDetail.id_option,
-        quantity: 1,
-      });
-
-      if (!dataAddToCart.data.errors) {
-        dispatch(setProductsIdsInCart(id));
-        alertReact.success("Product added to cart!");
+        else alertReact.error(dataAddToCart.data.errors);
       }
-
-      //recordatorio: agregar una tilde verde al lado del boton "agregar al carrito"
-      else alertReact.error(dataAddToCart.data.errors);
     }
   }
 
@@ -173,7 +158,7 @@ export const DetailsProductCard = ({
         ...productDetail,
         [e.target.name]: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
-        stock:chosenOptionSize[0]?.stock
+        stock: chosenOptionSize[0]?.stock
       });
     }
     else if (e.target.name === "color") {
@@ -188,7 +173,7 @@ export const DetailsProductCard = ({
         ...productDetail,
         color: e.target.value,
         id_option: chosenOptionSize[0]?.optionId,
-        stock:chosenOptionSize[0]?.stock
+        stock: chosenOptionSize[0]?.stock
       });
     }
     return setProductDetail({
@@ -248,7 +233,7 @@ const productDetailDisplay = (
                 <label
                   key={opcion.color}
                   className="color_filter_detail"
-                  style={productDetail["color"] === opcion.color ? { backgroundColor: opcion.color, outlineStyle: "double" } : { backgroundColor: opcion.color, border:"none" } }
+                  style={productDetail["color"] === opcion.color ? { backgroundColor: opcion.color, outlineStyle: "double" } : { backgroundColor: opcion.color, border: "none" }}
                   htmlFor={opcion.color}
                 >
                   <input
@@ -275,7 +260,7 @@ const productDetailDisplay = (
 
                 <label
                   key={option.size}
-                  style={productDetail["size"] === option.size ? {outlineStyle: "double"} : null }
+                  style={productDetail["size"] === option.size ? { outlineStyle: "double" } : null}
                   className="div_size_individual_select"
                   htmlFor={option.size}
                 >
