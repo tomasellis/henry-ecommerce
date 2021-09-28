@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: "30ch",
     },
-    marginLeft:"1rem",
+    marginLeft: "1rem",
     display: "grid",
     gridTemplateColumns: "1fr",
-    gridTemplateRows:"1fr 1fr",
-    gap:"3em"
+    gridTemplateRows: "1fr 1fr",
+    gap: "3em"
   },
   selectEmpty: {
     marginTop: theme.spacing(1),
@@ -102,6 +102,21 @@ type User = {
   id: string;
   email: string;
   auth0_id: string;
+  name: string;
+  last_name: string;
+  birthday: string;
+  identity_document_type: number;
+  postal_code: number;
+  locality: string;
+  address_number: string;
+  username: string;
+  sex: string;
+  address: string;
+  floor: string;
+  city: string;
+  phone_number: number;
+  number_apartament: string;
+  additional_data: string;
 };
 
 interface RootState {
@@ -132,11 +147,11 @@ export default function EditProfile() {
   const [mapActive, setMapActive] = useState<boolean>(false);
 
   const [info, setInfo] = useState({
-    name: "",
-    lastname: "",
-    sex: "",
-    date: "",
-    dni: "",
+    name: state.user.name || "",
+    lastname: state.user.last_name || "",
+    sex: state.user.sex || "",
+    date: state.user.birthday || "",
+    dni: state.user.identity_document_type || "",
   });
 
   const [changePassword, setChangePassword] = useState({
@@ -147,29 +162,31 @@ export default function EditProfile() {
 
   const [data, setData] = useState<{
     delivery: string;
+    delivery_google: string;
     number: string;
     floor: string;
     apartament: string;
-    postalcode: string;
+    postalcode: number;
     city: string;
     locality: string;
-    phone: string;
+    phone: number;
     additionaldata: string;
   }>({
-    delivery: "",
-    number: "",
-    floor: "",
-    apartament: "",
-    postalcode: "",
-    city: "",
-    locality: "",
-    phone: "",
-    additionaldata: "",
+    delivery: state.user.address || "",
+    delivery_google: "",
+    number: state.user.address_number || "",
+    floor: state.user.floor || "",
+    apartament: state.user.number_apartament || "",
+    postalcode: state.user.postal_code || undefined,
+    city: state.user.city || "",
+    locality: state.user.locality || "",
+    phone: state.user.phone_number || undefined,
+    additionaldata: state.user.additional_data || "",
   });
 
   // If using map widget, set data to widget data
   useEffect(() => {
-    setData({ ...data, delivery: returnLocation.returnFullAddress });
+    setData({ ...data, delivery_google: returnLocation.returnFullAddress });
     // eslint-disable-next-line
   }, [returnLocation]);
 
@@ -179,27 +196,28 @@ export default function EditProfile() {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
-    if(changePassword.newpassword === ""){
-      Swal.fire({title: "Write a new password", confirmButtonColor: '#9ea03b'})
+    if (changePassword.newpassword === "") {
+      Swal.fire({ title: "Write a new password", confirmButtonColor: '#9ea03b' })
       return;
     }
-    if(changePassword.repeatpassword !== changePassword.newpassword){
-      Swal.fire({title: "Passwords do not match", confirmButtonColor: '#9ea03b'})
+    if (changePassword.repeatpassword !== changePassword.newpassword) {
+      Swal.fire({ title: "Passwords do not match", confirmButtonColor: '#9ea03b' })
       return;
     }
-    else{
+    else {
       alert("Password changed successfully")
     }
   }
   const updateProfile = async () => {
     const responseAxios = await axios.post(
-      `${process.env.REACT_APP_BASE_REST_API_HASURA}/update_user`,
+      `${process.env.REACT_APP_BASE_REST_API_HASURA}/updateDataUser`,
       {
         auth0_id: state.user.auth0_id,
         name: info.name,
         last_name: info.lastname,
         birthday: info.date,
         identity_document_type: Number(info.dni),
+        sex: info.sex
       }
     );
     console.log("datos actualizados", responseAxios.data);
@@ -209,15 +227,18 @@ export default function EditProfile() {
 
   const updateAditionalData = async () => {
     let responseAxios = await axios.post(
-      `${process.env.REACT_APP_BASE_REST_API_HASURA}/update_user`,
+      `${process.env.REACT_APP_BASE_REST_API_HASURA}/updateAdditionalDataUser`,
       {
         auth0_id: state.user.auth0_id,
-        address: data.delivery,
+        address: data.delivery_google || data.delivery,
         address_number: Number(data.number),
         postal_code: Number(data.postalcode),
         city: data.city,
         locality: data.locality,
         phone_number: Number(data.phone),
+        floor: data.floor,
+        apartament: data.apartament,
+        additional_data: data.additionaldata
       }
     );
     console.log("datos actualizados", responseAxios.data);
@@ -254,7 +275,6 @@ export default function EditProfile() {
       return;
     }
     else {
-      alert("Dates updates")
       updateProfile();
     }
   };
@@ -292,7 +312,6 @@ export default function EditProfile() {
       return;
     }
     else {
-      alert("Dates updates")
       updateAditionalData();
     }
   };
@@ -332,10 +351,10 @@ export default function EditProfile() {
 
   return (
     isAuthenticated && (
-      <div className = 'divqencierratodo'>
-            <Profile />
+      <div className='divqencierratodo'>
+        <Profile />
         <div className="div-conteiner">
-          <h3 style={{margin:"5px"}}>PROFILE</h3>
+          <h3 style={{ margin: "5px" }}>PROFILE</h3>
           <div className="conteiner-datos">
             <form
               noValidate
@@ -344,66 +363,66 @@ export default function EditProfile() {
             >
               <h5>- Data</h5>
               <div className={classes.root}>
-              <TextField
-                value={info.name}
-                label="Name"
-                name="name"
-                multiline
-                maxRows={4}
-                onChange={(e) => inputChange(e)}
-              />
-              <TextField
-                value={info.lastname}
-                label="Last name"
-                name="lastname"
-                multiline
-                maxRows={4}
-                onChange={(e) => inputChange(e)}
-              />
-              <div style={{ marginTop: "15px" }}>
-                {/* <InputLabel>Sex</InputLabel> */}
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  label="Select an option"
-                  value={info.sex}
-                  name="sex"
-                  className={classes.selectEmpty}
+                <TextField
+                  value={info.name}
+                  label="Name"
+                  name="name"
+                  multiline
+                  maxRows={4}
                   onChange={(e) => inputChange(e)}
-                >
-                  <MenuItem disabled value="">
-                    <em>Select an option</em>
-                  </MenuItem>
-                  <MenuItem value={20}>Male</MenuItem>
-                  <MenuItem value={30}>Female</MenuItem>
-                </Select>
-              </div>
-              <TextField
-                value={info.date}
-                label="Birthday"
-                name="date"
-                type="date"
-                className={classes.textField}
-                onChange={(e) => inputChange(e)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
-                value={info.dni}
-                label="DNI"
-                name="dni"
-                type="number"
-                multiline
-                maxRows={4}
-                onChange={(e) => inputChange(e)}
-              />
-              <FormControl className={classes.selectEmpty} disabled>
-                <InputLabel htmlFor="component-disabled">Email</InputLabel>
-                <Input id="component-disabled" value={user.email} />
-              </FormControl>
-              <button type="submit" style={{ width: "50%" }} className="btn">
-                Update
-              </button>
+                />
+                <TextField
+                  value={info.lastname}
+                  label="Last name"
+                  name="lastname"
+                  multiline
+                  maxRows={4}
+                  onChange={(e) => inputChange(e)}
+                />
+                <div style={{ marginTop: "15px" }}>
+                  {/* <InputLabel>Sex</InputLabel> */}
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    label="Select an option"
+                    value={info.sex}
+                    name="sex"
+                    className={classes.selectEmpty}
+                    onChange={(e) => inputChange(e)}
+                  >
+                    <MenuItem disabled value="">
+                      <em>Select an option</em>
+                    </MenuItem>
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                  </Select>
+                </div>
+                <TextField
+                  value={info.date}
+                  label="Birthday"
+                  name="date"
+                  type="date"
+                  className={classes.textField}
+                  onChange={(e) => inputChange(e)}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  value={info.dni}
+                  label="DNI"
+                  name="dni"
+                  type="number"
+                  multiline
+                  maxRows={4}
+                  onChange={(e) => inputChange(e)}
+                />
+                <FormControl className={classes.selectEmpty} disabled>
+                  <InputLabel htmlFor="component-disabled">Email</InputLabel>
+                  <Input id="component-disabled" value={user.email} />
+                </FormControl>
+                <button type="submit" style={{ width: "50%" }} className="btn">
+                  Update
+                </button>
               </div>
             </form>
             {state.user.auth0_id?.slice(0, 5) === "auth0" && (
@@ -414,30 +433,30 @@ export default function EditProfile() {
               >
                 <h5>- Change password</h5>
                 <div className={classes.root2}>
-                <TextField
-                  label="New Password"
-                  name="newpassword"
-                  value={changePassword.newpassword}
-                  color="secondary"
-                  type="password"
-                  onChange={(e) => inputChangePassword(e)}
-                />
-                <TextField
-                  label="Repeat Password"
-                  name="repeatpassword"
-                  value={changePassword.repeatpassword}
-                  color="secondary"
-                  type="password"
-                  onChange={(e) => inputChangePassword(e)}
-                />
-                <button
-                  type="submit"
-                  style={{ width: "40%", height: "75%", marginTop: "15px" }}
-                  className="btn"
-                  onClick={(e) => changeNewPassword(e)}
-                >
-                  Update
-                </button>
+                  <TextField
+                    label="New Password"
+                    name="newpassword"
+                    value={changePassword.newpassword}
+                    color="secondary"
+                    type="password"
+                    onChange={(e) => inputChangePassword(e)}
+                  />
+                  <TextField
+                    label="Repeat Password"
+                    name="repeatpassword"
+                    value={changePassword.repeatpassword}
+                    color="secondary"
+                    type="password"
+                    onChange={(e) => inputChangePassword(e)}
+                  />
+                  <button
+                    type="submit"
+                    style={{ width: "40%", height: "75%", marginTop: "15px" }}
+                    className="btn"
+                    onClick={(e) => changeNewPassword(e)}
+                  >
+                    Update
+                  </button>
                 </div>
               </form>
             )}
@@ -464,7 +483,7 @@ export default function EditProfile() {
               onSubmit={(e) => handleAdditionalData(e)}
             >
               <TextField
-                value={data.delivery}
+                value={data.delivery_google || data.delivery}
                 label="Delivery Address"
                 color="secondary"
                 name="delivery"
