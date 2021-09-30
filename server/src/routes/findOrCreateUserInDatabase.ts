@@ -28,6 +28,15 @@ router.post(
                   postal_code
                   role
                   status
+                  birthday
+                  floor
+                  additional_data
+                  identity_document_type
+                  number_apartament
+                  phone_number
+                  sex
+                  username
+                  locality
                   reviews {
                     id_product_general
                   }
@@ -69,6 +78,15 @@ router.post(
                   postal_code
                   role
                   status
+                  birthday
+                  floor
+                  additional_data
+                  identity_document_type
+                  number_apartament
+                  phone_number
+                  sex
+                  username
+                  locality
                   reviews {
                     id_product_general
                   }
