@@ -7,7 +7,6 @@ router.post(
   "/",
   async (req: Request, response: Response, next: NextFunction) => {
     const { name, categories, image_url, gender, price, options } = req.body;
-    console.log("BODY =>>>>>>>>>>>", req.body);
     if (
       name &&
       (categories as string[]) &&
@@ -45,7 +44,6 @@ router.post(
             ),
           },
         });
-        console.log("MAYBE ERRORS", data);
         if (data.errors) {
           return response.status(400).send(data);
         }
