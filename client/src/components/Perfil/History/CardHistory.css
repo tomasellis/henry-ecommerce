@@ -1,3 +1,6 @@
+.divqencierratodo {
+  width: 100%;
+}
 .div_container_card_product {
   display: flex;
   justify-content: center;
@@ -26,7 +29,7 @@
   justify-content: center;
   width: 15rem;
   height: 32rem;
-  margin-left: 19%;
+  margin-left: 5%;
 }
 
 .div_card_product:hover {
@@ -46,7 +49,6 @@
   object-fit: cover;
   width: 20rem;
   height: 90rem;
-  padding: 5%;
 }
 
 .div_cards {
@@ -67,6 +69,20 @@
 
 .actualDiv {
   display: flex;
+  flex: 1;
+  max-width: 100%;
   flex-flow: column nowrap;
-  margin-left: 19%;
+  margin-left: 8%;
+}
+
+.dropdownStyle {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+.thisDiv {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
 }

@@ -54,28 +54,6 @@ export default function History() {
         <div className="divqencierratodo">
           <Profile />
           <div className="actualDiv">
-            {/* {state.storeHistory.orders?.map((e, index) => {
-              console.log("STORE HISTORY", e);
-              return e.orders_products.map((productOption, indexOption) => {
-                console.log("PRODUCT OPTION", productOption, indexOption);
-                return (
-                  <div key={indexOption}>
-                    <CardHistory
-                      id={productOption.id}
-                      image_url={
-                        productOption.products_option.product.image_url
-                      }
-                      name={productOption.products_option.product.name}
-                      unit_price={productOption.unit_price}
-                      quantity={productOption.quantity}
-                      date={productOption.created_at}
-                      orderId={index + 1}
-                      id_product_general={productOption.product_id}
-                    />
-                  </div>
-                );
-              });
-            })} */}
             {state.storeHistory.orders?.map((e, index) => (
               <DropDownHistory order={e} index={index} />
             ))}
