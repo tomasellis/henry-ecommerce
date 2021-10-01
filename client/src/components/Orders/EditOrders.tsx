@@ -4,6 +4,7 @@ import { useAlert } from 'react-alert'
 import '../Users/EditUsers.css'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import './EditOrders.css'
 
 export default function EditOrders() {
   const alertReact = useAlert()
@@ -79,7 +80,7 @@ export default function EditOrders() {
     console.log(HasuraResponseBlock.data);
   }
 
-  
+
   useEffect(() => {
     if(!status.length){
       axios.get(`${process.env.REACT_APP_BASE_REST_API_HASURA}/orders?mostrar=${5}&saltearse=${pages.currentPage * 5}`)
@@ -103,7 +104,7 @@ export default function EditOrders() {
   return (
     <React.Fragment>
       <div className='editUser'>
-        <div> Orders </div>
+        <h1> Orders </h1>
         <select
             className=""
             name=""
@@ -115,15 +116,15 @@ export default function EditOrders() {
             <option value="delivered">Delivered</option>
           </select>
         {orders.length ? <>
-          <table>
+          <table id="ordersOrUsers">
             <thead>
               <tr>
-                <th>order id</th>
-                <th>user email</th>
-                <th>address</th>
-                <th>updated at</th>
-                <th>status</th>
-                <th>change status</th>
+                <th>Order id</th>
+                <th>User email</th>
+                <th>Address</th>
+                <th>Updated at</th>
+                <th>Status</th>
+                <th>Change status</th>
               </tr>
 
             </thead>
@@ -134,10 +135,14 @@ export default function EditOrders() {
               <td>{order.updated_at.slice(0, 10)}</td>
               <td>{order.status}</td>
               <td>
-                {statues.includes(order.status.toLowerCase()) ? <button onClick={e => submit(order.id, order.status, order.email, order.email)}>{order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}</button> : <button disabled>No action</button>}
+                {statues.includes(order.status.toLowerCase()) ?
+                  <button className="button-change" onClick={e => submit(order.id, order.status, order.email, order.email)}>
+                  {order.status.toLowerCase() === 'approved' ? 'change to "shipped"' : 'change to "received"'}
+                  </button> : <button className="button-change" disabled>No action</button>}
               </td>
             </tr>)}</tbody>
           </table>
+          <div className="pagination">
           <button onClick={e => setPages({
             ...pages,
             currentPage: pages.currentPage - 1,
@@ -150,7 +155,7 @@ export default function EditOrders() {
             prevPage: pages.prevPage + 1,
             nextPage: pages.nextPage + 1
           })} disabled={pages.nextPage > Math.ceil(pages.maxOrders / 5) - 1} >Next</button>
-
+          </div>
         </>
           : null}
       </div>

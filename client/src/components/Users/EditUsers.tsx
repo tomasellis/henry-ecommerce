@@ -88,7 +88,33 @@ export default function EditUsers() {
   return (
     <React.Fragment>
       <div className='editUser'>
-      <div> users </div>
+      <h1> Users </h1>
+      {users.length ? <table id="ordersOrUsers">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Set role</th>
+            <th>Set status</th>
+          </tr>
+
+        </thead>
+        <tbody>{users.map((user) => <tr key={user.id}>
+          <td>{user.auth0_id}</td>
+          <td>{user.email}</td>
+          <td>{user.role}</td>
+          <td>{user.status}</td>
+          <td>
+            <button className="button-change" onClick={e => editRole(user.auth0_id, user.role)}>{user.role.toLowerCase() === 'user' ? 'set admin' : 'set user'}</button>
+          </td>
+          <td>
+            <button className="button-change" onClick={e => editBlock(user.auth0_id, user.status)}>{user.status.toLowerCase() === 'ok' ? 'Block' : 'Unblock'}</button>
+          </td>
+        </tr>)}</tbody>
+      </table> : null}
+      <div className="pagination">
       <button onClick={e => setPages({
         ...pages,
         currentPage: pages.currentPage - 1,
@@ -101,33 +127,7 @@ export default function EditUsers() {
         prevPage: pages.prevPage + 1,
         nextPage: pages.nextPage + 1
       })} disabled={pages.nextPage > Math.ceil(pages.maxUsers / 5) - 1} >Next</button>
-
-
-      {users.length ? <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>email</th>
-            <th>role</th>
-            <th>status</th>
-            <th>set role</th>
-            <th>set status</th>
-          </tr>
-
-        </thead>
-        <tbody>{users.map((user) => <tr key={user.id}>
-          <td>{user.auth0_id}</td>
-          <td>{user.email}</td>
-          <td>{user.role}</td>
-          <td>{user.status}</td>
-          <td>
-            <button onClick={e => editRole(user.auth0_id, user.role)}>{user.role.toLowerCase() === 'user' ? 'set admin' : 'set user'}</button>
-          </td>
-          <td>
-            <button onClick={e => editBlock(user.auth0_id, user.status)}>{user.status.toLowerCase() === 'ok' ? 'Block' : 'Unblock'}</button>
-          </td>
-        </tr>)}</tbody>
-      </table> : null}
+      </div>
       </div>
     </React.Fragment>
   )
