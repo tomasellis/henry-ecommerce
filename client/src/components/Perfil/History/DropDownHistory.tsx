@@ -38,26 +38,24 @@ const DropDownHistory = ({ order, index }: { order: Order; index: number }) => {
 
   const mapProducts = order.orders_products.map((product) => {
     return (
-      <>
-        <div className="div_container_card_product_history">
-          <div className="div_card_product">
-            <Link to={`/clothing/details/${product.product_id}`}>
-              <img
-                className="img_product_history"
-                src={product.products_option.product.image_url}
-                alt=""
-              />
-              <h3 className="card_name_product_history">
-                {product.products_option.product.name}
-              </h3>
-              <h5 className="titulito">$ {product.unit_price}</h5>
-              <h5 className="titulito"> Quantity: {product.quantity}</h5>
-              <h5 className="titulito"> {product.created_at.slice(0, 10)}</h5>
-              <h5 className="titulito"> Order: {index + 1}</h5>
-            </Link>
-          </div>
+      <div className="div_container_card_product_history">
+        <div className="div_card_product">
+          <Link to={`/clothing/details/${product.product_id}`}>
+            <img
+              className="img_product_history"
+              src={product.products_option.product.image_url}
+              alt=""
+            />
+            <h3 className="card_name_product_history">
+              {product.products_option.product.name}
+            </h3>
+            <h5 className="titulito">$ {product.unit_price}</h5>
+            <h5 className="titulito"> Quantity: {product.quantity}</h5>
+            <h5 className="titulito"> {product.created_at.slice(0, 10)}</h5>
+            <h5 className="titulito"> Order: {index + 1}</h5>
+          </Link>
         </div>
-      </>
+      </div>
     );
   });
 
@@ -66,9 +64,9 @@ const DropDownHistory = ({ order, index }: { order: Order; index: number }) => {
   );
 
   return (
-    <div style={{ display: "flex", flexFlow: "row nowrap", width: "100%" }}>
+    <div className="dropdownStyle">
       <React.Fragment>
-        <TableRow sx={{ "& > *": { borderBottom: "unset", width: "100%" } }}>
+        <TableRow sx={{ borderBottom: "unset", width: "100%" }}>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -87,21 +85,14 @@ const DropDownHistory = ({ order, index }: { order: Order; index: number }) => {
               return previousValue + currentValue;
             }, 0)}
           </TableCell>
-          {open ? (
-            <TableRow>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                }}
-              >
-                {mapProducts}
-              </div>
-            </TableRow>
-          ) : (
-            <span></span>
-          )}
         </TableRow>
+        {open ? (
+          <TableRow sx={{ backgroundColor: "lightgrey" }}>
+            <div className="thisDiv">{mapProducts}</div>
+          </TableRow>
+        ) : (
+          <span></span>
+        )}
       </React.Fragment>
     </div>
   );
