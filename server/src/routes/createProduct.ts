@@ -7,7 +7,6 @@ router.post(
   "/",
   async (req: Request, response: Response, next: NextFunction) => {
     const { name, categories, image_url, gender, price, options } = req.body;
-
     if (
       name &&
       (categories as string[]) &&
@@ -18,7 +17,7 @@ router.post(
     ) {
       const productCategoriesArray: string[] = (categories as string[]).map(
         (category_name) => {
-          const obj = `{ category_name: ${category_name} }`;
+          const obj = `{ category_name: ${category_name.toLocaleLowerCase()} }`;
           return obj;
         }
       );
@@ -45,12 +44,12 @@ router.post(
             ),
           },
         });
-
         if (data.errors) {
           return response.status(400).send(data);
         }
         return response.status(200).send(data);
       } catch (err) {
+        console.log(err);
         next(err);
       }
     } else {
